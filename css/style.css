@@ -1,0 +1,125 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&family=Fraunces:wght@400;500;600&family=Atkinson+Hyperlegible:wght@400;700&display=swap');
+
+/* Variáveis globais */
+:root {
+    /* Cores principais */
+    --verde-floresta: #203D2E;
+    --verde-escuro: #0C201A;
+    --verde-natural: #3B654A;
+    --verde-salvia: #B5D3B7;
+    --verde-claro: #EEF5E8;
+    --creme: #F6F3EA;
+    --terracota: #8A4B32;
+    --branco: #FFFFFF;
+
+    /* Cores de texto e bordas */
+    --texto-principal: #1B2922;
+    --texto-secundario: #59645B;
+    --borda: #DCE0D4;
+    --borda-input: #B8C3B6;
+
+    /* Cores do aplicativo */
+    --app-fundo: #F5F4EE;
+    --app-menu: #0C241C;
+    --app-menu-ativo: #203F2F;
+    --app-card-verde: #CCDFC7;
+    --app-card-terracota: #E9D6C7;
+    --app-iara: #E0EBD9;
+
+    /* Fontes */
+    --fonte-principal: 'Nunito Sans', sans-serif;
+    --fonte-titulo: 'Fraunces', serif;
+    --fonte-acessivel: 'Atkinson Hyperlegible', sans-serif;
+
+    /* Espaçamentos */
+    --espaco-pequeno: 8px;
+    --espaco-medio: 16px;
+    --espaco-grande: 24px;
+
+    /* Arredondamentos */
+    --radius-pequeno: 7px;
+    --radius-medio: 10px;
+    --radius-grande: 24px;
+}
+
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 100%;
+}
+
+/* Estilos gerais */
+body {
+    font-family: var(--fonte-principal);
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    background-color: var(--creme);
+    color: var(--texto-principal);
+    min-height: 100vh;
+}
+
+/* Tipografia */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--fonte-titulo);
+    font-weight: 500;
+    color: var(--verde-floresta);
+    line-height: 1.2;
+}
+
+h1 {
+    font-size: 2rem;
+}
+
+h2 {
+    font-size: 1.95rem;
+}
+
+h3 {
+    font-size: 1.7rem;
+}
+
+p {
+    font-size: 1rem;
+    line-height: 1.65;
+}
+
+a {
+    color: var(--verde-natural);
+}
+
+/* Imagens */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Elementos de formulário */
+button, input, select, textarea {
+    font: inherit;
+    color: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+/* Acessibilidade */
+
+/* Destaca o elemento em foco durante a navegação pelo teclado */
+:focus-visible {
+    outline: 2px solid var(--verde-natural);
+    outline-offset: 3px;
+}
+
+/* Personaliza as cores ao selecionar um texto */
+::selection {
+    background-color: var(--verde-salvia);
+    color: var(--texto-principal);
+}
