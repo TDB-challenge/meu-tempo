@@ -72,4 +72,102 @@
     </div>
   </header>
 
-  
+  <main>
+    <!-- 1. Topo da página Nossa Solução -->
+    <section class="container solucao-topo">
+      <div class="etiqueta">NOSSA SOLUÇÃO</div>
+      <h1>O apoio certo.<br />No seu caminho.</h1>
+      <p class="solucao-lead">
+        Peça ajuda, encontre informações e acompanhe tudo em um só lugar — por comando de voz com a IARA ou pela tela do celular.
+      </p>
+    </section>
+
+    <!-- 2. Bloco 01: Travessia Acessível -->
+    <section id="travessia" class="container solucao-bloco">
+      <div class="grid-2">
+        <!-- Arte do Semáforo (igual ao Figma) -->
+        <div class="solucao-arte arte-semaforo">
+          <span></span>
+
+          <div class="faixa-pedestre faixa-grande" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+
+          <div class="semaforo-conjunto semaforo-grande" aria-hidden="true">
+            <div class="semaforo-caixa">
+              <span class="luz"></span>
+              <span class="luz"></span>
+              <span class="luz ativa">
+                <img src="assets/icones/walking.png" alt="" class="icone" />
+              </span>
+            </div>
+            <div class="semaforo-poste"></div>
+          </div>
+
+          <span class="arte-legenda">
+            <img src="assets/icones/clock.png" alt="" class="icone-pequeno" />
+            No seu ritmo.
+          </span>
+        </div>
+
+        <!-- Texto + Botão -->
+        <div>
+          <div class="etiqueta">Travessia acessível</div>
+          <h2>Seu tempo para atravessar.</h2>
+          <p>
+            No mapa, encontre os cruzamentos com suporte inteligente. Em vez de procurar uma botoeira na rua ou depender de avisos sonoros externos, você ativa o <strong>guia musical e a vibração no próprio celular</strong> e solicita segundos extras para atravessar com segurança.
+          </p>
+          <p>
+            O sistema se comunica automaticamente com o semáforo: se o ciclo atual tiver menos de 8 segundos restantes, ele programa sua travessia para o próximo fluxo sem travar o trânsito e sem precisar de aprovação humana.
+          </p>
+          <button type="button" class="btn btn-abrir-simulador" data-alvo="simulador-travessia">
+            Usar este serviço &rarr;
+          </button>
+        </div>
+      </div>
+
+      <!-- Simulador Interativo: Regra dos 8 segundos -->
+      <div id="simulador-travessia" class="caixa-simulador">
+        <div class="grid-2">
+          <form id="form-travessia" class="card-branco">
+            <h3>Simular travessia inteligente</h3>
+            <div class="campo">
+              <label for="cruzamento">Cruzamento geolocalizado</label>
+              <select id="cruzamento">
+                <option value="Av. Paulista, 5502 (Próximo ao MASP)">Av. Paulista, 5502 (Próximo ao MASP)</option>
+                <option value="Av. Brigadeiro Faria Lima x Rua dos Pinheiros">Av. Brigadeiro Faria Lima x Rua dos Pinheiros</option>
+                <option value="Praça da República x Av. Ipiranga">Praça da República x Av. Ipiranga</option>
+              </select>
+            </div>
+
+            <div class="campo">
+              <label for="tempo-semaforo">Simular tempo restante no ciclo atual do semáforo</label>
+              <select id="tempo-semaforo">
+                <option value="14">14 segundos restantes (acima do limite de 8s)</option>
+                <option value="5">5 segundos restantes (abaixo do limite de 8s)</option>
+              </select>
+            </div>
+
+            <div class="campo">
+              <label for="guia-sensorial">Aviso sensorial no celular</label>
+              <select id="guia-sensorial">
+                <option value="Sinal musical + vibração rítmica + voz da IARA">Sinal musical + vibração rítmica</option>
+                <option value="Apenas vibração rítmica e contagem na tela">Apenas vibração rítmica e contagem na tela</option>
+              </select>
+            </div>
+
+            <button type="submit" class="btn">Solicitar tempo estendido &rarr;</button>
+          </form>
+
+          <div id="status-travessia" class="painel-status">
+            <h3>Como funciona a regra dos 8 segundos</h3>
+            <p>
+              <strong>Acima de 8 segundos:</strong> o semáforo estende o tempo imediatamente e inicia o sinal musical e a vibração no seu celular.
+            </p>
+            <p style="margin-bottom: 0;">
+              <strong>Abaixo de 8 segundos:</strong> para manter a fluidez dos veículos e a sua segurança, o sistema reserva automaticamente o tempo estendido para o próximo ciclo verde.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
