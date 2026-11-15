@@ -1,12 +1,113 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Solicitações | Meu Tempo</title>
-    <link rel="stylesheet" href="../../css/style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="../assets/css/style.css" />
+  </head>
 
-</body>
+  <body>
+    <!-- Menu lateral -->
+    <aside>
+      <a href="inicio.html">
+        <strong>meu tempo</strong>
+        <small>A cidade no seu ritmo.</small>
+      </a>
+
+      <!-- Navegação entre as páginas -->
+      <nav>
+        <ul>
+          <li><a href="inicio.html">Início</a></li>
+          <li><a href="servicos.html">Serviços</a></li>
+          <li><a href="solicitacoes.html">Solicitações</a></li>
+          <li><a href="iara.html">Assistente IARA</a></li>
+          <li><a href="perfil.html">Perfil e acessibilidade</a></li>
+        </ul>
+      </nav>
+
+      <div>
+        <a href="perfil.html">Acessibilidade</a>
+        <a href="../index.html">Voltar ao site</a>
+      </div>
+    </aside>
+
+    <!-- Área de conteúdo do aplicativo -->
+    <div>
+      <!-- Cabeçalho -->
+      <header>
+        <div>
+          <span>Meu Tempo</span>
+          <strong>Solicitações</strong>
+        </div>
+
+        <!-- Menu do usuário -->
+        <details>
+          <summary>
+            <span>U</span>
+            <small>Olá,</small>
+            <strong>Usuário</strong>
+          </summary>
+
+          <a href="perfil.html">Meu perfil</a>
+          <button type="button" disabled>Ler minha credencial</button>
+          <a href="../index.html">Voltar ao site</a>
+        </details>
+      </header>
+
+      <!-- Conteúdo principal -->
+      <main>
+        <h1>Minhas solicitações</h1>
+        <p>Acompanhe seus pedidos e relatos.</p>
+
+        <!-- Botões para filtrar os pedidos pela situação -->
+        <div>
+          <button type="button" disabled>Todas</button>
+          <button type="button" disabled>Em andamento</button>
+          <button type="button" disabled>Finalizadas</button>
+        </div>
+
+        <!-- Lista com os pedidos realizados pelo usuário -->
+        <section>
+          <!-- Exemplo de pedido de apoio no metrô -->
+          <details>
+            <!-- Informações que aparecem antes de abrir o pedido -->
+            <summary>
+              <strong>Acompanhamento até a plataforma</strong>
+
+              <small>
+                Hoje · 14:32 · Consolação · Linha 2 — Verde · Entrada principal
+              </small>
+
+              <span>Funcionário a caminho</span>
+            </summary>
+
+            <!-- Informações que aparecem ao abrir o pedido -->
+            <h2>Histórico da solicitação</h2>
+            <p>Funcionário a caminho.</p>
+          </details>
+
+          <!-- Exemplo de relato de zeladoria -->
+          <details>
+            <summary>
+              <strong>Piso tátil danificado</strong>
+
+              <small> Hoje · 09:15 · Av. Paulista × Rua Pamplona </small>
+
+              <span>Concluído</span>
+            </summary>
+
+            <h2>Histórico da solicitação</h2>
+            <p>Solicitação concluída.</p>
+          </details>
+
+          <!-- Mensagem que aparecerá caso não existam pedidos -->
+          <p hidden>Nenhuma solicitação encontrada.</p>
+        </section>
+      </main>
+    </div>
+
+    <!-- Botão de ajuda -->
+    <button type="button" aria-label="Preciso de ajuda" disabled>?</button>
+  </body>
 </html>

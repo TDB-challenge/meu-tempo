@@ -1,12 +1,195 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Travessia | Meu Tempo</title>
-    <link rel="stylesheet" href="../../css/style.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Travessia acessível | Meu Tempo</title>
+    <link rel="stylesheet" href="../assets/css/style.css" />
+  </head>
 
-</body>
+  <body>
+    <!-- Menu lateral -->
+    <aside>
+      <a href="inicio.html">
+        <strong>meu tempo</strong>
+        <small>A cidade no seu ritmo.</small>
+      </a>
+
+      <!-- Navegação entre as páginas -->
+      <nav>
+        <ul>
+          <li><a href="inicio.html">Início</a></li>
+          <li><a href="servicos.html">Serviços</a></li>
+          <li><a href="solicitacoes.html">Solicitações</a></li>
+          <li><a href="iara.html">Assistente IARA</a></li>
+          <li><a href="perfil.html">Perfil e acessibilidade</a></li>
+        </ul>
+      </nav>
+
+      <div>
+        <a href="perfil.html">Acessibilidade</a>
+        <a href="../index.html">Voltar ao site</a>
+      </div>
+    </aside>
+
+    <!-- Área de conteúdo do aplicativo -->
+    <div>
+      <!-- Cabeçalho -->
+      <header>
+        <div>
+          <span>Meu Tempo</span>
+          <strong>Travessia acessível</strong>
+        </div>
+
+        <!-- Menu do usuário -->
+        <details>
+          <summary>
+            <span>U</span>
+            <small>Olá,</small>
+            <strong>Usuário</strong>
+          </summary>
+
+          <a href="perfil.html">Meu perfil</a>
+          <button type="button" disabled>Ler minha credencial</button>
+          <a href="../index.html">Voltar ao site</a>
+        </details>
+      </header>
+
+      <!-- Conteúdo principal -->
+      <main>
+        <!-- Apresentação do serviço -->
+        <h1>Travessia acessível</h1>
+        <p>Peça mais tempo em um cruzamento com suporte.</p>
+
+        <!-- Formulário de solicitação de travessia -->
+        <form>
+          <!-- Área para selecionar o cruzamento -->
+          <section>
+            <h2>Onde você quer atravessar?</h2>
+
+            <p>Toque no mapa ou escolha na lista.</p>
+
+            <!-- Legenda que indica os tipos de cruzamento -->
+            <div>
+              <span>Com suporte</span>
+              <span>Sem suporte</span>
+            </div>
+
+            <!-- O mapa será implementado posteriormente -->
+            <div>
+              <p>Mapa dos cruzamentos</p>
+
+              <button type="button" aria-label="Ampliar mapa" disabled>
+                +
+              </button>
+              <button type="button" aria-label="Diminuir mapa" disabled>
+                −
+              </button>
+            </div>
+
+            <!-- Alternativa para quem não consegue utilizar o mapa -->
+            <details>
+              <summary>Escolher sem usar o mapa</summary>
+
+              <!-- Agrupa as opções de cruzamentos -->
+              <fieldset>
+                <legend>Selecione um cruzamento</legend>
+
+                <!-- Radio permite escolher apenas um cruzamento -->
+                <label>
+                  <input
+                    type="radio"
+                    name="cruzamento"
+                    value="paulista-augusta"
+                    checked
+                  />
+
+                  <strong>Av. Paulista × Rua Augusta</strong>
+                  <small>Com suporte à travessia assistida</small>
+                </label>
+
+                <label>
+                  <input
+                    type="radio"
+                    name="cruzamento"
+                    value="paulista-consolacao"
+                  />
+
+                  <strong>Av. Paulista × Rua da Consolação</strong>
+                  <small>Sem suporte à travessia assistida</small>
+                </label>
+
+                <label>
+                  <input
+                    type="radio"
+                    name="cruzamento"
+                    value="paulista-pamplona"
+                  />
+
+                  <strong>Av. Paulista × Rua Pamplona</strong>
+                  <small>Sem suporte à travessia assistida</small>
+                </label>
+
+                <label>
+                  <input
+                    type="radio"
+                    name="cruzamento"
+                    value="paulista-campinas"
+                  />
+
+                  <strong>Av. Paulista × Alameda Campinas</strong>
+                  <small>Com suporte à travessia assistida</small>
+                </label>
+
+                <label>
+                  <input
+                    type="radio"
+                    name="cruzamento"
+                    value="paulista-brigadeiro"
+                  />
+
+                  <strong>Av. Paulista × Av. Brigadeiro Luís Antônio</strong>
+                  <small>Com suporte à travessia assistida</small>
+                </label>
+              </fieldset>
+            </details>
+
+            <!-- Informações sobre o cruzamento selecionado -->
+            <div>
+              <strong>Av. Paulista × Rua Augusta</strong>
+              <small>Este cruzamento tem suporte à travessia assistida.</small>
+            </div>
+
+            <p>A cobertura apresentada é fictícia e faz parte do protótipo.</p>
+          </section>
+
+          <!-- Confirmação antes de realizar a solicitação -->
+          <section>
+            <small>No seu tempo</small>
+
+            <h2>Você está neste cruzamento?</h2>
+
+            <p>Confirme o local antes de enviar seu pedido.</p>
+
+            <!-- Botão que enviará a solicitação -->
+            <button type="button" disabled>Solicitar mais tempo</button>
+
+            <!-- Alternativa para solicitar ajuda por voz -->
+            <a href="iara.html">Solicitar por voz</a>
+
+            <button type="button" disabled>Escolher outro cruzamento</button>
+
+            <!-- Opção para relatar problemas no cruzamento -->
+            <a href="zeladoria.html" hidden> Relatar problema neste local </a>
+
+            <!-- Orientação de segurança -->
+            <p>Observe sempre o sinal de pedestres da rua.</p>
+          </section>
+        </form>
+      </main>
+    </div>
+
+    <!-- Botão de ajuda -->
+    <button type="button" aria-label="Preciso de ajuda" disabled>?</button>
+  </body>
 </html>

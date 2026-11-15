@@ -1,12 +1,246 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zeladoria | Meu Tempo</title>
-    <link rel="stylesheet" href="../../css/style.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zeladoria urbana | Meu Tempo</title>
+    <link rel="stylesheet" href="../assets/css/style.css" />
+  </head>
 
-</body>
+  <body>
+    <!-- Menu lateral -->
+    <aside>
+      <a href="inicio.html">
+        <strong>meu tempo</strong>
+        <small>A cidade no seu ritmo.</small>
+      </a>
+
+      <!-- Navegação entre as páginas -->
+      <nav>
+        <ul>
+          <li><a href="inicio.html">Início</a></li>
+          <li><a href="servicos.html">Serviços</a></li>
+          <li><a href="solicitacoes.html">Solicitações</a></li>
+          <li><a href="iara.html">Assistente IARA</a></li>
+          <li><a href="perfil.html">Perfil e acessibilidade</a></li>
+        </ul>
+      </nav>
+
+      <div>
+        <a href="perfil.html">Acessibilidade</a>
+        <a href="../index.html">Voltar ao site</a>
+      </div>
+    </aside>
+
+    <!-- Área de conteúdo do aplicativo -->
+    <div>
+      <!-- Cabeçalho -->
+      <header>
+        <div>
+          <span>Meu Tempo</span>
+          <strong>Zeladoria urbana</strong>
+        </div>
+
+        <!-- Menu do usuário -->
+        <details>
+          <summary>
+            <span>U</span>
+            <small>Olá,</small>
+            <strong>Usuário</strong>
+          </summary>
+
+          <a href="perfil.html">Meu perfil</a>
+          <button type="button" disabled>Ler minha credencial</button>
+          <a href="../index.html">Voltar ao site</a>
+        </details>
+      </header>
+
+      <!-- Conteúdo principal -->
+      <main>
+        <!-- Apresentação do serviço -->
+        <h1>Relatar um problema na rua</h1>
+
+        <p>Seu relato ajuda a tornar os caminhos mais acessíveis.</p>
+
+        <!-- Formulário para registrar um problema urbano -->
+        <form>
+          <!-- Opções para identificar o problema encontrado -->
+          <fieldset>
+            <legend>O que você encontrou?</legend>
+
+            <label>
+              <input
+                type="radio"
+                name="problema"
+                value="calcada"
+                checked
+                required
+              />
+              Calçada danificada
+            </label>
+
+            <label>
+              <input type="radio" name="problema" value="rampa" />
+              Falta de rampa
+            </label>
+
+            <label>
+              <input type="radio" name="problema" value="obstaculo" />
+              Obstáculo na passagem
+            </label>
+
+            <label>
+              <input type="radio" name="problema" value="semaforo" />
+              Problema em semáforo
+            </label>
+
+            <label>
+              <input type="radio" name="problema" value="piso-tatil" />
+              Piso tátil danificado
+            </label>
+
+            <label>
+              <input type="radio" name="problema" value="outro" />
+              Outro problema
+            </label>
+          </fieldset>
+
+          <!-- Endereço onde o problema foi encontrado -->
+          <div>
+            <label>
+              Endereço *
+
+              <input
+                type="text"
+                name="endereco"
+                placeholder="Rua, número ou ponto de referência"
+                required
+              />
+            </label>
+
+            <!-- Alternativas para informar a localização -->
+            <button type="button" disabled>Usar minha localização</button>
+
+            <button type="button" disabled>Escolher no mapa</button>
+          </div>
+
+          <!-- Área opcional para consultar os pontos do mapa -->
+          <details>
+            <summary>Mapa e semáforos da região</summary>
+
+            <h2>Onde está o problema?</h2>
+
+            <p>Toque no mapa ou escolha na lista.</p>
+
+            <!-- Legenda do mapa -->
+            <div>
+              <span>Com suporte</span>
+              <span>Sem suporte</span>
+            </div>
+
+            <!-- Espaço reservado para o mapa -->
+            <div>
+              <p>Mapa da região</p>
+
+              <button type="button" aria-label="Ampliar mapa" disabled>
+                +
+              </button>
+              <button type="button" aria-label="Diminuir mapa" disabled>
+                −
+              </button>
+            </div>
+
+            <!-- Alternativa para escolher o local sem utilizar o mapa -->
+            <details>
+              <summary>Escolher sem usar o mapa</summary>
+
+              <fieldset>
+                <legend>Selecione um cruzamento</legend>
+
+                <label>
+                  <input
+                    type="radio"
+                    name="cruzamento"
+                    value="paulista-augusta"
+                  />
+                  Av. Paulista × Rua Augusta
+                </label>
+
+                <label>
+                  <input
+                    type="radio"
+                    name="cruzamento"
+                    value="paulista-consolacao"
+                  />
+                  Av. Paulista × Rua da Consolação
+                </label>
+
+                <label>
+                  <input
+                    type="radio"
+                    name="cruzamento"
+                    value="paulista-pamplona"
+                  />
+                  Av. Paulista × Rua Pamplona
+                </label>
+
+                <label>
+                  <input
+                    type="radio"
+                    name="cruzamento"
+                    value="paulista-campinas"
+                  />
+                  Av. Paulista × Alameda Campinas
+                </label>
+
+                <label>
+                  <input
+                    type="radio"
+                    name="cruzamento"
+                    value="paulista-brigadeiro"
+                  />
+                  Av. Paulista × Av. Brigadeiro Luís Antônio
+                </label>
+              </fieldset>
+            </details>
+
+            <p>Você pode registrar problemas em qualquer local.</p>
+          </details>
+
+          <!-- Campo para explicar o problema com mais detalhes -->
+          <div>
+            <label>
+              Descrição *
+
+              <textarea name="descricao" rows="4" required></textarea>
+            </label>
+          </div>
+
+          <!-- Envio opcional de uma foto do problema -->
+          <div>
+            <label>
+              Adicionar foto (opcional)
+
+              <input type="file" name="foto" accept="image/*" />
+            </label>
+          </div>
+
+          <!-- Alternativa para enviar um arquivo de áudio -->
+          <div>
+            <label>
+              Adicionar áudio (opcional)
+
+              <input type="file" name="audio" accept="audio/*" />
+            </label>
+          </div>
+
+          <!-- Botão para finalizar o registro -->
+          <button type="button" disabled>Registrar relato</button>
+        </form>
+      </main>
+    </div>
+
+    <!-- Botão de ajuda -->
+    <button type="button" aria-label="Preciso de ajuda" disabled>?</button>
+  </body>
 </html>
