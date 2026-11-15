@@ -2977,7 +2977,1138 @@ button {
 
 
 
+/* PERFIL.HTML =============================================================================================== */
 
+/* pagina-perfil: main que contém as informações e preferências do usuário. */
+.app .pagina-perfil {
+    display: flex; /* organiza as seções do perfil */
+    flex-direction: column; /* deixa os cards um abaixo do outro */
+    gap: 20px; /* espaço entre os cards */
+    max-width: 1100px; /* limita a largura do conteúdo */
+}
+
+
+/* identificacao-perfil: section que agrupa o avatar e o nome do usuário. */
+.app .identificacao-perfil {
+    display: flex; /* coloca o avatar ao lado dos textos */
+    align-items: center; /* centraliza os elementos na vertical */
+    gap: 24px; /* espaço entre o avatar e as informações */
+    margin-bottom: 12px; /* separa a identificação dos cards */
+}
+
+
+/* avatar-perfil: círculo que contém as iniciais do usuário. */
+.app .avatar-perfil {
+    display: flex; /* permite centralizar as iniciais */
+    align-items: center; /* centraliza na vertical */
+    justify-content: center; /* centraliza na horizontal */
+    width: 88px; /* largura do avatar */
+    height: 88px; /* altura do avatar */
+    flex-shrink: 0; /* mantém o tamanho do círculo */
+    background-color: var(--app-card-verde); /* fundo verde claro */
+    color: var(--verde-floresta); /* cor das iniciais */
+    border-radius: 50%; /* deixa o elemento circular */
+    font-size: 2rem; /* tamanho das iniciais */
+    font-weight: 800; /* destaca as iniciais */
+}
+
+
+/* perfil-iniciais: id do elemento preenchido pelo app.js. */
+.app #perfil-iniciais {
+    text-transform: uppercase; /* mantém as iniciais em maiúsculo */
+}
+
+
+/* informacoes-perfil: div que contém o nome e os textos do perfil. */
+.app .informacoes-perfil {
+    display: flex; /* organiza as informações */
+    flex-direction: column; /* deixa os textos um abaixo do outro */
+    gap: 5px; /* espaço entre os textos */
+    min-width: 0; /* permite que os textos quebrem de linha */
+}
+
+
+/* texto suas preferências acima do nome. */
+.app .informacoes-perfil small {
+    color: var(--terracota); /* cor do texto */
+    font-size: 0.75rem; /* tamanho do texto */
+    font-weight: 800; /* destaca a informação */
+    letter-spacing: 1px; /* aumenta o espaço entre as letras */
+    text-transform: uppercase; /* exibe o texto em maiúsculo */
+}
+
+
+/* perfil-nome: id do h1 que recebe o nome completo do usuário. */
+.app #perfil-nome {
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem); /* adapta o tamanho do nome à tela */
+    font-weight: 500; /* mantém a fonte mais leve */
+    overflow-wrap: anywhere; /* evita que nomes grandes ultrapassem o conteúdo */
+}
+
+
+/* descrição que aparece abaixo do nome do usuário. */
+.app .informacoes-perfil p {
+    color: var(--texto-secundario); /* cor da descrição */
+    font-size: 0.9rem; /* tamanho do texto */
+}
+
+
+/* ACESSIBILIDADE DO PERFIL =================================================================================== */
+
+/* card-acessibilidade: section com as configurações de acessibilidade. */
+.app .card-acessibilidade {
+    display: flex; /* organiza as opções do card */
+    flex-direction: column; /* deixa as opções uma abaixo da outra */
+    gap: 20px; /* espaço entre os elementos */
+    padding: 26px; /* espaço interno do card */
+    background-color: var(--branco); /* fundo branco */
+    border: 1px solid var(--borda); /* contorno do card */
+    border-radius: var(--raio-grande); /* arredonda os cantos */
+}
+
+
+/* preferencias-acessibilidade: id que recebe os links de acessibilidade
+   presentes no menu lateral e no modal de ajuda. */
+.app #preferencias-acessibilidade {
+    scroll-margin-top: calc(var(--altura-cabecalho) + 20px); /* evita que a seção fique atrás do cabeçalho */
+}
+
+
+/* título do card de acessibilidade. */
+.app .card-acessibilidade > h2 {
+    font-size: 1.6rem; /* tamanho do título */
+    font-weight: 500; /* mantém a fonte mais leve */
+}
+
+
+/* tamanho-letras: label que contém o texto e o select de tamanho da fonte. */
+.app .tamanho-letras {
+    display: flex; /* coloca o texto e o select lado a lado */
+    align-items: center; /* centraliza os elementos na vertical */
+    justify-content: space-between; /* deixa os elementos nas extremidades */
+    gap: 14px; /* espaço entre os elementos */
+    font-weight: 700; /* destaca o nome da configuração */
+}
+
+
+/* tamanho-fonte: id do select com as porcentagens da fonte. */
+.app #tamanho-fonte {
+    min-height: 44px; /* altura mínima do campo */
+    padding: 10px 14px; /* espaço interno do select */
+    background-color: var(--app-fundo); /* fundo do campo */
+    color: var(--texto-principal); /* cor do texto */
+    border: 1px solid var(--borda-input); /* contorno do campo */
+    border-radius: var(--raio-pequeno); /* arredonda os cantos */
+    font-weight: 400; /* mantém as opções sem negrito */
+}
+
+
+/* lista-preferencias: div que agrupa as configurações com interruptores. */
+.app .lista-preferencias {
+    display: flex; /* organiza as configurações */
+    flex-direction: column; /* deixa uma opção abaixo da outra */
+}
+
+
+/* opcao-preferencia: label que contém ícone, descrição e checkbox. */
+.app .opcao-preferencia {
+    display: flex; /* coloca os elementos lado a lado */
+    align-items: center; /* centraliza na vertical */
+    gap: 14px; /* espaço entre os elementos */
+    min-height: 76px; /* mantém uma área confortável para interação */
+    padding: 14px 0; /* espaço vertical da opção */
+    border-top: 1px solid var(--borda); /* separa as configurações */
+    cursor: pointer; /* indica que clicar no label altera o checkbox */
+}
+
+
+/* icone-preferencia: círculo com o svg de cada configuração. */
+.app .icone-preferencia {
+    display: flex; /* permite centralizar o svg */
+    align-items: center; /* centraliza na vertical */
+    justify-content: center; /* centraliza na horizontal */
+    width: 42px; /* largura do círculo */
+    height: 42px; /* altura do círculo */
+    flex-shrink: 0; /* mantém o tamanho do círculo */
+    background-color: var(--app-iara); /* fundo verde claro */
+    border-radius: 50%; /* deixa o elemento circular */
+}
+
+
+/* descrição-preferencia: span que agrupa o nome e a explicação da opção. */
+.app .descricao-preferencia {
+    display: flex; /* organiza os textos */
+    flex-direction: column; /* deixa a explicação abaixo do nome */
+    gap: 3px; /* espaço entre os textos */
+    flex: 1; /* empurra o interruptor para a direita */
+    min-width: 0; /* permite que o texto quebre de linha */
+}
+
+
+/* nome da preferência de acessibilidade. */
+.app .descricao-preferencia strong {
+    color: var(--texto-principal); /* cor do nome */
+    font-size: 0.95rem; /* tamanho do texto */
+    font-weight: 800; /* destaca a configuração */
+}
+
+
+/* descrição menor da preferência. */
+.app .descricao-preferencia small {
+    color: var(--texto-secundario); /* cor da descrição */
+    font-size: 0.8rem; /* tamanho do texto */
+    line-height: 1.5; /* espaço entre as linhas */
+}
+
+
+/* INTERRUPTORES ============================================================================================= */
+
+/*
+    interruptor: classe dos checkboxes personalizados do perfil.
+
+    ids que utilizam essa classe:
+    #alto-contraste: ativa uma paleta com mais contraste.
+    #ouvir-iara: define a preferência de respostas por voz.
+    #vibrar-avisos: define a preferência de vibração.
+    #fonte-legivel: troca a fonte utilizada no app.
+    #tema-escuro: altera as cores para o modo escuro.
+
+    o css controla a aparência dos interruptores.
+    o app.js vai identificar quais opções estão selecionadas.
+*/
+
+.app .interruptor {
+    appearance: none; /* remove a aparência padrão do checkbox */
+    position: relative; /* referência para posicionar a bolinha */
+    width: 48px; /* largura do interruptor */
+    height: 28px; /* altura do interruptor */
+    margin: 0; /* remove a margem padrão do checkbox */
+    flex-shrink: 0; /* impede que o interruptor seja comprimido */
+    background-color: #737d73; /* fundo do interruptor desligado */
+    border: 1px solid transparent; /* mantém o tamanho da borda */
+    border-radius: var(--raio-circular); /* deixa o formato arredondado */
+    cursor: pointer; /* indica que a opção pode ser alterada */
+    transition: background-color 0.2s ease; /* suaviza a mudança de cor */
+}
+
+
+/* cria a bolinha que indica a posição do interruptor. */
+.app .interruptor::before {
+    content: ""; /* cria o elemento decorativo */
+    position: absolute; /* permite movimentar a bolinha */
+    top: 3px; /* distância do topo */
+    left: 3px; /* posição inicial na esquerda */
+    width: 20px; /* largura da bolinha */
+    height: 20px; /* altura da bolinha */
+    background-color: var(--branco); /* fundo branco */
+    border-radius: 50%; /* deixa a bolinha circular */
+    transition: transform 0.2s ease; /* suaviza o movimento */
+}
+
+
+/* checked indica que o checkbox está selecionado. */
+.app .interruptor:checked {
+    background-color: var(--verde-floresta); /* fundo do interruptor ligado */
+}
+
+
+/* movimenta a bolinha quando o interruptor estiver ligado. */
+.app .interruptor:checked::before {
+    transform: translateX(20px); /* desloca a bolinha para a direita */
+}
+
+
+/* mantém o estado do interruptor visível no modo de contraste do sistema. */
+@media (forced-colors: active) {
+
+    .app .interruptor {
+        appearance: auto; /* recupera o checkbox nativo do navegador */
+    }
+
+    .app .interruptor::before {
+        display: none; /* esconde a bolinha personalizada */
+    }
+
+}
+
+
+/* MAIS OPÇÕES DE LEITURA ===================================================================================== */
+
+/* opcoes-leitura: details que agrupa as configurações adicionais. */
+.app .opcoes-leitura {
+    border-top: 1px solid var(--borda); /* separa as opções anteriores */
+}
+
+
+/* titulo-opcoes-leitura: summary que abre ou fecha as demais configurações. */
+.app .titulo-opcoes-leitura {
+    display: flex; /* coloca os ícones e o texto lado a lado */
+    align-items: center; /* centraliza na vertical */
+    gap: 12px; /* espaço entre os elementos */
+    min-height: 54px; /* altura mínima da opção */
+    color: var(--verde-floresta); /* cor do texto */
+    font-weight: 700; /* destaca o título */
+}
+
+
+/* espaço entre as opções adicionais e o summary quando aberto. */
+.app .opcoes-leitura[open] > .lista-preferencias {
+    padding-top: 6px; /* separa o título das configurações internas */
+}
+
+
+/* botao-libras: botão de acesso aos conteúdos em libras. */
+.app .botao-libras {
+    display: flex; /* coloca o ícone ao lado do texto */
+    align-items: center; /* centraliza na vertical */
+    justify-content: center; /* centraliza o conteúdo */
+    gap: 10px; /* espaço entre o ícone e o texto */
+    width: 100%; /* ocupa toda a largura do card */
+    min-height: 48px; /* mantém uma área adequada para clique */
+    padding: 12px; /* espaço interno do botão */
+    background-color: var(--branco); /* fundo branco */
+    color: var(--verde-floresta); /* cor do texto */
+    border: 1px solid var(--borda-input); /* contorno do botão */
+    border-radius: var(--raio-medio); /* arredonda os cantos */
+    font-weight: 700; /* destaca o texto */
+    text-decoration: none; /* mantém o texto sem sublinhado */
+}
+
+
+/* MEUS DADOS ================================================================================================ */
+
+/* card-meus-dados: details que contém os dados pessoais do usuário. */
+.app .card-meus-dados {
+    padding: 0 24px; /* espaço nas laterais do card */
+    background-color: var(--branco); /* fundo branco */
+    border: 1px solid var(--borda); /* contorno do card */
+    border-radius: var(--raio-grande); /* arredonda os cantos */
+}
+
+
+/* titulo-meus-dados: summary que abre ou fecha os dados pessoais. */
+.app .titulo-meus-dados {
+    display: flex; /* coloca o ícone, texto e seta lado a lado */
+    align-items: center; /* centraliza na vertical */
+    gap: 14px; /* espaço entre os elementos */
+    min-height: 74px; /* altura mínima do card fechado */
+    color: var(--verde-floresta); /* cor do título */
+    font-weight: 800; /* destaca o título */
+}
+
+
+/* conteudo-meus-dados: div exibida quando o card estiver aberto. */
+.app .conteudo-meus-dados {
+    display: flex; /* organiza os elementos */
+    flex-direction: column; /* deixa o formulário acima do link de cadastro */
+    gap: 20px; /* distância entre os elementos */
+    padding: 20px 0 24px; /* espaço interno */
+    border-top: 1px solid var(--borda); /* separa o título do conteúdo */
+}
+
+
+/* formulario-perfil: form utilizado para atualizar os dados pessoais. */
+.app .formulario-perfil {
+    display: flex; /* organiza os campos */
+    flex-direction: column; /* deixa os elementos um abaixo do outro */
+    gap: 12px; /* espaço entre os campos */
+}
+
+
+/* labels dos campos de dados pessoais. */
+.app .formulario-perfil label {
+    font-weight: 700; /* destaca o nome do campo */
+    font-size: 0.9rem; /* tamanho do texto */
+}
+
+
+/* campos de texto do perfil, incluindo o id nome-completo. */
+.app .formulario-perfil input:not([type="checkbox"]):not([type="file"]) {
+    width: 100%; /* ocupa toda a largura disponível */
+    min-height: 48px; /* altura mínima do campo */
+    padding: 12px 14px; /* espaço interno */
+    background-color: var(--branco); /* fundo do campo */
+    color: var(--texto-principal); /* cor dos dados preenchidos */
+    border: 1px solid var(--borda-input); /* contorno do campo */
+    border-radius: var(--raio-medio); /* arredonda os cantos */
+}
+
+
+/* botão de salvar os dados do perfil. */
+.app .botao-salvar {
+    min-height: 46px; /* altura mínima do botão */
+    padding: 12px 20px; /* espaço interno */
+    background-color: var(--verde-floresta); /* fundo verde */
+    color: var(--branco); /* texto branco */
+    border: none; /* remove a borda padrão */
+    border-radius: var(--raio-circular); /* deixa o botão arredondado */
+    font-weight: 700; /* destaca o texto */
+}
+
+
+/* criar-conta: link que direciona para a página de cadastro. */
+.app .criar-conta {
+    display: inline-flex; /* coloca o texto ao lado da seta */
+    align-items: center; /* centraliza os elementos */
+    align-self: flex-start; /* limita a largura ao conteúdo */
+    gap: 10px; /* espaço entre texto e seta */
+    color: var(--verde-floresta); /* cor do link */
+    font-weight: 700; /* destaca o texto */
+}
+
+
+/* opcoes-perfil: div com privacidade e restauração das preferências. */
+.app .opcoes-perfil {
+    display: flex; /* coloca as opções lado a lado */
+    align-items: center; /* centraliza na vertical */
+    justify-content: space-between; /* separa as opções */
+    flex-wrap: wrap; /* permite a quebra de linha em telas menores */
+    gap: 14px; /* espaço entre os elementos */
+    padding: 8px 2px; /* espaço interno */
+}
+
+
+/* link de privacidade e botão restaurar-preferencias. */
+.app .opcoes-perfil a,
+.app #restaurar-preferencias {
+    background-color: transparent; /* mantém o fundo da página */
+    border: none; /* remove a borda padrão */
+    padding: 8px 0; /* aumenta a área clicável */
+    color: var(--verde-floresta); /* cor do texto */
+    font-size: 0.85rem; /* tamanho das opções */
+    font-weight: 800; /* destaca os textos */
+    text-decoration: none; /* mantém os textos sem sublinhado */
+}
+
+
+/* RESPONSIVIDADE DO PERFIL =================================================================================== */
+
+@media (max-width: 600px) {
+
+    /* ajusta a identificação do usuário */
+    .app .identificacao-perfil {
+        gap: 16px; /* aproxima o avatar dos textos */
+    }
+
+    /* círculo com as iniciais */
+    .app .avatar-perfil {
+        width: 66px; /* largura do avatar */
+        height: 66px; /* altura do avatar */
+        font-size: 1.5rem; /* tamanho das iniciais */
+    }
+
+    /* reduz o espaço interno dos cards */
+    .app .card-acessibilidade {
+        padding: 18px; /* aproveita a largura do celular */
+    }
+
+    /* card de informações pessoais */
+    .app .card-meus-dados {
+        padding: 0 18px; /* reduz os espaços laterais */
+    }
+
+    /* opções de acessibilidade */
+    .app .opcao-preferencia {
+        gap: 10px; /* aproxima os ícones dos textos */
+    }
+
+    /* círculos das preferências */
+    .app .icone-preferencia {
+        width: 36px; /* largura do círculo */
+        height: 36px; /* altura do círculo */
+    }
+
+    /* configuração do tamanho das letras */
+    .app .tamanho-letras {
+        flex-wrap: wrap; /* permite que o select desça quando faltar espaço */
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* MAPA COMPARTILHADO - TRAVESSIA.HTML E ZELADORIA.HTML ======================================================== */
+
+/* selecao-cruzamento: section que agrupa o mapa, a legenda,
+   a lista de cruzamentos e as informações do local selecionado. */
+.app .selecao-cruzamento {
+    display: flex; /* organiza as partes do mapa */
+    flex-direction: column; /* deixa os elementos um abaixo do outro */
+    gap: 14px; /* espaço entre os elementos */
+    min-width: 0; /* evita que o mapa ultrapasse o espaço disponível */
+}
+
+
+/* cabecalho-mapa: div com o título e as instruções do mapa. */
+.app .cabecalho-mapa {
+    display: flex; /* organiza os textos */
+    flex-direction: column; /* deixa a instrução abaixo do título */
+    gap: 5px; /* espaço entre os textos */
+}
+
+
+/* título da seção do mapa. */
+.app .cabecalho-mapa h2 {
+    font-size: 1.4rem; /* tamanho do título */
+    font-weight: 500; /* mantém a aparência dos títulos */
+}
+
+
+/* instrução de como escolher um cruzamento. */
+.app .cabecalho-mapa p {
+    color: var(--texto-secundario); /* cor da instrução */
+    font-size: 0.85rem; /* tamanho do texto */
+}
+
+
+/* legenda-mapa: div que identifica os semáforos com e sem suporte. */
+.app .legenda-mapa {
+    display: flex; /* coloca as duas legendas lado a lado */
+    align-items: center; /* centraliza os elementos */
+    flex-wrap: wrap; /* permite a quebra de linha */
+    gap: 16px; /* espaço entre as legendas */
+}
+
+
+/* ponto-com-suporte e ponto-sem-suporte: spans da legenda. */
+.app .ponto-com-suporte,
+.app .ponto-sem-suporte {
+    display: flex; /* coloca o indicador ao lado do texto */
+    align-items: center; /* centraliza na vertical */
+    gap: 6px; /* espaço entre o indicador e o texto */
+    color: var(--texto-secundario); /* cor dos textos */
+    font-size: 0.8rem; /* tamanho da legenda */
+}
+
+
+/* indicador-suporte: círculo com o check ou sinal de menos. */
+.app .indicador-suporte {
+    display: flex; /* permite centralizar o svg */
+    align-items: center; /* centraliza na vertical */
+    justify-content: center; /* centraliza na horizontal */
+    width: 17px; /* largura do círculo */
+    height: 17px; /* altura do círculo */
+    border-radius: 50%; /* deixa o elemento circular */
+}
+
+
+/* indicador da legenda dos semáforos com suporte. */
+.app .ponto-com-suporte .indicador-suporte {
+    background-color: var(--verde-floresta); /* fundo verde */
+}
+
+
+/* indicador da legenda dos semáforos sem suporte. */
+.app .ponto-sem-suporte .indicador-suporte {
+    background-color: var(--branco); /* fundo branco */
+    border: 1px solid var(--cor-sem-suporte); /* contorno cinza */
+}
+
+
+/* tamanho padrão dos ícones da legenda. */
+.app .indicador-suporte .icone {
+    width: 11px; /* largura do svg */
+    height: 11px; /* altura do svg */
+}
+
+
+/* check do indicador com suporte. */
+.app .ponto-com-suporte .icone {
+    filter: brightness(0) invert(1); /* deixa o check branco */
+}
+
+
+/* area-mapa: div que agrupa o mapa, os botões de zoom e a identificação. */
+.app .area-mapa {
+    position: relative; /* referência para posicionar os controles de zoom */
+    display: flex; /* organiza o mapa e a identificação */
+    flex-direction: column; /* deixa a identificação abaixo do mapa */
+    gap: 6px; /* espaço abaixo do mapa */
+    min-width: 0; /* mantém o mapa dentro da coluna */
+}
+
+
+/*
+    mapa-cruzamentos: div que recebe o mapa interativo.
+
+    #mapa-travessia: mapa utilizado para solicitar mais tempo.
+    #mapa-zeladoria: mapa utilizado para localizar problemas na rua.
+
+    os dois mapas vão utilizar a mesma estilização e o mesmo js.
+*/
+.app .mapa-cruzamentos {
+    position: relative; /* referência para os elementos internos */
+    width: 100%; /* ocupa toda a largura disponível */
+    height: 360px; /* altura inicial do mapa */
+    overflow: hidden; /* impede que o desenho ultrapasse a área visível */
+    background-color: #e6ecdf; /* fundo do mapa simplificado */
+    border: 1px solid var(--borda); /* contorno do mapa */
+    border-radius: var(--raio-medio); /* arredonda os cantos */
+}
+
+
+/* mapa-visual: div que agrupa o desenho das ruas e os marcadores.
+   o zoom será aplicado nesse elemento pelo mapas.js. */
+.app .mapa-visual {
+    position: absolute; /* permite preencher toda a área do mapa */
+    inset: 0; /* posiciona nas quatro extremidades */
+    transform-origin: center; /* define o centro como referência do zoom */
+    transition: transform 0.2s ease; /* suaviza a alteração do zoom */
+}
+
+
+/*
+    mapa-base: div que vai receber o desenho das ruas em svg.
+
+    #mapa-base-travessia: desenho do mapa da travessia.
+    #mapa-base-zeladoria: desenho do mapa da zeladoria.
+*/
+.app .mapa-base {
+    position: absolute; /* posiciona o desenho atrás dos marcadores */
+    inset: 0; /* ocupa toda a área do mapa */
+    pointer-events: none; /* evita que o desenho bloqueie os marcadores */
+}
+
+
+/* svg que representa as ruas e os espaços do mapa. */
+.app .mapa-base svg {
+    display: block; /* retira o espaço padrão de elementos inline */
+    width: 100%; /* ocupa toda a largura */
+    height: 100%; /* ocupa toda a altura */
+}
+
+
+/*
+    marcadores-mapa: div que vai receber os botões dos semáforos.
+
+    #marcadores-travessia: marcadores da travessia.
+    #marcadores-zeladoria: marcadores da zeladoria.
+*/
+.app .marcadores-mapa {
+    position: absolute; /* posiciona os marcadores sobre o desenho */
+    inset: 0; /* utiliza a mesma área do mapa-base */
+    pointer-events: none; /* permite interação apenas nos botões dos marcadores */
+}
+
+
+/*
+    marcador-semaforo: classe que será criada no mapas.js.
+    cada marcador será um botão com sua posição individual no mapa.
+*/
+.app .marcador-semaforo {
+    position: absolute; /* permite posicionar cada semáforo no mapa */
+    display: flex; /* permite centralizar o ícone */
+    align-items: center; /* centraliza na vertical */
+    justify-content: center; /* centraliza na horizontal */
+    width: 44px; /* largura do marcador */
+    height: 44px; /* altura do marcador */
+    padding: 0; /* retira o espaço padrão do botão */
+    background-color: var(--verde-floresta); /* fundo dos semáforos com suporte */
+    color: var(--branco); /* cor do conteúdo */
+    border: 2px solid var(--branco); /* contorno branco do marcador */
+    border-radius: 50% 50% 50% 0; /* cria o formato de marcador */
+    transform: translate(-50%, -100%) rotate(-45deg); /* posiciona a ponta sobre o cruzamento */
+    box-shadow: 0 3px 8px rgba(12, 32, 26, 0.15); /* destaca o marcador sobre o mapa */
+    pointer-events: auto; /* permite clicar no marcador */
+    cursor: pointer; /* indica que pode ser selecionado */
+}
+
+
+/* marcador com suporte para solicitar tempo adicional. */
+.app .marcador-semaforo.com-suporte {
+    background-color: var(--verde-floresta); /* fundo verde */
+}
+
+
+/* marcador de um semáforo sem suporte à travessia assistida. */
+.app .marcador-semaforo.sem-suporte {
+    background-color: var(--cor-sem-suporte); /* fundo cinza */
+}
+
+
+/* marcador selecionado pelo usuário através do mapa ou da lista. */
+.app .marcador-semaforo[aria-pressed="true"] {
+    box-shadow: 0 0 0 5px var(--verde-salvia); /* contorno verde claro ao redor da seleção */
+    z-index: 2; /* mantém o marcador selecionado acima dos demais */
+}
+
+
+/* svg que fica dentro do marcador. */
+.app .marcador-semaforo .icone {
+    width: 22px; /* largura do svg */
+    height: 22px; /* altura do svg */
+    filter: brightness(0) invert(1); /* deixa o ícone branco */
+    transform: rotate(45deg); /* corrige a inclinação criada no marcador */
+}
+
+
+/* controles-mapa: div com os botões de ampliar e diminuir. */
+.app .controles-mapa {
+    position: absolute; /* posiciona os botões sobre o mapa */
+    top: 12px; /* distância do topo */
+    right: 12px; /* distância da lateral direita */
+    z-index: 5; /* mantém os controles acima dos marcadores */
+    display: flex; /* organiza os botões */
+    flex-direction: column; /* deixa o mais acima do menos */
+    overflow: hidden; /* mantém os cantos arredondados */
+    background-color: var(--branco); /* fundo dos controles */
+    border: 1px solid var(--borda-input); /* contorno dos controles */
+    border-radius: var(--raio-pequeno); /* arredonda os cantos */
+    box-shadow: var(--sombra-leve); /* destaca os controles do mapa */
+}
+
+
+/*
+    botao-mapa: classe compartilhada pelos botões de zoom.
+
+    #ampliar-mapa-travessia e #ampliar-mapa-zeladoria: aumentam o zoom.
+    #diminuir-mapa-travessia e #diminuir-mapa-zeladoria: reduzem o zoom.
+*/
+.app .botao-mapa {
+    display: flex; /* permite centralizar o svg */
+    align-items: center; /* centraliza na vertical */
+    justify-content: center; /* centraliza na horizontal */
+    width: 42px; /* largura do botão */
+    height: 42px; /* altura do botão */
+    padding: 0; /* retira o espaço interno padrão */
+    background-color: var(--branco); /* fundo branco */
+    color: var(--verde-floresta); /* cor do conteúdo */
+    border: none; /* retira a borda individual */
+}
+
+
+/* separa o botão de diminuir do botão de ampliar. */
+.app .botao-mapa + .botao-mapa {
+    border-top: 1px solid var(--borda); /* linha entre os dois controles */
+}
+
+
+/* botão de zoom disponível quando o mouse passa por cima. */
+.app .botao-mapa:not(:disabled):hover {
+    background-color: var(--verde-claro); /* destaca o botão */
+}
+
+
+/* identificacao-mapa: texto abaixo do mapa que identifica a região. */
+.app .identificacao-mapa {
+    align-self: flex-end; /* posiciona o texto à direita */
+    color: var(--texto-secundario); /* cor da informação */
+    font-size: 0.7rem; /* tamanho do texto */
+    text-decoration: underline; /* segue a identificação do protótipo */
+}
+
+
+/* LISTA DE CRUZAMENTOS ======================================================================================= */
+
+/* lista-cruzamentos: details que permite selecionar um local sem usar o mapa. */
+.app .lista-cruzamentos {
+    background-color: var(--branco); /* fundo branco */
+    border: 1px solid var(--borda); /* contorno da lista */
+    border-radius: var(--raio-medio); /* arredonda os cantos */
+}
+
+
+/* titulo-lista-cruzamentos: summary que abre a lista de locais. */
+.app .titulo-lista-cruzamentos {
+    display: flex; /* organiza o ícone, texto e seta */
+    align-items: center; /* centraliza na vertical */
+    gap: 10px; /* espaço entre os elementos */
+    min-height: 48px; /* altura mínima da área clicável */
+    padding: 12px 16px; /* espaço interno */
+    color: var(--verde-floresta); /* cor do texto */
+    font-size: 0.9rem; /* tamanho do texto */
+    font-weight: 700; /* destaca a opção */
+}
+
+
+/* grupo-cruzamentos: fieldset com as opções de cruzamentos. */
+.app .grupo-cruzamentos {
+    display: flex; /* organiza as opções */
+    flex-direction: column; /* deixa uma opção abaixo da outra */
+    gap: 8px; /* espaço entre os cruzamentos */
+    padding: 12px; /* espaço interno da lista */
+}
+
+
+/* legend do fieldset que identifica o grupo de opções. */
+.app .grupo-cruzamentos legend {
+    padding: 0 8px; /* espaço nas laterais do texto */
+    color: var(--texto-secundario); /* cor da informação */
+    font-size: 0.8rem; /* tamanho do texto */
+}
+
+
+/* opcao-cruzamento: label que contém o radio e os dados do local. */
+.app .opcao-cruzamento {
+    display: flex; /* organiza os elementos lado a lado */
+    align-items: center; /* centraliza na vertical */
+    gap: 10px; /* espaço entre os elementos */
+    padding: 12px; /* espaço interno da opção */
+    border: 1px solid var(--borda); /* contorno da opção */
+    border-radius: var(--raio-pequeno); /* arredonda os cantos */
+    cursor: pointer; /* indica que o local pode ser escolhido */
+}
+
+
+/* destaca o label que possui um radio selecionado. */
+.app .opcao-cruzamento:has(input:checked) {
+    background-color: var(--verde-claro); /* fundo da opção escolhida */
+    border-color: var(--verde-natural); /* destaca o contorno */
+}
+
+
+/* radio utilizado na seleção de um cruzamento. */
+.app .opcao-cruzamento input {
+    accent-color: var(--verde-floresta); /* altera a cor da seleção nativa */
+    flex-shrink: 0; /* mantém o tamanho do campo radio */
+}
+
+
+/* icone-cruzamento: círculo que indica se o local possui suporte. */
+.app .icone-cruzamento {
+    display: flex; /* permite centralizar o svg */
+    align-items: center; /* centraliza na vertical */
+    justify-content: center; /* centraliza na horizontal */
+    width: 34px; /* largura do círculo */
+    height: 34px; /* altura do círculo */
+    flex-shrink: 0; /* evita que o círculo seja comprimido */
+    border-radius: 50%; /* deixa o elemento circular */
+    background-color: var(--verde-floresta); /* fundo verde */
+}
+
+
+/* ícone de um cruzamento com suporte. */
+.app .icone-cruzamento.com-suporte {
+    background-color: var(--verde-floresta); /* fundo verde */
+}
+
+
+/* ícone de um cruzamento sem suporte. */
+.app .icone-cruzamento.sem-suporte {
+    background-color: var(--cor-sem-suporte); /* fundo cinza */
+}
+
+
+/* svg que representa a situação do cruzamento. */
+.app .icone-cruzamento .icone {
+    width: 17px; /* largura do ícone */
+    height: 17px; /* altura do ícone */
+    filter: brightness(0) invert(1); /* deixa o ícone branco */
+}
+
+
+/* dados-cruzamento: agrupa o nome e a informação de suporte. */
+.app .dados-cruzamento {
+    display: flex; /* organiza os textos */
+    flex-direction: column; /* deixa a informação abaixo do nome */
+    gap: 4px; /* espaço entre os textos */
+    min-width: 0; /* permite a quebra de linha */
+}
+
+
+/* nome do cruzamento. */
+.app .dados-cruzamento strong {
+    color: var(--verde-floresta); /* cor do nome */
+    font-size: 0.9rem; /* tamanho do texto */
+    font-weight: 800; /* destaca o local */
+}
+
+
+/* informação de suporte à travessia. */
+.app .dados-cruzamento small {
+    color: var(--texto-secundario); /* cor da descrição */
+    font-size: 0.8rem; /* tamanho do texto */
+    line-height: 1.5; /* espaço entre as linhas */
+}
+
+
+/*
+    cruzamento-selecionado: card que mostra o local escolhido.
+
+    #cruzamento-travessia: local escolhido na travessia.
+    #cruzamento-zeladoria: local escolhido no relato.
+    #nome-cruzamento-travessia e #nome-cruzamento-zeladoria: nome do local.
+    #suporte-cruzamento-travessia e #suporte-cruzamento-zeladoria:
+    informação sobre o suporte.
+*/
+.app .cruzamento-selecionado {
+    display: flex; /* coloca o ícone ao lado das informações */
+    align-items: center; /* centraliza os elementos */
+    gap: 12px; /* espaço entre o ícone e os textos */
+    padding: 16px; /* espaço interno do card */
+    background-color: var(--app-iara); /* fundo verde claro */
+    border: 1px solid var(--verde-salvia); /* contorno do card */
+    border-radius: var(--raio-medio); /* arredonda os cantos */
+}
+
+
+/* card selecionado quando o cruzamento não possuir suporte. */
+.app .cruzamento-selecionado[data-suporte="false"] {
+    background-color: var(--app-card-terracota); /* diferencia o estado sem suporte */
+    border-color: var(--terracota); /* destaca a informação */
+}
+
+
+/* aviso-cobertura: informa que os dados do mapa são demonstrativos. */
+.app .aviso-cobertura {
+    color: var(--texto-secundario); /* cor do aviso */
+    font-size: 0.75rem; /* tamanho do texto */
+    line-height: 1.5; /* espaço entre as linhas */
+}
+
+
+/* aviso-mapa: mensagem de erro ou orientação do mapa. */
+.app .aviso-mapa {
+    color: var(--terracota); /* cor do aviso */
+    font-size: 0.8rem; /* tamanho do texto */
+    line-height: 1.5; /* facilita a leitura */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* TRAVESSIA.HTML ============================================================================================ */
+
+/* pagina-travessia: main da página de travessia acessível. */
+.app .pagina-travessia {
+    width: 100%; /* ocupa toda a largura disponível */
+}
+
+
+/* formulario-travessia: id do form que agrupa o mapa e a confirmação. */
+.app #formulario-travessia {
+    display: grid; /* permite dividir o formulário em colunas */
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); /* deixa mais espaço para o mapa */
+    align-items: start; /* mantém as colunas alinhadas pelo topo */
+    gap: 26px; /* espaço entre o mapa e o card */
+}
+
+
+/* a introdução do serviço já explica a finalidade do mapa,
+   por isso retirei visualmente o título repetido dessa área. */
+.app .pagina-travessia .cabecalho-mapa {
+    display: none; /* evita repetir as instruções do início da página */
+}
+
+
+/* confirmacao-travessia: section que contém as opções de solicitação. */
+.app .confirmacao-travessia {
+    display: flex; /* organiza os elementos do card */
+    flex-direction: column; /* deixa os elementos um abaixo do outro */
+    align-items: stretch; /* mantém os botões com a mesma largura */
+    gap: 16px; /* espaço entre os elementos */
+    min-width: 0; /* permite que o conteúdo se ajuste à coluna */
+    padding: 28px; /* espaço interno do card */
+    background-color: var(--branco); /* fundo branco */
+    border: 1px solid var(--borda); /* contorno do card */
+    border-radius: var(--raio-grande); /* arredonda os cantos */
+}
+
+
+/* ícone extra que havia sido colocado acima do card de confirmação.
+   retirei para manter a estrutura mais próxima do protótipo. */
+.app .icone-confirmacao-travessia {
+    display: none; /* mantém apenas o ícone do aviso de segurança */
+}
+
+
+/* chamada-travessia: texto no seu tempo. */
+.app .chamada-travessia {
+    color: var(--terracota); /* cor do texto */
+    font-size: 0.75rem; /* tamanho da chamada */
+    font-weight: 800; /* destaca o texto */
+    letter-spacing: 1.2px; /* separa um pouco as letras */
+    text-transform: uppercase; /* exibe a chamada em maiúsculo */
+}
+
+
+/* titulo-confirmacao-travessia: id do h2 de confirmação do local. */
+.app #titulo-confirmacao-travessia {
+    font-size: clamp(1.7rem, 2.5vw, 2.3rem); /* adapta o título à tela */
+    font-weight: 500; /* mantém o título mais leve */
+    line-height: 1.15; /* aproxima as linhas do título */
+}
+
+
+/* descricao-confirmacao-travessia: id do texto abaixo da confirmação. */
+.app #descricao-confirmacao-travessia {
+    color: var(--texto-secundario); /* cor da descrição */
+    font-size: 0.9rem; /* tamanho do texto */
+    line-height: 1.6; /* espaço entre as linhas */
+}
+
+
+/* local-confirmacao: div que repete o endereço selecionado.
+   o endereço já aparece abaixo do mapa, então retirei essa repetição visual. */
+.app .local-confirmacao {
+    display: none; /* evita repetir a informação do cruzamento selecionado */
+}
+
+
+/* solicitar-travessia: id do botão que registra o pedido de mais tempo.
+   o restante do estilo vem da classe botao-principal. */
+.app #solicitar-travessia {
+    margin-top: 8px; /* adiciona espaço antes da ação principal */
+}
+
+
+/* solicitar-por-voz: link que direciona para a iara. */
+.app .solicitar-por-voz {
+    display: flex; /* coloca o microfone ao lado do texto */
+    align-items: center; /* centraliza na vertical */
+    justify-content: center; /* centraliza na horizontal */
+    gap: 10px; /* espaço entre ícone e texto */
+    min-height: 50px; /* altura mínima do botão */
+    padding: 12px 16px; /* espaço interno */
+    background-color: var(--branco); /* fundo branco */
+    color: var(--verde-floresta); /* cor do texto */
+    border: 1px solid var(--borda-input); /* contorno do botão */
+    border-radius: var(--raio-circular); /* deixa o botão arredondado */
+    font-weight: 700; /* destaca o texto */
+    text-align: center; /* centraliza o texto */
+}
+
+
+/* altera o fundo da opção de solicitar por voz. */
+.app .solicitar-por-voz:hover {
+    background-color: var(--verde-claro); /* destaca o link */
+}
+
+
+/* trocar-cruzamento: botão para escolher outro local. */
+.app .trocar-cruzamento {
+    align-self: center; /* centraliza o botão dentro do card */
+    min-height: 44px; /* mantém uma área confortável para clique */
+    padding: 8px; /* espaço interno */
+    border: none; /* retira a borda padrão */
+    background-color: transparent; /* mantém o fundo do card */
+    color: var(--verde-floresta); /* cor do texto */
+    font-size: 0.9rem; /* tamanho do texto */
+    font-weight: 800; /* destaca a opção */
+    text-decoration: underline; /* indica que o texto pode ser clicado */
+}
+
+
+/* aviso-sem-suporte: div exibida quando o local não possui suporte. */
+.app .aviso-sem-suporte {
+    display: flex; /* coloca o ícone ao lado do aviso */
+    align-items: flex-start; /* alinha os elementos pelo topo */
+    gap: 10px; /* espaço entre os elementos */
+    padding: 14px; /* espaço interno */
+    background-color: var(--app-card-terracota); /* fundo de atenção */
+    color: var(--terracota); /* cor do aviso */
+    border-radius: var(--raio-pequeno); /* arredonda os cantos */
+}
+
+
+/* texto do aviso de cruzamento sem suporte. */
+.app .aviso-sem-suporte p {
+    font-size: 0.85rem; /* tamanho do texto */
+    line-height: 1.5; /* espaço entre as linhas */
+}
+
+
+/* relatar-local: link para registrar um problema no cruzamento escolhido. */
+.app .relatar-local {
+    display: flex; /* coloca o ícone ao lado do texto */
+    align-items: center; /* centraliza os elementos */
+    justify-content: center; /* centraliza o conteúdo */
+    gap: 10px; /* distância entre ícone e texto */
+    min-height: 46px; /* altura mínima do link */
+    padding: 10px 14px; /* espaço interno */
+    color: var(--verde-floresta); /* cor do texto */
+    border: 1px solid var(--borda-input); /* contorno do link */
+    border-radius: var(--raio-circular); /* deixa o formato arredondado */
+    font-size: 0.85rem; /* tamanho do texto */
+    font-weight: 700; /* destaca a opção */
+}
+
+
+/* aviso-seguranca: orientação para observar o sinal de pedestres. */
+.app .aviso-seguranca {
+    display: flex; /* coloca o escudo ao lado do aviso */
+    align-items: flex-start; /* alinha o texto pelo topo */
+    gap: 10px; /* distância entre o ícone e o texto */
+    padding-top: 16px; /* separa o aviso das ações */
+    border-top: 1px solid var(--borda); /* linha divisória */
+    color: var(--texto-secundario); /* cor da informação */
+}
+
+
+/* texto do aviso de segurança. */
+.app .aviso-seguranca p {
+    font-size: 0.8rem; /* tamanho do texto */
+    line-height: 1.6; /* facilita a leitura do aviso */
+}
+
+
+/* RESPONSIVIDADE DO MAPA E DA TRAVESSIA ======================================================================= */
+
+@media (max-width: 1100px) {
+
+    /* diminui o espaço entre o mapa e a confirmação */
+    .app #formulario-travessia {
+        gap: 18px; /* aproveita melhor a largura disponível */
+    }
+
+    /* reduz o espaço interno do card */
+    .app .confirmacao-travessia {
+        padding: 20px; /* deixa o card mais compacto */
+    }
+
+}
+
+@media (max-width: 700px) {
+
+    /* coloca a confirmação abaixo do mapa em telas estreitas */
+    .app #formulario-travessia {
+        grid-template-columns: minmax(0, 1fr); /* cria uma única coluna */
+    }
+
+    /* ajusta a altura do mapa */
+    .app .mapa-cruzamentos {
+        height: 320px; /* mantém espaço para selecionar os marcadores */
+    }
+
+}
 
 
 
