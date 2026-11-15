@@ -583,3 +583,775 @@ button {
     scroll-behavior: auto !important;
   }
 }
+
+
+
+/* ESTRUTURA DO APLICATIVO ===================================================================================== */
+
+/* aplicativo: div que envolve o menu lateral e toda a área
+   de conteúdo. está presente nos oito htmls do app. */
+.app .aplicativo {
+    display: grid; /* divide a estrutura em colunas */
+    grid-template-columns: var(--largura-menu) minmax(0, 1fr); /* primeira coluna para o menu e segunda para o conteúdo */
+    min-height: 100vh; /* ocupa pelo menos toda a altura da tela */
+    min-height: 100dvh; /* considera a altura disponível em dispositivos móveis */
+}
+
+
+/* area-conteudo: div que agrupa o header e o main de cada página. */
+.app .area-conteudo {
+    display: flex; /* permite organizar os elementos internos */
+    flex-direction: column; /* deixa o cabeçalho acima do conteúdo */
+    min-width: 0; /* evita que o conteúdo ultrapasse a largura disponível */
+}
+
+
+/* conteudo-app: classe do main dos oito htmls.
+   define o espaço onde fica o conteúdo de cada página. */
+.app .conteudo-app {
+    width: 100%; /* ocupa toda a largura disponível */
+    max-width: 1440px; /* limita a largura em monitores muito grandes */
+    margin: 0 auto; /* centraliza o conteúdo horizontalmente */
+    padding: 36px var(--espacamento-conteudo) 100px; /* espaços superior, laterais e inferior */
+    flex: 1; /* ocupa o espaço restante abaixo do cabeçalho */
+}
+
+
+/* MENU LATERAL =============================================================================================== */
+
+/* menu-lateral: aside que contém a logo, os links de navegação,
+   a opção de acessibilidade e o botão de voltar ao site. */
+.app .menu-lateral {
+    position: sticky; /* mantém o menu visível durante a rolagem */
+    top: 0; /* mantém o menu no topo da tela */
+    display: flex; /* organiza os elementos internos do menu */
+    flex-direction: column; /* deixa os elementos um abaixo do outro */
+    height: 100vh; /* ocupa toda a altura da tela */
+    height: 100dvh; /* considera a altura real disponível */
+    padding: 32px 24px 24px; /* espaço interno superior, lateral e inferior */
+    background-color: var(--app-menu); /* fundo verde escuro do menu */
+    color: var(--branco); /* cor padrão dos textos */
+    overflow-y: auto; /* permite rolar o menu caso falte espaço na vertical */
+}
+
+
+/* logo: link que agrupa o relógio, o nome meu tempo e o slogan.
+   ao clicar, direciona para o inicio.html. */
+.app .logo {
+    display: flex; /* coloca o relógio e os textos lado a lado */
+    align-items: center; /* centraliza os elementos na vertical */
+    gap: 12px; /* espaço entre o relógio e os textos */
+    padding: 4px 8px; /* espaço interno da logo */
+    margin-bottom: 48px; /* distância entre a logo e os links do menu */
+}
+
+
+/* icone-logo dentro da logo: altera somente o relógio do menu lateral. */
+.app .logo .icone-logo {
+    width: 42px; /* largura do relógio */
+    height: 42px; /* altura do relógio */
+    filter: brightness(0) invert(1); /* deixa o svg branco para aparecer no fundo escuro */
+}
+
+
+/* texto-logo: div que agrupa o nome e o slogan da marca. */
+.app .texto-logo {
+    display: flex; /* organiza os dois textos */
+    flex-direction: column; /* deixa o slogan abaixo do nome */
+    gap: 2px; /* pequeno espaço entre os textos */
+}
+
+
+/* strong dentro de texto-logo: nome meu tempo. */
+.app .texto-logo strong {
+    font-family: var(--fonte-principal); /* usa a nunito em vez da fonte serifada dos títulos */
+    font-size: 1.7rem; /* tamanho do nome da marca */
+    font-weight: 800; /* deixa o nome mais destacado */
+    line-height: 1; /* reduz o espaço vertical do texto */
+    letter-spacing: -0.8px; /* aproxima um pouco as letras */
+}
+
+
+/* slogan: texto "a cidade no seu ritmo" que fica abaixo da logo. */
+.app .slogan {
+    font-size: 0.6rem; /* deixa o slogan menor que o nome */
+    font-weight: 600; /* dá um pouco mais de destaque ao texto */
+    letter-spacing: 1.2px; /* aumenta o espaço entre as letras */
+    text-transform: uppercase; /* exibe o slogan em maiúsculo */
+    color: var(--verde-salvia); /* verde mais claro para contrastar com o fundo */
+}
+
+
+/* menu-navegacao: nav que agrupa os links de início, serviços,
+   pedidos, iara e perfil. */
+.app .menu-navegacao {
+    flex: 1; /* ocupa o espaço livre e empurra o menu inferior para baixo */
+}
+
+
+/* ul dentro de menu-navegacao: lista dos links principais. */
+.app .menu-navegacao ul {
+    display: flex; /* organiza os itens da lista */
+    flex-direction: column; /* deixa os links um abaixo do outro */
+    gap: 8px; /* distância entre os links */
+}
+
+
+/* links do menu-navegacao e do menu-inferior.
+   agrupei os dois seletores porque possuem estilos semelhantes. */
+.app .menu-navegacao a,
+.app .menu-inferior a {
+    display: flex; /* deixa o ícone e o texto lado a lado */
+    align-items: center; /* centraliza o ícone com o texto */
+    gap: 14px; /* espaço entre o ícone e o texto */
+    min-height: 50px; /* mantém uma área confortável para clicar */
+    padding: 12px 16px; /* espaço interno de cada link */
+    color: var(--branco); /* cor dos textos */
+    font-weight: 600; /* deixa os textos mais destacados */
+    border-radius: var(--raio-medio); /* arredonda os cantos dos links */
+    transition: background-color 0.2s ease; /* deixa a mudança de fundo mais suave */
+}
+
+
+/* icones dos links do menu lateral. */
+.app .menu-navegacao .icone,
+.app .menu-inferior .icone {
+    width: 22px; /* largura dos ícones */
+    height: 22px; /* altura dos ícones */
+    filter: brightness(0) invert(1); /* transforma os ícones em branco */
+}
+
+
+/* hover: seleciona os links quando o mouse passa por cima. */
+.app .menu-navegacao a:hover,
+.app .menu-inferior a:hover {
+    background-color: var(--app-menu-ativo); /* destaca a opção que está sendo apontada */
+}
+
+
+/* aria-current="page": identifica a página atual.
+   aria-current="location": identifica a seção em que a pessoa está,
+   como serviços nas páginas de travessia, metrô e zeladoria. */
+.app .menu-navegacao a[aria-current="page"],
+.app .menu-navegacao a[aria-current="location"] {
+    background-color: var(--app-menu-ativo); /* destaca a opção ativa no menu */
+    font-weight: 800; /* diferencia o texto dos outros links */
+}
+
+
+/* menu-inferior: div que contém as opções de acessibilidade
+   e voltar ao site, no final do menu lateral. */
+.app .menu-inferior {
+    display: flex; /* organiza os links inferiores */
+    flex-direction: column; /* deixa um link abaixo do outro */
+    gap: 6px; /* distância entre as duas opções */
+    margin-top: 24px; /* distância dos links principais */
+    padding-top: 20px; /* espaço entre a linha divisória e os links */
+    border-top: 1px solid rgba(255, 255, 255, 0.15); /* linha que separa as duas partes do menu */
+}
+
+
+/* links de acessibilidade e voltar ao site. */
+.app .menu-inferior a {
+    font-size: 0.9rem; /* texto um pouco menor que os links principais */
+    color: var(--verde-salvia); /* diferencia essas opções das demais */
+}
+
+
+/* CABEÇALHO ================================================================================================== */
+
+/* cabecalho-app: header presente nos oito htmls.
+   contém o nome da página atual, a logo mobile e o menu do usuário. */
+.app .cabecalho-app {
+    display: flex; /* organiza os elementos lado a lado */
+    align-items: center; /* centraliza os elementos na vertical */
+    justify-content: space-between; /* deixa o título à esquerda e o perfil à direita */
+    gap: 16px; /* evita que os elementos fiquem muito próximos */
+    min-height: var(--altura-cabecalho); /* define a altura mínima do cabeçalho */
+    padding: 16px var(--espacamento-conteudo); /* espaço interno vertical e horizontal */
+    background-color: var(--branco); /* fundo branco do cabeçalho */
+    border-bottom: 1px solid var(--borda); /* separa o cabeçalho do conteúdo */
+}
+
+
+/* titulo-pagina: div que agrupa o texto meu tempo
+   e o nome da página que está aberta. */
+.app .titulo-pagina {
+    display: flex; /* organiza os textos */
+    flex-direction: column; /* deixa o nome da página abaixo de meu tempo */
+    gap: 2px; /* espaço entre os dois textos */
+}
+
+
+/* span dentro de titulo-pagina: texto meu tempo no cabeçalho. */
+.app .titulo-pagina span {
+    color: var(--verde-natural); /* cor do texto */
+    font-size: 0.7rem; /* tamanho menor que o nome da página */
+    font-weight: 700; /* deixa o texto mais destacado */
+    letter-spacing: 1.5px; /* aumenta a distância entre as letras */
+    text-transform: uppercase; /* exibe o texto em maiúsculo */
+}
+
+
+/* strong dentro de titulo-pagina: nome da página atual. */
+.app .titulo-pagina strong {
+    color: var(--verde-floresta); /* cor do nome da página */
+    font-size: 1.1rem; /* tamanho do texto */
+    font-weight: 800; /* destaca a página atual */
+}
+
+
+/* logo-mobile: link com o relógio e o nome meu tempo.
+   aparece no cabeçalho de tablets e celulares. */
+.app .logo-mobile {
+    display: none; /* fica escondida no desktop */
+    align-items: center; /* centraliza o relógio e o texto */
+    gap: 8px; /* espaço entre o relógio e o nome */
+    color: var(--verde-floresta); /* cor do texto da logo */
+    font-size: 1.4rem; /* tamanho do nome meu tempo */
+    font-weight: 800; /* deixa o nome em destaque */
+}
+
+
+/* relógio que fica dentro da logo mobile. */
+.app .logo-mobile .icone-logo {
+    width: 32px; /* largura menor para caber no cabeçalho mobile */
+    height: 32px; /* mantém a proporção do ícone */
+}
+
+
+/* MENU DO USUÁRIO ============================================================================================ */
+
+/* menu-usuario: details que fica no lado direito do cabeçalho.
+   contém o avatar, o nome e as opções do usuário. */
+.app .menu-usuario {
+    position: relative; /* serve de referência para posicionar as opções do menu */
+}
+
+
+/* summary dentro de menu-usuario: parte que a pessoa clica
+   para abrir ou fechar as opções do perfil. */
+.app .menu-usuario > summary {
+    display: flex; /* organiza avatar, nome e seta lado a lado */
+    align-items: center; /* centraliza os elementos na vertical */
+    gap: 12px; /* distância entre os elementos */
+    padding: 4px; /* espaço interno da área clicável */
+    border-radius: var(--raio-medio); /* arredonda os cantos */
+}
+
+
+/* avatar: span que contém as iniciais do usuário. */
+.app .avatar {
+    display: flex; /* permite centralizar as iniciais */
+    align-items: center; /* centraliza na vertical */
+    justify-content: center; /* centraliza na horizontal */
+    width: 44px; /* largura do avatar */
+    height: 44px; /* altura do avatar */
+    flex-shrink: 0; /* impede que o círculo seja comprimido */
+    background-color: var(--app-card-verde); /* fundo verde claro */
+    color: var(--verde-floresta); /* cor das iniciais */
+    border-radius: 50%; /* transforma o elemento em um círculo */
+    font-weight: 800; /* destaca as iniciais */
+}
+
+
+/* usuario-iniciais: id presente no avatar dos oito htmls.
+   será utilizado pelo js para inserir as iniciais do usuário. */
+.app #usuario-iniciais {
+    text-transform: uppercase; /* mantém as iniciais em maiúsculo */
+}
+
+
+/* dados-usuario: span que agrupa a saudação e o nome. */
+.app .dados-usuario {
+    display: flex; /* organiza os textos */
+    flex-direction: column; /* deixa o nome abaixo da saudação */
+    min-width: 0; /* permite que o texto se ajuste ao espaço disponível */
+    line-height: 1.3; /* reduz o espaço vertical entre as linhas */
+}
+
+
+/* small dentro de dados-usuario: texto "olá," acima do nome. */
+.app .dados-usuario small {
+    color: var(--texto-secundario); /* deixa a saudação mais discreta */
+    font-size: 0.75rem; /* tamanho menor que o nome */
+}
+
+
+/* usuario-nome: id do strong que recebe o nome pelo js. */
+.app #usuario-nome {
+    color: var(--verde-floresta); /* cor do nome */
+    font-size: 0.95rem; /* tamanho do texto */
+    font-weight: 800; /* destaca o nome do usuário */
+    max-width: 160px; /* evita que nomes grandes ocupem todo o cabeçalho */
+    overflow: hidden; /* esconde a parte do texto que ultrapassar o limite */
+    text-overflow: ellipsis; /* coloca reticências caso o nome seja muito grande */
+    white-space: nowrap; /* mantém o nome em uma única linha */
+}
+
+
+/* seta-menu-usuario: ícone que indica se o menu está aberto. */
+.app .seta-menu-usuario {
+    width: 16px; /* largura da seta */
+    height: 16px; /* altura da seta */
+    transition: transform 0.2s ease; /* deixa o movimento da seta mais suave */
+}
+
+
+/* gira a seta quando o details do usuário estiver aberto. */
+.app .menu-usuario[open] .seta-menu-usuario {
+    transform: rotate(180deg); /* vira a seta para cima */
+}
+
+
+/* opcoes-usuario: div que contém os links do perfil,
+   identificação por documento e voltar ao site. */
+.app .opcoes-usuario {
+    position: absolute; /* posiciona o menu sem alterar o tamanho do cabeçalho */
+    top: calc(100% + 12px); /* coloca as opções abaixo do avatar */
+    right: 0; /* alinha o menu com a lateral direita do perfil */
+    z-index: 100; /* mantém o menu acima do conteúdo da página */
+    width: max-content; /* ajusta a largura de acordo com os textos */
+    min-width: 230px; /* evita que o menu fique muito estreito */
+    max-width: calc(100vw - 32px); /* impede que ultrapasse a largura da tela */
+    padding: 8px; /* espaço interno do menu */
+    background-color: var(--branco); /* fundo branco das opções */
+    border: 1px solid var(--borda); /* contorno do menu */
+    border-radius: var(--raio-medio); /* arredonda os cantos */
+    box-shadow: var(--sombra-media); /* diferencia o menu do conteúdo atrás dele */
+}
+
+
+/* links e possíveis botões dentro do menu do usuário. */
+.app .opcoes-usuario a,
+.app .opcoes-usuario button {
+    display: flex; /* deixa os ícones ao lado dos textos */
+    align-items: center; /* centraliza os elementos */
+    gap: 10px; /* espaço entre ícone e texto */
+    width: 100%; /* faz cada opção ocupar toda a linha */
+    min-height: 44px; /* mantém uma área confortável para clicar */
+    padding: 10px 12px; /* espaço interno de cada opção */
+    background-color: transparent; /* retira o fundo padrão dos botões */
+    border: none; /* retira a borda padrão dos botões */
+    border-radius: var(--raio-pequeno); /* arredonda os cantos das opções */
+    color: var(--verde-floresta); /* cor dos textos */
+    font-size: 0.9rem; /* tamanho dos textos das opções */
+    font-weight: 600; /* destaca os textos */
+    text-align: left; /* mantém os textos alinhados à esquerda */
+}
+
+
+/* altera o fundo das opções quando o mouse passa por cima. */
+.app .opcoes-usuario a:hover,
+.app .opcoes-usuario button:not(:disabled):hover {
+    background-color: var(--verde-claro); /* destaca a opção apontada */
+}
+
+
+/* NAVEGAÇÃO INFERIOR ========================================================================================== */
+
+/* navegacao-inferior: nav presente nos oito htmls.
+   substitui o menu lateral em tablets e celulares. */
+.app .navegacao-inferior {
+    display: none; /* fica escondida no desktop */
+    position: fixed; /* mantém a navegação no mesmo lugar durante a rolagem */
+    bottom: 0; /* posiciona o menu na parte inferior da tela */
+    left: 0; /* começa na lateral esquerda */
+    right: 0; /* termina na lateral direita */
+    z-index: 100; /* mantém a navegação acima do conteúdo */
+    min-height: var(--altura-menu-inferior); /* altura mínima do menu */
+    padding: 8px 12px; /* espaço interno da navegação */
+    padding-bottom: calc(8px + env(safe-area-inset-bottom, 0px)); /* considera a área inferior de alguns celulares */
+    background-color: var(--app-menu); /* fundo verde escuro */
+    color: var(--branco); /* cor dos textos */
+    border-top: 1px solid var(--app-menu-ativo); /* separa o menu do conteúdo */
+}
+
+
+/* lista que agrupa as cinco opções do menu inferior. */
+.app .navegacao-inferior ul {
+    display: grid; /* permite dividir o menu em colunas */
+    grid-template-columns: repeat(5, minmax(0, 1fr)); /* cria cinco colunas de mesmo tamanho */
+    gap: 4px; /* espaço entre as opções */
+}
+
+
+/* li dentro da navegação: elemento que contém cada link. */
+.app .navegacao-inferior li {
+    min-width: 0; /* permite que cada item se ajuste à sua coluna */
+}
+
+
+/* links de início, serviços, pedidos, iara e perfil. */
+.app .navegacao-inferior a {
+    display: flex; /* organiza o ícone e o texto */
+    flex-direction: column; /* deixa o texto abaixo do ícone */
+    align-items: center; /* centraliza os elementos na horizontal */
+    justify-content: center; /* centraliza os elementos na vertical */
+    gap: 5px; /* distância entre o ícone e o texto */
+    min-height: 56px; /* mantém uma área adequada para o toque */
+    padding: 6px 2px; /* espaço interno de cada link */
+    border-radius: var(--raio-medio); /* arredonda os cantos das opções */
+    color: var(--branco); /* cor dos textos */
+    font-size: 0.75rem; /* tamanho dos nomes das opções */
+    font-weight: 600; /* deixa os nomes mais destacados */
+    text-align: center; /* centraliza os textos */
+}
+
+
+/* ícones que aparecem acima dos nomes no menu inferior. */
+.app .navegacao-inferior .icone {
+    width: 22px; /* largura do ícone */
+    height: 22px; /* altura do ícone */
+    filter: brightness(0) invert(1); /* deixa os ícones brancos */
+}
+
+
+/* destaca a página ou seção atual na navegação inferior. */
+.app .navegacao-inferior a[aria-current="page"],
+.app .navegacao-inferior a[aria-current="location"] {
+    background-color: var(--app-menu-ativo); /* fundo da opção selecionada */
+    font-weight: 800; /* diferencia o texto da opção ativa */
+}
+
+
+/* BOTÃO DE AJUDA ============================================================================================= */
+
+/* botao-ajuda: botão flutuante com o ícone de interrogação.
+   está presente nos oito htmls e abre o modal de ajuda pelo js. */
+.app .botao-ajuda {
+    position: fixed; /* mantém o botão visível durante a rolagem */
+    right: 24px; /* distância da lateral direita da tela */
+    bottom: 24px; /* distância da parte inferior da tela */
+    z-index: 90; /* mantém o botão acima do conteúdo */
+    display: flex; /* permite centralizar o ícone */
+    align-items: center; /* centraliza o ícone na vertical */
+    justify-content: center; /* centraliza o ícone na horizontal */
+    width: 56px; /* largura do botão */
+    height: 56px; /* altura do botão */
+    padding: 0; /* remove o espaço interno padrão */
+    background-color: var(--verde-floresta); /* fundo verde do botão */
+    color: var(--branco); /* cor padrão do conteúdo */
+    border: none; /* remove a borda padrão do navegador */
+    border-radius: 50%; /* deixa o botão circular */
+    box-shadow: var(--sombra-media); /* destaca o botão do fundo */
+    transition: background-color 0.2s ease; /* suaviza a mudança de cor */
+}
+
+
+/* ícone de interrogação dentro do botão de ajuda. */
+.app .botao-ajuda .icone {
+    width: 28px; /* largura do ícone */
+    height: 28px; /* altura do ícone */
+    filter: brightness(0) invert(1); /* deixa o ícone branco */
+}
+
+
+/* altera a cor do botão quando o mouse passa por cima. */
+.app .botao-ajuda:hover {
+    background-color: var(--verde-escuro); /* escurece o fundo do botão */
+}
+
+
+/* MODAL DE AJUDA ============================================================================================= */
+
+/* modal-ajuda: dialog que contém as opções de ajuda.
+   será aberto pelo app.js quando o botão de ajuda for clicado. */
+.app .modal-ajuda {
+    width: calc(100% - 32px); /* mantém uma margem nas telas menores */
+    max-width: 460px; /* limita a largura da janela no desktop */
+    max-height: calc(100dvh - 32px); /* evita que ultrapasse a altura da tela */
+    margin: auto; /* centraliza o modal */
+    padding: 28px; /* espaço interno da janela */
+    background-color: var(--creme); /* fundo creme do modal */
+    color: var(--texto-principal); /* cor padrão dos textos */
+    border: 1px solid var(--borda); /* contorno da janela */
+    border-radius: var(--raio-grande); /* arredonda os cantos */
+    box-shadow: var(--sombra-modal); /* destaca a janela sobre o restante da página */
+    overflow-y: auto; /* permite rolar o conteúdo caso falte espaço */
+}
+
+
+/* modal-ajuda quando possui o atributo open.
+   o js vai controlar a abertura e o fechamento da janela. */
+.app .modal-ajuda[open] {
+    display: flex; /* organiza os elementos internos */
+    flex-direction: column; /* deixa os elementos um abaixo do outro */
+    gap: 20px; /* distância entre título, descrição e opções */
+}
+
+
+/* backdrop: fundo que aparece atrás do dialog quando aberto por showModal(). */
+.app .modal-ajuda::backdrop {
+    background-color: rgba(12, 32, 26, 0.55); /* escurece a página atrás do modal */
+}
+
+
+/* cabecalho-modal-ajuda: header que agrupa o título
+   e o botão de fechar a janela. */
+.app .cabecalho-modal-ajuda {
+    display: flex; /* organiza o título e o botão lado a lado */
+    align-items: center; /* centraliza os elementos na vertical */
+    justify-content: space-between; /* deixa o título à esquerda e o x à direita */
+    gap: 12px; /* espaço entre o título e o botão */
+}
+
+
+/* titulo-modal-ajuda: id do h2 que identifica o título da janela.
+   também é usado pelo aria-labelledby para leitores de tela. */
+.app #titulo-modal-ajuda {
+    color: var(--verde-floresta); /* cor do título */
+    font-family: var(--fonte-titulo); /* mantém a fonte dos títulos do app */
+    font-size: 1.65rem; /* tamanho do título */
+    font-weight: 600; /* destaca o texto */
+}
+
+
+/* fechar-modal-ajuda: botão com o ícone x que fecha a janela. */
+.app .fechar-modal-ajuda {
+    display: flex; /* permite centralizar o ícone */
+    align-items: center; /* centraliza na vertical */
+    justify-content: center; /* centraliza na horizontal */
+    width: 44px; /* largura da área clicável */
+    height: 44px; /* altura da área clicável */
+    padding: 0; /* remove o espaço interno padrão */
+    background-color: transparent; /* mantém o mesmo fundo do modal */
+    color: var(--verde-floresta); /* cor padrão do botão */
+    border: none; /* remove a borda padrão */
+    border-radius: 50%; /* deixa a área do botão circular */
+}
+
+
+/* destaca o botão de fechar quando o mouse passa por cima. */
+.app .fechar-modal-ajuda:hover {
+    background-color: var(--app-iara); /* fundo verde claro */
+}
+
+
+/* parágrafo que explica como a pessoa pode receber ajuda. */
+.app .modal-ajuda > p {
+    color: var(--texto-secundario); /* cor da descrição */
+    font-size: 0.95rem; /* tamanho do texto */
+    line-height: 1.6; /* aumenta o espaço entre as linhas */
+}
+
+
+/* opcoes-ajuda: div que contém os links da iara e acessibilidade. */
+.app .opcoes-ajuda {
+    display: flex; /* organiza os links */
+    flex-direction: column; /* deixa um link abaixo do outro */
+    gap: 12px; /* distância entre as opções */
+}
+
+
+/* estilos compartilhados pelos dois links do modal. */
+.app .ajuda-iara,
+.app .ajuda-acessibilidade {
+    display: flex; /* deixa os ícones e textos lado a lado */
+    align-items: center; /* centraliza os elementos na vertical */
+    justify-content: center; /* centraliza o conteúdo na horizontal */
+    gap: 10px; /* espaço entre os ícones e textos */
+    width: 100%; /* ocupa toda a largura disponível */
+    min-height: 52px; /* define a altura mínima dos links */
+    padding: 12px 16px; /* espaço interno dos links */
+    border-radius: var(--raio-circular); /* deixa os links com formato arredondado */
+    font-weight: 700; /* destaca os textos */
+    text-align: center; /* centraliza os textos */
+    transition: background-color 0.2s ease; /* suaviza a mudança de fundo */
+}
+
+
+/* ajuda-iara: link que direciona para o chatbot. */
+.app .ajuda-iara {
+    background-color: var(--verde-floresta); /* fundo verde escuro */
+    color: var(--branco); /* texto branco */
+    border: 1px solid var(--verde-floresta); /* mantém a mesma cor na borda */
+}
+
+
+/* ícones do botão de conversar com a iara. */
+.app .ajuda-iara .icone {
+    filter: brightness(0) invert(1); /* deixa o microfone e a seta brancos */
+}
+
+
+/* altera o fundo do link da iara ao passar o mouse. */
+.app .ajuda-iara:hover {
+    background-color: var(--verde-escuro); /* deixa o fundo mais escuro */
+}
+
+
+/* ajuda-acessibilidade: link que direciona para as preferências
+   de acessibilidade dentro do perfil.html. */
+.app .ajuda-acessibilidade {
+    background-color: transparent; /* mantém o fundo creme do modal */
+    color: var(--verde-floresta); /* cor verde do texto */
+    border: 1px solid var(--borda-input); /* contorno da opção */
+}
+
+
+/* destaca o link de acessibilidade ao passar o mouse. */
+.app .ajuda-acessibilidade:hover {
+    background-color: var(--verde-claro); /* fundo verde claro */
+}
+
+
+/* RESPONSIVIDADE DA ESTRUTURA ================================================================================= */
+
+/* ajustes para telas intermediárias, antes de esconder o menu lateral. */
+@media (max-width: 1100px) {
+
+    /* reduz os espaços para aproveitar melhor a largura da tela */
+    .app {
+        --largura-menu: 235px; /* reduz a largura do menu lateral */
+        --espacamento-conteudo: 28px; /* reduz os espaços laterais do conteúdo */
+    }
+
+    /* diminui o espaço interno do menu lateral */
+    .app .menu-lateral {
+        padding: 24px 16px; /* evita que os links fiquem apertados */
+    }
+
+    /* diminui o tamanho do nome da marca */
+    .app .texto-logo strong {
+        font-size: 1.45rem; /* ajusta a logo à largura do menu */
+    }
+
+    /* diminui o relógio da marca */
+    .app .logo .icone-logo {
+        width: 36px; /* largura do relógio */
+        height: 36px; /* altura do relógio */
+    }
+
+}
+
+
+/* ajustes para tablets e celulares.
+   nesse tamanho o menu lateral será substituído pelo menu inferior. */
+@media (max-width: 900px) {
+
+    /* altera as medidas utilizadas pela estrutura do aplicativo */
+    .app {
+        --altura-cabecalho: 72px; /* diminui a altura do cabeçalho */
+        --espacamento-conteudo: 24px; /* diminui o espaço nas laterais */
+    }
+
+    /* retira a divisão em colunas, pois não teremos mais o menu lateral */
+    .app .aplicativo {
+        display: block; /* deixa o conteúdo ocupar toda a largura da tela */
+    }
+
+    /* esconde o menu lateral nas telas menores */
+    .app .menu-lateral {
+        display: none; /* retira o menu lateral da estrutura */
+    }
+
+    /* esconde o nome da página que aparecia no cabeçalho desktop */
+    .app .titulo-pagina {
+        display: none; /* será substituído pela logo mobile */
+    }
+
+    /* exibe a logo mobile no cabeçalho */
+    .app .logo-mobile {
+        display: flex; /* mostra o relógio e o nome lado a lado */
+    }
+
+    /* mantém o cabeçalho visível durante a rolagem */
+    .app .cabecalho-app {
+        position: sticky; /* acompanha a rolagem da página */
+        top: 0; /* mantém o cabeçalho no topo */
+        z-index: 110; /* evita que o conteúdo fique por cima dele */
+    }
+
+    /* exibe a navegação inferior */
+    .app .navegacao-inferior {
+        display: block; /* mostra o menu que estava escondido */
+    }
+
+    /* ajusta o espaço interno do main */
+    .app .conteudo-app {
+        padding: 28px var(--espacamento-conteudo) calc(var(--altura-menu-inferior) + 64px + env(safe-area-inset-bottom, 0px)); /* reserva espaço para o menu inferior */
+    }
+
+    /* ajusta a posição do botão de ajuda */
+    .app .botao-ajuda {
+        bottom: calc(var(--altura-menu-inferior) + 16px + env(safe-area-inset-bottom, 0px)); /* coloca o botão acima do menu inferior */
+        right: 20px; /* distância da lateral direita */
+    }
+
+    /* evita que o cabeçalho esconda o conteúdo ao usar o link de acessibilidade */
+    .app #conteudo-principal {
+        scroll-margin-top: calc(var(--altura-cabecalho) + 12px); /* reserva o espaço do cabeçalho */
+    }
+
+}
+
+
+/* ajustes para celulares com telas mais estreitas. */
+@media (max-width: 480px) {
+
+    /* reduz ainda mais os espaços laterais */
+    .app {
+        --espacamento-conteudo: 16px; /* aproveita melhor a largura disponível */
+        --altura-cabecalho: 64px; /* deixa o cabeçalho mais compacto */
+    }
+
+    /* diminui o espaço interno do cabeçalho */
+    .app .cabecalho-app {
+        padding: 10px var(--espacamento-conteudo); /* espaço vertical e horizontal */
+        gap: 8px; /* distância entre a logo e o perfil */
+    }
+
+    /* reduz o tamanho da logo */
+    .app .logo-mobile {
+        gap: 6px; /* aproxima o relógio do nome */
+        font-size: 1.2rem; /* diminui o texto da marca */
+    }
+
+    /* reduz o relógio da logo */
+    .app .logo-mobile .icone-logo {
+        width: 28px; /* largura do relógio */
+        height: 28px; /* altura do relógio */
+    }
+
+    /* ajusta o avatar para telas menores */
+    .app .avatar {
+        width: 36px; /* largura do círculo */
+        height: 36px; /* altura do círculo */
+        font-size: 0.85rem; /* tamanho das iniciais */
+    }
+
+    /* diminui o espaço entre avatar, nome e seta */
+    .app .menu-usuario > summary {
+        gap: 6px; /* deixa o menu mais compacto */
+    }
+
+    /* diminui o espaço ocupado pelo nome do usuário */
+    .app #usuario-nome {
+        max-width: 75px; /* limita o espaço do nome */
+        font-size: 0.8rem; /* diminui o tamanho do texto */
+    }
+
+    /* ajusta o espaço superior do conteúdo */
+    .app .conteudo-app {
+        padding-top: 24px; /* reduz a distância do cabeçalho */
+    }
+
+    /* ajusta o tamanho do botão flutuante */
+    .app .botao-ajuda {
+        width: 50px; /* largura do botão */
+        height: 50px; /* altura do botão */
+        right: 16px; /* distância da lateral */
+    }
+
+    /* aproveita melhor o espaço dentro da janela de ajuda */
+    .app .modal-ajuda {
+        padding: 20px; /* reduz o espaço interno do modal */
+    }
+
+    /* diminui o título do modal em celulares */
+    .app #titulo-modal-ajuda {
+        font-size: 1.4rem; /* evita que o título ocupe muito espaço */
+    }
+
+}
