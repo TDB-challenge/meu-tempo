@@ -454,3 +454,143 @@ if (btnApagarPreferencias) {
     }
   });
 }
+
+// =====================================================
+// FLUXO DE CADASTRO COM VALIDAÇÃO QR CODE (cadastro.html)
+// =====================================================
+const formCadastro = document.getElementById("form-cadastro");
+
+if (formCadastro) {
+  let qrCodeValidado = false;
+
+  const boxQrCode = document.getElementById("box-qrcode-cadastro");
+  const btnSimularQr = document.getElementById("btn-simular-qrcode");
+  const statusQrCode = document.getElementById("status-qrcode-cadastro");
+  const resumoPerfilQr = document.getElementById("resumo-perfil-qrcode");
+  const avisoCadastro = document.getElementById("aviso-cadastro");
+
+  const passo1 = document.getElementById("cadastro-passo-1");
+  const passo2 = document.getElementById("cadastro-passo-2");
+  const passo3 = document.getElementById("cadastro-passo-3");
+  const indicadoresEtapa = document.querySelectorAll("[data-indicador-etapa]");
+
+  function irParaEtapaCadastro(numero) {
+    passo1.hidden = numero !== 1;
+    passo2.hidden = numero !== 2;
+    passo3.hidden = numero !== 3;
+
+    for (let i = 0; i < indicadoresEtapa.length; i++) {
+      const etapaNum = Number(indicadoresEtapa[i].getAttribute("data-indicador-etapa"));
+      indicadoresEtapa[i].classList.toggle("ativa", etapaNum === numero);
+      indicadoresEtapa[i].classList.toggle("concluida", etapaNum < numero);
+    }
+
+    if (avisoCadastro) {
+      avisoCadastro.textContent = "";
+    }
+  }
+
+  if (btnSimularQr) {
+    btnSimularQr.addEventListener("click", function () {
+      qrCodeValidado = true;
+      if (boxQrCode) {
+        boxQrCode.classList.add("validado");
+      }
+      if (statusQrCode) {
+        statusQrCode.innerHTML =
+          "<strong>Credencial validada com sucesso:</strong> CIN · Identificação de Acessibilidade confirmada.";
+      }
+      if (resumoPerfilQr) {
+        resumoPerfilQr.textContent =
+          "Documento validado: CIN com identificação de acessibilidade. Perfil visual e sonoro ativado.";
+      }
+
+      const campoNome = document.getElementById("cad-nome");
+      if (campoNome && campoNome.value.trim() === "") {
+        campoNome.value = "Cidadão Validado (Exemplo)";
+      }
+      if (avisoCadastro) {
+        avisoCadastro.textContent = "";
+      }
+    });
+  }
+
+  const btnIrPasso2 = document.getElementById("btn-cad-ir-passo2");
+  if (btnIrPasso2) {
+    btnIrPasso2.addEventListener("click", function () {
+      const nome = document.getElementById("cad-nome").value.trim();
+      const email = document.getElementById("cad-email").value.trim();
+      const senha = document.getElementById("cad-senha").value;
+      const confirma = document.getElementById("cad-confirma-senha").value;
+      const aceitouTermos = document.getElementById("cad-termos").checked;
+
+      if (!qrCodeValidado) {
+        avisoCadastro.textContent =
+          "Valide primeiro sua credencial oficial por QR Code para prosseguir.";
+        return;
+      }
+      if (!nome || !email || !senha || !confirma) {
+        avisoCadastro.textContent =
+          "Preencha todos os campos obrigatórios antes de continuar.";
+        return;
+      }
+      if (senha.length < 8) {
+        avisoCadastro.textContent =
+          "A senha precisa ter pelo menos 8 caracteres.";
+        return;
+      }
+      if (senha !== confirma) {
+        avisoCadastro.textContent =
+          "A confirmação de senha não confere com a senha digitada.";
+        return;
+      }
+      if (!aceitouTermos) {
+        avisoCadastro.textContent =
+          "Aceite os termos de uso e as informações de privacidade para continuar.";
+        return;
+      }
+
+      irParaEtapaCadastro(2);
+    });
+  }
+
+  const btnVoltar1 = document.getElementById("btn-cad-voltar-1");
+  if (btnVoltar1) {
+    btnVoltar1.addEventListener("click", function () {
+      irParaEtapaCadastro(1);
+    });
+  }
+
+  const btnIrPasso3 = document.getElementById("btn-cad-ir-passo3");
+  if (btnIrPasso3) {
+    btnIrPasso3.addEventListener("click", function () {
+      irParaEtapaCadastro(3);
+    });
+  }
+
+  const btnVoltar2 = document.getElementById("btn-cad-voltar-2");
+  if (btnVoltar2) {
+    btnVoltar2.addEventListener("click", function () {
+      irParaEtapaCadastro(2);
+    });
+  }
+
+  formCadastro.addEventListener("submit", function (evento) {
+    evento.preventDefault();
+
+    const usarContraste = document.getElementById("pref-contraste").checked;
+    const usarFonte = document.getElementById("pref-fonte").checked;
+
+    if (usarContraste) {
+      document.body.classList.add("alto-contraste");
+      localStorage.setItem("altoContraste", "ativo");
+    }
+    if (usarFonte) {
+      document.body.classList.add("fonte-legivel");
+      localStorage.setItem("fonteLegivel", "ativo");
+    }
+
+    avisoCadastro.innerHTML =
+      'Cadastro demonstrativo concluído com sucesso! Suas preferências de acessibilidade já foram aplicadas. <a href="solucao01.html" class="link-seta">Acessar plataforma do cidadão &rarr;</a>';
+  });
+}

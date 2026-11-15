@@ -2403,3 +2403,308 @@ CSS
     grid-template-columns: 1fr;
   }
 }
+
+/* =====================================================
+   24. ESTILOS ESPECÍFICOS DA PÁGINA CADASTRO
+   ===================================================== */
+.cadastro-secao {
+  padding: 56px 0 96px;
+}
+
+.cadastro-layout {
+  display: grid;
+  grid-template-columns: 0.95fr 1.05fr;
+  gap: 56px;
+  align-items: start;
+}
+
+.cadastro-apresentacao h1 {
+  max-width: 480px;
+}
+
+.cadastro-lead {
+  font-size: 1.02rem;
+  color: var(--texto-secundario);
+  max-width: 460px;
+  margin-bottom: 32px;
+}
+
+/* Foto com recorte em arco fiel ao Figma */
+.cadastro-foto-arco {
+  width: 100%;
+  max-width: 460px;
+  height: 320px;
+  border-radius: 180px 180px 18px 18px;
+  overflow: hidden;
+  background-color: var(--verde-claro);
+  border: 1px solid var(--borda);
+}
+
+.cadastro-foto-arco img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.cadastro-card {
+  padding: 36px 32px;
+}
+
+.cadastro-area-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--texto-secundario);
+  margin-bottom: 12px;
+}
+
+.cadastro-area-tag img.icone {
+  width: 16px;
+  height: 16px;
+}
+
+.cadastro-card h2 {
+  font-size: 1.9rem;
+  margin-bottom: 6px;
+}
+
+.cadastro-subtitulo {
+  font-size: 0.92rem;
+  color: var(--texto-secundario);
+  margin-bottom: 24px;
+}
+
+/* Barra de progresso de 3 etapas */
+.cadastro-etapas {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.etapa-item span {
+  display: block;
+  font-size: 0.76rem;
+  color: var(--texto-secundario);
+  margin-top: 6px;
+}
+
+.etapa-item.ativa span {
+  font-weight: 700;
+  color: var(--texto-principal);
+}
+
+.etapa-barra {
+  height: 3px;
+  border-radius: 4px;
+  background-color: var(--borda);
+}
+
+.etapa-item.ativa .etapa-barra,
+.etapa-item.concluida .etapa-barra {
+  background-color: var(--verde-floresta);
+}
+
+/* Box verde de leitura do QR Code */
+.cadastro-qrcode-box {
+  background-color: var(--verde-claro);
+  border: 1px solid rgba(24, 58, 42, 0.14);
+  border-radius: 12px;
+  padding: 18px;
+  margin-bottom: 22px;
+}
+
+.cadastro-qrcode-box.validado {
+  border-color: var(--verde-floresta);
+  background-color: #e4efe7;
+}
+
+.qrcode-box-topo {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.qrcode-icone-wrap {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background-color: rgba(24, 58, 42, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.qrcode-box-topo strong {
+  display: block;
+  font-size: 0.94rem;
+  color: var(--texto-principal);
+  margin-bottom: 3px;
+}
+
+.qrcode-box-topo p {
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: var(--texto-secundario);
+  margin-bottom: 0;
+}
+
+.btn-qrcode-ler {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background-color: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(24, 58, 42, 0.35);
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--texto-principal);
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.btn-qrcode-ler:hover {
+  background-color: var(--branco, #ffffff);
+  border-color: var(--verde-floresta);
+}
+
+.qrcode-nota {
+  font-size: 0.78rem;
+  color: var(--texto-secundario);
+  margin: 10px 0 0;
+}
+
+.campo-dica {
+  font-size: 0.78rem;
+  color: var(--texto-secundario);
+}
+
+.checkbox-termos {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.86rem;
+  color: var(--texto-principal);
+  cursor: pointer;
+}
+
+.checkbox-termos input {
+  margin-top: 3px;
+  accent-color: var(--verde-floresta);
+}
+
+.checkbox-termos a {
+  color: var(--verde-floresta);
+  text-decoration: underline;
+  font-weight: 600;
+}
+
+/* Etapas 2 e 3: cartões de opção */
+.cadastro-opcoes-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.opcao-check-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1px solid var(--borda);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.opcao-check-card input {
+  margin-top: 4px;
+  accent-color: var(--verde-floresta);
+}
+
+.opcao-check-card strong {
+  display: block;
+  font-size: 0.92rem;
+  color: var(--texto-principal);
+  margin-bottom: 2px;
+}
+
+.opcao-check-card span {
+  font-size: 0.82rem;
+  color: var(--texto-secundario);
+  line-height: 1.45;
+}
+
+.cadastro-botoes-linha {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* Rodapé interno do cartão de cadastro */
+.cadastro-card-rodape {
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid var(--borda);
+}
+
+.cadastro-seguranca {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  color: var(--texto-secundario);
+  margin-bottom: 18px;
+}
+
+.cadastro-seguranca img.icone {
+  width: 16px;
+  height: 16px;
+}
+
+.cadastro-links-rodape {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.cadastro-link-admin {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--texto-principal);
+  text-decoration: none;
+}
+
+.cadastro-link-libras {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--verde-floresta);
+  text-decoration: none;
+}
+
+@media (max-width: 860px) {
+  .cadastro-layout {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .cadastro-foto-arco {
+    max-width: 100%;
+    height: 240px;
+  }
+
+  .cadastro-card {
+    padding: 28px 20px;
+  }
+}
