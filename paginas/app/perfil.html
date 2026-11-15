@@ -6,177 +6,275 @@
     <title>Perfil e acessibilidade | Meu Tempo</title>
     <link rel="stylesheet" href="../assets/css/style.css" />
   </head>
-  <body>
-    <!-- Menu lateral -->
-    <aside>
-      <a href="inicio.html">
-        <strong>meu tempo</strong>
-        <small>A cidade no seu ritmo.</small>
-      </a>
-      <!-- Navegação entre as páginas -->
-      <nav>
-        <ul>
-          <li><a href="inicio.html">Início</a></li>
-          <li><a href="servicos.html">Serviços</a></li>
-          <li><a href="solicitacoes.html">Solicitações</a></li>
-          <li><a href="iara.html">Assistente IARA</a></li>
-          <li><a href="perfil.html">Perfil e acessibilidade</a></li>
-        </ul>
-      </nav>
-      <div>
-        <a href="perfil.html">Acessibilidade</a>
-        <a href="../index.html">Voltar ao site</a>
-      </div>
-    </aside>
 
-    <!-- Área de conteúdo do aplicativo -->
-    <div>
-      <!-- Cabeçalho -->
-      <header>
-        <div>
-          <span>Meu Tempo</span>
-          <strong>Perfil e acessibilidade</strong>
-        </div>
+  <body class="app">
+    <a href="#conteudo-principal" class="pular-conteudo">
+      Ir para o conteúdo
+    </a>
 
-        <!-- Menu do usuário -->
-        <details>
-          <summary>
-            <span>U</span>
-            <small>Olá,</small>
-            <strong>Usuário</strong>
-          </summary>
+    <div class="aplicativo">
+      <!-- Menu lateral -->
+      <aside class="menu-lateral">
+        <a href="inicio.html" class="logo">
+          <strong>meu tempo</strong>
+          <small class="slogan">A cidade no seu ritmo.</small>
+        </a>
 
-          <a href="perfil.html">Meu perfil</a>
-          <button type="button" disabled>Ler minha credencial</button>
+        <nav class="menu-navegacao" aria-label="Menu principal">
+          <ul>
+            <li><a href="inicio.html">Início</a></li>
+            <li><a href="servicos.html">Serviços</a></li>
+            <li><a href="solicitacoes.html">Solicitações</a></li>
+            <li><a href="iara.html">Assistente IARA</a></li>
+            <li>
+              <a href="perfil.html" aria-current="page"
+                >Perfil e acessibilidade</a
+              >
+            </li>
+          </ul>
+        </nav>
+
+        <div class="menu-inferior">
+          <a href="#preferencias-acessibilidade">Acessibilidade</a>
           <a href="../index.html">Voltar ao site</a>
-        </details>
-      </header>
+        </div>
+      </aside>
 
-      <!-- Conteúdo principal do perfil -->
-      <main>
-        <!-- Apresentação do usuário -->
-        <section>
-          <!-- Iniciais do nome que ficarão dentro do avatar -->
-          <span>U</span>
-          <small>Suas preferências</small>
-
-          <!-- Nome completo do usuário logado -->
-          <h1>Usuário</h1>
-          <p>Personalize o Meu Tempo do seu jeito.</p>
-        </section>
-
-        <!-- Área de configurações de acessibilidade -->
-        <section>
-          <h2>Acessibilidade</h2>
-          <!-- Lista de opções para aumentar o tamanho dos textos -->
-          <label>
-            Tamanho das letras
-            <select name="tamanho-fonte">
-              <option value="100">100% — padrão</option>
-              <option value="125">125%</option>
-              <option value="150">150%</option>
-              <option value="175">175%</option>
-              <option value="200">200%</option>
-            </select>
-          </label>
-
-          <!-- Cada checkbox permite ativar ou desativar uma opção -->
-          <div>
-            <label>
-              <strong>Alto contraste</strong>
-              <small>Textos e botões mais destacados.</small>
-              <input type="checkbox" name="alto-contraste" />
-            </label>
+      <div class="area-conteudo">
+        <!-- Cabeçalho do aplicativo -->
+        <header class="cabecalho-app">
+          <div class="titulo-pagina">
+            <span>Meu Tempo</span>
+            <strong>Perfil e acessibilidade</strong>
           </div>
 
-          <div>
-            <label>
-              <strong>Ouvir a IARA</strong>
-              <small>Respostas por voz e por texto.</small>
-              <input type="checkbox" name="ouvir-iara" />
-            </label>
-          </div>
+          <details class="menu-usuario">
+            <summary>
+              <span class="avatar" id="usuario-iniciais">U</span>
 
-          <div>
-            <label>
-              <strong>Vibrar nos avisos</strong>
-              <small>Quando o dispositivo permitir.</small>
-              <input type="checkbox" name="vibrar-avisos" />
-            </label>
-          </div>
+              <span class="dados-usuario">
+                <small>Olá,</small>
+                <strong id="usuario-nome">Usuário</strong>
+              </span>
+            </summary>
 
-          <!-- Opções adicionais que aparecem ao expandir -->
-          <details>
-            <summary>Mais opções de leitura</summary>
-            <label>
-              Fonte mais legível
-              <input type="checkbox" name="fonte-legivel" />
-            </label>
-            <label>
-              Tema escuro
-              <input type="checkbox" name="tema-escuro" />
-            </label>
+            <div class="opcoes-usuario">
+              <a href="perfil.html">Meu perfil</a>
+              <button type="button" id="ler-credencial" disabled>
+                Ler minha credencial
+              </button>
+              <a href="../index.html">Voltar ao site</a>
+            </div>
           </details>
+        </header>
 
-          <!-- Botão para acessar conteúdos em Libras -->
-          <button type="button" disabled>Conteúdo em Libras</button>
-        </section>
+        <!-- Conteúdo exclusivo do perfil -->
+        <main
+          class="conteudo-app pagina-perfil"
+          id="conteudo-principal"
+          tabindex="-1"
+        >
+          <!-- Apresentação do usuário -->
+          <section class="identificacao-perfil">
+            <span class="avatar-perfil" id="perfil-iniciais">U</span>
 
-        <!-- Área de identificação por credencial -->
-        <section>
-          <h2>Minha credencial</h2>
+            <div class="informacoes-perfil">
+              <small>Suas preferências</small>
+              <h1 id="perfil-nome">Usuário</h1>
+              <p>Personalize o Meu Tempo do seu jeito.</p>
+            </div>
+          </section>
 
-          <p>Adicione sua identificação por QR Code.</p>
+          <!-- Configurações de acessibilidade -->
+          <section class="card-acessibilidade" id="preferencias-acessibilidade">
+            <h2>Acessibilidade</h2>
 
-          <!-- Futuramente abrirá a janela do leitor de QR Code -->
-          <button type="button" disabled>Ler QR Code</button>
-        </section>
+            <!-- Seleção do tamanho dos textos -->
+            <label class="tamanho-letras" for="tamanho-fonte">
+              Tamanho das letras
 
-        <!-- Área expansível para consultar e alterar os dados -->
-        <details>
-          <summary>Meus dados</summary>
+              <select id="tamanho-fonte" name="tamanho-fonte">
+                <option value="100">100% — padrão</option>
+                <option value="125">125%</option>
+                <option value="150">150%</option>
+                <option value="175">175%</option>
+                <option value="200">200%</option>
+              </select>
+            </label>
 
-          <!-- Formulário para alterar o nome do usuário -->
-          <form>
-            <label>
-              Nome completo *
+            <!-- Preferências que podem ser ativadas e desativadas -->
+            <div class="lista-preferencias">
+              <label class="opcao-preferencia">
+                <span class="descricao-preferencia">
+                  <strong>Alto contraste</strong>
+                  <small>Textos e botões mais destacados.</small>
+                </span>
+
+                <input
+                  type="checkbox"
+                  class="interruptor"
+                  id="alto-contraste"
+                  name="alto-contraste"
+                />
+              </label>
+
+              <label class="opcao-preferencia">
+                <span class="descricao-preferencia">
+                  <strong>Ouvir a IARA</strong>
+                  <small>Respostas por voz e por texto.</small>
+                </span>
+
+                <input
+                  type="checkbox"
+                  class="interruptor"
+                  id="ouvir-iara"
+                  name="ouvir-iara"
+                />
+              </label>
+
+              <label class="opcao-preferencia">
+                <span class="descricao-preferencia">
+                  <strong>Vibrar nos avisos</strong>
+                  <small>Quando o dispositivo permitir.</small>
+                </span>
+
+                <input
+                  type="checkbox"
+                  class="interruptor"
+                  id="vibrar-avisos"
+                  name="vibrar-avisos"
+                />
+              </label>
+            </div>
+
+            <!-- Configurações adicionais de leitura -->
+            <details class="opcoes-leitura">
+              <summary>Mais opções de leitura</summary>
+
+              <div class="lista-preferencias">
+                <label class="opcao-preferencia">
+                  <span class="descricao-preferencia">
+                    <strong>Fonte mais legível</strong>
+                  </span>
+
+                  <input
+                    type="checkbox"
+                    class="interruptor"
+                    id="fonte-legivel"
+                    name="fonte-legivel"
+                  />
+                </label>
+
+                <label class="opcao-preferencia">
+                  <span class="descricao-preferencia">
+                    <strong>Tema escuro</strong>
+                  </span>
+
+                  <input
+                    type="checkbox"
+                    class="interruptor"
+                    id="tema-escuro"
+                    name="tema-escuro"
+                  />
+                </label>
+              </div>
+            </details>
+
+            <button
+              type="button"
+              class="botao-libras"
+              id="abrir-libras"
+              disabled
+            >
+              Conteúdo em Libras
+            </button>
+          </section>
+
+          <!-- Identificação por credencial -->
+          <section class="card-credencial">
+            <div class="dados-credencial">
+              <h2>Minha credencial</h2>
+
+              <p id="status-credencial">
+                Adicione sua identificação por QR Code.
+              </p>
+            </div>
+
+            <button
+              type="button"
+              class="botao-qr"
+              id="abrir-leitor-qr"
+              disabled
+            >
+              Ler QR Code
+            </button>
+          </section>
+
+          <!-- Área de consulta e alteração dos dados pessoais -->
+          <details class="card-meus-dados">
+            <summary>Meus dados</summary>
+
+            <form
+              class="formulario-perfil"
+              id="formulario-perfil"
+              method="post"
+            >
+              <label for="nome-completo"> Nome completo * </label>
 
               <input
                 type="text"
+                id="nome-completo"
                 name="nome-completo"
                 autocomplete="name"
                 maxlength="60"
                 required
               />
-            </label>
 
-            <button type="button" disabled>Salvar nome</button>
-          </form>
+              <button
+                type="submit"
+                class="botao-salvar"
+                id="salvar-nome"
+                disabled
+              >
+                Salvar nome
+              </button>
+            </form>
 
-          <!-- Link para quem ainda não possui uma conta -->
-          <a href="../cadastro.html">Criar minha conta</a>
-        </details>
+            <a href="../cadastro.html" id="criar-conta"> Criar minha conta </a>
+          </details>
 
-        <!-- Opções no final da página -->
-        <div>
-          <a href="../privacidade.html"> Privacidade e termos </a>
+          <!-- Opções disponíveis no final do perfil -->
+          <div class="opcoes-perfil">
+            <a href="../privacidade.html"> Privacidade e termos </a>
 
-          <button type="button" disabled>Restaurar preferências</button>
-        </div>
-      </main>
+            <button type="button" id="restaurar-preferencias" disabled>
+              Restaurar preferências
+            </button>
+          </div>
+        </main>
+      </div>
+
+      <button
+        type="button"
+        class="botao-ajuda"
+        id="botao-ajuda"
+        aria-label="Preciso de ajuda"
+        disabled
+      >
+        ?
+      </button>
     </div>
 
-    <!-- Botão de ajuda -->
-    <button type="button" aria-label="Preciso de ajuda" disabled>?</button>
-
-    <!-- Janela que ficará escondida até o usuário escolher ler o QR Code -->
-    <dialog aria-label="Ler QR Code da credencial">
-      <!-- Título da janela e opção de fechar -->
-      <header>
-        <h2>Ler QR Code da credencial</h2>
+    <!-- Janela de leitura do QR Code -->
+    <dialog class="modal-qr" id="modal-qr" aria-labelledby="titulo-modal-qr">
+      <!-- Cabeçalho da janela -->
+      <header class="cabecalho-modal">
+        <h2 id="titulo-modal-qr">Ler QR Code da credencial</h2>
 
         <form method="dialog">
-          <button type="submit" aria-label="Fechar janela">×</button>
+          <button type="submit" class="fechar-modal" aria-label="Fechar janela">
+            ×
+          </button>
         </form>
       </header>
 
@@ -184,71 +282,96 @@
         Aponte a câmera para o QR Code da sua credencial ou envie uma imagem.
       </p>
 
-      <!-- Espaço onde futuramente aparecerá a imagem da câmera -->
-      <video
-        autoplay
-        playsinline
-        muted
-        hidden
-        aria-label="Câmera para leitura do QR Code"
-      ></video>
+      <!-- Espaço onde será exibida a câmera -->
+      <div class="area-camera">
+        <video
+          id="camera-qr"
+          autoplay
+          playsinline
+          muted
+          hidden
+          aria-label="Câmera para leitura do QR Code"
+        ></video>
 
-      <p>Posicione o QR Code aqui</p>
+        <div class="moldura-qr">
+          <p>Posicione o QR Code aqui</p>
+        </div>
+      </div>
 
-      <!-- Orientações durante a leitura -->
-      <p role="status">Escolha como deseja ler sua credencial.</p>
+      <!-- Mensagens sobre o andamento da leitura -->
+      <p class="mensagem-leitura" id="mensagem-leitura" role="status">
+        Escolha como deseja ler sua credencial.
+      </p>
 
-      <!-- Opção para abrir a câmera do dispositivo -->
-      <button type="button" disabled>Abrir câmera</button>
+      <button type="button" class="botao-camera" id="abrir-camera" disabled>
+        Abrir câmera
+      </button>
 
-      <!-- Campo para selecionar uma imagem com QR Code -->
-      <label>
+      <!-- Alternativa para selecionar uma imagem -->
+      <label class="enviar-imagem" for="imagem-qr">
         Enviar imagem
-        <input type="file" name="imagem-qr" accept="image/*" disabled />
+
+        <input
+          type="file"
+          id="imagem-qr"
+          name="imagem-qr"
+          accept="image/*"
+          disabled
+        />
       </label>
 
-      <!-- Resultado que aparecerá após encontrar uma identificação -->
-      <section hidden>
+      <!-- Aparece quando o QR Code for lido -->
+      <section class="resultado-qr" id="resultado-qr" hidden>
         <h3>Identificação encontrada</h3>
 
-        <!-- Espaço para o nome encontrado -->
-        <strong></strong>
+        <strong id="credencial-nome"></strong>
+        <p id="credencial-perfil"></p>
+        <p id="credencial-codigo"></p>
 
-        <!-- Espaço para o tipo de credencial -->
-        <p></p>
-
-        <!-- Espaço para o código da credencial -->
-        <p></p>
-
-        <button type="button" disabled>Usar estes dados</button>
+        <button
+          type="button"
+          class="botao-confirmar-qr"
+          id="confirmar-credencial"
+          disabled
+        >
+          Usar estes dados
+        </button>
       </section>
 
       <!-- Alternativa para informar o código manualmente -->
-      <details>
+      <details class="leitura-manual">
         <summary>Não consigo ler o QR Code</summary>
-        <label>
-          Código da credencial
-          <input
-            type="text"
-            name="codigo-credencial"
-            placeholder="Ex.: MT-IDOSO-1048"
-            autocomplete="off"
-          />
-        </label>
-        <button type="button" disabled>Conferir código</button>
-        <!-- Imagem de teste do protótipo -->
+
+        <label for="codigo-credencial"> Código da credencial </label>
+
+        <input
+          type="text"
+          id="codigo-credencial"
+          name="codigo-credencial"
+          placeholder="Ex.: MT-IDOSO-1048"
+          autocomplete="off"
+        />
+
+        <button type="button" id="conferir-codigo" disabled>
+          Conferir código
+        </button>
+
+        <!-- QR Code fictício utilizado para testar o protótipo -->
         <a href="../assets/imagens/credencial-maria.png" download>
           Baixar um QR Code de exemplo
         </a>
       </details>
 
-      <!-- Permite fechar a janela sem adicionar uma credencial -->
+      <!-- Permite sair sem adicionar uma credencial -->
       <form method="dialog">
-        <button type="submit">Continuar sem QR Code</button>
+        <button type="submit" class="continuar-sem-qr">
+          Continuar sem QR Code
+        </button>
       </form>
     </dialog>
-    <!-- Aviso que aparecerá após adicionar a credencial -->
-    <p role="status" hidden>
+
+    <!-- Aviso exibido após cadastrar uma credencial -->
+    <p class="notificacao" id="notificacao-credencial" role="status" hidden>
       Identificação adicionada. Confira seus dados para continuar.
     </p>
   </body>

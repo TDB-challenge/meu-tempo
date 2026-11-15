@@ -7,107 +7,173 @@
     <link rel="stylesheet" href="../assets/css/style.css" />
   </head>
 
-  <body>
-    <!-- Menu lateral -->
-    <aside>
-      <a href="inicio.html">
-        <strong>meu tempo</strong>
-        <small>A cidade no seu ritmo.</small>
-      </a>
+  <body class="app">
+    <a href="#conteudo-principal" class="pular-conteudo">
+      Ir para o conteúdo
+    </a>
 
-      <!-- Navegação entre as páginas -->
-      <nav>
-        <ul>
-          <li><a href="inicio.html">Início</a></li>
-          <li><a href="servicos.html">Serviços</a></li>
-          <li><a href="solicitacoes.html">Solicitações</a></li>
-          <li><a href="iara.html">Assistente IARA</a></li>
-          <li><a href="perfil.html">Perfil e acessibilidade</a></li>
-        </ul>
-      </nav>
+    <div class="aplicativo">
+      <!-- Menu lateral -->
+      <aside class="menu-lateral">
+        <a href="inicio.html" class="logo">
+          <strong>meu tempo</strong>
+          <small class="slogan">A cidade no seu ritmo.</small>
+        </a>
 
-      <div>
-        <a href="perfil.html">Acessibilidade</a>
-        <a href="../index.html">Voltar ao site</a>
-      </div>
-    </aside>
+        <nav class="menu-navegacao" aria-label="Menu principal">
+          <ul>
+            <li><a href="inicio.html">Início</a></li>
+            <li><a href="servicos.html">Serviços</a></li>
+            <li>
+              <a href="solicitacoes.html" aria-current="page">Solicitações</a>
+            </li>
+            <li><a href="iara.html">Assistente IARA</a></li>
+            <li><a href="perfil.html">Perfil e acessibilidade</a></li>
+          </ul>
+        </nav>
 
-    <!-- Área de conteúdo do aplicativo -->
-    <div>
-      <!-- Cabeçalho -->
-      <header>
-        <div>
-          <span>Meu Tempo</span>
-          <strong>Solicitações</strong>
-        </div>
-
-        <!-- Menu do usuário -->
-        <details>
-          <summary>
-            <span>U</span>
-            <small>Olá,</small>
-            <strong>Usuário</strong>
-          </summary>
-
-          <a href="perfil.html">Meu perfil</a>
-          <button type="button" disabled>Ler minha credencial</button>
+        <div class="menu-inferior">
+          <a href="perfil.html">Acessibilidade</a>
           <a href="../index.html">Voltar ao site</a>
-        </details>
-      </header>
-
-      <!-- Conteúdo principal -->
-      <main>
-        <h1>Minhas solicitações</h1>
-        <p>Acompanhe seus pedidos e relatos.</p>
-
-        <!-- Botões para filtrar os pedidos pela situação -->
-        <div>
-          <button type="button" disabled>Todas</button>
-          <button type="button" disabled>Em andamento</button>
-          <button type="button" disabled>Finalizadas</button>
         </div>
+      </aside>
 
-        <!-- Lista com os pedidos realizados pelo usuário -->
-        <section>
-          <!-- Exemplo de pedido de apoio no metrô -->
-          <details>
-            <!-- Informações que aparecem antes de abrir o pedido -->
+      <div class="area-conteudo">
+        <!-- Cabeçalho do aplicativo -->
+        <header class="cabecalho-app">
+          <div class="titulo-pagina">
+            <span>Meu Tempo</span>
+            <strong>Solicitações</strong>
+          </div>
+
+          <details class="menu-usuario">
             <summary>
-              <strong>Acompanhamento até a plataforma</strong>
+              <span class="avatar" id="usuario-iniciais">U</span>
 
-              <small>
-                Hoje · 14:32 · Consolação · Linha 2 — Verde · Entrada principal
-              </small>
-
-              <span>Funcionário a caminho</span>
+              <span class="dados-usuario">
+                <small>Olá,</small>
+                <strong id="usuario-nome">Usuário</strong>
+              </span>
             </summary>
 
-            <!-- Informações que aparecem ao abrir o pedido -->
-            <h2>Histórico da solicitação</h2>
-            <p>Funcionário a caminho.</p>
+            <div class="opcoes-usuario">
+              <a href="perfil.html">Meu perfil</a>
+              <button type="button" id="ler-credencial" disabled>
+                Ler minha credencial
+              </button>
+              <a href="../index.html">Voltar ao site</a>
+            </div>
           </details>
+        </header>
 
-          <!-- Exemplo de relato de zeladoria -->
-          <details>
-            <summary>
-              <strong>Piso tátil danificado</strong>
+        <!-- Conteúdo exclusivo das solicitações -->
+        <main
+          class="conteudo-app pagina-solicitacoes"
+          id="conteudo-principal"
+          tabindex="-1"
+        >
+          <section class="introducao-pagina">
+            <h1>Minhas solicitações</h1>
+            <p>Acompanhe seus pedidos e relatos.</p>
+          </section>
 
-              <small> Hoje · 09:15 · Av. Paulista × Rua Pamplona </small>
+          <!-- Filtros para consultar os pedidos pela situação -->
+          <div
+            class="filtros-solicitacoes"
+            role="group"
+            aria-label="Filtrar solicitações"
+          >
+            <button
+              type="button"
+              class="botao-filtro"
+              id="filtro-todas"
+              aria-pressed="true"
+              disabled
+            >
+              Todas
+            </button>
 
-              <span>Concluído</span>
-            </summary>
+            <button
+              type="button"
+              class="botao-filtro"
+              id="filtro-andamento"
+              aria-pressed="false"
+              disabled
+            >
+              Em andamento
+            </button>
 
-            <h2>Histórico da solicitação</h2>
-            <p>Solicitação concluída.</p>
-          </details>
+            <button
+              type="button"
+              class="botao-filtro"
+              id="filtro-finalizadas"
+              aria-pressed="false"
+              disabled
+            >
+              Finalizadas
+            </button>
+          </div>
 
-          <!-- Mensagem que aparecerá caso não existam pedidos -->
-          <p hidden>Nenhuma solicitação encontrada.</p>
-        </section>
-      </main>
+          <!-- Lista que receberá os pedidos realizados pelo usuário -->
+          <section class="lista-solicitacoes" id="lista-solicitacoes">
+            <!-- Exemplo de solicitação em andamento -->
+            <details class="card-solicitacao">
+              <summary>
+                <span class="dados-solicitacao">
+                  <strong>Acompanhamento até a plataforma</strong>
+
+                  <small> Hoje · 14:32 · Consolação · Linha 2 — Verde </small>
+                </span>
+
+                <span class="status-solicitacao status-andamento">
+                  Funcionário a caminho
+                </span>
+              </summary>
+
+              <!-- Informações que aparecem ao abrir o pedido -->
+              <div class="historico-solicitacao">
+                <h2>Histórico da solicitação</h2>
+                <p>Funcionário a caminho.</p>
+              </div>
+            </details>
+
+            <!-- Exemplo de solicitação finalizada -->
+            <details class="card-solicitacao">
+              <summary>
+                <span class="dados-solicitacao">
+                  <strong>Piso tátil danificado</strong>
+
+                  <small> Hoje · 09:15 · Av. Paulista × Rua Pamplona </small>
+                </span>
+
+                <span class="status-solicitacao status-finalizada">
+                  Concluído
+                </span>
+              </summary>
+
+              <div class="historico-solicitacao">
+                <h2>Histórico da solicitação</h2>
+                <p>Solicitação concluída.</p>
+              </div>
+            </details>
+          </section>
+
+          <!-- Aparece quando não existem pedidos disponíveis -->
+          <p class="sem-solicitacoes" id="sem-solicitacoes" hidden>
+            Nenhuma solicitação encontrada.
+          </p>
+        </main>
+      </div>
+
+      <button
+        type="button"
+        class="botao-ajuda"
+        id="botao-ajuda"
+        aria-label="Preciso de ajuda"
+        disabled
+      >
+        ?
+      </button>
     </div>
-
-    <!-- Botão de ajuda -->
-    <button type="button" aria-label="Preciso de ajuda" disabled>?</button>
   </body>
 </html>

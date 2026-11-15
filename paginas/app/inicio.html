@@ -1,119 +1,182 @@
 <!doctype html>
 <html lang="pt-BR">
   <head>
-    <!-- Configurações da página -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Início | Meu Tempo</title>
-    <!-- Importação do CSS global -->
     <link rel="stylesheet" href="../assets/css/style.css" />
   </head>
-  <body>
-    <!-- Menu que ficará na lateral da página -->
-    <aside>
-      <!-- Nome e slogan do projeto. Ao clicar, volta para o início -->
-      <a href="inicio.html">
-        <strong>meu tempo</strong>
-        <small>A cidade no seu ritmo.</small>
-      </a>
-      <!-- Lista de páginas disponíveis no aplicativo -->
-      <nav>
-        <ul>
-          <li><a href="inicio.html">Início</a></li>
-          <li><a href="servicos.html">Serviços</a></li>
-          <li><a href="solicitacoes.html">Solicitações</a></li>
-          <li><a href="iara.html">Assistente IARA</a></li>
-          <li><a href="perfil.html">Perfil e acessibilidade</a></li>
-        </ul>
-      </nav>
-      <!-- Opções que ficarão na parte inferior do menu -->
-      <div>
-        <a href="perfil.html">Acessibilidade</a>
-        <a href="../index.html">Voltar ao site</a>
-      </div>
-    </aside>
 
-    <!-- Agrupa o cabeçalho e todo o conteúdo ao lado do menu -->
-    <div>
-      <!-- Cabeçalho superior do aplicativo -->
-      <header>
-        <!-- Identificação da página atual -->
-        <div>
-          <span>Meu Tempo</span>
-          <strong>Início</strong>
-        </div>
-        <!-- Menu que abre ao clicar no nome do usuário -->
-        <details>
-          <summary>
-            <!-- Iniciais e nome serão preenchidos após o login -->
-            <span>U</span>
-            <small>Olá,</small>
-            <strong>Usuário</strong>
-          </summary>
-          <!-- Opções disponíveis ao abrir o menu -->
-          <a href="perfil.html">Meu perfil</a>
-          <button type="button" disabled>Ler minha credencial</button>
+  <body class="app">
+    <!-- Atalho para quem navega pelo teclado -->
+    <a href="#conteudo-principal" class="pular-conteudo">
+      Ir para o conteúdo
+    </a>
+
+    <!-- Agrupa toda a estrutura do aplicativo -->
+    <div class="aplicativo">
+      <!-- Menu lateral -->
+      <aside class="menu-lateral">
+        <!-- Nome e slogan do projeto -->
+        <a href="inicio.html" class="logo">
+          <strong>meu tempo</strong>
+          <small class="slogan">A cidade no seu ritmo.</small>
+        </a>
+
+        <!-- Links para navegar entre as páginas -->
+        <nav class="menu-navegacao" aria-label="Menu principal">
+          <ul>
+            <li><a href="inicio.html" aria-current="page">Início</a></li>
+            <li><a href="servicos.html">Serviços</a></li>
+            <li><a href="solicitacoes.html">Solicitações</a></li>
+            <li><a href="iara.html">Assistente IARA</a></li>
+            <li><a href="perfil.html">Perfil e acessibilidade</a></li>
+          </ul>
+        </nav>
+
+        <!-- Opções na parte inferior do menu -->
+        <div class="menu-inferior">
+          <a href="perfil.html">Acessibilidade</a>
           <a href="../index.html">Voltar ao site</a>
-        </details>
-      </header>
-      <!-- Conteúdo principal da página inicial -->
-      <main>
-        <!-- Área de boas-vindas -->
-        <section>
-          <!-- Espaço para mostrar a data atual futuramente -->
-          <p></p>
-          <!-- O nome será substituído pelo nome do usuário logado -->
-          <h1>
-            Olá, <span>usuário</span>. Como podemos ajudar você <em>hoje?</em>
-          </h1>
-          <p>Escolha um serviço ou converse com a IARA.</p>
-          <!-- Card que mostrará a localização do usuário -->
-          <div>
-            <small>Sua localização</small>
-            <strong>Não informada</strong>
-            <button type="button" disabled>Alterar</button>
-          </div>
-        </section>
-        <!-- Área dos serviços disponíveis -->
-        <section>
-          <h2>O que você precisa?</h2>
-          <p>3 serviços disponíveis</p>
-          <!-- Cada card é um link para a página do serviço -->
-          <div>
-            <!-- Primeiro serviço -->
-            <a href="travessia.html">
-              <span>01</span>
-              <h3>Travessia acessível</h3>
-              <p>Peça mais tempo para atravessar.</p>
-            </a>
-            <!-- Segundo serviço -->
-            <a href="apoio-metro.html">
-              <span>02</span>
-              <h3>Apoio no Metrô</h3>
-              <p>Solicite assistência na estação.</p>
-            </a>
-            <!-- Terceiro serviço -->
-            <a href="zeladoria.html">
-              <span>03</span>
-              <h3>Zeladoria urbana</h3>
-              <p>Avise sobre barreiras no caminho.</p>
-            </a>
-          </div>
-        </section>
+        </div>
+      </aside>
 
-        <!-- Banner que direciona para o chatbot -->
-        <section>
-          <a href="iara.html">
-            <small>Prefere falar?</small>
-            <h2>Converse com a IARA</h2>
-            <p>Sua assistente, no seu ritmo.</p>
+      <!-- Agrupa o cabeçalho e o conteúdo da página -->
+      <div class="area-conteudo">
+        <header class="cabecalho-app">
+          <!-- Nome da página atual -->
+          <div class="titulo-pagina">
+            <span>Meu Tempo</span>
+            <strong>Início</strong>
+          </div>
+
+          <!-- Menu que abre ao clicar no usuário -->
+          <details class="menu-usuario">
+            <summary>
+              <!-- Dados preenchidos após o login -->
+              <span class="avatar" id="usuario-iniciais">U</span>
+
+              <span class="dados-usuario">
+                <small>Olá,</small>
+                <strong id="usuario-nome">Usuário</strong>
+              </span>
+            </summary>
+
+            <div class="opcoes-usuario">
+              <a href="perfil.html">Meu perfil</a>
+              <button type="button" id="ler-credencial" disabled>
+                Ler minha credencial
+              </button>
+              <a href="../index.html">Voltar ao site</a>
+            </div>
+          </details>
+        </header>
+
+        <!-- Conteúdo exclusivo da página inicial -->
+        <main
+          class="conteudo-app pagina-inicio"
+          id="conteudo-principal"
+          tabindex="-1"
+        >
+          <!-- Área de boas-vindas -->
+          <section class="boas-vindas">
+            <div class="saudacao">
+              <!-- A data será preenchida pelo JavaScript -->
+              <p class="data-atual" id="data-atual"></p>
+
+              <h1>
+                Olá, <span id="usuario-primeiro-nome">usuário</span>. Como
+                podemos ajudar você <em>hoje?</em>
+              </h1>
+
+              <p>Escolha um serviço ou converse com a IARA.</p>
+            </div>
+
+            <!-- Localização atual do usuário -->
+            <div class="localizacao">
+              <div class="dados-localizacao">
+                <small>Sua localização</small>
+                <strong id="usuario-localizacao">Não informada</strong>
+              </div>
+
+              <button type="button" id="alterar-localizacao" disabled>
+                Alterar
+              </button>
+            </div>
+          </section>
+
+          <!-- Serviços disponíveis -->
+          <section class="servicos">
+            <div class="titulo-secao">
+              <h2>O que você precisa?</h2>
+              <p>3 serviços disponíveis</p>
+            </div>
+
+            <!-- Cada card direciona para uma página de serviço -->
+            <div class="lista-servicos">
+              <a href="travessia.html" class="card-servico card-travessia">
+                <div class="topo-card">
+                  <span class="numero-servico">01</span>
+                </div>
+
+                <div class="conteudo-card">
+                  <h3>Travessia acessível</h3>
+                  <p>Peça mais tempo para atravessar.</p>
+                </div>
+              </a>
+
+              <a href="apoio-metro.html" class="card-servico card-metro">
+                <div class="topo-card">
+                  <span class="numero-servico">02</span>
+                </div>
+
+                <div class="conteudo-card">
+                  <h3>Apoio no Metrô</h3>
+                  <p>Solicite assistência na estação.</p>
+                </div>
+              </a>
+
+              <a href="zeladoria.html" class="card-servico card-zeladoria">
+                <div class="topo-card">
+                  <span class="numero-servico">03</span>
+                </div>
+
+                <div class="conteudo-card">
+                  <h3>Zeladoria urbana</h3>
+                  <p>Avise sobre barreiras no caminho.</p>
+                </div>
+              </a>
+            </div>
+          </section>
+
+          <!-- Banner que direciona para a IARA -->
+          <section class="assistente-iara">
+            <a href="iara.html" class="banner-iara">
+              <div class="conteudo-iara">
+                <small>Prefere falar?</small>
+                <h2>Converse com a IARA</h2>
+                <p>Sua assistente, no seu ritmo.</p>
+              </div>
+            </a>
+          </section>
+
+          <!-- Atalho para consultar os pedidos realizados -->
+          <a href="solicitacoes.html" class="acompanhar-solicitacoes">
+            Acompanhar minhas solicitações
           </a>
-        </section>
-        <!-- Atalho para consultar os pedidos realizados -->
-        <a href="solicitacoes.html"> Acompanhar minhas solicitações </a>
-      </main>
+        </main>
+      </div>
+
+      <!-- Botão flutuante de ajuda -->
+      <button
+        type="button"
+        class="botao-ajuda"
+        id="botao-ajuda"
+        aria-label="Preciso de ajuda"
+        disabled
+      >
+        ?
+      </button>
     </div>
-    <!-- Botão de ajuda que ficará no canto da tela -->
-    <button type="button" aria-label="Preciso de ajuda" disabled>?</button>
   </body>
 </html>

@@ -6,103 +6,199 @@
     <title>Assistente IARA | Meu Tempo</title>
     <link rel="stylesheet" href="../assets/css/style.css" />
   </head>
-  <body>
-    <!-- Menu lateral -->
-    <aside>
-      <a href="inicio.html">
-        <strong>meu tempo</strong>
-        <small>A cidade no seu ritmo.</small>
-      </a>
 
-      <!-- Navegação entre as páginas -->
-      <nav>
-        <ul>
-          <li><a href="inicio.html">Início</a></li>
-          <li><a href="servicos.html">Serviços</a></li>
-          <li><a href="solicitacoes.html">Solicitações</a></li>
-          <li><a href="iara.html">Assistente IARA</a></li>
-          <li><a href="perfil.html">Perfil e acessibilidade</a></li>
-        </ul>
-      </nav>
-      <div>
-        <a href="perfil.html">Acessibilidade</a>
-        <a href="../index.html">Voltar ao site</a>
-      </div>
-    </aside>
+  <body class="app">
+    <a href="#conteudo-principal" class="pular-conteudo">
+      Ir para o conteúdo
+    </a>
 
-    <!-- Área de conteúdo do aplicativo -->
-    <div>
-      <!-- Cabeçalho superior -->
-      <header>
-        <div>
-          <span>Meu Tempo</span>
-          <strong>Assistente IARA</strong>
-        </div>
-        <!-- Menu do usuário -->
-        <details>
-          <summary>
-            <span>U</span>
-            <small>Olá,</small>
-            <strong>Usuário</strong>
-          </summary>
-          <a href="perfil.html">Meu perfil</a>
-          <button type="button" disabled>Ler minha credencial</button>
+    <div class="aplicativo">
+      <!-- Menu lateral -->
+      <aside class="menu-lateral">
+        <a href="inicio.html" class="logo">
+          <strong>meu tempo</strong>
+          <small class="slogan">A cidade no seu ritmo.</small>
+        </a>
+
+        <nav class="menu-navegacao" aria-label="Menu principal">
+          <ul>
+            <li><a href="inicio.html">Início</a></li>
+            <li><a href="servicos.html">Serviços</a></li>
+            <li><a href="solicitacoes.html">Solicitações</a></li>
+            <li><a href="iara.html" aria-current="page">Assistente IARA</a></li>
+            <li><a href="perfil.html">Perfil e acessibilidade</a></li>
+          </ul>
+        </nav>
+
+        <div class="menu-inferior">
+          <a href="perfil.html">Acessibilidade</a>
           <a href="../index.html">Voltar ao site</a>
-        </details>
-      </header>
-      <!-- Conteúdo principal -->
-      <main>
-        <!-- Janela de conversa com a IARA -->
-        <section>
-          <!-- Cabeçalho do chatbot -->
-          <header>
-            <h1>IARA, sua assistente</h1>
-            <p>Estou aqui para ajudar você.</p>
-            <!-- Botão para ouvir a resposta da assistente -->
-            <button type="button" disabled>Ouvir</button>
-          </header>
+        </div>
+      </aside>
 
-          <!-- Espaço onde aparecerão as mensagens da conversa -->
-          <div role="log" aria-live="polite">
-            <!-- Primeira mensagem exibida pela IARA -->
-            <p>
-              Olá! Sou a IARA, sua assistente de acessibilidade urbana. Como
-              posso ajudar você?
-            </p>
-          </div>
-          <!-- Sugestões de assuntos para iniciar uma conversa -->
-          <div>
-            <button type="button" disabled>Solicitar travessia</button>
-            <button type="button" disabled>Pedir apoio no Metrô</button>
-            <button type="button" disabled>Relatar problema na rua</button>
-            <button type="button" disabled>Como funciona o Meu Tempo?</button>
+      <div class="area-conteudo">
+        <!-- Cabeçalho do aplicativo -->
+        <header class="cabecalho-app">
+          <div class="titulo-pagina">
+            <span>Meu Tempo</span>
+            <strong>Assistente IARA</strong>
           </div>
 
-          <!-- Formulário para enviar mensagens -->
-          <form>
-            <!-- Botão para utilizar o microfone -->
-            <button type="button" disabled>Falar</button>
-            <!-- Campo onde o usuário escreve a mensagem -->
-            <input
-              type="text"
-              name="mensagem"
-              placeholder="Escreva uma mensagem..."
-              aria-label="Mensagem para a IARA"
-              autocomplete="off"
-              required
-            />
+          <details class="menu-usuario">
+            <summary>
+              <span class="avatar" id="usuario-iniciais">U</span>
 
-            <!-- Botão para enviar a mensagem -->
-            <button type="button" disabled>Enviar</button>
-          </form>
-          <!-- Orientação sobre as formas de utilizar o chatbot -->
-          <p>
-            Você pode falar ou escrever. As respostas também aparecem em texto.
-          </p>
-        </section>
-      </main>
+              <span class="dados-usuario">
+                <small>Olá,</small>
+                <strong id="usuario-nome">Usuário</strong>
+              </span>
+            </summary>
+
+            <div class="opcoes-usuario">
+              <a href="perfil.html">Meu perfil</a>
+              <button type="button" id="ler-credencial" disabled>
+                Ler minha credencial
+              </button>
+              <a href="../index.html">Voltar ao site</a>
+            </div>
+          </details>
+        </header>
+
+        <!-- Interface do chatbot -->
+        <main
+          class="conteudo-app pagina-iara"
+          id="conteudo-principal"
+          tabindex="-1"
+        >
+          <section class="chat-iara">
+            <!-- Cabeçalho da conversa -->
+            <header class="cabecalho-chat">
+              <div class="identificacao-iara">
+                <h1>IARA, sua assistente</h1>
+                <p>Estou aqui para ajudar você.</p>
+              </div>
+
+              <button
+                type="button"
+                class="botao-ouvir"
+                id="ouvir-mensagem"
+                disabled
+              >
+                Ouvir
+              </button>
+            </header>
+
+            <!-- Área onde aparecerão as mensagens -->
+            <div class="conversa-iara">
+              <div
+                class="mensagens"
+                id="mensagens"
+                role="log"
+                aria-live="polite"
+                aria-label="Conversa com a IARA"
+              >
+                <!-- Mensagem inicial da assistente -->
+                <div class="mensagem mensagem-iara">
+                  <p>
+                    Olá! Sou a IARA, sua assistente de acessibilidade urbana.
+                    Como posso ajudar você?
+                  </p>
+                </div>
+              </div>
+
+              <!-- Sugestões para começar uma conversa -->
+              <div class="sugestoes-iara">
+                <button
+                  type="button"
+                  class="botao-sugestao"
+                  id="sugestao-travessia"
+                  disabled
+                >
+                  Solicitar travessia
+                </button>
+
+                <button
+                  type="button"
+                  class="botao-sugestao"
+                  id="sugestao-metro"
+                  disabled
+                >
+                  Pedir apoio no Metrô
+                </button>
+
+                <button
+                  type="button"
+                  class="botao-sugestao"
+                  id="sugestao-zeladoria"
+                  disabled
+                >
+                  Relatar problema na rua
+                </button>
+
+                <button
+                  type="button"
+                  class="botao-sugestao"
+                  id="sugestao-informacoes"
+                  disabled
+                >
+                  Como funciona o Meu Tempo?
+                </button>
+              </div>
+            </div>
+
+            <!-- Área de envio de mensagens -->
+            <div class="area-envio">
+              <form class="formulario-chat" id="formulario-chat" method="post">
+                <!-- Permite enviar mensagens por voz -->
+                <button
+                  type="button"
+                  class="botao-microfone"
+                  id="botao-microfone"
+                  disabled
+                >
+                  Falar
+                </button>
+
+                <!-- Campo para digitar a mensagem -->
+                <input
+                  type="text"
+                  class="campo-mensagem"
+                  id="campo-mensagem"
+                  name="mensagem"
+                  placeholder="Escreva uma mensagem..."
+                  aria-label="Mensagem para a IARA"
+                  autocomplete="off"
+                  required
+                />
+
+                <button
+                  type="submit"
+                  class="botao-enviar"
+                  id="enviar-mensagem"
+                  disabled
+                >
+                  Enviar
+                </button>
+              </form>
+
+              <p class="orientacao-chat">
+                Você pode falar ou escrever. As respostas também aparecem em
+                texto.
+              </p>
+            </div>
+          </section>
+        </main>
+      </div>
+
+      <button
+        type="button"
+        class="botao-ajuda"
+        id="botao-ajuda"
+        aria-label="Preciso de ajuda"
+        disabled
+      >
+        ?
+      </button>
     </div>
-    <!-- Botão de ajuda -->
-    <button type="button" aria-label="Preciso de ajuda" disabled>?</button>
   </body>
 </html>

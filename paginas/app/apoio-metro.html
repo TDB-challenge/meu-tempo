@@ -7,89 +7,109 @@
     <link rel="stylesheet" href="../assets/css/style.css" />
   </head>
 
-  <body>
-    <!-- Menu lateral -->
-    <aside>
-      <a href="inicio.html">
-        <strong>meu tempo</strong>
-        <small>A cidade no seu ritmo.</small>
-      </a>
+  <body class="app">
+    <a href="#conteudo-principal" class="pular-conteudo">
+      Ir para o conteúdo
+    </a>
 
-      <!-- Navegação entre as páginas -->
-      <nav>
-        <ul>
-          <li><a href="inicio.html">Início</a></li>
-          <li><a href="servicos.html">Serviços</a></li>
-          <li><a href="solicitacoes.html">Solicitações</a></li>
-          <li><a href="iara.html">Assistente IARA</a></li>
-          <li><a href="perfil.html">Perfil e acessibilidade</a></li>
-        </ul>
-      </nav>
+    <div class="aplicativo">
+      <!-- Menu lateral -->
+      <aside class="menu-lateral">
+        <a href="inicio.html" class="logo">
+          <strong>meu tempo</strong>
+          <small class="slogan">A cidade no seu ritmo.</small>
+        </a>
 
-      <div>
-        <a href="perfil.html">Acessibilidade</a>
-        <a href="../index.html">Voltar ao site</a>
-      </div>
-    </aside>
+        <nav class="menu-navegacao" aria-label="Menu principal">
+          <ul>
+            <li><a href="inicio.html">Início</a></li>
+            <li><a href="servicos.html">Serviços</a></li>
+            <li><a href="solicitacoes.html">Solicitações</a></li>
+            <li><a href="iara.html">Assistente IARA</a></li>
+            <li><a href="perfil.html">Perfil e acessibilidade</a></li>
+          </ul>
+        </nav>
 
-    <!-- Área de conteúdo do aplicativo -->
-    <div>
-      <!-- Cabeçalho -->
-      <header>
-        <div>
-          <span>Meu Tempo</span>
-          <strong>Apoio no Metrô</strong>
-        </div>
-
-        <!-- Menu do usuário -->
-        <details>
-          <summary>
-            <span>U</span>
-            <small>Olá,</small>
-            <strong>Usuário</strong>
-          </summary>
-
-          <a href="perfil.html">Meu perfil</a>
-          <button type="button" disabled>Ler minha credencial</button>
+        <div class="menu-inferior">
+          <a href="perfil.html">Acessibilidade</a>
           <a href="../index.html">Voltar ao site</a>
-        </details>
-      </header>
+        </div>
+      </aside>
 
-      <!-- Conteúdo principal -->
-      <main>
-        <!-- Apresentação do serviço -->
-        <h1>Apoio no Metrô</h1>
-        <p>Vamos encontrar a ajuda de que você precisa.</p>
-        <!-- Formulário com as informações necessárias para o atendimento -->
-        <form>
-          <h2>Onde você precisa de apoio?</h2>
-          <!-- Seleção da linha do metrô -->
-          <div>
-            <label>
+      <div class="area-conteudo">
+        <!-- Cabeçalho do aplicativo -->
+        <header class="cabecalho-app">
+          <div class="titulo-pagina">
+            <span>Meu Tempo</span>
+            <strong>Apoio no Metrô</strong>
+          </div>
+
+          <details class="menu-usuario">
+            <summary>
+              <span class="avatar" id="usuario-iniciais">U</span>
+
+              <span class="dados-usuario">
+                <small>Olá,</small>
+                <strong id="usuario-nome">Usuário</strong>
+              </span>
+            </summary>
+
+            <div class="opcoes-usuario">
+              <a href="perfil.html">Meu perfil</a>
+              <button type="button" id="ler-credencial" disabled>
+                Ler minha credencial
+              </button>
+              <a href="../index.html">Voltar ao site</a>
+            </div>
+          </details>
+        </header>
+
+        <!-- Conteúdo exclusivo do serviço de metrô -->
+        <main
+          class="conteudo-app pagina-apoio-metro"
+          id="conteudo-principal"
+          tabindex="-1"
+        >
+          <section class="introducao-pagina">
+            <h1>Apoio no Metrô</h1>
+            <p>Vamos encontrar a ajuda de que você precisa.</p>
+          </section>
+
+          <!-- Formulário para solicitar assistência -->
+          <form
+            class="formulario-servico"
+            id="formulario-apoio-metro"
+            method="post"
+          >
+            <h2>Onde você precisa de apoio?</h2>
+
+            <!-- Seleção da linha do metrô -->
+            <label class="campo-formulario" for="linha-metro">
               Linha *
-              <select name="linha" required>
+
+              <select id="linha-metro" name="linha" required>
                 <option value="verde">2 — Verde</option>
                 <option value="amarela">4 — Amarela</option>
                 <option value="vermelha">3 — Vermelha</option>
               </select>
             </label>
-          </div>
-          <!-- Seleção da estação -->
-          <div>
-            <label>
+
+            <!-- As estações mudarão conforme a linha selecionada -->
+            <label class="campo-formulario" for="estacao-metro">
               Estação *
-              <select name="estacao" required>
+
+              <select id="estacao-metro" name="estacao" required>
                 <option>Consolação</option>
                 <option>Trianon-Masp</option>
                 <option>Brigadeiro</option>
               </select>
             </label>
-          </div>
-          <!-- Seleção do tipo de assistência necessária -->
-          <div>
-            <label>
+
+            <!-- Tipo de assistência necessária -->
+            <label class="campo-formulario" for="tipo-apoio">
               De que ajuda precisa? *
-              <select name="tipo-apoio" required>
+
+              <select id="tipo-apoio" name="tipo-apoio" required>
                 <option>Acompanhamento até a plataforma</option>
                 <option>Ajuda na catraca</option>
                 <option>Rampa móvel para embarque</option>
@@ -98,48 +118,64 @@
                 <option>Outro tipo de auxílio</option>
               </select>
             </label>
-          </div>
-          <!-- Local onde o funcionário poderá encontrar o usuário -->
-          <div>
-            <label>
+
+            <!-- Local onde o funcionário encontrará o usuário -->
+            <label class="campo-formulario" for="ponto-encontro">
               Onde podemos encontrar você? *
+
               <input
                 type="text"
+                id="ponto-encontro"
                 name="ponto-encontro"
                 placeholder="Ex.: entrada, catraca ou plataforma"
                 required
               />
             </label>
-          </div>
 
-          <!-- Área que mostra a disponibilidade dos elevadores -->
-          <details>
-            <summary>Ver elevadores da estação</summary>
-            <!-- Informações do primeiro elevador -->
-            <div>
-              <strong>Elevador 01</strong>
-              <p>Acesso da rua ao mezanino</p>
-              <span>Operando</span>
-            </div>
+            <!-- Informações demonstrativas sobre os elevadores -->
+            <details class="elevadores-estacao" id="elevadores-estacao">
+              <summary>Ver elevadores da estação</summary>
 
-            <!-- Informações do segundo elevador -->
-            <div>
-              <strong>Elevador 02</strong>
-              <p>Acesso do mezanino à plataforma</p>
-              <span>Operando</span>
-            </div>
-            <p>
-              Você pode pedir apoio mesmo se um elevador estiver em manutenção.
-            </p>
-          </details>
+              <div class="card-elevador">
+                <strong>Elevador 01</strong>
+                <p>Acesso da rua ao mezanino</p>
+                <span class="status-elevador">Operando</span>
+              </div>
 
-          <!-- Botão para enviar o pedido de assistência -->
-          <button type="button" disabled>Pedir apoio</button>
-        </form>
-      </main>
+              <div class="card-elevador">
+                <strong>Elevador 02</strong>
+                <p>Acesso do mezanino à plataforma</p>
+                <span class="status-elevador">Operando</span>
+              </div>
+
+              <p>
+                Você pode pedir apoio mesmo se um elevador estiver em
+                manutenção.
+              </p>
+            </details>
+
+            <!-- Envio do pedido de assistência -->
+            <button
+              type="submit"
+              class="botao-principal"
+              id="pedir-apoio"
+              disabled
+            >
+              Pedir apoio
+            </button>
+          </form>
+        </main>
+      </div>
+
+      <button
+        type="button"
+        class="botao-ajuda"
+        id="botao-ajuda"
+        aria-label="Preciso de ajuda"
+        disabled
+      >
+        ?
+      </button>
     </div>
-
-    <!-- Botão de ajuda -->
-    <button type="button" aria-label="Preciso de ajuda" disabled>?</button>
   </body>
 </html>
