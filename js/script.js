@@ -26,28 +26,88 @@ const botoesAumentar = document.querySelectorAll(".acao-aumentar");
 const botoesDiminuir = document.querySelectorAll(".acao-diminuir");
 const botoesContraste = document.querySelectorAll(".acao-contraste");
 const botoesTema = document.querySelectorAll(".acao-tema");
+const botoesFonteLegivel = document.querySelectorAll(".acao-fonte-legivel");
+const btnResetarAcess = document.getElementById("btn-resetar-acess");
+const feedbackAcess = document.getElementById("feedback-acess");
+
+let escalaFonte = 100;
+
+function atualizarStatusAcessibilidade() {
+  if (!feedbackAcess) {
+    return;
+  }
+
+  const ativos = [];
+
+  if (escalaFonte > 100) {
+    ativos.push("Texto ampliado (" + escalaFonte + "%)");
+  }
+  if (document.body.classList.contains("fonte-legivel")) {
+    ativos.push("Tipografia de alta legibilidade");
+  }
+  if (document.body.classList.contains("alto-contraste")) {
+    ativos.push("Alto contraste");
+  }
+  if (document.body.classList.contains("tema-escuro")) {
+    ativos.push("Tema escuro");
+  }
+
+  if (ativos.length === 0) {
+    feedbackAcess.textContent = "Configuração atual: Leitura padrão ativada (100%).";
+  } else {
+    feedbackAcess.textContent = "Filtros ativos agora: " + ativos.join(" • ") + ".";
+  }
+}
 
 for (let i = 0; i < botoesAumentar.length; i++) {
   botoesAumentar[i].addEventListener("click", function () {
-    document.body.classList.add("fonte-grande");
+    if (escalaFonte < 145) {
+      escalaFonte += 15;
+      document.documentElement.style.fontSize = escalaFonte + "%";
+    }
+    atualizarStatusAcessibilidade();
   });
 }
 
 for (let i = 0; i < botoesDiminuir.length; i++) {
   botoesDiminuir[i].addEventListener("click", function () {
-    document.body.classList.remove("fonte-grande");
+    if (escalaFonte > 100) {
+      escalaFonte -= 15;
+      document.documentElement.style.fontSize = escalaFonte + "%";
+    }
+    atualizarStatusAcessibilidade();
+  });
+}
+
+for (let i = 0; i < botoesFonteLegivel.length; i++) {
+  botoesFonteLegivel[i].addEventListener("click", function () {
+    document.body.classList.toggle("fonte-legivel");
+    atualizarStatusAcessibilidade();
   });
 }
 
 for (let i = 0; i < botoesContraste.length; i++) {
   botoesContraste[i].addEventListener("click", function () {
+    document.body.classList.remove("tema-escuro");
     document.body.classList.toggle("alto-contraste");
+    atualizarStatusAcessibilidade();
   });
 }
 
 for (let i = 0; i < botoesTema.length; i++) {
   botoesTema[i].addEventListener("click", function () {
+    document.body.classList.remove("alto-contraste");
     document.body.classList.toggle("tema-escuro");
+    atualizarStatusAcessibilidade();
+  });
+}
+
+if (btnResetarAcess) {
+  btnResetarAcess.addEventListener("click", function () {
+    escalaFonte = 100;
+    document.documentElement.style.fontSize = "100%";
+    document.body.classList.remove("fonte-grande", "fonte-legivel", "alto-contraste", "tema-escuro");
+    atualizarStatusAcessibilidade();
   });
 }
 
@@ -99,10 +159,8 @@ if (formIara) {
 }
 
 // =====================================================
-// 4. SIMULADORES DA PÁGINA NOSSA SOLUÇÃO (solucao.html)
+// 4. SIMULADORES DA PÁGINA NOSSA SOLUÇÃO
 // =====================================================
-
-// Abrir e fechar os simuladores ao clicar em "Usar este serviço"
 const botoesSimulador = document.querySelectorAll(".btn-abrir-simulador");
 
 for (let i = 0; i < botoesSimulador.length; i++) {
@@ -115,7 +173,6 @@ for (let i = 0; i < botoesSimulador.length; i++) {
   });
 }
 
-// Simulador 01: Travessia com regra automática dos 8 segundos
 const formTravessia = document.getElementById("form-travessia");
 const statusTravessia = document.getElementById("status-travessia");
 
@@ -142,7 +199,6 @@ if (formTravessia) {
   });
 }
 
-// Simulador 02: Chamado geolocalizado no Metrô / CPTM
 const formMetro = document.getElementById("form-metro");
 const statusMetro = document.getElementById("status-metro");
 
@@ -162,7 +218,6 @@ if (formMetro) {
   });
 }
 
-// Simulador 03: Zeladoria urbana
 const formZeladoria = document.getElementById("form-zeladoria");
 const statusZeladoria = document.getElementById("status-zeladoria");
 
@@ -187,7 +242,6 @@ if (formZeladoria) {
   });
 }
 
-// Simulador 04: Demonstração guiada da IARA (Av. Paulista, 5502)
 const btnDemoIara = document.getElementById("btn-demo-iara");
 const demoIaraBox = document.getElementById("demo-iara-box");
 const btnIaraSim = document.getElementById("btn-iara-sim");

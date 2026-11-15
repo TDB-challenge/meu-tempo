@@ -75,8 +75,20 @@ body.fonte-grande {
 body.fonte-legivel,
 body.fonte-legivel h1,
 body.fonte-legivel h2,
-body.fonte-legivel h3 {
+body.fonte-legivel h3,
+body.fonte-legivel p,
+body.fonte-legivel a,
+body.fonte-legivel button,
+body.fonte-legivel li {
   font-family: var(--fonte-acessivel);
+  letter-spacing: 0.04em;
+  word-spacing: 0.14em;
+  line-height: 1.85;
+}
+
+body.fonte-legivel p {
+  color: var(--texto-principal);
+  font-weight: 500;
 }
 
 body.tema-escuro {
@@ -97,7 +109,7 @@ body.alto-contraste {
   --verde-floresta: #000000;
   --verde-natural: #000000;
   --texto-principal: #000000;
-  --texto-secundario: #111111;
+  --texto-secundario: #000000;
   --borda: #000000;
 }
 
@@ -1591,4 +1603,75 @@ img {
 .card-frente p {
   font-size: 0.92rem;
   margin-bottom: 0;
+}
+
+/* =====================================================
+   14. ESTILOS ESPECÍFICOS DA PÁGINA ACESSIBILIDADE
+   ===================================================== */
+.acess-topo {
+  padding: 64px 0 36px;
+}
+
+.acess-topo h1 {
+  max-width: 640px;
+}
+
+.acess-lead {
+  font-size: 1.05rem;
+  color: var(--texto-secundario);
+  max-width: 620px;
+  margin-bottom: 0;
+}
+
+.acess-painel-secao {
+  padding: 16px 0 76px;
+}
+
+.grade-controles-acess {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.btn-controle-acess {
+  background-color: var(--verde-claro);
+  color: var(--texto-principal);
+  border: 1px solid var(--borda);
+  border-radius: var(--radius-medio);
+  padding: 14px 16px;
+  text-align: left;
+  font-family: inherit;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.btn-controle-acess:hover {
+  background-color: #203D2E;
+  color: #F6F3EA;
+  border-color: #203D2E;
+}
+
+.btn-controle-acess strong {
+  font-size: 0.92rem;
+}
+
+.btn-controle-acess span {
+  font-size: 0.78rem;
+  opacity: 0.85;
+}
+
+.grade-pilares-acess {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+@media (max-width: 720px) {
+  .grade-controles-acess,
+  .grade-pilares-acess {
+    grid-template-columns: 1fr;
+  }
 }
