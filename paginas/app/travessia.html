@@ -1,12 +1,718 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Travessia | Meu Tempo</title>
-    <link rel="stylesheet" href="../../css/style.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-</body>
+    <title>Travessia acessível | Meu Tempo</title>
+
+    <link rel="stylesheet" href="../../css/style.css" />
+  </head>
+
+  <body class="app">
+    <!-- Atalho para quem navega pelo teclado -->
+    <a href="#conteudo-principal" class="pular-conteudo">
+      Ir para o conteúdo
+    </a>
+
+    <div class="aplicativo">
+      <!-- Menu lateral para computadores -->
+      <aside class="menu-lateral">
+        <a href="inicio.html" class="logo">
+          <div class="texto-logo">
+            <strong>meu tempo</strong>
+            <small class="slogan">A cidade no seu ritmo.</small>
+          </div>
+        </a>
+
+        <!-- Navegação principal do aplicativo -->
+        <nav class="menu-navegacao" aria-label="Menu principal">
+          <ul>
+            <li>
+              <a href="inicio.html">
+                <img
+                  src="../../assets/icones/piso-tatil.svg"
+                  class="icone"
+                  alt=""
+                />
+                <span>Início</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="servicos.html" aria-current="location">
+                <span>Serviços</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="solicitacoes.html">
+                <span>Pedidos</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="iara.html">
+                <img
+                  src="../../assets/icones/audio.svg"
+                  class="icone"
+                  alt=""
+                />
+                <span>IARA</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="perfil.html">
+                <span>Perfil</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+        <!-- Opções complementares do menu -->
+        <div class="menu-inferior">
+          <a href="perfil.html#preferencias-acessibilidade">
+            <img
+              src="../../assets/icones/libras.svg"
+              class="icone"
+              alt=""
+            />
+            <span>Acessibilidade</span>
+          </a>
+
+          <a href="../index.html">
+            <img src="../../assets/icones/seta-direita.svg" class="icone" alt="" />
+            <span>Voltar ao site</span>
+          </a>
+        </div>
+      </aside>
+
+      <div class="area-conteudo">
+        <!-- Cabeçalho do aplicativo -->
+        <header class="cabecalho-app">
+          <div class="titulo-pagina">
+            <span>Meu Tempo</span>
+            <strong>Travessia acessível</strong>
+          </div>
+
+          <!-- Logo exibida em tablets e celulares -->
+          <a href="inicio.html" class="logo-mobile">
+            <strong>meu tempo</strong>
+          </a>
+
+          <!-- Menu do usuário -->
+          <details class="menu-usuario">
+            <summary>
+              <span class="avatar" id="usuario-iniciais"> U </span>
+
+              <span class="dados-usuario">
+                <small>Olá,</small>
+                <strong id="usuario-nome">Usuário</strong>
+              </span>
+
+              <img
+                src="../../assets/icones/expandir.svg"
+                class="icone seta-menu-usuario"
+                alt=""
+              />
+            </summary>
+
+            <div class="opcoes-usuario">
+              <a href="perfil.html">
+                Meu perfil
+              </a>
+
+              <a href="perfil.html#abrir-leitor-documentos" id="identificar-documento">
+                <img
+                  src="../../assets/icones/camera.svg"
+                  class="icone"
+                  alt=""
+                />
+                Identificar meu documento
+              </a>
+
+              <a href="../index.html">
+                <img src="../../assets/icones/seta-direita.svg" class="icone" alt="" />
+                Voltar ao site
+              </a>
+            </div>
+          </details>
+        </header>
+
+        <!-- Conteúdo da página de travessia -->
+        <main
+          class="conteudo-app pagina-travessia"
+          id="conteudo-principal"
+          tabindex="-1"
+        >
+          <!-- Apresentação do serviço -->
+          <section class="introducao-pagina">
+            <span class="icone-introducao">
+              <img
+                src="../../assets/icones/travessia.svg"
+                class="icone"
+                alt=""
+              />
+            </span>
+
+            <div class="texto-introducao">
+              <h1>Travessia acessível</h1>
+
+              <p>Peça mais tempo em um cruzamento com suporte.</p>
+            </div>
+          </section>
+
+          <!-- Formulário dividido entre mapa e confirmação -->
+          <form
+            class="formulario-servico"
+            id="formulario-travessia"
+            method="post"
+          >
+            <!-- Área para escolher o cruzamento -->
+            <section class="selecao-cruzamento">
+              <div class="cabecalho-mapa">
+                <h2>Onde você quer atravessar?</h2>
+
+                <p>Toque no mapa ou escolha na lista.</p>
+              </div>
+
+              <!-- Legenda que indica quais semáforos possuem suporte -->
+              <div class="legenda-mapa">
+                <span class="ponto-com-suporte">
+                  <span class="indicador-suporte">
+                    <img
+                      src="../../assets/icones/confirmacao.svg"
+                      class="icone"
+                      alt=""
+                    />
+                  </span>
+
+                  Com suporte
+                </span>
+
+                <span class="ponto-sem-suporte">
+                  <span class="indicador-suporte">
+                    <img
+                      src="../../assets/icones/menos.svg"
+                      class="icone"
+                      alt=""
+                    />
+                  </span>
+
+                  Sem suporte
+                </span>
+              </div>
+
+              <!-- Estrutura compartilhada do mapa -->
+              <div class="area-mapa">
+                <div
+                  class="mapa-cruzamentos"
+                  id="mapa-travessia"
+                  aria-label="Mapa demonstrativo dos cruzamentos"
+                >
+                  <!-- As ruas e os marcadores serão inseridos pelo mapas.js -->
+                  <div class="mapa-visual">
+                    <div
+                      class="mapa-base"
+                      id="mapa-base-travessia"
+                      aria-hidden="true"
+                    ></div>
+
+                    <!-- Área que receberá os semáforos selecionáveis -->
+                    <div
+                      class="marcadores-mapa"
+                      id="marcadores-travessia"
+                    ></div>
+                  </div>
+                </div>
+
+                <!-- Controles de zoom do mapa -->
+                <div class="controles-mapa">
+                  <button
+                    type="button"
+                    class="botao-mapa"
+                    id="ampliar-mapa-travessia"
+                    aria-label="Ampliar mapa"
+                    disabled
+                  >
+                    <img
+                      src="../../assets/icones/mais.svg"
+                      class="icone"
+                      alt=""
+                    />
+                  </button>
+
+                  <button
+                    type="button"
+                    class="botao-mapa"
+                    id="diminuir-mapa-travessia"
+                    aria-label="Diminuir mapa"
+                    disabled
+                  >
+                    <img
+                      src="../../assets/icones/menos.svg"
+                      class="icone"
+                      alt=""
+                    />
+                  </button>
+                </div>
+
+                <!-- Informação sobre a cobertura demonstrativa -->
+                <small class="identificacao-mapa"> Mapa demonstrativo </small>
+              </div>
+
+              <!-- Avisos sobre o funcionamento do mapa -->
+              <p
+                class="aviso-mapa"
+                id="aviso-mapa-travessia"
+                role="status"
+                hidden
+              ></p>
+
+              <!-- Alternativa para quem não consegue utilizar o mapa -->
+              <details class="lista-cruzamentos">
+                <summary class="titulo-lista-cruzamentos">
+                  <img
+                    src="../../assets/icones/lista.svg"
+                    class="icone"
+                    alt=""
+                  />
+
+                  <span>Escolher sem usar o mapa</span>
+
+                  <img
+                    src="../../assets/icones/expandir.svg"
+                    class="icone seta-expansao"
+                    alt=""
+                  />
+                </summary>
+
+                <fieldset class="grupo-cruzamentos">
+                  <legend>Selecione um cruzamento</legend>
+
+                  <!-- Todos os campos possuem o mesmo name,
+                                     permitindo selecionar apenas um cruzamento -->
+
+                  <label
+                    class="opcao-cruzamento"
+                    data-cruzamento="paulista-augusta"
+                    data-suporte="true"
+                  >
+                    <input
+                      type="radio"
+                      name="cruzamento"
+                      value="paulista-augusta"
+                      checked
+                    />
+
+                    <span class="icone-cruzamento com-suporte">
+                      <img
+                        src="../../assets/icones/confirmacao.svg"
+                        class="icone"
+                        alt=""
+                      />
+                    </span>
+
+                    <span class="dados-cruzamento">
+                      <strong>Av. Paulista × Rua Augusta</strong>
+
+                      <small>Com suporte à travessia assistida</small>
+                    </span>
+                  </label>
+
+                  <label
+                    class="opcao-cruzamento"
+                    data-cruzamento="paulista-consolacao"
+                    data-suporte="false"
+                  >
+                    <input
+                      type="radio"
+                      name="cruzamento"
+                      value="paulista-consolacao"
+                    />
+
+                    <span class="icone-cruzamento sem-suporte">
+                      <img
+                        src="../../assets/icones/menos.svg"
+                        class="icone"
+                        alt=""
+                      />
+                    </span>
+
+                    <span class="dados-cruzamento">
+                      <strong> Av. Paulista × Rua da Consolação </strong>
+
+                      <small>Sem suporte à travessia assistida</small>
+                    </span>
+                  </label>
+
+                  <label
+                    class="opcao-cruzamento"
+                    data-cruzamento="paulista-pamplona"
+                    data-suporte="false"
+                  >
+                    <input
+                      type="radio"
+                      name="cruzamento"
+                      value="paulista-pamplona"
+                    />
+
+                    <span class="icone-cruzamento sem-suporte">
+                      <img
+                        src="../../assets/icones/menos.svg"
+                        class="icone"
+                        alt=""
+                      />
+                    </span>
+
+                    <span class="dados-cruzamento">
+                      <strong>Av. Paulista × Rua Pamplona</strong>
+
+                      <small>Sem suporte à travessia assistida</small>
+                    </span>
+                  </label>
+
+                  <label
+                    class="opcao-cruzamento"
+                    data-cruzamento="paulista-campinas"
+                    data-suporte="true"
+                  >
+                    <input
+                      type="radio"
+                      name="cruzamento"
+                      value="paulista-campinas"
+                    />
+
+                    <span class="icone-cruzamento com-suporte">
+                      <img
+                        src="../../assets/icones/confirmacao.svg"
+                        class="icone"
+                        alt=""
+                      />
+                    </span>
+
+                    <span class="dados-cruzamento">
+                      <strong>Av. Paulista × Alameda Campinas</strong>
+
+                      <small>Com suporte à travessia assistida</small>
+                    </span>
+                  </label>
+
+                  <label
+                    class="opcao-cruzamento"
+                    data-cruzamento="paulista-brigadeiro"
+                    data-suporte="true"
+                  >
+                    <input
+                      type="radio"
+                      name="cruzamento"
+                      value="paulista-brigadeiro"
+                    />
+
+                    <span class="icone-cruzamento com-suporte">
+                      <img
+                        src="../../assets/icones/confirmacao.svg"
+                        class="icone"
+                        alt=""
+                      />
+                    </span>
+
+                    <span class="dados-cruzamento">
+                      <strong>
+                        Av. Paulista × Av. Brigadeiro Luís Antônio
+                      </strong>
+
+                      <small>Com suporte à travessia assistida</small>
+                    </span>
+                  </label>
+                </fieldset>
+              </details>
+
+              <!-- Informações do cruzamento selecionado no mapa ou na lista -->
+              <div
+                class="cruzamento-selecionado"
+                id="cruzamento-travessia"
+                data-suporte="true"
+                role="status"
+              >
+                <span
+                  class="icone-cruzamento com-suporte"
+                  id="icone-cruzamento-travessia"
+                >
+                  <img
+                    src="../../assets/icones/confirmacao.svg"
+                    class="icone"
+                    alt=""
+                  />
+                </span>
+
+                <div class="dados-cruzamento">
+                  <strong id="nome-cruzamento-travessia">
+                    Av. Paulista × Rua Augusta
+                  </strong>
+
+                  <small id="suporte-cruzamento-travessia">
+                    Este cruzamento tem suporte à travessia assistida.
+                  </small>
+                </div>
+              </div>
+
+              <!-- Os dados de cobertura ainda não são oficiais -->
+              <p class="aviso-cobertura">
+                A cobertura apresentada é demonstrativa.
+              </p>
+            </section>
+
+            <!-- Card lateral para confirmar a solicitação -->
+            <section class="confirmacao-travessia">
+              <span class="icone-confirmacao-travessia">
+                <img
+                  src="../../assets/icones/sucesso.svg"
+                  class="icone"
+                  alt=""
+                />
+              </span>
+
+              <small class="chamada-travessia"> No seu tempo </small>
+
+              <h2 id="titulo-confirmacao-travessia">
+                Você está neste cruzamento?
+              </h2>
+
+              <p id="descricao-confirmacao-travessia">
+                Confirme o local antes de enviar seu pedido.
+              </p>
+
+              <!-- Apresenta o endereço selecionado -->
+              <div class="local-confirmacao">
+                <img
+                  src="../../assets/icones/localizacao.svg"
+                  class="icone"
+                  alt=""
+                />
+
+                <strong id="endereco-confirmacao">
+                  Av. Paulista × Rua Augusta
+                </strong>
+              </div>
+
+              <!-- Disponível apenas quando o cruzamento possui suporte -->
+              <button
+                type="submit"
+                class="botao-principal"
+                id="solicitar-travessia"
+                disabled
+              >
+                <span>Solicitar mais tempo</span>
+
+                <img
+                  src="../../assets/icones/seta-direita.svg"
+                  class="icone"
+                  alt=""
+                />
+              </button>
+
+              <!-- Alternativa para realizar o atendimento por voz -->
+              <a href="iara.html" class="solicitar-por-voz">
+                <img
+                  src="../../assets/icones/audio.svg"
+                  class="icone"
+                  alt=""
+                />
+
+                <span>Solicitar por voz</span>
+              </a>
+
+              <button
+                type="button"
+                class="trocar-cruzamento"
+                id="trocar-cruzamento"
+                disabled
+              >
+                Escolher outro cruzamento
+              </button>
+
+              <!-- Aviso exibido quando o cruzamento não possui suporte -->
+              <div class="aviso-sem-suporte" id="aviso-sem-suporte" hidden>
+                <img
+                  src="../../assets/icones/alerta.svg"
+                  class="icone"
+                  alt=""
+                />
+
+                <p>
+                  Este cruzamento ainda não possui suporte para solicitar mais
+                  tempo de travessia.
+                </p>
+              </div>
+
+              <!-- Permite informar um problema no local selecionado -->
+              <a
+                href="zeladoria.html"
+                class="relatar-local"
+                id="relatar-local"
+                hidden
+              >
+                <img
+                  src="../../assets/icones/zeladoria.svg"
+                  class="icone"
+                  alt=""
+                />
+
+                <span>Relatar problema neste local</span>
+              </a>
+
+              <!-- Orientação de segurança para o usuário -->
+              <div class="aviso-seguranca">
+                <img
+                  src="../../assets/icones/sucesso.svg"
+                  class="icone"
+                  alt=""
+                />
+
+                <p>Observe sempre o sinal de pedestres da rua.</p>
+              </div>
+            </section>
+          </form>
+
+          <!-- Feedback exibido após uma solicitação simulada -->
+          <section
+            class="resultado-servico"
+            id="resultado-travessia"
+            role="status"
+            hidden
+          >
+            <img src="../../assets/icones/sucesso.svg" class="icone" alt="" />
+
+            <h2>Solicitação registrada</h2>
+
+            <p>
+              Seu pedido foi registrado na demonstração do Meu Tempo. Aguarde o
+              sinal de pedestres.
+            </p>
+
+            <a href="solicitacoes.html" class="botao-principal">
+              Acompanhar meus pedidos
+            </a>
+          </section>
+        </main>
+      </div>
+
+      <!-- Navegação inferior para tablets e celulares -->
+      <nav
+        class="navegacao-inferior"
+        aria-label="Menu principal para telas menores"
+      >
+        <ul>
+          <li>
+            <a href="inicio.html">
+              <img src="../../assets/icones/piso-tatil.svg" class="icone" alt="" />
+              <span>Início</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="servicos.html" aria-current="location">
+              <span>Serviços</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="solicitacoes.html">
+              <span>Pedidos</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="iara.html">
+              <img
+                src="../../assets/icones/audio.svg"
+                class="icone"
+                alt=""
+              />
+              <span>IARA</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="perfil.html">
+              <span>Perfil</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Botão flutuante de ajuda -->
+      <button
+        type="button"
+        class="botao-ajuda"
+        id="botao-ajuda"
+        aria-label="Preciso de ajuda"
+        aria-haspopup="dialog"
+        aria-controls="modal-ajuda"
+      >
+        <img src="../../assets/icones/ajuda.svg" class="icone" alt="" />
+      </button>
+    </div>
+
+    <!-- Janela de ajuda compartilhada entre as páginas -->
+    <dialog
+      class="modal-ajuda"
+      id="modal-ajuda"
+      aria-labelledby="titulo-modal-ajuda"
+    >
+      <header class="cabecalho-modal-ajuda">
+        <h2 id="titulo-modal-ajuda">Como podemos ajudar?</h2>
+
+        <form method="dialog">
+          <button
+            type="submit"
+            class="fechar-modal-ajuda"
+            aria-label="Fechar janela"
+          >
+            <img src="../../assets/icones/fechar.svg" class="icone" alt="" />
+          </button>
+        </form>
+      </header>
+
+      <p>
+        Escolha um serviço para pedir apoio. Em “Pedidos”, você acompanha cada
+        atualização.
+      </p>
+
+      <div class="opcoes-ajuda">
+        <a href="iara.html" class="ajuda-iara">
+          <img src="../../assets/icones/audio.svg" class="icone" alt="" />
+
+          <span>Conversar com a IARA</span>
+
+          <img
+            src="../../assets/icones/seta-direita.svg"
+            class="icone"
+            alt=""
+          />
+        </a>
+
+        <a
+          href="perfil.html#preferencias-acessibilidade"
+          class="ajuda-acessibilidade"
+        >
+          <img
+            src="../../assets/icones/libras.svg"
+            class="icone"
+            alt=""
+          />
+
+          <span>Ajustar acessibilidade</span>
+        </a>
+      </div>
+    </dialog>
+
+    <!-- Mapas interativos, marcadores dos semáforos, zoom e geolocalização. -->
+    <script src="../../js/mapas.js" defer></script>
+
+    <!-- Funcionalidades gerais, navegação, acessibilidade, preferências, formulários, solicitações e regras dos serviços. -->
+    <script src="../../js/app.js" defer></script>
+  </body>
 </html>

@@ -1,12 +1,781 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfil | Meu Tempo</title>
-    <link rel="stylesheet" href="../../css/style.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-</body>
+    <title>Perfil e acessibilidade | Meu Tempo</title>
+
+    <link rel="stylesheet" href="../../css/style.css" />
+  </head>
+
+  <body class="app">
+    <!-- Atalho para quem navega pelo teclado -->
+    <a href="#conteudo-principal" class="pular-conteudo">
+      Ir para o conteúdo
+    </a>
+
+    <div class="aplicativo">
+      <!-- Menu lateral do aplicativo -->
+      <aside class="menu-lateral">
+        <a href="inicio.html" class="logo">
+          <div class="texto-logo">
+            <strong>meu tempo</strong>
+            <small class="slogan">A cidade no seu ritmo.</small>
+          </div>
+        </a>
+
+        <nav class="menu-navegacao" aria-label="Menu principal">
+          <ul>
+            <li>
+              <a href="inicio.html">
+                <img
+                  src="../../assets/icones/piso-tatil.svg"
+                  class="icone"
+                  alt=""
+                />
+                <span>Início</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="servicos.html">
+                <span>Serviços</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="solicitacoes.html">
+                <span>Pedidos</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="iara.html">
+                <img
+                  src="../../assets/icones/audio.svg"
+                  class="icone"
+                  alt=""
+                />
+                <span>IARA</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="perfil.html" aria-current="page">
+                <span>Perfil</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+        <!-- Opções na parte inferior do menu -->
+        <div class="menu-inferior">
+          <a href="#preferencias-acessibilidade">
+            <img
+              src="../../assets/icones/libras.svg"
+              class="icone"
+              alt=""
+            />
+            <span>Acessibilidade</span>
+          </a>
+
+          <a href="../index.html">
+            <img src="../../assets/icones/seta-direita.svg" class="icone" alt="" />
+            <span>Voltar ao site</span>
+          </a>
+        </div>
+      </aside>
+
+      <div class="area-conteudo">
+        <!-- Cabeçalho do aplicativo -->
+        <header class="cabecalho-app">
+          <div class="titulo-pagina">
+            <span>Meu Tempo</span>
+            <strong>Perfil e acessibilidade</strong>
+          </div>
+
+          <!-- Logo exibida em telas menores -->
+          <a href="inicio.html" class="logo-mobile">
+            <strong>meu tempo</strong>
+          </a>
+
+          <!-- Menu que abre ao clicar no usuário -->
+          <details class="menu-usuario">
+            <summary>
+              <span class="avatar" id="usuario-iniciais"> U </span>
+
+              <span class="dados-usuario">
+                <small>Olá,</small>
+                <strong id="usuario-nome">Usuário</strong>
+              </span>
+
+              <img
+                src="../../assets/icones/expandir.svg"
+                class="icone seta-menu-usuario"
+                alt=""
+              />
+            </summary>
+
+            <div class="opcoes-usuario">
+              <a href="perfil.html">
+                Meu perfil
+              </a>
+
+              <a href="#abrir-leitor-documentos" id="identificar-documento">
+                <img
+                  src="../../assets/icones/camera.svg"
+                  class="icone"
+                  alt=""
+                />
+                Identificar meu documento
+              </a>
+
+              <a href="../index.html">
+                <img src="../../assets/icones/seta-direita.svg" class="icone" alt="" />
+                Voltar ao site
+              </a>
+            </div>
+          </details>
+        </header>
+
+        <!-- Conteúdo da página de perfil -->
+        <main
+          class="conteudo-app pagina-perfil"
+          id="conteudo-principal"
+          tabindex="-1"
+        >
+          <!-- Apresentação do usuário -->
+          <section class="identificacao-perfil">
+            <!-- As iniciais serão preenchidas pelo JavaScript -->
+            <span class="avatar-perfil" id="perfil-iniciais"> U </span>
+
+            <div class="informacoes-perfil">
+              <small>Suas preferências</small>
+
+              <h1 id="perfil-nome">Usuário</h1>
+
+              <p>Personalize o Meu Tempo do seu jeito.</p>
+            </div>
+          </section>
+
+          <!-- Configurações de acessibilidade -->
+          <section class="card-acessibilidade" id="preferencias-acessibilidade">
+            <h2>Acessibilidade</h2>
+
+            <!-- Seleção do tamanho das letras -->
+            <label class="tamanho-letras" for="tamanho-fonte">
+              Tamanho das letras
+
+              <select id="tamanho-fonte" name="tamanho-fonte">
+                <option value="100">100% — padrão</option>
+                <option value="125">125%</option>
+                <option value="150">150%</option>
+                <option value="175">175%</option>
+                <option value="200">200%</option>
+              </select>
+            </label>
+
+            <!-- Preferências que podem ser ativadas ou desativadas -->
+            <div class="lista-preferencias">
+              <!-- Configuração de alto contraste -->
+              <label class="opcao-preferencia">
+                <span class="icone-preferencia">
+                  <img
+                    src="../../assets/icones/contraste.svg"
+                    class="icone"
+                    alt=""
+                  />
+                </span>
+
+                <span class="descricao-preferencia">
+                  <strong>Alto contraste</strong>
+
+                  <small> Textos e botões mais destacados. </small>
+                </span>
+
+                <input
+                  type="checkbox"
+                  class="interruptor"
+                  id="alto-contraste"
+                  name="alto-contraste"
+                  role="switch"
+                />
+              </label>
+
+              <!-- Configuração das respostas por voz -->
+              <label class="opcao-preferencia">
+                <span class="icone-preferencia">
+                  <img
+                    src="../../assets/icones/audio.svg"
+                    class="icone"
+                    alt=""
+                  />
+                </span>
+
+                <span class="descricao-preferencia">
+                  <strong>Ouvir a IARA</strong>
+
+                  <small> Respostas por voz e por texto. </small>
+                </span>
+
+                <input
+                  type="checkbox"
+                  class="interruptor"
+                  id="ouvir-iara"
+                  name="ouvir-iara"
+                  role="switch"
+                />
+              </label>
+
+              <!-- Configuração de vibração dos avisos -->
+              <label class="opcao-preferencia">
+                <span class="icone-preferencia">
+                  <img
+                    src="../../assets/icones/vibracao.svg"
+                    class="icone"
+                    alt=""
+                  />
+                </span>
+
+                <span class="descricao-preferencia">
+                  <strong>Vibrar nos avisos</strong>
+
+                  <small> Quando o dispositivo permitir. </small>
+                </span>
+
+                <input
+                  type="checkbox"
+                  class="interruptor"
+                  id="vibrar-avisos"
+                  name="vibrar-avisos"
+                  role="switch"
+                />
+              </label>
+            </div>
+
+            <!-- Outras configurações de leitura -->
+            <details class="opcoes-leitura">
+              <summary class="titulo-opcoes-leitura">
+                <img
+                  src="../../assets/icones/configuracoes.svg"
+                  class="icone"
+                  alt=""
+                />
+
+                <span>Mais opções de leitura</span>
+
+                <img
+                  src="../../assets/icones/avancar.svg"
+                  class="icone seta-expansao"
+                  alt=""
+                />
+              </summary>
+
+              <div class="lista-preferencias">
+                <!-- Permite utilizar uma fonte mais legível -->
+                <label class="opcao-preferencia">
+                  <span class="icone-preferencia">
+                    <img
+                      src="../../assets/icones/libras.svg"
+                      class="icone"
+                      alt=""
+                    />
+                  </span>
+
+                  <span class="descricao-preferencia">
+                    <strong>Fonte mais legível</strong>
+                  </span>
+
+                  <input
+                    type="checkbox"
+                    class="interruptor"
+                    id="fonte-legivel"
+                    name="fonte-legivel"
+                    role="switch"
+                  />
+                </label>
+
+                <!-- Permite ativar o tema escuro -->
+                <label class="opcao-preferencia">
+                  <span class="icone-preferencia">
+                    <img
+                      src="../../assets/icones/contraste.svg"
+                      class="icone"
+                      alt=""
+                    />
+                  </span>
+
+                  <span class="descricao-preferencia">
+                    <strong>Tema escuro</strong>
+                  </span>
+
+                  <input
+                    type="checkbox"
+                    class="interruptor"
+                    id="tema-escuro"
+                    name="tema-escuro"
+                    role="switch"
+                  />
+                </label>
+              </div>
+            </details>
+
+            <!-- Acesso aos conteúdos em Libras -->
+            <button
+              type="button"
+              class="botao-libras"
+              id="abrir-libras"
+              disabled
+            >
+              <img src="../../assets/icones/libras.svg" class="icone" alt="" />
+
+              <span>Conteúdo em Libras</span>
+            </button>
+          </section>
+
+          <!-- Identificação por documento, com revisão dos dados pelo usuário -->
+          <section class="card-documento" aria-labelledby="titulo-identificacao-documento">
+            <span class="icone-documento">
+              <img src="../../assets/icones/camera.svg" class="icone" alt="" />
+            </span>
+
+            <div class="dados-documento">
+              <h2 id="titulo-identificacao-documento">Meu documento</h2>
+
+              <!-- O texto será atualizado após a confirmação dos dados -->
+              <p id="status-documento">
+                Fotografe um documento ou escolha uma imagem da galeria.
+                Você também pode preencher seus dados manualmente.
+              </p>
+            </div>
+
+            <!-- O leitor-documentos.js abrirá a janela quando for implementado -->
+            <button
+              type="button"
+              class="botao-documento"
+              id="abrir-leitor-documentos"
+              aria-haspopup="dialog"
+              aria-controls="modal-documento"
+            >
+              <img src="../../assets/icones/camera.svg" class="icone" alt="" />
+              <span id="texto-botao-documento">Identificar documento</span>
+            </button>
+          </section>
+
+          <!-- Área para consultar e alterar os dados pessoais -->
+          <details class="card-meus-dados">
+            <summary class="titulo-meus-dados">
+              <span>Meus dados</span>
+
+              <img
+                src="../../assets/icones/avancar.svg"
+                class="icone seta-expansao"
+                alt=""
+              />
+            </summary>
+
+            <div class="conteudo-meus-dados">
+              <form
+                class="formulario-perfil"
+                id="formulario-perfil"
+                method="post"
+              >
+                <label for="nome-completo"> Nome completo * </label>
+
+                <input
+                  type="text"
+                  id="nome-completo"
+                  name="nome-completo"
+                  autocomplete="name"
+                  maxlength="100"
+                  required
+                />
+
+                <label for="data-nascimento">Data de nascimento</label>
+                <input
+                  type="date"
+                  id="data-nascimento"
+                  name="data-nascimento"
+                  autocomplete="bday"
+                />
+
+                <label for="tipo-documento-perfil">Tipo de documento</label>
+                <select id="tipo-documento-perfil" name="tipo-documento-perfil">
+                  <option value="">Selecione o tipo de documento</option>
+                  <option value="cin">Carteira de Identidade Nacional (CIN)</option>
+                  <option value="rg">Registro Geral (RG)</option>
+                  <option value="cnh">Carteira Nacional de Habilitação (CNH)</option>
+                  <option value="outro">Outro documento</option>
+                </select>
+
+                <button
+                  type="submit"
+                  class="botao-salvar"
+                  id="salvar-dados-perfil"
+                  disabled
+                >
+                  Salvar dados
+                </button>
+              </form>
+
+              <!-- Redireciona para a página de cadastro -->
+              <a href="../cadastro.html" class="criar-conta" id="criar-conta">
+                <span>Criar minha conta</span>
+
+                <img
+                  src="../../assets/icones/seta-direita.svg"
+                  class="icone"
+                  alt=""
+                />
+              </a>
+            </div>
+          </details>
+
+          <!-- Opções complementares do perfil -->
+          <div class="opcoes-perfil">
+            <a href="../privacidade.html"> Privacidade e termos </a>
+
+            <button type="button" id="restaurar-preferencias">
+              Restaurar preferências
+            </button>
+          </div>
+        </main>
+      </div>
+
+      <!-- Barra de navegação inferior -->
+      <nav
+        class="navegacao-inferior"
+        aria-label="Menu principal para telas menores"
+      >
+        <ul>
+          <li>
+            <a href="inicio.html">
+              <img src="../../assets/icones/piso-tatil.svg" class="icone" alt="" />
+              <span>Início</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="servicos.html">
+              <span>Serviços</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="solicitacoes.html">
+              <span>Pedidos</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="iara.html">
+              <img
+                src="../../assets/icones/audio.svg"
+                class="icone"
+                alt=""
+              />
+              <span>IARA</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="perfil.html" aria-current="page">
+              <span>Perfil</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Botão flutuante de ajuda -->
+      <button
+        type="button"
+        class="botao-ajuda"
+        id="botao-ajuda"
+        aria-label="Preciso de ajuda"
+        aria-haspopup="dialog"
+        aria-controls="modal-ajuda"
+      >
+        <img src="../../assets/icones/ajuda.svg" class="icone" alt="" />
+      </button>
+    </div>
+
+    <!-- Estrutura para a futura identificação por documento e revisão dos dados -->
+    <dialog
+      class="modal-documento"
+      id="modal-documento"
+      aria-labelledby="titulo-modal-documento"
+      aria-describedby="descricao-leitura-documento"
+    >
+      <header class="cabecalho-modal">
+        <h2 id="titulo-modal-documento">Identificar meu documento</h2>
+
+        <form method="dialog">
+          <button type="submit" class="fechar-modal" aria-label="Fechar janela">
+            <img src="../../assets/icones/fechar.svg" class="icone" alt="" />
+          </button>
+        </form>
+      </header>
+
+      <p id="descricao-leitura-documento">
+        Fotografe um documento legível ou escolha uma imagem da galeria.
+        Confira e corrija os dados encontrados antes de confirmá-los.
+      </p>
+
+      <!-- Estes campos apenas selecionam a imagem; nenhum arquivo é enviado -->
+      <fieldset class="opcoes-leitura-documento">
+        <legend>Imagem do documento</legend>
+
+        <label class="botao-camera" for="foto-documento">
+          <img src="../../assets/icones/camera.svg" class="icone" alt="" />
+          <span>Fotografar documento</span>
+        </label>
+        <input
+          type="file"
+          id="foto-documento"
+          name="foto-documento"
+          accept="image/*"
+          capture="environment"
+          aria-describedby="orientacao-imagem-documento"
+        />
+
+        <label class="enviar-imagem" for="imagem-documento">
+          <img src="../../assets/icones/imagem.svg" class="icone" alt="" />
+          <span>Selecionar imagem da galeria</span>
+        </label>
+        <input
+          type="file"
+          id="imagem-documento"
+          name="imagem-documento"
+          accept="image/*"
+          aria-describedby="orientacao-imagem-documento"
+        />
+
+        <p id="orientacao-imagem-documento">
+          Enquadre todo o documento e evite reflexos. Selecione apenas uma imagem.
+        </p>
+
+        <label for="tipo-documento">Tipo de documento</label>
+        <select id="tipo-documento" name="tipo-documento" required>
+          <option value="">Selecione o tipo de documento</option>
+          <option value="cin">Carteira de Identidade Nacional (CIN)</option>
+          <option value="rg">Registro Geral (RG)</option>
+          <option value="cnh">Carteira Nacional de Habilitação (CNH)</option>
+          <option value="outro">Outro documento</option>
+        </select>
+      </fieldset>
+
+      <!-- O JavaScript preencherá a prévia local sem enviar a imagem -->
+      <figure class="previa-documento" id="previa-documento" hidden>
+        <img id="fotografia-documento" alt="Prévia do documento selecionado" />
+        <figcaption id="nome-imagem-documento"></figcaption>
+        <button type="button" class="remover-imagem" id="remover-imagem-documento" disabled>
+          Remover imagem
+        </button>
+      </figure>
+
+      <!-- A autorização será conferida antes de qualquer envio ao serviço externo -->
+      <fieldset class="autorizacao-documento">
+        <legend>Autorização para processamento externo</legend>
+        <p id="aviso-processamento-externo">
+          Na leitura automática, a imagem será enviada por um backend seguro ao
+          serviço externo Azure AI Document Intelligence para extrair os dados
+          do documento. Autorize o envio somente se concordar com esse processamento.
+          Para continuar sem enviar uma imagem, preencha seus dados manualmente.
+        </p>
+
+        <label for="autorizar-processamento-documento">
+          <input
+            type="checkbox"
+            id="autorizar-processamento-documento"
+            name="autorizar-processamento-documento"
+            aria-describedby="aviso-processamento-externo"
+            required
+          />
+          Autorizo o envio da imagem ao serviço externo para identificar meus dados.
+        </label>
+
+        <!-- O envio ficará desativado até a integração segura e a validação da autorização -->
+        <button
+          type="button"
+          class="botao-identificar-dados"
+          id="identificar-dados-documento"
+          aria-describedby="mensagem-leitura-documento"
+          disabled
+        >
+          Identificar dados automaticamente
+        </button>
+      </fieldset>
+
+      <p class="mensagem-leitura" id="mensagem-leitura-documento" role="status" aria-live="polite">
+        A leitura automática ainda não está disponível. Por enquanto, preencha
+        seus dados manualmente na seção “Meus dados” do perfil.
+      </p>
+
+      <!-- Os campos encontrados serão editáveis antes da confirmação -->
+      <section
+        class="resultado-documento"
+        id="resultado-documento"
+        aria-labelledby="titulo-resultado-documento"
+        hidden
+      >
+        <span class="icone-resultado-documento">
+          <img src="../../assets/icones/confirmacao.svg" class="icone" alt="" />
+        </span>
+        <h3 id="titulo-resultado-documento">Confira os dados encontrados</h3>
+        <p>A leitura pode conter erros. Corrija os campos antes de usar os dados no perfil.</p>
+
+        <label for="documento-nome-completo">Nome completo</label>
+        <input
+          type="text"
+          id="documento-nome-completo"
+          name="documento-nome-completo"
+          autocomplete="name"
+          maxlength="100"
+          required
+        />
+
+        <label for="documento-data-nascimento">Data de nascimento</label>
+        <input
+          type="date"
+          id="documento-data-nascimento"
+          name="documento-data-nascimento"
+          autocomplete="bday"
+          required
+        />
+
+        <label for="documento-tipo-documento">Tipo de documento</label>
+        <select id="documento-tipo-documento" name="documento-tipo-documento" required>
+          <option value="">Selecione o tipo de documento</option>
+          <option value="cin">Carteira de Identidade Nacional (CIN)</option>
+          <option value="rg">Registro Geral (RG)</option>
+          <option value="cnh">Carteira Nacional de Habilitação (CNH)</option>
+          <option value="outro">Outro documento</option>
+        </select>
+
+        <!-- A confirmação preencherá o perfil quando essa funcionalidade existir -->
+        <button
+          type="button"
+          class="botao-confirmar-documento"
+          id="confirmar-dados-documento"
+          disabled
+        >
+          <span>Confirmar e preencher meu perfil</span>
+          <img src="../../assets/icones/seta-direita.svg" class="icone" alt="" />
+        </button>
+      </section>
+
+      <!-- O preenchimento manual dispensa imagem e autorização para processamento externo -->
+      <details class="leitura-manual" id="preenchimento-manual-documento">
+        <summary>Preencher dados manualmente</summary>
+        <div class="conteudo-leitura-manual">
+          <p>Use esta opção se preferir ou se a leitura automática não funcionar.</p>
+
+          <label for="manual-nome-completo">Nome completo</label>
+          <input
+            type="text"
+            id="manual-nome-completo"
+            name="manual-nome-completo"
+            autocomplete="name"
+            maxlength="100"
+            required
+          />
+
+          <label for="manual-data-nascimento">Data de nascimento</label>
+          <input
+            type="date"
+            id="manual-data-nascimento"
+            name="manual-data-nascimento"
+            autocomplete="bday"
+            required
+          />
+
+          <label for="manual-tipo-documento">Tipo de documento</label>
+          <select id="manual-tipo-documento" name="manual-tipo-documento" required>
+            <option value="">Selecione o tipo de documento</option>
+            <option value="cin">Carteira de Identidade Nacional (CIN)</option>
+            <option value="rg">Registro Geral (RG)</option>
+            <option value="cnh">Carteira Nacional de Habilitação (CNH)</option>
+            <option value="outro">Outro documento</option>
+          </select>
+
+          <button
+            type="button"
+            class="botao-confirmar-dados-manuais"
+            id="confirmar-dados-manuais"
+            disabled
+          >
+            Confirmar dados preenchidos
+          </button>
+        </div>
+      </details>
+
+      <form method="dialog">
+        <button type="submit" class="continuar-sem-documento">
+          Continuar sem leitura de documento
+        </button>
+      </form>
+    </dialog>
+
+    <!-- Aviso reservado para a futura confirmação dos dados do perfil -->
+    <p class="notificacao" id="notificacao-documento" role="status" hidden>
+      Dados confirmados para preencher seu perfil.
+    </p>
+
+    <!-- Janela de ajuda do aplicativo -->
+    <dialog
+      class="modal-ajuda"
+      id="modal-ajuda"
+      aria-labelledby="titulo-modal-ajuda"
+    >
+      <header class="cabecalho-modal-ajuda">
+        <h2 id="titulo-modal-ajuda">Como podemos ajudar?</h2>
+
+        <form method="dialog">
+          <button
+            type="submit"
+            class="fechar-modal-ajuda"
+            aria-label="Fechar janela"
+          >
+            <img src="../../assets/icones/fechar.svg" class="icone" alt="" />
+          </button>
+        </form>
+      </header>
+
+      <p>
+        Escolha um serviço para pedir apoio. Em “Pedidos”, você acompanha cada
+        atualização.
+      </p>
+
+      <div class="opcoes-ajuda">
+        <a href="iara.html" class="ajuda-iara">
+          <img src="../../assets/icones/audio.svg" class="icone" alt="" />
+
+          <span>Conversar com a IARA</span>
+
+          <img
+            src="../../assets/icones/seta-direita.svg"
+            class="icone"
+            alt=""
+          />
+        </a>
+
+        <a href="#preferencias-acessibilidade" class="ajuda-acessibilidade">
+          <img
+            src="../../assets/icones/libras.svg"
+            class="icone"
+            alt=""
+          />
+
+          <span>Ajustar acessibilidade</span>
+        </a>
+      </div>
+    </dialog>
+
+    <!-- Funcionalidades gerais, navegação, acessibilidade, preferências, formulários, solicitações e regras dos serviços. -->
+    <script src="../../js/app.js" defer></script>
+
+    <!-- Captura de documentos, revisão e preenchimento dos dados do perfil. -->
+    <script src="../../js/leitor-documentos.js" defer></script>
+  </body>
 </html>

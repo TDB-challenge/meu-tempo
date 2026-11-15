@@ -1,12 +1,927 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zeladoria | Meu Tempo</title>
-    <link rel="stylesheet" href="../../css/style.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-</body>
+    <title>Zeladoria urbana | Meu Tempo</title>
+
+    <link rel="stylesheet" href="../../css/style.css" />
+  </head>
+
+  <body class="app">
+    <!-- Atalho para quem navega pelo teclado -->
+    <a href="#conteudo-principal" class="pular-conteudo">
+      Ir para o conteúdo
+    </a>
+
+    <div class="aplicativo">
+      <!-- Menu lateral para computadores -->
+      <aside class="menu-lateral">
+        <a href="inicio.html" class="logo">
+          <div class="texto-logo">
+            <strong>meu tempo</strong>
+            <small class="slogan">A cidade no seu ritmo.</small>
+          </div>
+        </a>
+
+        <!-- Navegação principal do aplicativo -->
+        <nav class="menu-navegacao" aria-label="Menu principal">
+          <ul>
+            <li>
+              <a href="inicio.html">
+                <img
+                  src="../../assets/icones/piso-tatil.svg"
+                  class="icone"
+                  alt=""
+                />
+                <span>Início</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="servicos.html" aria-current="location">
+                <span>Serviços</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="solicitacoes.html">
+                <span>Pedidos</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="iara.html">
+                <img
+                  src="../../assets/icones/audio.svg"
+                  class="icone"
+                  alt=""
+                />
+                <span>IARA</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="perfil.html">
+                <span>Perfil</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+        <!-- Opções complementares do menu -->
+        <div class="menu-inferior">
+          <a href="perfil.html#preferencias-acessibilidade">
+            <img
+              src="../../assets/icones/libras.svg"
+              class="icone"
+              alt=""
+            />
+            <span>Acessibilidade</span>
+          </a>
+
+          <a href="../index.html">
+            <img src="../../assets/icones/seta-direita.svg" class="icone" alt="" />
+            <span>Voltar ao site</span>
+          </a>
+        </div>
+      </aside>
+
+      <div class="area-conteudo">
+        <!-- Cabeçalho do aplicativo -->
+        <header class="cabecalho-app">
+          <div class="titulo-pagina">
+            <span>Meu Tempo</span>
+            <strong>Zeladoria urbana</strong>
+          </div>
+
+          <!-- Logo exibida em tablets e celulares -->
+          <a href="inicio.html" class="logo-mobile">
+            <strong>meu tempo</strong>
+          </a>
+
+          <!-- Menu do usuário -->
+          <details class="menu-usuario">
+            <summary>
+              <span class="avatar" id="usuario-iniciais"> U </span>
+
+              <span class="dados-usuario">
+                <small>Olá,</small>
+                <strong id="usuario-nome">Usuário</strong>
+              </span>
+
+              <img
+                src="../../assets/icones/expandir.svg"
+                class="icone seta-menu-usuario"
+                alt=""
+              />
+            </summary>
+
+            <div class="opcoes-usuario">
+              <a href="perfil.html">
+                Meu perfil
+              </a>
+
+              <a href="perfil.html#abrir-leitor-documentos" id="identificar-documento">
+                <img
+                  src="../../assets/icones/camera.svg"
+                  class="icone"
+                  alt=""
+                />
+                Identificar meu documento
+              </a>
+
+              <a href="../index.html">
+                <img src="../../assets/icones/seta-direita.svg" class="icone" alt="" />
+                Voltar ao site
+              </a>
+            </div>
+          </details>
+        </header>
+
+        <!-- Conteúdo da página de zeladoria urbana -->
+        <main
+          class="conteudo-app pagina-zeladoria"
+          id="conteudo-principal"
+          tabindex="-1"
+        >
+          <!-- Apresentação do serviço -->
+          <section class="introducao-pagina">
+            <span class="icone-introducao">
+              <img
+                src="../../assets/icones/zeladoria.svg"
+                class="icone"
+                alt=""
+              />
+            </span>
+
+            <div class="texto-introducao">
+              <h1>Relatar um problema na rua</h1>
+
+              <p>Seu relato ajuda a tornar os caminhos mais acessíveis.</p>
+            </div>
+          </section>
+
+          <!-- Formulário para registrar problemas de acessibilidade -->
+          <form
+            class="formulario-servico"
+            id="formulario-zeladoria"
+            method="post"
+            enctype="multipart/form-data"
+          >
+            <!-- Categorias de problemas que podem ser relatados -->
+            <fieldset class="tipos-problema">
+              <legend>O que você encontrou?</legend>
+
+              <div class="lista-problemas">
+                <!-- Categoria de calçadas danificadas -->
+                <label class="opcao-problema">
+                  <input
+                    type="radio"
+                    name="problema"
+                    value="calcada"
+                    checked
+                    required
+                  />
+
+                  <img
+                    src="../../assets/icones/travessia.svg"
+                    class="icone"
+                    alt=""
+                  />
+
+                  <span>Calçada danificada</span>
+                </label>
+
+                <!-- Categoria de ausência de rampas -->
+                <label class="opcao-problema">
+                  <input type="radio" name="problema" value="rampa" />
+
+                  <img
+                    src="../../assets/icones/libras.svg"
+                    class="icone"
+                    alt=""
+                  />
+
+                  <span>Falta de rampa</span>
+                </label>
+
+                <!-- Categoria de obstáculos na rua -->
+                <label class="opcao-problema">
+                  <input type="radio" name="problema" value="obstaculo" />
+
+                  <img
+                    src="../../assets/icones/obstaculo.svg"
+                    class="icone"
+                    alt=""
+                  />
+
+                  <span>Obstáculo na passagem</span>
+                </label>
+
+                <!-- Categoria relacionada aos semáforos -->
+                <label class="opcao-problema">
+                  <input type="radio" name="problema" value="semaforo" />
+
+                  <!-- Ícone desenhado diretamente no HTML,
+                                     pois não encontramos o arquivo do semáforo -->
+                  <svg
+                    class="icone"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <rect x="7" y="2" width="10" height="20" rx="3" />
+
+                    <circle cx="12" cy="6" r="2" />
+
+                    <circle cx="12" cy="12" r="2" />
+
+                    <circle cx="12" cy="18" r="2" />
+                  </svg>
+
+                  <span>Problema em semáforo</span>
+                </label>
+
+                <!-- Categoria de problemas com piso tátil -->
+                <label class="opcao-problema">
+                  <input type="radio" name="problema" value="piso-tatil" />
+
+                  <img
+                    src="../../assets/icones/piso-tatil.svg"
+                    class="icone"
+                    alt=""
+                  />
+
+                  <span>Piso tátil danificado</span>
+                </label>
+
+                <!-- Categoria para outros tipos de problemas -->
+                <label class="opcao-problema">
+                  <input type="radio" name="problema" value="outro" />
+
+                  <img
+                    src="../../assets/icones/outros.svg"
+                    class="icone"
+                    alt=""
+                  />
+
+                  <span>Outro problema</span>
+                </label>
+              </div>
+            </fieldset>
+
+            <!-- Área para informar onde o problema foi encontrado -->
+            <section class="localizacao-relato">
+              <div class="campo-formulario">
+                <label for="endereco-relato"> Endereço * </label>
+
+                <input
+                  type="text"
+                  id="endereco-relato"
+                  name="endereco"
+                  placeholder="Rua, número ou ponto de referência"
+                  autocomplete="street-address"
+                  required
+                />
+              </div>
+
+              <!-- Coordenadas obtidas após a autorização do usuário -->
+              <input type="hidden" id="latitude-relato" name="latitude" />
+
+              <input type="hidden" id="longitude-relato" name="longitude" />
+
+              <!-- Alternativas para preencher a localização -->
+              <div class="acoes-localizacao">
+                <!-- Solicita a localização real do dispositivo -->
+                <button
+                  type="button"
+                  class="botao-localizacao"
+                  id="usar-localizacao"
+                  disabled
+                >
+                  <img src="../../assets/icones/gps.svg" class="icone" alt="" />
+
+                  <span>Usar minha localização</span>
+                </button>
+
+                <!-- Expande a área do mapa dentro do formulário -->
+                <button
+                  type="button"
+                  class="botao-localizacao"
+                  id="escolher-mapa"
+                  aria-controls="mapa-regiao"
+                  aria-expanded="false"
+                >
+                  <img
+                    src="../../assets/icones/localizacao.svg"
+                    class="icone"
+                    alt=""
+                  />
+
+                  <span>Escolher no mapa</span>
+                </button>
+              </div>
+
+              <!-- Avisos de permissão, carregamento ou erro de localização -->
+              <p
+                class="aviso-localizacao"
+                id="aviso-localizacao"
+                role="status"
+                hidden
+              ></p>
+            </section>
+
+            <!-- O mapa permanece recolhido até o usuário abrir esta área -->
+            <details class="mapa-regiao" id="mapa-regiao">
+              <summary class="titulo-mapa-regiao">
+                <img src="../../assets/icones/localizacao.svg" class="icone" alt="" />
+
+                <span>Mapa e semáforos da região</span>
+
+                <img
+                  src="../../assets/icones/expandir.svg"
+                  class="icone seta-expansao"
+                  alt=""
+                />
+              </summary>
+
+              <!-- Reutiliza a estrutura do mapa da travessia -->
+              <section class="selecao-cruzamento">
+                <div class="cabecalho-mapa">
+                  <h2>Onde está o problema?</h2>
+
+                  <p>Toque no mapa ou escolha na lista.</p>
+                </div>
+
+                <!-- Legenda dos semáforos com e sem suporte -->
+                <div class="legenda-mapa">
+                  <span class="ponto-com-suporte">
+                    <span class="indicador-suporte">
+                      <img
+                        src="../../assets/icones/confirmacao.svg"
+                        class="icone"
+                        alt=""
+                      />
+                    </span>
+
+                    Com suporte
+                  </span>
+
+                  <span class="ponto-sem-suporte">
+                    <span class="indicador-suporte">
+                      <img
+                        src="../../assets/icones/menos.svg"
+                        class="icone"
+                        alt=""
+                      />
+                    </span>
+
+                    Sem suporte
+                  </span>
+                </div>
+
+                <!-- Área que receberá o mapa interativo -->
+                <div class="area-mapa">
+                  <div
+                    class="mapa-cruzamentos"
+                    id="mapa-zeladoria"
+                    aria-label="Mapa demonstrativo dos cruzamentos"
+                  >
+                    <div class="mapa-visual">
+                      <!-- As ruas serão desenhadas pelo mapas.js -->
+                      <div
+                        class="mapa-base"
+                        id="mapa-base-zeladoria"
+                        aria-hidden="true"
+                      ></div>
+
+                      <!-- Recebe os marcadores selecionáveis -->
+                      <div
+                        class="marcadores-mapa"
+                        id="marcadores-zeladoria"
+                      ></div>
+                    </div>
+                  </div>
+
+                  <!-- Controles de zoom -->
+                  <div class="controles-mapa">
+                    <button
+                      type="button"
+                      class="botao-mapa"
+                      id="ampliar-mapa-zeladoria"
+                      aria-label="Ampliar mapa"
+                      disabled
+                    >
+                      <img
+                        src="../../assets/icones/mais.svg"
+                        class="icone"
+                        alt=""
+                      />
+                    </button>
+
+                    <button
+                      type="button"
+                      class="botao-mapa"
+                      id="diminuir-mapa-zeladoria"
+                      aria-label="Diminuir mapa"
+                      disabled
+                    >
+                      <img
+                        src="../../assets/icones/menos.svg"
+                        class="icone"
+                        alt=""
+                      />
+                    </button>
+                  </div>
+
+                  <small class="identificacao-mapa"> Mapa demonstrativo </small>
+                </div>
+
+                <!-- Avisos relacionados ao mapa -->
+                <p
+                  class="aviso-mapa"
+                  id="aviso-mapa-zeladoria"
+                  role="status"
+                  hidden
+                ></p>
+
+                <!-- Alternativa acessível ao mapa interativo -->
+                <details class="lista-cruzamentos">
+                  <summary class="titulo-lista-cruzamentos">
+                    <img
+                      src="../../assets/icones/lista.svg"
+                      class="icone"
+                      alt=""
+                    />
+
+                    <span>Escolher sem usar o mapa</span>
+
+                    <img
+                      src="../../assets/icones/expandir.svg"
+                      class="icone seta-expansao"
+                      alt=""
+                    />
+                  </summary>
+
+                  <fieldset class="grupo-cruzamentos">
+                    <legend>Selecione um cruzamento</legend>
+
+                    <!-- É possível relatar problemas em
+                                         cruzamentos com ou sem suporte -->
+
+                    <label
+                      class="opcao-cruzamento"
+                      data-cruzamento="paulista-augusta"
+                      data-suporte="true"
+                    >
+                      <input
+                        type="radio"
+                        name="cruzamento"
+                        value="paulista-augusta"
+                      />
+
+                      <span class="icone-cruzamento com-suporte">
+                        <img
+                          src="../../assets/icones/confirmacao.svg"
+                          class="icone"
+                          alt=""
+                        />
+                      </span>
+
+                      <span class="dados-cruzamento">
+                        <strong> Av. Paulista × Rua Augusta </strong>
+
+                        <small> Com suporte à travessia assistida </small>
+                      </span>
+                    </label>
+
+                    <label
+                      class="opcao-cruzamento"
+                      data-cruzamento="paulista-consolacao"
+                      data-suporte="false"
+                    >
+                      <input
+                        type="radio"
+                        name="cruzamento"
+                        value="paulista-consolacao"
+                      />
+
+                      <span class="icone-cruzamento sem-suporte">
+                        <img
+                          src="../../assets/icones/menos.svg"
+                          class="icone"
+                          alt=""
+                        />
+                      </span>
+
+                      <span class="dados-cruzamento">
+                        <strong> Av. Paulista × Rua da Consolação </strong>
+
+                        <small> Sem suporte à travessia assistida </small>
+                      </span>
+                    </label>
+
+                    <label
+                      class="opcao-cruzamento"
+                      data-cruzamento="paulista-pamplona"
+                      data-suporte="false"
+                    >
+                      <input
+                        type="radio"
+                        name="cruzamento"
+                        value="paulista-pamplona"
+                      />
+
+                      <span class="icone-cruzamento sem-suporte">
+                        <img
+                          src="../../assets/icones/menos.svg"
+                          class="icone"
+                          alt=""
+                        />
+                      </span>
+
+                      <span class="dados-cruzamento">
+                        <strong> Av. Paulista × Rua Pamplona </strong>
+
+                        <small> Sem suporte à travessia assistida </small>
+                      </span>
+                    </label>
+
+                    <label
+                      class="opcao-cruzamento"
+                      data-cruzamento="paulista-campinas"
+                      data-suporte="true"
+                    >
+                      <input
+                        type="radio"
+                        name="cruzamento"
+                        value="paulista-campinas"
+                      />
+
+                      <span class="icone-cruzamento com-suporte">
+                        <img
+                          src="../../assets/icones/confirmacao.svg"
+                          class="icone"
+                          alt=""
+                        />
+                      </span>
+
+                      <span class="dados-cruzamento">
+                        <strong> Av. Paulista × Alameda Campinas </strong>
+
+                        <small> Com suporte à travessia assistida </small>
+                      </span>
+                    </label>
+
+                    <label
+                      class="opcao-cruzamento"
+                      data-cruzamento="paulista-brigadeiro"
+                      data-suporte="true"
+                    >
+                      <input
+                        type="radio"
+                        name="cruzamento"
+                        value="paulista-brigadeiro"
+                      />
+
+                      <span class="icone-cruzamento com-suporte">
+                        <img
+                          src="../../assets/icones/confirmacao.svg"
+                          class="icone"
+                          alt=""
+                        />
+                      </span>
+
+                      <span class="dados-cruzamento">
+                        <strong>
+                          Av. Paulista × Av. Brigadeiro Luís Antônio
+                        </strong>
+
+                        <small> Com suporte à travessia assistida </small>
+                      </span>
+                    </label>
+                  </fieldset>
+                </details>
+
+                <!-- Apresenta o cruzamento escolhido no mapa ou na lista -->
+                <div
+                  class="cruzamento-selecionado"
+                  id="cruzamento-zeladoria"
+                  role="status"
+                  hidden
+                >
+                  <span
+                    class="icone-cruzamento"
+                    id="icone-cruzamento-zeladoria"
+                  >
+                    <img
+                      src="../../assets/icones/localizacao.svg"
+                      class="icone"
+                      alt=""
+                    />
+                  </span>
+
+                  <div class="dados-cruzamento">
+                    <strong id="nome-cruzamento-zeladoria"></strong>
+
+                    <small id="suporte-cruzamento-zeladoria"></small>
+                  </div>
+                </div>
+
+                <!-- O relato pode ser registrado em qualquer endereço -->
+                <p class="aviso-cobertura">
+                  A cobertura apresentada é demonstrativa. Você pode registrar
+                  problemas em qualquer local.
+                </p>
+              </section>
+            </details>
+
+            <!-- Campo para explicar o problema encontrado -->
+            <div class="campo-formulario">
+              <label for="descricao-relato"> Descrição * </label>
+
+              <textarea
+                id="descricao-relato"
+                name="descricao"
+                rows="4"
+                placeholder="Conte um pouco sobre o problema encontrado..."
+                required
+              ></textarea>
+            </div>
+
+            <!-- Arquivos que podem complementar o relato -->
+            <div class="anexos-relato">
+              <!-- Envio opcional de uma foto -->
+              <div class="anexo-relato">
+                <label class="botao-anexo" for="foto-relato">
+                  <img
+                    src="../../assets/icones/camera.svg"
+                    class="icone"
+                    alt=""
+                  />
+
+                  <span>Adicionar foto (opcional)</span>
+                </label>
+
+                <input
+                  type="file"
+                  class="campo-anexo"
+                  id="foto-relato"
+                  name="foto"
+                  accept="image/*"
+                  capture="environment"
+                />
+
+                <!-- Prévia da foto selecionada -->
+                <div class="previa-anexo" id="previa-foto" hidden>
+                  <img
+                    id="imagem-relato"
+                    alt="Foto selecionada para o relato"
+                  />
+
+                  <p id="nome-foto"></p>
+
+                  <button
+                    type="button"
+                    class="remover-anexo"
+                    id="remover-foto"
+                    aria-label="Remover foto"
+                  >
+                    <img
+                      src="../../assets/icones/fechar.svg"
+                      class="icone"
+                      alt=""
+                    />
+                  </button>
+                </div>
+              </div>
+
+              <!-- Envio opcional de um arquivo de áudio -->
+              <div class="anexo-relato">
+                <label class="botao-anexo" for="audio-relato">
+                  <img
+                    src="../../assets/icones/audio.svg"
+                    class="icone"
+                    alt=""
+                  />
+
+                  <span>Adicionar áudio (opcional)</span>
+                </label>
+
+                <input
+                  type="file"
+                  class="campo-anexo"
+                  id="audio-relato"
+                  name="audio"
+                  accept="audio/*"
+                />
+
+                <!-- Prévia do áudio selecionado -->
+                <div class="previa-anexo" id="previa-audio" hidden>
+                  <audio id="reprodutor-audio" controls></audio>
+
+                  <p id="nome-audio"></p>
+
+                  <button
+                    type="button"
+                    class="remover-anexo"
+                    id="remover-audio"
+                    aria-label="Remover áudio"
+                  >
+                    <img
+                      src="../../assets/icones/fechar.svg"
+                      class="icone"
+                      alt=""
+                    />
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Mensagens relacionadas ao preenchimento do formulário -->
+            <p
+              class="aviso-formulario"
+              id="aviso-zeladoria"
+              role="status"
+              hidden
+            ></p>
+
+            <!-- Botão para finalizar o registro -->
+            <button
+              type="submit"
+              class="botao-principal"
+              id="registrar-relato"
+              disabled
+            >
+              <span>Registrar relato</span>
+
+              <img
+                src="../../assets/icones/seta-direita.svg"
+                class="icone"
+                alt=""
+              />
+            </button>
+          </form>
+
+          <!-- Confirmação exibida após registrar o problema -->
+          <section
+            class="resultado-servico"
+            id="resultado-zeladoria"
+            role="status"
+            hidden
+          >
+            <span class="icone-resultado-servico">
+              <img src="../../assets/icones/sucesso.svg" class="icone" alt="" />
+            </span>
+
+            <h2>Relato registrado!</h2>
+
+            <p>Obrigado por contribuir para uma cidade mais acessível.</p>
+
+            <!-- Número gerado após o registro -->
+            <p class="protocolo-solicitacao">
+              Protocolo:
+              <strong id="protocolo-zeladoria"></strong>
+            </p>
+
+            <a href="solicitacoes.html" class="botao-principal">
+              <span>Acompanhar meu relato</span>
+
+              <img
+                src="../../assets/icones/seta-direita.svg"
+                class="icone"
+                alt=""
+              />
+            </a>
+
+            <a href="servicos.html" class="voltar-servicos">
+              Voltar aos serviços
+            </a>
+          </section>
+        </main>
+      </div>
+
+      <!-- Navegação inferior para tablets e celulares -->
+      <nav
+        class="navegacao-inferior"
+        aria-label="Menu principal para telas menores"
+      >
+        <ul>
+          <li>
+            <a href="inicio.html">
+              <img src="../../assets/icones/piso-tatil.svg" class="icone" alt="" />
+              <span>Início</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="servicos.html" aria-current="location">
+              <span>Serviços</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="solicitacoes.html">
+              <span>Pedidos</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="iara.html">
+              <img
+                src="../../assets/icones/audio.svg"
+                class="icone"
+                alt=""
+              />
+              <span>IARA</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="perfil.html">
+              <span>Perfil</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Botão flutuante de ajuda -->
+      <button
+        type="button"
+        class="botao-ajuda"
+        id="botao-ajuda"
+        aria-label="Preciso de ajuda"
+        aria-haspopup="dialog"
+        aria-controls="modal-ajuda"
+      >
+        <img src="../../assets/icones/ajuda.svg" class="icone" alt="" />
+      </button>
+    </div>
+
+    <!-- Janela de ajuda compartilhada entre as páginas -->
+    <dialog
+      class="modal-ajuda"
+      id="modal-ajuda"
+      aria-labelledby="titulo-modal-ajuda"
+    >
+      <header class="cabecalho-modal-ajuda">
+        <h2 id="titulo-modal-ajuda">Como podemos ajudar?</h2>
+
+        <form method="dialog">
+          <button
+            type="submit"
+            class="fechar-modal-ajuda"
+            aria-label="Fechar janela"
+          >
+            <img src="../../assets/icones/fechar.svg" class="icone" alt="" />
+          </button>
+        </form>
+      </header>
+
+      <p>
+        Escolha um serviço para pedir apoio. Em “Pedidos”, você acompanha cada
+        atualização.
+      </p>
+
+      <div class="opcoes-ajuda">
+        <a href="iara.html" class="ajuda-iara">
+          <img src="../../assets/icones/audio.svg" class="icone" alt="" />
+
+          <span>Conversar com a IARA</span>
+
+          <img
+            src="../../assets/icones/seta-direita.svg"
+            class="icone"
+            alt=""
+          />
+        </a>
+
+        <a
+          href="perfil.html#preferencias-acessibilidade"
+          class="ajuda-acessibilidade"
+        >
+          <img
+            src="../../assets/icones/libras.svg"
+            class="icone"
+            alt=""
+          />
+
+          <span>Ajustar acessibilidade</span>
+        </a>
+      </div>
+    </dialog>
+
+    <!-- Mapas interativos, marcadores dos semáforos, zoom e geolocalização. -->
+    <script src="../../js/mapas.js" defer></script>
+
+    <!-- Funcionalidades gerais, navegação, acessibilidade, preferências, formulários, solicitações e regras dos serviços. -->
+    <script src="../../js/app.js" defer></script>
+  </body>
 </html>

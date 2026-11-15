@@ -1,12 +1,508 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solicitações | Meu Tempo</title>
-    <link rel="stylesheet" href="../../css/style.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-</body>
+    <title>Solicitações | Meu Tempo</title>
+
+    <link rel="stylesheet" href="../../css/style.css" />
+  </head>
+
+  <body class="app">
+    <!-- Atalho para quem navega pelo teclado -->
+    <a href="#conteudo-principal" class="pular-conteudo">
+      Ir para o conteúdo
+    </a>
+
+    <div class="aplicativo">
+      <!-- Menu lateral do aplicativo -->
+      <aside class="menu-lateral">
+        <a href="inicio.html" class="logo">
+          <div class="texto-logo">
+            <strong>meu tempo</strong>
+            <small class="slogan">A cidade no seu ritmo.</small>
+          </div>
+        </a>
+
+        <nav class="menu-navegacao" aria-label="Menu principal">
+          <ul>
+            <li>
+              <a href="inicio.html">
+                <img
+                  src="../../assets/icones/piso-tatil.svg"
+                  class="icone"
+                  alt=""
+                />
+                <span>Início</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="servicos.html">
+                <span>Serviços</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="solicitacoes.html" aria-current="page">
+                <span>Pedidos</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="iara.html">
+                <img
+                  src="../../assets/icones/audio.svg"
+                  class="icone"
+                  alt=""
+                />
+                <span>IARA</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="perfil.html">
+                <span>Perfil</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+        <!-- Opções complementares do menu -->
+        <div class="menu-inferior">
+          <a href="perfil.html#preferencias-acessibilidade">
+            <img
+              src="../../assets/icones/libras.svg"
+              class="icone"
+              alt=""
+            />
+            <span>Acessibilidade</span>
+          </a>
+
+          <a href="../index.html">
+            <img src="../../assets/icones/seta-direita.svg" class="icone" alt="" />
+            <span>Voltar ao site</span>
+          </a>
+        </div>
+      </aside>
+
+      <div class="area-conteudo">
+        <!-- Cabeçalho do aplicativo -->
+        <header class="cabecalho-app">
+          <div class="titulo-pagina">
+            <span>Meu Tempo</span>
+            <strong>Solicitações</strong>
+          </div>
+
+          <!-- Logo para telas menores -->
+          <a href="inicio.html" class="logo-mobile">
+            <strong>meu tempo</strong>
+          </a>
+
+          <!-- Menu do usuário -->
+          <details class="menu-usuario">
+            <summary>
+              <span class="avatar" id="usuario-iniciais"> U </span>
+
+              <span class="dados-usuario">
+                <small>Olá,</small>
+                <strong id="usuario-nome">Usuário</strong>
+              </span>
+
+              <img
+                src="../../assets/icones/expandir.svg"
+                class="icone seta-menu-usuario"
+                alt=""
+              />
+            </summary>
+
+            <div class="opcoes-usuario">
+              <a href="perfil.html">
+                Meu perfil
+              </a>
+
+              <a href="perfil.html#abrir-leitor-documentos" id="identificar-documento">
+                <img
+                  src="../../assets/icones/camera.svg"
+                  class="icone"
+                  alt=""
+                />
+                Identificar meu documento
+              </a>
+
+              <a href="../index.html">
+                <img src="../../assets/icones/seta-direita.svg" class="icone" alt="" />
+                Voltar ao site
+              </a>
+            </div>
+          </details>
+        </header>
+
+        <!-- Conteúdo da página de solicitações -->
+        <main
+          class="conteudo-app pagina-solicitacoes"
+          id="conteudo-principal"
+          tabindex="-1"
+        >
+          <!-- Título e descrição da página -->
+          <section class="introducao-pagina">
+            <div class="texto-introducao">
+              <h1>Minhas solicitações</h1>
+              <p>Acompanhe seus pedidos e relatos.</p>
+            </div>
+          </section>
+
+          <!-- Filtros para consultar os pedidos pela situação -->
+          <div
+            class="filtros-solicitacoes"
+            role="group"
+            aria-label="Filtrar solicitações"
+          >
+            <button
+              type="button"
+              class="botao-filtro"
+              id="filtro-todas"
+              aria-pressed="true"
+            >
+              Todas
+            </button>
+
+            <button
+              type="button"
+              class="botao-filtro"
+              id="filtro-andamento"
+              aria-pressed="false"
+            >
+              Em andamento
+            </button>
+
+            <button
+              type="button"
+              class="botao-filtro"
+              id="filtro-finalizadas"
+              aria-pressed="false"
+            >
+              Finalizadas
+            </button>
+          </div>
+
+          <!-- Exemplos de pedidos que serão substituídos por dados do usuário -->
+          <section
+            class="lista-solicitacoes"
+            id="lista-solicitacoes"
+            aria-label="Pedidos realizados"
+          >
+            <!-- Exemplo de solicitação de apoio no metrô -->
+            <details class="card-solicitacao" data-status="andamento">
+              <summary>
+                <span class="icone-solicitacao">
+                  <img
+                    src="../../assets/icones/metro.svg"
+                    class="icone"
+                    alt=""
+                  />
+                </span>
+
+                <span class="dados-solicitacao">
+                  <strong> Acompanhamento até a plataforma </strong>
+
+                  <small>
+                    Hoje · 14:32 · Consolação · Linha 2 — Verde · Entrada
+                    principal
+                  </small>
+                </span>
+
+                <span class="status-solicitacao status-andamento">
+                  Funcionário a caminho
+                </span>
+
+                <img
+                  src="../../assets/icones/seta-direita.svg"
+                  class="icone seta-solicitacao"
+                  alt=""
+                />
+              </summary>
+
+              <!-- Histórico exibido ao abrir a solicitação -->
+              <div class="historico-solicitacao">
+                <p class="protocolo-solicitacao">MT-1042</p>
+
+                <!-- Linha do tempo das atualizações do pedido -->
+                <ol class="linha-tempo">
+                  <li class="etapa-solicitacao">
+                    <span class="icone-etapa">
+                      <img
+                        src="../../assets/icones/confirmacao.svg"
+                        class="icone"
+                        alt=""
+                      />
+                    </span>
+
+                    <div class="dados-etapa">
+                      <strong>Pedido recebido</strong>
+
+                      <p>
+                        <time datetime="14:32">14:32</time>
+                      </p>
+                    </div>
+                  </li>
+
+                  <li class="etapa-solicitacao">
+                    <span class="icone-etapa">
+                      <img
+                        src="../../assets/icones/confirmacao.svg"
+                        class="icone"
+                        alt=""
+                      />
+                    </span>
+
+                    <div class="dados-etapa">
+                      <strong>Aprovado</strong>
+
+                      <p>
+                        <time datetime="14:33">14:33</time>
+                      </p>
+                    </div>
+                  </li>
+
+                  <li class="etapa-solicitacao">
+                    <span class="icone-etapa">
+                      <img
+                        src="../../assets/icones/confirmacao.svg"
+                        class="icone"
+                        alt=""
+                      />
+                    </span>
+
+                    <div class="dados-etapa">
+                      <strong>Funcionário a caminho</strong>
+
+                      <p>
+                        <time datetime="14:35">14:35</time>
+                        · Aguarde próximo à entrada principal.
+                      </p>
+                    </div>
+                  </li>
+                </ol>
+              </div>
+            </details>
+
+            <!-- Exemplo de uma solicitação de zeladoria concluída -->
+            <details class="card-solicitacao" data-status="finalizada">
+              <summary>
+                <span class="icone-solicitacao">
+                  <img
+                    src="../../assets/icones/zeladoria.svg"
+                    class="icone"
+                    alt=""
+                  />
+                </span>
+
+                <span class="dados-solicitacao">
+                  <strong>Piso tátil danificado</strong>
+
+                  <small> Hoje · 09:15 · Av. Paulista × Rua Pamplona </small>
+                </span>
+
+                <span class="status-solicitacao status-finalizada">
+                  Concluído
+                </span>
+
+                <img
+                  src="../../assets/icones/seta-direita.svg"
+                  class="icone seta-solicitacao"
+                  alt=""
+                />
+              </summary>
+
+              <!-- Histórico do relato registrado -->
+              <div class="historico-solicitacao">
+                <p class="protocolo-solicitacao">MT-1041</p>
+
+                <ol class="linha-tempo">
+                  <li class="etapa-solicitacao">
+                    <span class="icone-etapa">
+                      <img
+                        src="../../assets/icones/confirmacao.svg"
+                        class="icone"
+                        alt=""
+                      />
+                    </span>
+
+                    <div class="dados-etapa">
+                      <strong>Pedido recebido</strong>
+
+                      <p>
+                        <time datetime="09:15">09:15</time>
+                      </p>
+                    </div>
+                  </li>
+
+                  <li class="etapa-solicitacao">
+                    <span class="icone-etapa">
+                      <img
+                        src="../../assets/icones/confirmacao.svg"
+                        class="icone"
+                        alt=""
+                      />
+                    </span>
+
+                    <div class="dados-etapa">
+                      <strong>Em análise</strong>
+
+                      <p>
+                        <time datetime="09:22">09:22</time>
+                      </p>
+                    </div>
+                  </li>
+
+                  <li class="etapa-solicitacao">
+                    <span class="icone-etapa">
+                      <img
+                        src="../../assets/icones/confirmacao.svg"
+                        class="icone"
+                        alt=""
+                      />
+                    </span>
+
+                    <div class="dados-etapa">
+                      <strong>Concluído</strong>
+
+                      <p>
+                        <time datetime="11:40">11:40</time>
+                        · Passagem desobstruída.
+                      </p>
+                    </div>
+                  </li>
+                </ol>
+              </div>
+            </details>
+          </section>
+
+          <!-- Mensagem exibida quando não houver pedidos -->
+          <p
+            class="sem-solicitacoes"
+            id="sem-solicitacoes"
+            role="status"
+            hidden
+          >
+            Nenhuma solicitação encontrada.
+          </p>
+        </main>
+      </div>
+
+      <!-- Navegação inferior para tablets e celulares -->
+      <nav
+        class="navegacao-inferior"
+        aria-label="Menu principal para telas menores"
+      >
+        <ul>
+          <li>
+            <a href="inicio.html">
+              <img src="../../assets/icones/piso-tatil.svg" class="icone" alt="" />
+              <span>Início</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="servicos.html">
+              <span>Serviços</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="solicitacoes.html" aria-current="page">
+              <span>Pedidos</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="iara.html">
+              <img
+                src="../../assets/icones/audio.svg"
+                class="icone"
+                alt=""
+              />
+              <span>IARA</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="perfil.html">
+              <span>Perfil</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Botão flutuante de ajuda -->
+      <button
+        type="button"
+        class="botao-ajuda"
+        id="botao-ajuda"
+        aria-label="Preciso de ajuda"
+        aria-haspopup="dialog"
+        aria-controls="modal-ajuda"
+      >
+        <img src="../../assets/icones/ajuda.svg" class="icone" alt="" />
+      </button>
+    </div>
+
+    <!-- Janela de ajuda do aplicativo -->
+    <dialog
+      class="modal-ajuda"
+      id="modal-ajuda"
+      aria-labelledby="titulo-modal-ajuda"
+    >
+      <header class="cabecalho-modal-ajuda">
+        <h2 id="titulo-modal-ajuda">Como podemos ajudar?</h2>
+
+        <form method="dialog">
+          <button
+            type="submit"
+            class="fechar-modal-ajuda"
+            aria-label="Fechar janela"
+          >
+            <img src="../../assets/icones/fechar.svg" class="icone" alt="" />
+          </button>
+        </form>
+      </header>
+
+      <p>
+        Escolha um serviço para pedir apoio. Em “Pedidos”, você acompanha cada
+        atualização.
+      </p>
+
+      <div class="opcoes-ajuda">
+        <a href="iara.html" class="ajuda-iara">
+          <img src="../../assets/icones/audio.svg" class="icone" alt="" />
+
+          <span>Conversar com a IARA</span>
+
+          <img
+            src="../../assets/icones/seta-direita.svg"
+            class="icone"
+            alt=""
+          />
+        </a>
+
+        <a
+          href="perfil.html#preferencias-acessibilidade"
+          class="ajuda-acessibilidade"
+        >
+          <img
+            src="../../assets/icones/libras.svg"
+            class="icone"
+            alt=""
+          />
+
+          <span>Ajustar acessibilidade</span>
+        </a>
+      </div>
+    </dialog>
+
+    <!-- Funcionalidades gerais, navegação, acessibilidade, preferências, formulários, solicitações e regras dos serviços. -->
+    <script src="../../js/app.js" defer></script>
+  </body>
 </html>

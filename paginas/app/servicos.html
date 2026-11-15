@@ -1,12 +1,393 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Serviços | Meu Tempo</title>
-    <link rel="stylesheet" href="../../css/style.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-</body>
+    <title>Serviços | Meu Tempo</title>
+
+    <link rel="stylesheet" href="../../css/style.css" />
+  </head>
+
+  <body class="app">
+    <!-- Atalho para quem navega pelo teclado -->
+    <a href="#conteudo-principal" class="pular-conteudo">
+      Ir para o conteúdo
+    </a>
+
+    <div class="aplicativo">
+      <!-- Menu lateral para computadores -->
+      <aside class="menu-lateral">
+        <a href="inicio.html" class="logo">
+          <div class="texto-logo">
+            <strong>meu tempo</strong>
+            <small class="slogan">A cidade no seu ritmo.</small>
+          </div>
+        </a>
+
+        <!-- Links de navegação do aplicativo -->
+        <nav class="menu-navegacao" aria-label="Menu principal">
+          <ul>
+            <li>
+              <a href="inicio.html">
+                <img
+                  src="../../assets/icones/piso-tatil.svg"
+                  class="icone"
+                  alt=""
+                />
+                <span>Início</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="servicos.html" aria-current="page">
+                <span>Serviços</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="solicitacoes.html">
+                <span>Pedidos</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="iara.html">
+                <img
+                  src="../../assets/icones/audio.svg"
+                  class="icone"
+                  alt=""
+                />
+                <span>IARA</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="perfil.html">
+                <span>Perfil</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+        <!-- Opções na parte inferior do menu -->
+        <div class="menu-inferior">
+          <a href="perfil.html#preferencias-acessibilidade">
+            <img
+              src="../../assets/icones/libras.svg"
+              class="icone"
+              alt=""
+            />
+            <span>Acessibilidade</span>
+          </a>
+
+          <a href="../index.html">
+            <img src="../../assets/icones/seta-direita.svg" class="icone" alt="" />
+            <span>Voltar ao site</span>
+          </a>
+        </div>
+      </aside>
+
+      <div class="area-conteudo">
+        <!-- Cabeçalho do aplicativo -->
+        <header class="cabecalho-app">
+          <!-- Nome da página exibido no desktop -->
+          <div class="titulo-pagina">
+            <span>Meu Tempo</span>
+            <strong>Serviços</strong>
+          </div>
+
+          <!-- Logo exibida em telas menores -->
+          <a href="inicio.html" class="logo-mobile">
+            <strong>meu tempo</strong>
+          </a>
+
+          <!-- Menu do usuário -->
+          <details class="menu-usuario">
+            <summary>
+              <span class="avatar" id="usuario-iniciais"> U </span>
+
+              <span class="dados-usuario">
+                <small>Olá,</small>
+                <strong id="usuario-nome">Usuário</strong>
+              </span>
+
+              <img
+                src="../../assets/icones/expandir.svg"
+                class="icone seta-menu-usuario"
+                alt=""
+              />
+            </summary>
+
+            <div class="opcoes-usuario">
+              <a href="perfil.html">
+                Meu perfil
+              </a>
+
+              <a href="perfil.html#abrir-leitor-documentos" id="identificar-documento">
+                <img
+                  src="../../assets/icones/camera.svg"
+                  class="icone"
+                  alt=""
+                />
+                Identificar meu documento
+              </a>
+
+              <a href="../index.html">
+                <img src="../../assets/icones/seta-direita.svg" class="icone" alt="" />
+                Voltar ao site
+              </a>
+            </div>
+          </details>
+        </header>
+
+        <!-- Conteúdo da página de serviços -->
+        <main
+          class="conteudo-app pagina-servicos"
+          id="conteudo-principal"
+          tabindex="-1"
+        >
+          <!-- Apresentação da página -->
+          <section class="introducao-pagina">
+            <div class="texto-introducao">
+              <h1>Como podemos ajudar?</h1>
+              <p>Escolha um serviço para continuar.</p>
+            </div>
+          </section>
+
+          <!-- Cards dos serviços disponíveis -->
+          <section class="lista-servicos" aria-label="Serviços disponíveis">
+            <!-- Serviço de travessia acessível -->
+            <a href="travessia.html" class="card-servico card-travessia">
+              <div class="topo-card">
+                <span class="icone-card">
+                  <img
+                    src="../../assets/icones/travessia.svg"
+                    class="icone"
+                    alt=""
+                  />
+                </span>
+
+                <span class="numero-servico">01</span>
+              </div>
+
+              <div class="conteudo-card">
+                <div class="texto-card">
+                  <h2>Travessia acessível</h2>
+                  <p>Peça mais tempo para atravessar.</p>
+                </div>
+
+                <span class="seta-card">
+                  <img
+                    src="../../assets/icones/seta-direita.svg"
+                    class="icone"
+                    alt=""
+                  />
+                </span>
+              </div>
+            </a>
+
+            <!-- Serviço de apoio no metrô -->
+            <a href="apoio-metro.html" class="card-servico card-metro">
+              <div class="topo-card">
+                <span class="icone-card">
+                  <img
+                    src="../../assets/icones/metro.svg"
+                    class="icone"
+                    alt=""
+                  />
+                </span>
+
+                <span class="numero-servico">02</span>
+              </div>
+
+              <div class="conteudo-card">
+                <div class="texto-card">
+                  <h2>Apoio no Metrô</h2>
+                  <p>Solicite assistência na estação.</p>
+                </div>
+
+                <span class="seta-card">
+                  <img
+                    src="../../assets/icones/seta-direita.svg"
+                    class="icone"
+                    alt=""
+                  />
+                </span>
+              </div>
+            </a>
+
+            <!-- Serviço de zeladoria urbana -->
+            <a href="zeladoria.html" class="card-servico card-zeladoria">
+              <div class="topo-card">
+                <span class="icone-card">
+                  <img
+                    src="../../assets/icones/zeladoria.svg"
+                    class="icone"
+                    alt=""
+                  />
+                </span>
+
+                <span class="numero-servico">03</span>
+              </div>
+
+              <div class="conteudo-card">
+                <div class="texto-card">
+                  <h2>Zeladoria urbana</h2>
+                  <p>Avise sobre barreiras no caminho.</p>
+                </div>
+
+                <span class="seta-card">
+                  <img
+                    src="../../assets/icones/seta-direita.svg"
+                    class="icone"
+                    alt=""
+                  />
+                </span>
+              </div>
+            </a>
+          </section>
+
+          <!-- Atalho para conversar com a IARA -->
+          <section class="assistente-iara">
+            <a href="iara.html" class="banner-iara">
+              <span class="icone-banner-iara">
+                <img
+                  src="../../assets/icones/audio.svg"
+                  class="icone"
+                  alt=""
+                />
+              </span>
+
+              <div class="conteudo-iara">
+                <small>Prefere falar?</small>
+
+                <h2>Converse com a IARA</h2>
+
+                <p>Sua assistente, no seu ritmo.</p>
+              </div>
+
+              <img
+                src="../../assets/icones/seta-direita.svg"
+                class="icone seta-banner-iara"
+                alt=""
+              />
+            </a>
+          </section>
+        </main>
+      </div>
+
+      <!-- Barra de navegação para tablets e celulares -->
+      <nav
+        class="navegacao-inferior"
+        aria-label="Menu principal para telas menores"
+      >
+        <ul>
+          <li>
+            <a href="inicio.html">
+              <img src="../../assets/icones/piso-tatil.svg" class="icone" alt="" />
+              <span>Início</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="servicos.html" aria-current="page">
+              <span>Serviços</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="solicitacoes.html">
+              <span>Pedidos</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="iara.html">
+              <img
+                src="../../assets/icones/audio.svg"
+                class="icone"
+                alt=""
+              />
+              <span>IARA</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="perfil.html">
+              <span>Perfil</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Botão flutuante de ajuda -->
+      <button
+        type="button"
+        class="botao-ajuda"
+        id="botao-ajuda"
+        aria-label="Preciso de ajuda"
+        aria-haspopup="dialog"
+        aria-controls="modal-ajuda"
+      >
+        <img src="../../assets/icones/ajuda.svg" class="icone" alt="" />
+      </button>
+    </div>
+
+    <!-- Janela que será aberta pelo botão de ajuda -->
+    <dialog
+      class="modal-ajuda"
+      id="modal-ajuda"
+      aria-labelledby="titulo-modal-ajuda"
+    >
+      <header class="cabecalho-modal-ajuda">
+        <h2 id="titulo-modal-ajuda">Como podemos ajudar?</h2>
+
+        <form method="dialog">
+          <button
+            type="submit"
+            class="fechar-modal-ajuda"
+            aria-label="Fechar janela"
+          >
+            <img src="../../assets/icones/fechar.svg" class="icone" alt="" />
+          </button>
+        </form>
+      </header>
+
+      <p>
+        Escolha um serviço para pedir apoio. Em “Pedidos”, você acompanha cada
+        atualização.
+      </p>
+
+      <div class="opcoes-ajuda">
+        <a href="iara.html" class="ajuda-iara">
+          <img src="../../assets/icones/audio.svg" class="icone" alt="" />
+
+          <span>Conversar com a IARA</span>
+
+          <img
+            src="../../assets/icones/seta-direita.svg"
+            class="icone"
+            alt=""
+          />
+        </a>
+
+        <a
+          href="perfil.html#preferencias-acessibilidade"
+          class="ajuda-acessibilidade"
+        >
+          <img
+            src="../../assets/icones/libras.svg"
+            class="icone"
+            alt=""
+          />
+
+          <span>Ajustar acessibilidade</span>
+        </a>
+      </div>
+    </dialog>
+
+    <!-- Funcionalidades gerais, navegação, acessibilidade, preferências, formulários, solicitações e regras dos serviços. -->
+    <script src="../../js/app.js" defer></script>
+  </body>
 </html>
