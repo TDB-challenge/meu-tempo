@@ -456,7 +456,7 @@ if (btnApagarPreferencias) {
 }
 
 // =====================================================
-// FLUXO DE CADASTRO COM VALIDAÇÃO QR CODE (cadastro.html)
+// FLUXO DE CADASTRO REALISTA COM PERFIL DO CARLOS (cadastro.html)
 // =====================================================
 const formCadastro = document.getElementById("form-cadastro");
 
@@ -475,9 +475,9 @@ if (formCadastro) {
   const indicadoresEtapa = document.querySelectorAll("[data-indicador-etapa]");
 
   function irParaEtapaCadastro(numero) {
-    passo1.hidden = numero !== 1;
-    passo2.hidden = numero !== 2;
-    passo3.hidden = numero !== 3;
+    if (passo1) passo1.hidden = numero !== 1;
+    if (passo2) passo2.hidden = numero !== 2;
+    if (passo3) passo3.hidden = numero !== 3;
 
     for (let i = 0; i < indicadoresEtapa.length; i++) {
       const etapaNum = Number(indicadoresEtapa[i].getAttribute("data-indicador-etapa"));
@@ -490,25 +490,54 @@ if (formCadastro) {
     }
   }
 
+  function aplicarPerfilDoCarlos() {
+    // 1. Preenche dados da credencial e nome completo
+    if (boxQrCode) {
+      boxQrCode.classList.add("validado");
+    }
+    if (statusQrCode) {
+      statusQrCode.innerHTML =
+        "<strong>Credencial validada:</strong> CIPCD · Carlos Eduardo Mendes (Mobilidade reduzida — uso de muletas).";
+    }
+
+    const campoNome = document.getElementById("cad-nome");
+    const campoEmail = document.getElementById("cad-email");
+    if (campoNome) {
+      campoNome.value = "Carlos Eduardo Mendes";
+    }
+    if (campoEmail && campoEmail.value.trim() === "") {
+      campoEmail.focus();
+    }
+
+    // 2. Pré-define acessibilidade ideal para quem usa muletas (pode desativar se quiser)
+    const prefContraste = document.getElementById("pref-contraste");
+    const prefFonte = document.getElementById("pref-fonte");
+    const prefVoz = document.getElementById("pref-voz");
+    const prefVibracao = document.getElementById("pref-vibracao");
+
+    if (prefContraste) prefContraste.checked = false;
+    if (prefFonte) prefFonte.checked = true;
+    if (prefVoz) prefVoz.checked = true;
+    if (prefVibracao) prefVibracao.checked = true;
+
+    if (resumoPerfilQr) {
+      resumoPerfilQr.innerHTML =
+        "<strong>CIPCD · Mobilidade reduzida (uso de muletas).</strong><br />" +
+        "Como suas mãos ficam ocupadas durante o deslocamento, pré-ativamos os comandos de voz da IARA, alertas vibratórios e fonte de alta legibilidade. Você pode ativar ou desativar qualquer opção abaixo.";
+    }
+
+    // 3. Pré-seleciona os usos mais importantes para mobilidade reduzida
+    const checkZeladoria = document.querySelector('input[name="uso"][value="zeladoria"]');
+    if (checkZeladoria) {
+      checkZeladoria.checked = true;
+    }
+  }
+
   if (btnSimularQr) {
     btnSimularQr.addEventListener("click", function () {
       qrCodeValidado = true;
-      if (boxQrCode) {
-        boxQrCode.classList.add("validado");
-      }
-      if (statusQrCode) {
-        statusQrCode.innerHTML =
-          "<strong>Credencial validada com sucesso:</strong> CIN · Identificação de Acessibilidade confirmada.";
-      }
-      if (resumoPerfilQr) {
-        resumoPerfilQr.textContent =
-          "Documento validado: CIN com identificação de acessibilidade. Perfil visual e sonoro ativado.";
-      }
+      aplicarPerfilDoCarlos();
 
-      const campoNome = document.getElementById("cad-nome");
-      if (campoNome && campoNome.value.trim() === "") {
-        campoNome.value = "Cidadão Validado (Exemplo)";
-      }
       if (avisoCadastro) {
         avisoCadastro.textContent = "";
       }
@@ -531,7 +560,7 @@ if (formCadastro) {
       }
       if (!nome || !email || !senha || !confirma) {
         avisoCadastro.textContent =
-          "Preencha todos os campos obrigatórios antes de continuar.";
+          "Preencha seu e-mail e crie uma senha para continuar.";
         return;
       }
       if (senha.length < 8) {
@@ -583,14 +612,43 @@ if (formCadastro) {
 
     if (usarContraste) {
       document.body.classList.add("alto-contraste");
-      localStorage.setItem("altoContraste", "ativo");
     }
     if (usarFonte) {
       document.body.classList.add("fonte-legivel");
-      localStorage.setItem("fonteLegivel", "ativo");
+    }
+
+    const btnConcluir = formCadastro.querySelector('button[type="submit"]');
+    if (btnConcluir) {
+      btnConcluir.disabled = true;
     }
 
     avisoCadastro.innerHTML =
-      'Cadastro demonstrativo concluído com sucesso! Suas preferências de acessibilidade já foram aplicadas. <a href="solucao01.html" class="link-seta">Acessar plataforma do cidadão &rarr;</a>';
+      "Cadastro de <strong>Carlos Eduardo Mendes</strong> concluído com sucesso! Voltando à tela inicial...";
+
+    setTimeout(function () {
+      document.body.classList.remove("alto-contraste", "fonte-legivel", "tema-escuro");
+      document.documentElement.style.fontSize = "";
+      localStorage.removeItem("altoContraste");
+      localStorage.removeItem("fonteLegivel");
+      localStorage.removeItem("temaEscuro");
+      localStorage.removeItem("vozIara");
+      localStorage.removeItem("alertaVibracao");
+
+      formCadastro.reset();
+      qrCodeValidado = false;
+
+      if (boxQrCode) {
+        boxQrCode.classList.remove("validado");
+      }
+      if (statusQrCode) {
+        statusQrCode.textContent =
+          "Após validar o QR Code, confira ou complete seus dados básicos abaixo.";
+      }
+      if (btnConcluir) {
+        btnConcluir.disabled = false;
+      }
+
+      irParaEtapaCadastro(1);
+    }, 3300);
   });
 }
