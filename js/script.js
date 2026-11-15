@@ -698,3 +698,29 @@ for (let i = 0; i < botoesToggleSenha.length; i++) {
   });
 }
 
+// =====================================================
+// RECUPERAÇÃO DE SENHA (recuperar-senha.html)
+// =====================================================
+const formRecuperarSenha = document.getElementById("form-recuperar-senha");
+
+if (formRecuperarSenha) {
+  const inputEmailRec = document.getElementById("rec-email");
+  const avisoRecuperar = document.getElementById("aviso-recuperar");
+
+  formRecuperarSenha.addEventListener("submit", function (evento) {
+    evento.preventDefault();
+
+    const email = inputEmailRec ? inputEmailRec.value.trim() : "";
+
+    if (!email || !email.includes("@")) {
+      avisoRecuperar.textContent = "Informe um endereço de e-mail válido para continuar.";
+      return;
+    }
+
+    avisoRecuperar.innerHTML =
+      '<p style="margin-bottom: 10px;">Solicitação registrada! Se este e-mail estiver vinculado a uma conta, enviaremos as instruções de redefinição (simulação demonstrativa).</p>' +
+      '<a href="login.html" class="link-seta">Voltar para o login &rarr;</a>';
+
+    formRecuperarSenha.reset();
+  });
+}
