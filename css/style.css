@@ -1796,3 +1796,205 @@ img {
   height: 18px;
   object-fit: contain;
 }
+
+/* =====================================================
+   19. ESTILOS ESPECÍFICOS DA PÁGINA FAQ
+   ===================================================== */
+.faq-topo {
+  padding: 64px 0 40px;
+}
+
+.faq-topo h1 {
+  max-width: 640px;
+}
+
+.faq-lead {
+  font-size: 1.05rem;
+  color: var(--texto-secundario);
+  max-width: 580px;
+  margin-bottom: 0;
+}
+
+.faq-conteudo {
+  padding: 12px 0 96px;
+}
+
+.faq-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 56px;
+  align-items: start;
+}
+
+/* Barra lateral de assuntos */
+.faq-sidebar-titulo {
+  display: block;
+  font-size: 0.92rem;
+  color: var(--texto-principal);
+  margin-bottom: 14px;
+}
+
+.faq-categorias {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.faq-cat-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 12px 16px;
+  background: transparent;
+  border: none;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  color: var(--texto-secundario);
+  text-align: left;
+  cursor: pointer;
+}
+
+.faq-cat-btn:hover {
+  background-color: var(--verde-claro);
+  color: var(--verde-floresta);
+}
+
+.faq-cat-btn.ativo {
+  background-color: var(--verde-claro);
+  color: var(--verde-floresta);
+  font-weight: 700;
+}
+
+/* Card lateral "Prefere conversar?" */
+.faq-card-iara {
+  background-color: var(--verde-claro);
+  border-radius: 14px;
+  padding: 24px 20px;
+  margin-top: 28px;
+}
+
+.faq-card-iara img {
+  margin-bottom: 14px;
+}
+
+.faq-card-iara strong {
+  display: block;
+  font-size: 0.98rem;
+  color: var(--texto-principal);
+  margin-bottom: 6px;
+}
+
+.faq-card-iara p {
+  font-size: 0.86rem;
+  line-height: 1.5;
+  margin-bottom: 14px;
+}
+
+/* Campo de busca */
+.faq-busca-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background-color: var(--branco);
+  border: 1px solid var(--borda);
+  border-radius: 12px;
+  padding: 0 16px;
+}
+
+.faq-busca-wrapper:focus-within {
+  border-color: var(--verde-floresta);
+}
+
+.faq-busca-icone {
+  font-size: 1rem;
+  color: var(--texto-secundario);
+  margin-right: 10px;
+}
+
+.faq-busca-wrapper input {
+  width: 100%;
+  border: none;
+  background: transparent;
+  padding: 15px 0;
+  font-family: inherit;
+  font-size: 0.95rem;
+  color: var(--texto-principal);
+  outline: none;
+}
+
+.faq-limpar-btn {
+  background: transparent;
+  border: none;
+  font-size: 1.35rem;
+  color: var(--texto-secundario);
+  cursor: pointer;
+  padding: 4px 6px;
+}
+
+.faq-contador {
+  font-size: 0.82rem;
+  color: var(--texto-secundario);
+  margin: 14px 0 22px;
+}
+
+/* Acordeão de perguntas */
+.faq-item {
+  border-bottom: 1px solid var(--borda);
+}
+
+.faq-pergunta {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 24px 4px;
+  background: transparent;
+  border: none;
+  font-family: inherit;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--texto-principal);
+  text-align: left;
+  cursor: pointer;
+}
+
+.faq-pergunta:hover {
+  color: var(--verde-floresta);
+}
+
+.faq-sinal {
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: var(--verde-floresta);
+  flex-shrink: 0;
+}
+
+.faq-resposta {
+  padding: 0 4px 24px;
+}
+
+.faq-resposta p {
+  font-size: 0.94rem;
+  line-height: 1.7;
+  color: var(--texto-secundario);
+  margin-bottom: 0;
+}
+
+@media (max-width: 860px) {
+  .faq-layout {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .faq-categorias {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .faq-cat-btn {
+    width: auto;
+  }
+}

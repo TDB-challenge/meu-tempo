@@ -304,29 +304,93 @@ if (btnIaraNao && demoIaraMensagens) {
 }
 
 // =====================================================
-// 5. FILTRO DE PERGUNTAS NO FAQ (faq.html)
+// 5. FILTRO DE ASSUNTOS, BUSCA E ACORDEÃO NO FAQ (faq.html)
 // =====================================================
 const campoBuscaFaq = document.getElementById("busca-faq");
+const btnLimparFaq = document.getElementById("btn-limpar-faq");
+const botoesCategoriaFaq = document.querySelectorAll(".faq-cat-btn");
 const itensFaq = document.querySelectorAll(".faq-item");
+const contadorFaq = document.getElementById("contador-faq");
 const avisoFaq = document.getElementById("sem-resultado");
 
-if (campoBuscaFaq) {
-  campoBuscaFaq.addEventListener("input", function () {
-    const termo = campoBuscaFaq.value.toLowerCase();
-    let encontrados = 0;
+let categoriaAtivaFaq = "todas";
 
-    for (let i = 0; i < itensFaq.length; i++) {
-      const conteudo = itensFaq[i].textContent.toLowerCase();
-      if (conteudo.includes(termo)) {
-        itensFaq[i].style.display = "block";
-        encontrados++;
-      } else {
-        itensFaq[i].style.display = "none";
-      }
+function filtrarFaq() {
+  if (itensFaq.length === 0) {
+    return;
+  }
+
+  const termo = campoBuscaFaq ? campoBuscaFaq.value.toLowerCase().trim() : "";
+  let encontrados = 0;
+
+  if (btnLimparFaq) {
+    btnLimparFaq.hidden = termo === "";
+  }
+
+  for (let i = 0; i < itensFaq.length; i++) {
+    const item = itensFaq[i];
+    const categoriaItem = item.getAttribute("data-categoria");
+    const conteudo = item.textContent.toLowerCase();
+
+    const bateCategoria = categoriaAtivaFaq === "todas" || categoriaItem === categoriaAtivaFaq;
+    const bateBusca = termo === "" || conteudo.includes(termo);
+
+    if (bateCategoria && bateBusca) {
+      item.style.display = "block";
+      encontrados++;
+    } else {
+      item.style.display = "none";
     }
+  }
 
-    if (avisoFaq) {
-      avisoFaq.style.display = encontrados === 0 ? "block" : "none";
+  if (contadorFaq) {
+    contadorFaq.textContent =
+      encontrados === 1 ? "1 pergunta encontrada" : encontrados + " perguntas encontradas";
+  }
+
+  if (avisoFaq) {
+    avisoFaq.style.display = encontrados === 0 ? "block" : "none";
+  }
+}
+
+if (campoBuscaFaq) {
+  campoBuscaFaq.addEventListener("input", filtrarFaq);
+}
+
+if (btnLimparFaq && campoBuscaFaq) {
+  btnLimparFaq.addEventListener("click", function () {
+    campoBuscaFaq.value = "";
+    filtrarFaq();
+    campoBuscaFaq.focus();
+  });
+}
+
+for (let i = 0; i < botoesCategoriaFaq.length; i++) {
+  botoesCategoriaFaq[i].addEventListener("click", function () {
+    for (let j = 0; j < botoesCategoriaFaq.length; j++) {
+      botoesCategoriaFaq[j].classList.remove("ativo");
+    }
+    this.classList.add("ativo");
+    categoriaAtivaFaq = this.getAttribute("data-categoria");
+    filtrarFaq();
+  });
+}
+
+// Abrir e fechar respostas ao clicar nas perguntas
+const perguntasFaq = document.querySelectorAll(".faq-pergunta");
+
+for (let i = 0; i < perguntasFaq.length; i++) {
+  perguntasFaq[i].addEventListener("click", function () {
+    const aberta = this.getAttribute("aria-expanded") === "true";
+    const resposta = this.nextElementSibling;
+    const sinal = this.querySelector(".faq-sinal");
+
+    this.setAttribute("aria-expanded", String(!aberta));
+    if (resposta) {
+      resposta.hidden = aberta;
+    }
+    if (sinal) {
+      sinal.textContent = aberta ? "+" : "−";
     }
   });
 }
