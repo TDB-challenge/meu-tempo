@@ -111,6 +111,36 @@ if (btnResetarAcess) {
   });
 }
 
+// =====================================================
+// CONTROLE DOS TOGGLES DE ACESSIBILIDADE
+// =====================================================
+const switchesToggle = document.querySelectorAll(".switch-toggle");
+
+for (let i = 0; i < switchesToggle.length; i++) {
+  switchesToggle[i].addEventListener("click", function (event) {
+    // Garante que o alvo seja sempre o botão .switch-toggle, mesmo clicando na bolinha interna
+    const botao = event.currentTarget;
+    
+    botao.classList.toggle("ativo");
+    const ligado = botao.classList.contains("ativo");
+    botao.setAttribute("aria-pressed", ligado);
+
+    if (botao.classList.contains("acao-contraste")) {
+      document.body.classList.toggle("alto-contraste", ligado);
+    } else if (botao.classList.contains("acao-voz")) {
+      document.body.classList.toggle("voz-iara-ativa", ligado);
+    } else if (botao.classList.contains("acao-vibracao")) {
+      document.body.classList.toggle("vibracao-ativa", ligado);
+    } else if (botao.classList.contains("acao-musical")) {
+      document.body.classList.toggle("musical-ativo", ligado);
+    }
+
+    if (typeof atualizarStatusAcessibilidade === "function") {
+      atualizarStatusAcessibilidade();
+    }
+  });
+}
+
 // Botão flutuante de Libras
 const btnLibras = document.getElementById("btn-libras");
 if (btnLibras) {
