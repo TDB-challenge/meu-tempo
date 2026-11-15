@@ -1,18 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solução | Meu Tempo</title>
-    <link rel="stylesheet" href="../css/style.css">
-</head>
-<body>
-
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sobre o Projeto | Meu Tempo</title>
@@ -71,3 +59,68 @@
       <a href="solucao.html" class="btn btn-pequeno header-cta">Acessar plataforma &rarr;</a>
     </div>
   </header>
+
+  <main>
+    <!-- 1. Cabeçalho da página FAQ -->
+    <section class="container faq-topo">
+      <div class="etiqueta">PODEMOS AJUDAR?</div>
+      <h1>Respostas para seguir<br />com mais tranquilidade.</h1>
+      <p class="faq-lead">
+        Reunimos as principais dúvidas sobre o Meu Tempo. Se preferir, você também pode conversar com a IARA.
+      </p>
+    </section>
+
+    <!-- 2. Layout em duas colunas: Filtro lateral + Busca e Perguntas -->
+    <section class="container faq-conteudo">
+      <div class="faq-layout">
+        <!-- Coluna Esquerda: Assuntos + Card IARA -->
+        <aside class="faq-sidebar">
+          <strong class="faq-sidebar-titulo">Encontre por assunto</strong>
+
+          <nav class="faq-categorias" aria-label="Filtrar perguntas por assunto">
+            <button type="button" class="faq-cat-btn ativo" data-categoria="todas">
+              <span>Todas</span>
+              <span aria-hidden="true">&rsaquo;</span>
+            </button>
+            <button type="button" class="faq-cat-btn" data-categoria="primeiros-passos">
+              <span>Primeiros passos</span>
+              <span aria-hidden="true">&rsaquo;</span>
+            </button>
+            <button type="button" class="faq-cat-btn" data-categoria="cadastro-login">
+              <span>Cadastro e login</span>
+              <span aria-hidden="true">&rsaquo;</span>
+            </button>
+            <button type="button" class="faq-cat-btn" data-categoria="acessibilidade">
+              <span>Acessibilidade</span>
+              <span aria-hidden="true">&rsaquo;</span>
+            </button>
+            <button type="button" class="faq-cat-btn" data-categoria="travessias">
+              <span>Travessias</span>
+              <span aria-hidden="true">&rsaquo;</span>
+            </button>
+            <button type="button" class="faq-cat-btn" data-categoria="apoio-metro">
+              <span>Apoio no Metrô</span>
+              <span aria-hidden="true">&rsaquo;</span>
+            </button>
+            <button type="button" class="faq-cat-btn" data-categoria="relogio-pulseira">
+              <span>Relógio e pulseira</span>
+              <span aria-hidden="true">&rsaquo;</span>
+            </button>
+            <button type="button" class="faq-cat-btn" data-categoria="privacidade">
+              <span>Privacidade</span>
+              <span aria-hidden="true">&rsaquo;</span>
+            </button>
+            <button type="button" class="faq-cat-btn" data-categoria="inteligencia-artificial">
+              <span>Inteligência artificial</span>
+              <span aria-hidden="true">&rsaquo;</span>
+            </button>
+          </nav>
+
+          <!-- Card lateral da IARA -->
+          <div class="faq-card-iara">
+            <img src="../assets/icones/microfone.png" alt="" class="icone" />
+            <strong>Prefere conversar?</strong>
+            <p>A IARA pode mostrar por onde começar.</p>
+            <a href="solucao.html#demo-iara-box" class="link-seta">Falar com a IARA &rarr;</a>
+          </div>
+        </aside>
