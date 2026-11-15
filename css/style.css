@@ -5084,3 +5084,784 @@ button {
 }
 
 
+
+
+
+
+
+/* IDENTIFICAÇÃO POR DOCUMENTO - PERFIL.HTML ================================================================== */
+
+/* card-documento: section que agrupa o ícone, as informações
+   e o botão que abre a janela de identificação por documento. */
+.app .card-documento {
+    display: flex; /* coloca os elementos lado a lado */
+    align-items: center; /* centraliza os elementos na vertical */
+    gap: 18px; /* espaço entre o ícone, os textos e o botão */
+    padding: 24px; /* espaço interno do card */
+    background-color: var(--branco); /* fundo do card */
+    border: 1px solid var(--borda); /* contorno do card */
+    border-radius: var(--raio-grande); /* arredonda os cantos */
+}
+
+
+/* icone-documento: span que contém o svg da câmera. */
+.app .icone-documento {
+    display: flex; /* permite centralizar o ícone */
+    align-items: center; /* centraliza na vertical */
+    justify-content: center; /* centraliza na horizontal */
+    width: 52px; /* largura do círculo */
+    height: 52px; /* altura do círculo */
+    flex-shrink: 0; /* evita que o círculo seja comprimido */
+    background-color: var(--app-iara); /* fundo verde claro */
+    border-radius: 50%; /* deixa o elemento circular */
+}
+
+
+/* svg da câmera que fica dentro do círculo. */
+.app .icone-documento .icone {
+    width: 26px; /* largura do ícone */
+    height: 26px; /* altura do ícone */
+}
+
+
+/* dados-documento: div que agrupa o título e a descrição do card. */
+.app .dados-documento {
+    display: flex; /* organiza os textos */
+    flex-direction: column; /* deixa a descrição abaixo do título */
+    gap: 6px; /* espaço entre os textos */
+    flex: 1; /* ocupa o espaço entre o ícone e o botão */
+    min-width: 0; /* permite que os textos quebrem de linha */
+}
+
+
+/* titulo-identificacao-documento: id do h2 meu documento. */
+.app #titulo-identificacao-documento {
+    font-size: 1.5rem; /* tamanho do título */
+    font-weight: 500; /* mantém o título mais leve */
+}
+
+
+/* status-documento: id do parágrafo que informa a situação
+   da identificação e será atualizado pelo js. */
+.app #status-documento {
+    color: var(--texto-secundario); /* cor da descrição */
+    font-size: 0.85rem; /* tamanho do texto */
+    line-height: 1.5; /* espaço entre as linhas */
+}
+
+
+/* botao-documento: botão com o id abrir-leitor-documentos.
+   será utilizado pelo leitor-documentos.js para abrir o modal. */
+.app .botao-documento {
+    display: flex; /* coloca o ícone ao lado do texto */
+    align-items: center; /* centraliza os elementos na vertical */
+    justify-content: center; /* centraliza o conteúdo do botão */
+    gap: 8px; /* espaço entre o ícone e o texto */
+    min-height: 46px; /* mantém uma área confortável para clicar */
+    padding: 12px 16px; /* espaço interno do botão */
+    background-color: var(--branco); /* fundo do botão */
+    color: var(--verde-floresta); /* cor do texto */
+    border: 1px solid var(--borda-input); /* contorno do botão */
+    border-radius: var(--raio-circular); /* deixa o botão arredondado */
+    font-weight: 700; /* destaca o texto */
+    font-size: 0.85rem; /* tamanho do texto */
+    flex-shrink: 0; /* evita que o botão seja comprimido */
+}
+
+
+/* texto-botao-documento: id do span dentro do botão.
+   o texto poderá ser alterado pelo js após a identificação. */
+.app #texto-botao-documento {
+    line-height: 1.4; /* mantém o texto legível caso quebre de linha */
+}
+
+
+/* destaca o botão de identificação ao passar o mouse. */
+.app .botao-documento:hover {
+    background-color: var(--verde-claro); /* altera o fundo */
+    border-color: var(--verde-natural); /* destaca o contorno */
+}
+
+
+/* CAMPOS ADICIONAIS DO PERFIL =============================================================================== */
+
+/* data-nascimento: input que recebe a data de nascimento.
+   o restante da estilização já vem da classe formulario-perfil. */
+.app #data-nascimento {
+    min-width: 0; /* evita que o campo de data ultrapasse o formulário */
+}
+
+
+/* tipo-documento-perfil: select que identifica o tipo de documento
+   escolhido ou identificado automaticamente. */
+.app #tipo-documento-perfil {
+    width: 100%; /* ocupa toda a largura disponível */
+    min-height: 48px; /* mantém a mesma altura dos outros campos */
+    padding: 12px 14px; /* espaço interno do campo */
+    background-color: var(--branco); /* fundo do select */
+    color: var(--texto-principal); /* cor do texto */
+    border: 1px solid var(--borda-input); /* contorno do campo */
+    border-radius: var(--raio-medio); /* arredonda os cantos */
+}
+
+
+
+
+
+/* MODAL DE DIGITALIZAÇÃO DE DOCUMENTOS ======================================================================= */
+
+/* modal-documento: dialog que contém todas as etapas de identificação.
+   possui o id modal-documento, utilizado pelo leitor-documentos.js. */
+.app .modal-documento {
+    width: calc(100% - 32px); /* mantém uma margem nas laterais da tela */
+    max-width: 620px; /* limita a largura da janela */
+    max-height: calc(100dvh - 40px); /* evita que ultrapasse a altura da tela */
+    margin: auto; /* centraliza o modal */
+    padding: 28px; /* espaço interno da janela */
+    background-color: var(--creme); /* fundo creme do modal */
+    color: var(--texto-principal); /* cor padrão dos textos */
+    border: 1px solid var(--borda); /* contorno da janela */
+    border-radius: var(--raio-grande); /* arredonda os cantos */
+    box-shadow: var(--sombra-modal); /* destaca o modal do restante da página */
+    overflow-y: auto; /* permite rolar o conteúdo dentro da janela */
+}
+
+
+/* open: atributo que indica quando o dialog está aberto. */
+.app .modal-documento[open] {
+    display: flex; /* organiza os elementos do modal */
+    flex-direction: column; /* deixa as etapas uma abaixo da outra */
+    gap: 20px; /* espaço entre as etapas */
+}
+
+
+/* backdrop: fundo que aparece atrás da janela quando ela é aberta. */
+.app .modal-documento::backdrop {
+    background-color: rgba(12, 32, 26, 0.6); /* escurece a página atrás do modal */
+}
+
+
+/* cabecalho-modal: header que agrupa o título e o botão de fechar. */
+.app .cabecalho-modal {
+    display: flex; /* coloca o título e o botão lado a lado */
+    align-items: center; /* centraliza os elementos na vertical */
+    justify-content: space-between; /* mantém os elementos nas extremidades */
+    gap: 16px; /* espaço entre o título e o botão */
+}
+
+
+/* titulo-modal-documento: id do h2 que identifica a janela.
+   também é utilizado pelo aria-labelledby para leitores de tela. */
+.app #titulo-modal-documento {
+    font-size: clamp(1.4rem, 3vw, 1.9rem); /* adapta o título ao tamanho da tela */
+    font-weight: 500; /* mantém a fonte mais leve */
+    color: var(--verde-floresta); /* cor do título */
+}
+
+
+/* fechar-modal: botão com o svg de x que fecha o dialog. */
+.app .fechar-modal {
+    display: flex; /* permite centralizar o ícone */
+    align-items: center; /* centraliza na vertical */
+    justify-content: center; /* centraliza na horizontal */
+    width: 44px; /* largura da área clicável */
+    height: 44px; /* altura da área clicável */
+    padding: 0; /* remove o espaço interno padrão */
+    background-color: transparent; /* mantém o fundo do modal */
+    border: none; /* remove a borda padrão */
+    border-radius: 50%; /* deixa o botão circular */
+    flex-shrink: 0; /* mantém o tamanho do botão */
+}
+
+
+/* destaca o botão de fechar quando o mouse passa por cima. */
+.app .fechar-modal:hover {
+    background-color: var(--app-iara); /* altera o fundo do botão */
+}
+
+
+/* descricao-leitura-documento: id do parágrafo que explica
+   como fotografar e conferir as informações do documento. */
+.app #descricao-leitura-documento {
+    color: var(--texto-secundario); /* cor da descrição */
+    font-size: 0.9rem; /* tamanho do texto */
+    line-height: 1.6; /* melhora a leitura das instruções */
+}
+
+
+/* SELEÇÃO DA IMAGEM ========================================================================================= */
+
+/* opcoes-leitura-documento: fieldset que agrupa os campos
+   de fotografia, galeria e tipo de documento. */
+.app .opcoes-leitura-documento {
+    display: flex; /* organiza as opções */
+    flex-direction: column; /* deixa uma opção abaixo da outra */
+    gap: 12px; /* espaço entre os elementos */
+}
+
+
+/* legend que identifica a etapa de seleção da imagem. */
+.app .opcoes-leitura-documento legend {
+    margin-bottom: 12px; /* espaço abaixo do título */
+    padding: 0; /* remove o espaço padrão */
+    font-weight: 800; /* destaca o título */
+    color: var(--verde-floresta); /* cor do texto */
+}
+
+
+/* botao-camera e enviar-imagem: labels que abrem os campos
+   de arquivo para fotografar ou selecionar uma imagem. */
+.app .botao-camera,
+.app .enviar-imagem {
+    display: flex; /* coloca o ícone ao lado do texto */
+    align-items: center; /* centraliza os elementos na vertical */
+    justify-content: center; /* centraliza o conteúdo */
+    gap: 10px; /* espaço entre o ícone e o texto */
+    width: 100%; /* ocupa toda a largura disponível */
+    min-height: 54px; /* mantém uma área confortável para clicar */
+    padding: 14px 16px; /* espaço interno */
+    background-color: var(--branco); /* fundo das opções */
+    color: var(--verde-floresta); /* cor dos textos */
+    border: 1px dashed var(--borda-input); /* contorno tracejado */
+    border-radius: var(--raio-medio); /* arredonda os cantos */
+    font-size: 0.9rem; /* tamanho dos textos */
+    font-weight: 700; /* destaca as opções */
+    text-align: center; /* centraliza o texto */
+    cursor: pointer; /* indica que a opção pode ser clicada */
+}
+
+
+/* altera o fundo das opções ao passar o mouse. */
+.app .botao-camera:hover,
+.app .enviar-imagem:hover {
+    background-color: var(--verde-claro); /* destaca a opção */
+    border-color: var(--verde-natural); /* altera a cor do contorno */
+}
+
+
+/* foto-documento: input que permite capturar uma fotografia.
+   imagem-documento: input que permite escolher uma imagem da galeria.
+
+   deixei os inputs invisíveis porque os labels já funcionam
+   como botões, mas os campos continuam acessíveis pelo teclado. */
+.app #foto-documento,
+.app #imagem-documento {
+    position: absolute; /* retira o campo da organização visual */
+    width: 1px; /* reduz a largura visual */
+    height: 1px; /* reduz a altura visual */
+    padding: 0; /* remove o espaço interno */
+    opacity: 0; /* deixa o campo invisível */
+    overflow: hidden; /* evita que ultrapasse o espaço definido */
+    clip-path: inset(50%); /* esconde visualmente o campo */
+}
+
+
+/* destaca o label quando o campo de arquivo recebe foco pelo teclado.
+
+   o has verifica se o input que está logo depois do label
+   está recebendo o foco. */
+.app .botao-camera:has(+ #foto-documento:focus-visible),
+.app .enviar-imagem:has(+ #imagem-documento:focus-visible) {
+    outline: 3px solid var(--terracota); /* contorno de acessibilidade */
+    outline-offset: 3px; /* distância entre o contorno e o botão */
+}
+
+
+/* orientacao-imagem-documento: id do texto com as instruções
+   para enquadrar o documento corretamente. */
+.app #orientacao-imagem-documento {
+    color: var(--texto-secundario); /* cor da orientação */
+    font-size: 0.8rem; /* tamanho do texto */
+    line-height: 1.5; /* espaço entre as linhas */
+}
+
+
+/* PRÉVIA DO DOCUMENTO ======================================================================================== */
+
+/* previa-documento: figure que mostra a imagem selecionada.
+   começa escondida pelo atributo hidden e será exibida pelo js. */
+.app .previa-documento {
+    display: flex; /* organiza a imagem e suas informações */
+    flex-direction: column; /* deixa os elementos um abaixo do outro */
+    gap: 12px; /* espaço entre os elementos */
+    margin: 0; /* remove a margem padrão do figure */
+    padding: 16px; /* espaço interno da prévia */
+    background-color: var(--branco); /* fundo da prévia */
+    border: 1px solid var(--borda); /* contorno da área */
+    border-radius: var(--raio-medio); /* arredonda os cantos */
+}
+
+
+/* fotografia-documento: id da imagem que recebe a fotografia
+   selecionada pela câmera ou pela galeria. */
+.app #fotografia-documento {
+    width: 100%; /* ocupa toda a largura disponível */
+    max-height: 280px; /* limita a altura da fotografia */
+    object-fit: contain; /* mantém o documento inteiro sem cortar a imagem */
+    border-radius: var(--raio-pequeno); /* arredonda os cantos */
+}
+
+
+/* nome-imagem-documento: id do figcaption que recebe o nome do arquivo. */
+.app #nome-imagem-documento {
+    color: var(--texto-secundario); /* cor do nome */
+    font-size: 0.8rem; /* tamanho do texto */
+    text-align: center; /* centraliza o nome da imagem */
+    overflow-wrap: anywhere; /* permite quebrar nomes de arquivos muito grandes */
+}
+
+
+/* remover-imagem: botão com o id remover-imagem-documento.
+   permite retirar a imagem antes de realizar a identificação. */
+.app .remover-imagem {
+    align-self: center; /* centraliza o botão dentro da prévia */
+    min-height: 44px; /* mantém uma área adequada para clicar */
+    padding: 8px 14px; /* espaço interno */
+    background-color: transparent; /* mantém o fundo da prévia */
+    border: none; /* remove a borda padrão */
+    color: var(--terracota); /* diferencia a ação de remover */
+    font-weight: 700; /* destaca o texto */
+    font-size: 0.85rem; /* tamanho do texto */
+}
+
+
+/* AUTORIZAÇÃO PARA PROCESSAMENTO EXTERNO ===================================================================== */
+
+/* autorizacao-documento: fieldset que contém as informações
+   sobre o processamento da imagem pelo serviço externo. */
+.app .autorizacao-documento {
+    display: flex; /* organiza as informações e o checkbox */
+    flex-direction: column; /* deixa os elementos um abaixo do outro */
+    gap: 14px; /* espaço entre as informações */
+    padding: 18px; /* espaço interno da seção */
+    background-color: var(--branco); /* fundo da autorização */
+    border: 1px solid var(--borda-input); /* contorno da seção */
+    border-radius: var(--raio-medio); /* arredonda os cantos */
+}
+
+
+/* título que identifica a autorização para uso da api externa. */
+.app .autorizacao-documento legend {
+    padding: 0 6px; /* espaço nas laterais do título */
+    font-size: 0.9rem; /* tamanho do texto */
+    font-weight: 800; /* destaca a informação */
+    color: var(--verde-floresta); /* cor do título */
+}
+
+
+/* aviso-processamento-externo: id do texto que informa
+   que a imagem será enviada ao serviço de ocr. */
+.app #aviso-processamento-externo {
+    color: var(--texto-secundario); /* cor da informação */
+    font-size: 0.85rem; /* tamanho do texto */
+    line-height: 1.7; /* aumenta o espaço entre as linhas */
+}
+
+
+/* label da autorização que agrupa o checkbox e o texto. */
+.app .autorizacao-documento label {
+    display: flex; /* coloca o checkbox ao lado do texto */
+    align-items: flex-start; /* alinha o checkbox com o início do texto */
+    gap: 12px; /* espaço entre o checkbox e a informação */
+    font-size: 0.85rem; /* tamanho do texto */
+    font-weight: 600; /* destaca a autorização */
+    cursor: pointer; /* permite selecionar clicando no texto */
+}
+
+
+/* autorizar-processamento-documento: id do checkbox que
+   registra a autorização antes de enviar a imagem.
+
+   o js deverá conferir essa opção antes de chamar a api. */
+.app #autorizar-processamento-documento {
+    width: 20px; /* largura do checkbox */
+    height: 20px; /* altura do checkbox */
+    margin: 2px 0 0; /* alinha o campo com a primeira linha do texto */
+    accent-color: var(--verde-floresta); /* cor do checkbox selecionado */
+    flex-shrink: 0; /* impede que o campo seja comprimido */
+}
+
+
+/* mensagem-leitura: parágrafo com avisos da identificação.
+   o id mensagem-leitura-documento será atualizado pelo js. */
+.app .mensagem-leitura {
+    padding: 12px 16px; /* espaço interno do aviso */
+    background-color: var(--app-card-terracota); /* fundo de atenção */
+    color: var(--terracota); /* cor do texto */
+    border-radius: var(--raio-pequeno); /* arredonda os cantos */
+    font-size: 0.85rem; /* tamanho da mensagem */
+    line-height: 1.6; /* facilita a leitura */
+}
+
+
+/* CONFERÊNCIA DOS DADOS IDENTIFICADOS ======================================================================== */
+
+/* resultado-documento: section que recebe os dados extraídos
+   após a leitura automática do documento. */
+.app .resultado-documento {
+    display: flex; /* organiza os dados encontrados */
+    flex-direction: column; /* deixa os campos um abaixo do outro */
+    gap: 12px; /* espaço entre os elementos */
+    padding: 20px; /* espaço interno do resultado */
+    background-color: var(--verde-claro); /* fundo verde claro */
+    border: 1px solid var(--verde-salvia); /* contorno da seção */
+    border-radius: var(--raio-medio); /* arredonda os cantos */
+}
+
+
+/* icone-resultado-documento: círculo com o check da identificação. */
+.app .icone-resultado-documento {
+    display: flex; /* permite centralizar o ícone */
+    align-items: center; /* centraliza na vertical */
+    justify-content: center; /* centraliza na horizontal */
+    align-self: center; /* centraliza o círculo dentro da seção */
+    width: 48px; /* largura do círculo */
+    height: 48px; /* altura do círculo */
+    background-color: var(--verde-floresta); /* fundo verde */
+    border-radius: 50%; /* deixa o elemento circular */
+}
+
+
+/* check dentro do círculo do resultado. */
+.app .icone-resultado-documento .icone {
+    width: 24px; /* largura do svg */
+    height: 24px; /* altura do svg */
+    filter: brightness(0) invert(1); /* deixa o check branco */
+}
+
+
+/* titulo-resultado-documento: id do h3 que solicita
+   a conferência dos dados encontrados. */
+.app #titulo-resultado-documento {
+    font-size: 1.4rem; /* tamanho do título */
+    font-weight: 500; /* mantém a fonte mais leve */
+    text-align: center; /* centraliza o título */
+}
+
+
+/* texto que informa que os dados podem conter erros. */
+.app .resultado-documento > p {
+    color: var(--texto-secundario); /* cor da informação */
+    font-size: 0.85rem; /* tamanho do texto */
+    line-height: 1.5; /* melhora a leitura */
+}
+
+
+/* CAMPOS DO LEITOR DE DOCUMENTOS ============================================================================= */
+
+/*
+    ids dos campos utilizados durante a identificação:
+
+    #tipo-documento: tipo de documento escolhido antes da leitura.
+
+    #documento-nome-completo: nome encontrado pelo ocr.
+    #documento-data-nascimento: data encontrada pelo ocr.
+    #documento-tipo-documento: tipo de documento identificado.
+
+    #manual-nome-completo: nome preenchido manualmente.
+    #manual-data-nascimento: data preenchida manualmente.
+    #manual-tipo-documento: tipo escolhido manualmente.
+
+    agrupei os seletores porque todos os campos possuem
+    a mesma aparência, independente da etapa de identificação.
+*/
+
+.app #tipo-documento,
+.app #documento-nome-completo,
+.app #documento-data-nascimento,
+.app #documento-tipo-documento,
+.app #manual-nome-completo,
+.app #manual-data-nascimento,
+.app #manual-tipo-documento {
+    width: 100%; /* ocupa toda a largura disponível */
+    min-width: 0; /* permite que o campo se ajuste à tela */
+    min-height: 48px; /* mantém uma altura confortável */
+    padding: 12px 14px; /* espaço interno do campo */
+    background-color: var(--branco); /* fundo do campo */
+    color: var(--texto-principal); /* cor das informações */
+    border: 1px solid var(--borda-input); /* contorno do campo */
+    border-radius: var(--raio-medio); /* arredonda os cantos */
+    font-size: 0.95rem; /* tamanho do texto preenchido */
+}
+
+
+/* labels que identificam os campos de cada etapa. */
+.app .opcoes-leitura-documento label[for="tipo-documento"],
+.app .resultado-documento label,
+.app .conteudo-leitura-manual label {
+    color: var(--texto-principal); /* cor do texto */
+    font-size: 0.9rem; /* tamanho do label */
+    font-weight: 700; /* destaca a identificação do campo */
+}
+
+
+/* BOTÕES DE IDENTIFICAÇÃO E CONFIRMAÇÃO ====================================================================== */
+
+/*
+    botao-identificar-dados: solicita a leitura automática pela api.
+    possui o id identificar-dados-documento.
+
+    botao-confirmar-documento: confirma os dados encontrados.
+    possui o id confirmar-dados-documento.
+
+    botao-confirmar-dados-manuais: confirma os dados digitados.
+    possui o id confirmar-dados-manuais.
+
+    os três botões possuem a mesma estilização para manter
+    o padrão das ações principais do aplicativo.
+*/
+
+.app .botao-identificar-dados,
+.app .botao-confirmar-documento,
+.app .botao-confirmar-dados-manuais {
+    display: flex; /* organiza o texto e o possível ícone */
+    align-items: center; /* centraliza na vertical */
+    justify-content: center; /* centraliza na horizontal */
+    gap: 10px; /* espaço entre os elementos */
+    width: 100%; /* ocupa toda a largura disponível */
+    min-height: 48px; /* mantém uma área adequada para clique */
+    padding: 12px 18px; /* espaço interno */
+    background-color: var(--verde-floresta); /* fundo verde */
+    color: var(--branco); /* cor do texto */
+    border: 1px solid var(--verde-floresta); /* contorno do botão */
+    border-radius: var(--raio-circular); /* deixa o botão arredondado */
+    font-size: 0.9rem; /* tamanho do texto */
+    font-weight: 700; /* destaca a ação */
+    text-align: center; /* centraliza o texto */
+}
+
+
+/* seta que aparece no botão de confirmação dos dados encontrados. */
+.app .botao-confirmar-documento .icone {
+    filter: brightness(0) invert(1); /* deixa o svg branco */
+}
+
+
+/* destaca os botões somente quando estiverem disponíveis. */
+.app .botao-identificar-dados:not(:disabled):hover,
+.app .botao-confirmar-documento:not(:disabled):hover,
+.app .botao-confirmar-dados-manuais:not(:disabled):hover {
+    background-color: var(--verde-escuro); /* escurece o fundo do botão */
+}
+
+
+/* PREENCHIMENTO MANUAL ======================================================================================= */
+
+/* leitura-manual: details com o id preenchimento-manual-documento.
+   permite preencher os dados sem enviar uma fotografia. */
+.app .leitura-manual {
+    background-color: var(--branco); /* fundo da seção */
+    border: 1px solid var(--borda); /* contorno da seção */
+    border-radius: var(--raio-medio); /* arredonda os cantos */
+}
+
+
+/* summary que abre ou fecha os campos de preenchimento manual. */
+.app .leitura-manual > summary {
+    display: flex; /* permite posicionar a seta ao lado do texto */
+    align-items: center; /* centraliza os elementos */
+    justify-content: space-between; /* coloca a seta na direita */
+    gap: 12px; /* espaço entre os elementos */
+    min-height: 48px; /* altura mínima da opção */
+    padding: 12px 16px; /* espaço interno */
+    color: var(--verde-floresta); /* cor do texto */
+    font-size: 0.9rem; /* tamanho do texto */
+    font-weight: 700; /* destaca a opção */
+}
+
+
+/* cria a seta do preenchimento manual utilizando o svg local.
+   fiz pelo css porque esse summary não possui um img no html. */
+.app .leitura-manual > summary::after {
+    content: ""; /* cria o elemento da seta */
+    width: 18px; /* largura do ícone */
+    height: 18px; /* altura do ícone */
+    flex-shrink: 0; /* mantém o tamanho do ícone */
+    background-color: currentColor; /* utiliza a mesma cor do texto */
+    mask: url("../assets/icones/expandir.svg") center / contain no-repeat; /* utiliza o svg como formato da seta */
+    transition: transform 0.2s ease; /* suaviza o movimento */
+}
+
+
+/* gira a seta quando a seção estiver aberta. */
+.app .leitura-manual[open] > summary::after {
+    transform: rotate(180deg); /* deixa a seta apontada para cima */
+}
+
+
+/* conteudo-leitura-manual: div com os campos preenchidos pelo usuário. */
+.app .conteudo-leitura-manual {
+    display: flex; /* organiza o formulário manual */
+    flex-direction: column; /* deixa os campos um abaixo do outro */
+    gap: 12px; /* espaço entre os elementos */
+    padding: 16px; /* espaço interno */
+    border-top: 1px solid var(--borda); /* separa os campos do título */
+}
+
+
+/* texto com instruções para utilizar o preenchimento manual. */
+.app .conteudo-leitura-manual p {
+    color: var(--texto-secundario); /* cor da instrução */
+    font-size: 0.85rem; /* tamanho do texto */
+    line-height: 1.6; /* melhora a leitura */
+}
+
+
+/* continuar-sem-documento: botão que fecha o modal sem realizar
+   a identificação, permitindo continuar utilizando o app. */
+.app .continuar-sem-documento {
+    width: 100%; /* ocupa toda a largura disponível */
+    min-height: 44px; /* mantém uma área adequada para clique */
+    padding: 10px 14px; /* espaço interno */
+    background-color: transparent; /* mantém o fundo do modal */
+    color: var(--verde-floresta); /* cor do texto */
+    border: none; /* remove a borda padrão */
+    font-size: 0.85rem; /* tamanho do texto */
+    font-weight: 700; /* destaca a opção */
+    text-align: center; /* centraliza o texto */
+}
+
+
+/* NOTIFICAÇÃO DA IDENTIFICAÇÃO ============================================================================== */
+
+/* notificacao-documento: id do parágrafo que será exibido
+   após confirmar os dados encontrados ou preenchidos manualmente. */
+.app #notificacao-documento {
+    position: fixed; /* mantém a mensagem visível durante a rolagem */
+    bottom: 24px; /* distância da parte inferior da tela */
+    left: 50%; /* posiciona no centro horizontal */
+    transform: translateX(-50%); /* corrige a centralização */
+    z-index: 200; /* mantém a mensagem acima do conteúdo */
+    width: max-content; /* ajusta a largura ao texto */
+    max-width: calc(100% - 32px); /* evita ultrapassar as laterais */
+    padding: 14px 20px; /* espaço interno da mensagem */
+    background-color: var(--verde-floresta); /* fundo verde */
+    color: var(--branco); /* cor do texto */
+    border-radius: var(--raio-medio); /* arredonda os cantos */
+    box-shadow: var(--sombra-media); /* destaca a mensagem */
+    font-size: 0.9rem; /* tamanho do texto */
+    font-weight: 700; /* destaca a confirmação */
+    text-align: center; /* centraliza o texto */
+}
+
+
+
+
+
+
+
+/* RESPONSIVIDADE DA IDENTIFICAÇÃO POR DOCUMENTO ============================================================= */
+
+/* ajustes para tablets e celulares com menu inferior. */
+@media (max-width: 900px) {
+
+    /* mantém a notificação acima da navegação inferior. */
+    .app #notificacao-documento {
+        bottom: calc(var(--altura-menu-inferior) + 16px + env(safe-area-inset-bottom, 0px)); /* considera o espaço do menu */
+    }
+
+}
+
+
+/* ajustes para celulares com menos espaço na horizontal. */
+@media (max-width: 600px) {
+
+    /* reorganiza o card de identificação em duas colunas. */
+    .app .card-documento {
+        display: grid; /* permite controlar a posição dos elementos */
+        grid-template-columns: auto minmax(0, 1fr); /* primeira coluna para o ícone e segunda para os textos */
+        gap: 14px; /* espaço entre os elementos */
+        padding: 18px; /* reduz o espaço interno do card */
+    }
+
+    /* coloca o botão de identificação abaixo dos textos. */
+    .app .botao-documento {
+        grid-column: 1 / -1; /* ocupa todas as colunas do card */
+        width: 100%; /* aproveita toda a largura disponível */
+    }
+
+    /* diminui o círculo da identificação. */
+    .app .icone-documento {
+        width: 44px; /* largura do círculo */
+        height: 44px; /* altura do círculo */
+    }
+
+    /* ajusta o tamanho da janela de identificação. */
+    .app .modal-documento {
+        width: calc(100% - 24px); /* mantém uma pequena margem lateral */
+        max-height: calc(100dvh - 24px); /* evita ultrapassar a altura da tela */
+        padding: 18px; /* reduz o espaço interno */
+        gap: 16px; /* aproxima as etapas */
+    }
+
+    /* reduz os espaços internos da autorização e dos resultados. */
+    .app .autorizacao-documento,
+    .app .resultado-documento {
+        padding: 16px; /* aproveita melhor a largura do celular */
+    }
+
+    /* ajusta a altura máxima da fotografia. */
+    .app #fotografia-documento {
+        max-height: 220px; /* evita que a fotografia ocupe toda a tela */
+    }
+
+}
+
+
+/* ACESSIBILIDADE DO LEITOR DE DOCUMENTOS ===================================================================== */
+
+/* ajusta as ações principais da identificação no tema escuro. */
+.app.tema-escuro .botao-identificar-dados,
+.app.tema-escuro .botao-confirmar-documento,
+.app.tema-escuro .botao-confirmar-dados-manuais,
+.app.tema-escuro #notificacao-documento {
+    background-color: #cce3c5; /* fundo claro para destacar a ação */
+    color: #10251a; /* texto escuro para manter o contraste */
+    border-color: #cce3c5; /* mantém a borda da mesma cor */
+}
+
+
+/* mantém o ícone escuro dentro do botão de confirmação. */
+.app.tema-escuro .botao-confirmar-documento .icone {
+    filter: brightness(0); /* deixa a seta preta */
+}
+
+
+/* deixa os ícones do modal visíveis no tema escuro. */
+.app.tema-escuro .modal-documento .fechar-modal .icone,
+.app.tema-escuro .modal-documento .botao-camera .icone,
+.app.tema-escuro .modal-documento .enviar-imagem .icone {
+    filter: brightness(0) invert(1); /* deixa os svg brancos */
+}
+
+
+/* mantém o check visível no círculo claro do resultado. */
+.app.tema-escuro .icone-resultado-documento .icone {
+    filter: brightness(0); /* deixa o check escuro */
+}
+
+
+/* destaca as ações da identificação no modo de alto contraste. */
+.app.alto-contraste .botao-identificar-dados,
+.app.alto-contraste .botao-confirmar-documento,
+.app.alto-contraste .botao-confirmar-dados-manuais,
+.app.alto-contraste #notificacao-documento {
+    background-color: #ffff00; /* fundo amarelo */
+    color: #000000; /* texto preto */
+    border: 2px solid #ffff00; /* contorno amarelo */
+}
+
+
+/* mantém os ícones escuros nas superfícies claras do alto contraste. */
+.app.alto-contraste .botao-confirmar-documento .icone,
+.app.alto-contraste .icone-resultado-documento .icone {
+    filter: brightness(0); /* deixa os svg pretos */
+}
+
+
+/* evita perder a identificação dos campos durante o foco pelo teclado. */
+.app.alto-contraste .botao-camera:has(+ #foto-documento:focus-visible),
+.app.alto-contraste .enviar-imagem:has(+ #imagem-documento:focus-visible) {
+    outline: 3px solid #ffff00; /* destaca o campo com contorno amarelo */
+    outline-offset: 3px; /* distancia o contorno do elemento */
+}
