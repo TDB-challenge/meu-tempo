@@ -1,12 +1,397 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Acessibilidade | Meu Tempo</title>
-    <link rel="stylesheet" href="../css/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Acessibilidade | Meu Tempo</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <script src="../js/script.js" defer></script>
 </head>
 <body>
+  <!-- Barra superior -->
+  <div class="barra-util">
+    <div class="container">
+      <span>Uma cidade para todas as pessoas. Um caminho de cada vez.</span>
+      <button type="button" id="btn-abrir-acess" class="btn-acess-topo">
+        Recursos de acessibilidade &rsaquo;
+      </button>
+    </div>
+  </div>
 
+  <!-- Barra de ajustes rápidos -->
+  <div id="painel-acess-rapido" class="painel-acess-rapido">
+    <div class="container">
+      <strong>Ajustes rápidos de leitura:</strong>
+      <div class="botoes-acess">
+        <button type="button" class="acao-aumentar">A+ Aumentar texto</button>
+        <button type="button" class="acao-diminuir">A- Texto normal</button>
+        <button type="button" class="acao-contraste">Alto contraste</button>
+        <button type="button" class="acao-tema">Tema escuro</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cabeçalho -->
+  <header class="cabecalho">
+    <div class="container">
+      <a href="index.html" class="logo">
+        <span class="logo-circulo">
+          <img src="../assets/icones/clock-three.png" alt="" class="icone" />
+        </span>
+        <div>
+          <span class="logo-titulo">meu tempo</span>
+          <span class="logo-sub">A cidade no seu ritmo.</span>
+        </div>
+      </a>
+
+      <button type="button" id="btn-menu" class="btn-menu">Menu</button>
+
+      <nav id="menu-navegacao" class="menu">
+        <a href="index.html">Início</a>
+        <a href="sobre.html">Sobre</a>
+        <a href="solucao.html">Nossa solução</a>
+        <a href="acessibilidade.html" class="ativo">Acessibilidade</a>
+        <a href="integrantes.html">Equipe</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contato.html">Contato</a>
+      </nav>
+
+      <a href="solucao.html" class="btn btn-pequeno header-cta">Acessar plataforma &rarr;</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- 1. Cabeçalho da página Acessibilidade -->
+    <section class="container acess-topo">
+      <div class="etiqueta">ACESSIBILIDADE</div>
+      <h1>A experiência se adapta a você.<br />Não o contrário.</h1>
+      <p class="acess-lead">
+        No Meu Tempo, acessibilidade não é um ajuste escondido no final da tela — é o ponto de partida para que pessoas cegas, idosas, surdas ou com mobilidade reduzida naveguem com autonomia.
+      </p>
+    </section>
+
+    <!-- Destaque: Cadastro Inteligente via QR Code de Documentos -->
+    <section class="container" style="padding-bottom: 44px;">
+      <div class="destaque-iara-card" style="margin: 0; grid-template-columns: 1.15fr 0.85fr;">
+        <div>
+          <div class="etiqueta">CADASTRO INTELIGENTE E SEGURO</div>
+          <h2>A acessibilidade começa na validação do seu cadastro.</h2>
+          <p>
+            Para evitar fraudes e garantir que os recursos de travessia e apoio presencial atendam exclusivamente quem realmente precisa, o cadastro no <strong>Meu Tempo</strong> exige a validação por <strong>QR Code</strong> de um documento oficial — como a <strong>Nova Carteira de Identidade Nacional (CIN)</strong> com identificação de deficiência, a <strong>CIPCD</strong>, a <strong>CIPTEA</strong> ou a <strong>Carteira da Pessoa Idosa</strong>. Além de assegurar o uso legítimo da plataforma, essa leitura já ativa automaticamente o perfil visual e sensorial mais adequado para você.
+          </p>
+          <p style="margin-bottom: 0;">
+            Depois de validado, se quiser ajustar qualquer detalhe no dia a dia, basta acessar o <strong>Perfil do Usuário</strong> para personalizar fonte, contraste, som ou navegação por voz a qualquer momento.
+          </p>
+        </div>
+
+        <div class="lista-perfis-auto">
+          <div class="card-perfil-auto">
+            <div class="topo-card">
+              <span class="topo-card-titulo">
+                <img src="/assets/icones/eye.png" alt="" class="icone-pequeno" />
+                Baixa visão
+              </span>
+              <span>Automático</span>
+            </div>
+            <strong>Perfil Alto Contraste + Texto Ampliado</strong>
+            <p>Ativado automaticamente após a validação, reforçando bordas, leitura e tipografia de alta legibilidade.</p>
+          </div>
+
+          <div class="card-perfil-auto">
+            <div class="topo-card">
+              <span class="topo-card-titulo">
+                <img src="/assets/icones/old-people.png" alt="" class="icone-pequeno" />
+                Pessoa Idosa (Carteira do Idoso)
+              </span>
+              <span>Automático</span>
+            </div>
+            <strong>Perfil Limpo e Intuitivo</strong>
+            <p>Interface simplificada, botões amplos, menos estímulos visuais e acesso direto à voz da IARA.</p>
+          </div>
+
+          <div class="card-perfil-auto">
+            <div class="topo-card">
+              <span class="topo-card-titulo">
+                <img src="../assets/icones/walking.png" alt="" class="icone-pequeno" />
+                Autismo (CIPTEA) e Neurodivergência
+              </span>
+              <span>Automático</span>
+            </div>
+            <strong>Perfil Sensorial Equilibrado</strong>
+            <p>Cores suaves sem poluição visual e avisos previsíveis por vibração ou som controlado.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Painel Interativo: Teste os ajustes na prática -->
+    <section class="container acess-painel-secao">
+      <div class="grid-2">
+        <div class="card-branco">
+          <div class="etiqueta">PERSONALIZE AGORA</div>
+          <h2>Ajuste a tela ao seu conforto visual.</h2>
+          <p>
+            Experimente os controles abaixo. As alterações são aplicadas imediatamente em toda a página para facilitar sua leitura.
+          </p>
+
+          <div class="grade-controles-acess">
+            <button type="button" class="btn-controle-acess acao-aumentar">
+              <strong>A+ Aumentar texto</strong>
+              <span>Amplia o tamanho das letras</span>
+            </button>
+
+            <button type="button" class="btn-controle-acess acao-diminuir">
+              <strong>A- Tamanho padrão</strong>
+              <span>Retorna a escala original</span>
+            </button>
+
+            <button type="button" class="btn-controle-acess acao-fonte-legivel">
+              <strong>Tipografia de alta legibilidade</strong>
+              <span>Ativa a fonte Atkinson Hyperlegible</span>
+            </button>
+
+            <button type="button" class="btn-controle-acess acao-contraste">
+              <strong>Modo alto contraste</strong>
+              <span>Reforça bordas e leitura</span>
+            </button>
+
+            <button type="button" class="btn-controle-acess acao-tema">
+              <strong>Tema escuro</strong>
+              <span>Reduz o brilho da tela</span>
+            </button>
+
+            <button type="button" id="btn-resetar-acess" class="btn-controle-acess">
+              <strong>Restaurar padrão</strong>
+              <span>Desativa todos os filtros</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Coluna Direita: Pré-visualização ao vivo -->
+        <div class="painel-status" style="display: flex; flex-direction: column; justify-content: center;">
+          <div class="etiqueta">PRÉ-VISUALIZAÇÃO AO VIVO</div>
+          <h3>Como este texto aparece para você?</h3>
+          <p>
+            “Ao chegar no cruzamento da Avenida Paulista, basta dizer para a IARA que deseja atravessar. O celular vibra no ritmo certo e emite o guia musical sem depender do barulho da rua.”
+          </p>
+          <p id="feedback-acess" class="aviso-ok" style="margin-bottom: 0;">
+            Configuração atual: Leitura padrão ativada.
+          </p>
+        </div>
+      </div>
+
+      <!-- Bloco Abaixo: Toggles de assistência no App -->
+      <div class="card-branco" style="margin-top: 28px;">
+        <div class="etiqueta">RECURSOS DO APLICATIVO</div>
+        <h3 style="margin-bottom: 8px;">Outras opções de assistência personalizáveis no App</h3>
+
+        <div class="lista-toggles">
+          <!-- Toggle 1: Ativar a IARA -->
+          <div class="item-toggle-linha">
+            <div class="toggle-info">
+              <span class="toggle-icone">
+                <!-- mantenha aqui o src do seu ícone de IA -->
+                <img src="/assets/icones/artificial-intelligence.png" alt="" class="icone" />
+              </span>
+              <div>
+                <strong>Ativar a IARA</strong>
+                <p>Respostas inteligentes por voz e por texto.</p>
+              </div>
+            </div>
+            <button type="button" class="switch-toggle acao-voz" aria-pressed="false">
+              <span class="switch-bola"></span>
+            </button>
+          </div>
+
+          <!-- Toggle 2: Vibrar durante as travessias -->
+          <div class="item-toggle-linha">
+            <div class="toggle-info">
+              <span class="toggle-icone">
+                <img src="/assets/icones/watch-smart.png" alt="" class="icone" />
+              </span>
+              <div>
+                <strong>Vibrar durante as travessias</strong>
+                <p>Quando o dispositivo permitir.</p>
+              </div>
+            </div>
+            <button type="button" class="switch-toggle acao-vibracao" aria-pressed="false">
+              <span class="switch-bola"></span>
+            </button>
+          </div>
+
+          <!-- Toggle 3: Apoio musical -->
+          <div class="item-toggle-linha">
+            <div class="toggle-info">
+              <span class="toggle-icone">
+                <img src="/assets/icones/music-alt.png" alt="" class="icone" />
+              </span>
+              <div>
+                <strong>Apoio musical</strong>
+                <p>Guia sonoro seguro durante a travessia.</p>
+              </div>
+            </div>
+            <button type="button" class="switch-toggle acao-musical" aria-pressed="false">
+              <span class="switch-bola"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Os 4 Pilares de Acessibilidade do Projeto -->
+    <section class="secao secao-suave">
+      <div class="container">
+        <div class="cabecalho-secao">
+          <div>
+            <div class="etiqueta">PROJETADO PARA INCLUIR</div>
+            <h2>Quatro formas de garantir autonomia.</h2>
+          </div>
+          <p>Recursos pensados tanto para o aplicativo mobile do cidadão quanto para esta plataforma web.</p>
+        </div>
+
+        <div class="grade-pilares-acess">
+          <!-- Pilar 01 -->
+          <article class="card-branco">
+            <div class="topo-card">
+              <span class="topo-card-titulo">
+                <img src="../assets/icones/walking.png" alt="" class="icone-pequeno" />
+                Voz e leitores de tela
+              </span>
+              <span>01</span>
+            </div>
+            <h3>Navegação 100% por voz com a IARA</h3>
+            <p>
+              Pessoas cegas ou idosas com dificuldade para digitar podem acionar todas as funções falando naturalmente. Na web, a estrutura semântica e os textos alternativos garantem leitura fluida no NVDA, VoiceOver e TalkBack.
+            </p>
+          </article>
+
+          <!-- Pilar 02 -->
+          <article class="card-branco">
+            <div class="topo-card">
+              <span class="topo-card-titulo">
+                <img src="../assets/icones/clock.png" alt="" class="icone-pequeno" />
+                Estímulos sensoriais
+              </span>
+              <span>02</span>
+            </div>
+            <h3>Sinal musical e vibração na palma da mão</h3>
+            <p>
+              Inspirado no SIIM da Linha 4-Amarela, o aviso de travessia acontece no próprio smartphone por meio de melodia e vibração rítmica — superando a poluição sonora das avenidas de São Paulo.
+            </p>
+          </article>
+
+          <!-- Pilar 03 -->
+          <article class="card-branco">
+            <div class="topo-card">
+              <span class="topo-card-titulo">
+                <img src="../assets/icones/check-circle.png" alt="" class="icone-pequeno" />
+                Conforto visual
+              </span>
+              <span>03</span>
+            </div>
+            <h3>Tipografia acessível e alto contraste</h3>
+            <p>
+              Suporte à fonte <strong>Atkinson Hyperlegible</strong> — desenvolvida especificamente para diferenciar caracteres parecidos em casos de baixa visão —, além de botões amplos e espaçamento generoso.
+            </p>
+          </article>
+
+          <!-- Pilar 04 -->
+          <article class="card-branco">
+            <div class="topo-card">
+              <span class="topo-card-titulo">
+                <img src="/assets/icones/hand-paper.png" alt="" class="icone-pequeno" />
+                Comunicação inclusiva
+              </span>
+              <span>04</span>
+            </div>
+            <h3>Apoio em Libras e linguagem simples</h3>
+            <p>
+              Atalho permanente para tradução em Língua Brasileira de Sinais no canto da tela e textos diretos, sem termos técnicos difíceis, para que qualquer pessoa entenda cada etapa.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Acessibilidade pensada para o celular -->
+    <section class="container secao">
+      <div class="sobre-editorial" style="padding: 0;">
+        <div class="bloco-editorial">
+          <div class="etiqueta">EXPERIÊNCIA MOBILE ACESSÍVEL</div>
+          <h2>Feito para a palma da mão, no ritmo da rua</h2>
+          <p>
+            Como o <strong>Meu Tempo</strong> acompanha o cidadão em movimento pelas ruas e estações de São Paulo, toda a experiência mobile foi projetada para funcionar sem exigir digitação ou precisão no toque:
+          </p>
+
+          <ul class="lista-transformar">
+            <li><strong>Comandos de voz com a IARA:</strong> basta falar naturalmente para pedir mais tempo no semáforo, chamar um agente no metrô ou registrar uma barreira — ideal para pessoas cegas ou idosas.</li>
+            <li><strong>Retorno tátil e guia musical:</strong> vibrações rítmicas e sinais sonoros no próprio smartphone indicam a hora segura de atravessar, mesmo em avenidas barulhentas.</li>
+            <li><strong>Botões amplos e espaçados:</strong> áreas de toque generosas facilitam o uso com uma só mão e evitam cliques acidentais para quem tem tremor ou baixa mobilidade.</li>
+            <li><strong>Compatível com TalkBack e VoiceOver:</strong> leitura nativa de tela no Android e no iOS para navegação fluida por gestos simples no celular.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Faixa verde-escura final -->
+    <section class="faixa-cta">
+      <div class="container">
+        <div>
+          <div class="etiqueta">CADA PESSOA TEM SEU TEMPO</div>
+          <h2>Encontrou alguma barreira nesta página?</h2>
+          <p>Sua opinião ajuda a tornar o Meu Tempo ainda mais acessível para todos.</p>
+        </div>
+        <a href="contato.html" class="btn btn-branco">Falar com a equipe &rarr;</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Rodapé -->
+  <footer class="rodape">
+    <div class="container">
+      <div class="rodape-grid">
+        <div>
+          <h3>meu tempo</h3>
+          <p>Tecnologia que acolhe.<br />Uma cidade que respeita você.</p>
+          <p>Um projeto acadêmico · FIAP 2026</p>
+        </div>
+        <div>
+          <h3>Conheça o Meu Tempo</h3>
+          <a href="sobre.html">Sobre o projeto</a>
+          <a href="solucao.html">Nossa solução</a>
+          <a href="integrantes.html">Nossa equipe</a>
+        </div>
+        <div>
+          <h3>Estamos com você</h3>
+          <a href="acessibilidade.html">Acessibilidade</a>
+          <a href="faq.html">Perguntas frequentes</a>
+          <a href="contato.html">Fale com a gente</a>
+        </div>
+        <div>
+          <h3>Outros caminhos</h3>
+          <a href="solucao01.html">Travessia acessível</a>
+          <a href="solucao02.html">Apoio e zeladoria</a>
+          <a href="privacidade.html">Privacidade e termos</a>
+        </div>
+      </div>
+
+      <div class="rodape-base">
+        <span>© 2026 Meu Tempo. A cidade no seu ritmo.</span>
+        <span>Acolhimento, autonomia e acessibilidade.</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Integração oficial do VLibras -->
+  <div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+      <div class="vw-plugin-top-wrapper"></div>
+    </div>
+  </div>
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script>
 </body>
 </html>

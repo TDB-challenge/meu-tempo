@@ -1,12 +1,367 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro | Meu Tempo</title>
-    <link rel="stylesheet" href="../css/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cadastro | Meu Tempo</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <script src="../js/script.js" defer></script>
 </head>
 <body>
+  <!-- Barra superior -->
+  <div class="barra-util">
+    <div class="container">
+      <span>Uma cidade para todas as pessoas. Um caminho de cada vez.</span>
+      <button type="button" id="btn-abrir-acess" class="btn-acess-topo">
+        Recursos de acessibilidade &rsaquo;
+      </button>
+    </div>
+  </div>
 
+  <!-- Barra de ajustes rápidos -->
+  <div id="painel-acess-rapido" class="painel-acess-rapido">
+    <div class="container">
+      <strong>Ajustes rápidos de leitura:</strong>
+      <div class="botoes-acess">
+        <button type="button" class="acao-aumentar">A+ Aumentar texto</button>
+        <button type="button" class="acao-diminuir">A- Texto normal</button>
+        <button type="button" class="acao-contraste">Alto contraste</button>
+        <button type="button" class="acao-tema">Tema escuro</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cabeçalho -->
+  <header class="cabecalho">
+    <div class="container">
+      <a href="index.html" class="logo">
+        <span class="logo-circulo">
+          <img src="../assets/icones/clock-three.png" alt="" class="icone" />
+        </span>
+        <div>
+          <span class="logo-titulo">meu tempo</span>
+          <span class="logo-sub">A cidade no seu ritmo.</span>
+        </div>
+      </a>
+
+      <button type="button" id="btn-menu" class="btn-menu">Menu</button>
+
+      <nav id="menu-navegacao" class="menu">
+        <a href="index.html">Início</a>
+        <a href="sobre.html" class="ativo">Sobre</a>
+        <a href="solucao.html">Nossa solução</a>
+        <a href="acessibilidade.html">Acessibilidade</a>
+        <a href="integrantes.html">Equipe</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contato.html">Contato</a>
+      </nav>
+
+      <a href="solucao.html" class="btn btn-pequeno header-cta">Acessar plataforma &rarr;</a>
+    </div>
+  </header>
+
+
+  <main>
+    <section class="container cadastro-secao">
+      <div class="cadastro-layout">
+        <!-- Coluna Esquerda: Boas-vindas e foto em arco -->
+        <div class="cadastro-apresentacao">
+          <div class="etiqueta">SEJA BEM-VINDO AO MEU TEMPO</div>
+          <h1>Seu próximo caminho começa por aqui.</h1>
+          <p class="cadastro-lead">
+            Mais autonomia para seguir no seu ritmo. Valide sua credencial e configure sua experiência em poucos passos.
+          </p>
+
+          <div class="cadastro-foto-arco">
+            <img
+              src="../assets/imagens/homem_acessib.jpg"
+              alt="Homem com perna amputada usando muletas"
+            />
+          </div>
+          <p class="cadastro-legenda-ficticia">
+            <span class="asterisco">*</span> Perfil fictício criado para demonstração institucional deste protótipo acadêmico.
+          </p>
+        </div>
+
+        <!-- Coluna Direita: Cartão branco com formulário em 3 etapas -->
+        <div class="card-branco cadastro-card">
+          <div class="cadastro-area-tag">
+            <img src="../assets/icones/user.png" alt="" class="icone" />
+            <span>Área do cidadão</span>
+          </div>
+
+          <h2>Vamos começar?</h2>
+          <p class="cadastro-subtitulo">Precisamos de poucas informações para começar.</p>
+
+          <!-- Indicador das 3 etapas -->
+          <div class="cadastro-etapas" aria-label="Etapas do cadastro">
+            <div class="etapa-item ativa" data-indicador-etapa="1">
+              <div class="etapa-barra"></div>
+              <span>1. Dados básicos</span>
+            </div>
+            <div class="etapa-item" data-indicador-etapa="2">
+              <div class="etapa-barra"></div>
+              <span>2. Acessibilidade</span>
+            </div>
+            <div class="etapa-item" data-indicador-etapa="3">
+              <div class="etapa-barra"></div>
+              <span>3. Preferências</span>
+            </div>
+          </div>
+
+          <form id="form-cadastro" novalidate>
+            <!-- ================= ETAPA 1: DADOS BÁSICOS ================= -->
+            <div id="cadastro-passo-1" class="cadastro-passo">
+              <!-- Box verde de validação obrigatória por QR Code -->
+              <div id="box-qrcode-cadastro" class="cadastro-qrcode-box">
+                <div class="qrcode-box-topo">
+                  <span class="qrcode-icone-wrap">
+                    <img src="../assets/icones/qr.png" alt="" class="icone" />
+                  </span>
+                  <div>
+                    <strong>Valide sua credencial com QR Code <span class="asterisco">*</span></strong>
+                    <p>
+                      Obrigatório para evitar fraudes e liberar os benefícios (CIN, CIPCD, CIPTEA ou Carteira da Pessoa Idosa).
+                    </p>
+                  </div>
+                </div>
+
+                <button type="button" id="btn-simular-qrcode" class="btn-qrcode-ler">
+                  <img src="../assets/icones/qr.png" alt="" class="icone" />
+                  <span>Ler QR Code da credencial</span>
+                </button>
+
+                <p id="status-qrcode-cadastro" class="qrcode-nota">
+                  Após validar o QR Code, confira ou complete seus dados básicos abaixo.
+                </p>
+              </div>
+
+              <div class="form-contato">
+                <div class="campo-grupo">
+                  <label for="cad-nome">Nome completo <span class="asterisco">*</span></label>
+                  <input type="text" id="cad-nome" name="nome" required />
+                </div>
+
+                <div class="campo-grupo">
+                  <label for="cad-email">E-mail <span class="asterisco">*</span></label>
+                  <input type="email" id="cad-email" name="email" required />
+                </div>
+
+                <div class="campo-grupo">
+                  <label for="cad-senha">Senha <span class="asterisco">*</span></label>
+                  <div class="campo-senha-wrap">
+                    <input type="password" id="cad-senha" name="senha" minlength="8" required />
+                    <button
+                      type="button"
+                      class="btn-toggle-senha"
+                      aria-label="Mostrar senha"
+                      aria-pressed="false"
+                    >
+                      <img src="../assets/icones/eye.png" alt="" class="icone" />
+                    </button>
+                  </div>
+                </div>
+
+                <div class="campo-grupo">
+                  <label for="cad-confirma-senha">Confirme a senha <span class="asterisco">*</span></label>
+                  <div class="campo-senha-wrap">
+                    <input type="password" id="cad-confirma-senha" name="confirmaSenha" minlength="8" required />
+                    <button
+                      type="button"
+                      class="btn-toggle-senha"
+                      aria-label="Mostrar confirmação de senha"
+                      aria-pressed="false"
+                    >
+                      <img src="../assets/icones/eye.png" alt="" class="icone" />
+                    </button>
+                  </div>
+                  <small class="campo-dica">Use pelo menos 8 caracteres.</small>
+                </div>
+
+                <label class="checkbox-termos" for="cad-termos">
+                  <input type="checkbox" id="cad-termos" required />
+                  <span>
+                    Li os <a href="acessibilidade.html#termos-uso">termos de uso</a> e as
+                    <a href="privacidade.html">informações de privacidade</a>.
+                  </span>
+                </label>
+
+                <div>
+                  <button type="button" id="btn-cad-ir-passo2" class="btn">
+                    Continuar &rarr;
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- ================= ETAPA 2: ACESSIBILIDADE ================= -->
+            <div id="cadastro-passo-2" class="cadastro-passo" hidden>
+              <div class="painel-status" style="margin-bottom: 20px;">
+                <strong>Perfil identificado pela credencial:</strong>
+                <p id="resumo-perfil-qrcode" style="margin: 6px 0 0;">
+                  Credencial validada · Recursos visuais e sonoros recomendados ativados.
+                </p>
+              </div>
+
+              <p style="font-size: 0.92rem; margin-bottom: 16px;">
+                Personalize como você prefere visualizar e interagir com a plataforma:
+              </p>
+
+              <div class="cadastro-opcoes-lista">
+                <label class="opcao-check-card">
+                  <input type="checkbox" id="pref-contraste" />
+                  <div>
+                    <strong>Alto contraste visual</strong>
+                    <span>Reforça bordas e contraste entre textos e botões na tela.</span>
+                  </div>
+                </label>
+
+                <label class="opcao-check-card">
+                  <input type="checkbox" id="pref-fonte" checked />
+                  <div>
+                    <strong>Fonte de alta legibilidade</strong>
+                    <span>Amplia o espaçamento e facilita a leitura rápida na rua.</span>
+                  </div>
+                </label>
+
+                <label class="opcao-check-card">
+                  <input type="checkbox" id="pref-voz" checked />
+                  <div>
+                    <strong>Comandos e respostas por voz (IARA)</strong>
+                    <span>Permite solicitar travessias e apoio falando com a assistente.</span>
+                  </div>
+                </label>
+
+                <label class="opcao-check-card">
+                  <input type="checkbox" id="pref-vibracao" checked />
+                  <div>
+                    <strong>Alerta vibratório e guia musical</strong>
+                    <span>Sinalização tátil e sonora durante a abertura do semáforo.</span>
+                  </div>
+                </label>
+              </div>
+
+              <div class="cadastro-botoes-linha">
+                <button type="button" id="btn-cad-voltar-1" class="btn btn-contorno">
+                  &larr; Voltar
+                </button>
+                <button type="button" id="btn-cad-ir-passo3" class="btn">
+                  Continuar &rarr;
+                </button>
+              </div>
+            </div>
+
+            <!-- ================= ETAPA 3: PREFERÊNCIAS ================= -->
+            <div id="cadastro-passo-3" class="cadastro-passo" hidden>
+              <p style="font-size: 0.92rem; margin-bottom: 16px;">
+                Quais recursos você pretende usar com mais frequência no dia a dia?
+              </p>
+
+              <div class="cadastro-opcoes-lista">
+                <label class="opcao-check-card">
+                  <input type="checkbox" name="uso" value="travessia" checked />
+                  <div>
+                    <strong>Travessia com tempo estendido</strong>
+                    <span>Solicitação de tempo adicional em cruzamentos semafóricos (CET).</span>
+                  </div>
+                </label>
+
+                <label class="opcao-check-card">
+                  <input type="checkbox" name="uso" value="metro" checked />
+                  <div>
+                    <strong>Apoio geolocalizado no Metrô e CPTM</strong>
+                    <span>Acompanhamento de agentes da estação desde o bloqueio até o embarque.</span>
+                  </div>
+                </label>
+
+                <label class="opcao-check-card">
+                  <input type="checkbox" name="uso" value="zeladoria" />
+                  <div>
+                    <strong>Zeladoria urbana e elevadores</strong>
+                    <span>Consulta e relato de elevadores, rampas e pisos táteis.</span>
+                  </div>
+                </label>
+              </div>
+
+              <div class="cadastro-botoes-linha">
+                <button type="button" id="btn-cad-voltar-2" class="btn btn-contorno">
+                  &larr; Voltar
+                </button>
+                <button type="submit" class="btn">
+                  Concluir cadastro &rarr;
+                </button>
+              </div>
+            </div>
+
+            <div id="aviso-cadastro" class="aviso-contato" role="status" aria-live="polite" style="margin-top: 16px;"></div>
+          </form>
+
+          <!-- Rodapé interno do card -->
+          <div class="cadastro-card-rodape">
+            <div class="cadastro-seguranca">
+              <img src="../assets/icones/shield-check.png" alt="" class="icone" />
+              <span>Seus dados e suas preferências ficam sob seu controle.</span>
+            </div>
+
+            <div class="cadastro-links-rodape">
+              <a href="login.html" class="cadastro-link-admin">Já tenho conta · Entrar</a>
+              <a href="solucao02.html" class="cadastro-link-libras">
+                <span>Acesso administrativo &rarr;</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Rodapé -->
+  <footer class="rodape">
+    <div class="container">
+      <div class="rodape-grid">
+        <div>
+          <h3>meu tempo</h3>
+          <p>Tecnologia que acolhe.<br />Uma cidade que respeita você.</p>
+          <p>Um projeto acadêmico · FIAP 2026</p>
+        </div>
+        <div>
+          <h3>Conheça o Meu Tempo</h3>
+          <a href="sobre.html">Sobre o projeto</a>
+          <a href="solucao.html">Nossa solução</a>
+          <a href="integrantes.html">Nossa equipe</a>
+        </div>
+        <div>
+          <h3>Estamos com você</h3>
+          <a href="acessibilidade.html">Acessibilidade</a>
+          <a href="faq.html">Perguntas frequentes</a>
+          <a href="contato.html">Fale com a gente</a>
+        </div>
+        <div>
+          <h3>Outros caminhos</h3>
+          <a href="solucao01.html">Plataforma do cidadão</a>
+          <a href="solucao02.html">Acesso administrativo</a>
+          <a href="privacidade.html">Privacidade e termos</a>
+        </div>
+      </div>
+
+      <div class="rodape-base">
+        <span>© 2026 Meu Tempo. A cidade no seu ritmo.</span>
+        <span>Acolhimento, autonomia e acessibilidade.</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Integração oficial do VLibras -->
+  <div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+      <div class="vw-plugin-top-wrapper"></div>
+    </div>
+  </div>
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script>
 </body>
 </html>

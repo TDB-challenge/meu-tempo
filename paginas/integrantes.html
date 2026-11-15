@@ -1,12 +1,252 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Integrantes | Meu Tempo</title>
-    <link rel="stylesheet" href="../css/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Integrantes | Meu Tempo</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <script src="../js/script.js" defer></script>
 </head>
 <body>
+  <!-- Barra superior -->
+  <div class="barra-util">
+    <div class="container">
+      <span>Uma cidade para todas as pessoas. Um caminho de cada vez.</span>
+      <button type="button" id="btn-abrir-acess" class="btn-acess-topo">
+        Recursos de acessibilidade &rsaquo;
+      </button>
+    </div>
+  </div>
 
+  <!-- Barra de ajustes rápidos -->
+  <div id="painel-acess-rapido" class="painel-acess-rapido">
+    <div class="container">
+      <strong>Ajustes rápidos de leitura:</strong>
+      <div class="botoes-acess">
+        <button type="button" class="acao-aumentar">A+ Aumentar texto</button>
+        <button type="button" class="acao-diminuir">A- Texto normal</button>
+        <button type="button" class="acao-contraste">Alto contraste</button>
+        <button type="button" class="acao-tema">Tema escuro</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cabeçalho -->
+  <header class="cabecalho">
+    <div class="container">
+      <a href="index.html" class="logo">
+        <span class="logo-circulo">
+          <img src="/assets/icones/clock-three.png" alt="" class="icone" />
+        </span>
+        <div>
+          <span class="logo-titulo">meu tempo</span>
+          <span class="logo-sub">A cidade no seu ritmo.</span>
+        </div>
+      </a>
+
+      <button type="button" id="btn-menu" class="btn-menu">Menu</button>
+
+      <nav id="menu-navegacao" class="menu">
+        <a href="index.html">Início</a>
+        <a href="sobre.html">Sobre</a>
+        <a href="solucao.html">Nossa solução</a>
+        <a href="acessibilidade.html">Acessibilidade</a>
+        <a href="integrantes.html" class="ativo">Equipe</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contato.html">Contato</a>
+      </nav>
+
+      <a href="solucao.html" class="btn btn-pequeno header-cta">Acessar plataforma &rarr;</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- 1. Cabeçalho da página Integrantes -->
+    <section class="container equipe-topo">
+      <div class="etiqueta">QUEM CONSTRÓI ESSE CAMINHO</div>
+      <h1>Pessoas por trás<br />de uma ideia para pessoas.</h1>
+      <p class="equipe-lead">
+        O <strong>Meu Tempo</strong> é um projeto acadêmico desenvolvido para a Global Solution 2026 da FIAP.
+      </p>
+    </section>
+
+    <!-- 2. Grade de Integrantes com Fotos e RMs Oficiais -->
+    <section class="container equipe-secao">
+      <div class="grid-3 grade-equipe-3d">
+        <!-- Integrante 1: Maria Luiza -->
+        <article class="card-branco card-integrante">
+          <div class="topo-integrante">
+            <img
+              src="/assets/imagens/img-02_malu (1).png"
+              alt="Foto de Maria Luiza de Castro Antunes"
+              class="foto-integrante"
+            />
+            <span class="badge-rm">RM 575122</span>
+          </div>
+          <h3>Maria Luiza de Castro Antunes</h3>
+          <span class="cargo-integrante">Banco de Dados &amp; IA / Chatbot</span>
+          <p>
+            Responsável pela modelagem relacional do banco de dados da plataforma e pelo desenvolvimento dos fluxos conversacionais e respostas da assistente IARA.
+          </p>
+          <div class="links-integrante">
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="link-seta">GitHub &rarr;</a>
+            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="link-seta">LinkedIn &rarr;</a>
+          </div>
+        </article>
+
+        <!-- Integrante 2: Gabrielly -->
+        <article class="card-branco card-integrante">
+          <div class="topo-integrante">
+            <img
+              src="/assets/imagens/img-03_gaby (1).png"
+              alt="Foto de Gabrielly Macario de Souza Ribeiro"
+              class="foto-integrante"
+            />
+            <span class="badge-rm">RM 575133</span>
+          </div>
+          <h3>Gabrielly Macario de Souza Ribeiro</h3>
+          <span class="cargo-integrante">Front-end &amp; Python</span>
+          <p>
+            Atua na construção das interfaces web responsivas e acessíveis, além do desenvolvimento de scripts e rotinas de automação em Python.
+          </p>
+          <div class="links-integrante">
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="link-seta">GitHub &rarr;</a>
+            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="link-seta">LinkedIn &rarr;</a>
+          </div>
+        </article>
+
+        <!-- Integrante 3: Rayza -->
+        <article class="card-branco card-integrante">
+          <div class="topo-integrante">
+            <img
+              src="/assets/imagens/img-04_rayza (1).png"
+              alt="Foto de Rayza Salles Almeida do Nascimento"
+              class="foto-integrante"
+            />
+            <span class="badge-rm">RM 576940</span>
+          </div>
+          <h3>Rayza Salles Almeida do Nascimento</h3>
+          <span class="cargo-integrante">Front-end &amp; Java</span>
+          <p>
+            Focada no desenvolvimento front-end e recursos de acessibilidade da plataforma web, além da implementação das regras de negócio e arquitetura back-end em Java.
+          </p>
+          <div class="links-integrante">
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="link-seta">GitHub &rarr;</a>
+            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="link-seta">LinkedIn &rarr;</a>
+          </div>
+        </article>
+
+        <!-- Integrante 4: Sofia -->
+        <article class="card-branco card-integrante">
+          <div class="topo-integrante">
+            <img
+              src="/assets/imagens/img-05_sofia (1).jpeg"
+              alt="Foto de Sofia Balieiro Yamane Caro"
+              class="foto-integrante"
+            />
+            <span class="badge-rm">RM 574510</span>
+          </div>
+          <h3>Sofia Balieiro Yamane Caro</h3>
+          <span class="cargo-integrante">IA / Chatbot &amp; Banco de Dados</span>
+          <p>
+            Responsável pela estruturação da inteligência artificial da IARA, integração do chatbot e modelagem e persistência dos dados do sistema.
+          </p>
+          <div class="links-integrante">
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="link-seta">GitHub &rarr;</a>
+            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="link-seta">LinkedIn &rarr;</a>
+          </div>
+        </article>
+
+        <!-- Integrante 5: Taiane Mirella -->
+        <article class="card-branco card-integrante">
+          <div class="topo-integrante">
+            <img
+              src="/assets/imagens/img-01_mirella (1).jpeg"
+              alt="Foto de Taiane Mirella Santos de Alcântara"
+              class="foto-integrante"
+            />
+            <span class="badge-rm">RM 575845</span>
+          </div>
+          <h3>Taiane Mirella Santos de Alcântara</h3>
+          <span class="cargo-integrante">Java &amp; Python</span>
+          <p>
+            Atua no desenvolvimento back-end em Java para gestão dos chamados operacionais e na criação de automações e integrações de dados em Python.
+          </p>
+          <div class="links-integrante">
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="link-seta">GitHub &rarr;</a>
+            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="link-seta">LinkedIn &rarr;</a>
+          </div>
+        </article>
+      </div>
+
+      <!-- 3. Bloco Editorial Complementar (fiel ao protótipo) -->
+      <div class="equipe-manifesto">
+        <h2>Um trabalho que reúne diferentes olhares</h2>
+        <p>
+          Pesquisa, experiência do usuário, acessibilidade, desenvolvimento e integração são partes do mesmo caminho. Cada integrante contribui com sua parte para transformar a mobilidade urbana em uma experiência mais humana e autônoma.
+        </p>
+      </div>
+    </section>
+
+    <!-- 4. Faixa verde-escura final -->
+    <section class="faixa-cta">
+      <div class="container">
+        <div>
+          <div class="etiqueta">CADA PESSOA TEM SEU TEMPO</div>
+          <h2>Seu caminho merece respeito.<br />Seu tempo também.</h2>
+          <p>Encontre novas formas de se mover pela cidade, do seu jeito.</p>
+        </div>
+        <a href="solucao.html" class="btn btn-branco">Conhecer a plataforma &rarr;</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Rodapé -->
+  <footer class="rodape">
+    <div class="container">
+      <div class="rodape-grid">
+        <div>
+          <h3>meu tempo</h3>
+          <p>Tecnologia que acolhe.<br />Uma cidade que respeita você.</p>
+          <p>Um projeto acadêmico · FIAP 2026</p>
+        </div>
+        <div>
+          <h3>Conheça o Meu Tempo</h3>
+          <a href="sobre.html">Sobre o projeto</a>
+          <a href="solucao.html">Nossa solução</a>
+          <a href="integrantes.html">Nossa equipe</a>
+        </div>
+        <div>
+          <h3>Estamos com você</h3>
+          <a href="acessibilidade.html">Acessibilidade</a>
+          <a href="faq.html">Perguntas frequentes</a>
+          <a href="contato.html">Fale com a gente</a>
+        </div>
+        <div>
+          <h3>Outros caminhos</h3>
+          <a href="solucao01.html">Plataforma do cidadão</a>
+          <a href="solucao02.html">Acesso administrativo</a>
+          <a href="privacidade.html">Privacidade e termos</a>
+        </div>
+      </div>
+
+      <div class="rodape-base">
+        <span>© 2026 Meu Tempo. A cidade no seu ritmo.</span>
+        <span>Acolhimento, autonomia e acessibilidade.</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Integração oficial do VLibras -->
+  <div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+      <div class="vw-plugin-top-wrapper"></div>
+    </div>
+  </div>
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script>
 </body>
 </html>
