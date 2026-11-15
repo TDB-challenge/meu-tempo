@@ -150,12 +150,32 @@
 
                 <div class="campo-grupo">
                   <label for="cad-senha">Senha <span class="asterisco">*</span></label>
-                  <input type="password" id="cad-senha" name="senha" minlength="8" required />
+                  <div class="campo-senha-wrap">
+                    <input type="password" id="cad-senha" name="senha" minlength="8" required />
+                    <button
+                      type="button"
+                      class="btn-toggle-senha"
+                      aria-label="Mostrar senha"
+                      aria-pressed="false"
+                    >
+                      <img src="../assets/icones/eye.png" alt="" class="icone" />
+                    </button>
+                  </div>
                 </div>
 
                 <div class="campo-grupo">
                   <label for="cad-confirma-senha">Confirme a senha <span class="asterisco">*</span></label>
-                  <input type="password" id="cad-confirma-senha" name="confirmaSenha" minlength="8" required />
+                  <div class="campo-senha-wrap">
+                    <input type="password" id="cad-confirma-senha" name="confirmaSenha" minlength="8" required />
+                    <button
+                      type="button"
+                      class="btn-toggle-senha"
+                      aria-label="Mostrar confirmação de senha"
+                      aria-pressed="false"
+                    >
+                      <img src="../assets/icones/eye.png" alt="" class="icone" />
+                    </button>
+                  </div>
                   <small class="campo-dica">Use pelo menos 8 caracteres.</small>
                 </div>
 

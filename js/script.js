@@ -652,3 +652,49 @@ if (formCadastro) {
     }, 3300);
   });
 }
+
+// =====================================================
+// INTERAÇÕES DA PÁGINA LOGIN (login.html)
+// =====================================================
+const formLogin = document.getElementById("form-login");
+
+if (formLogin) {
+  const inputSenhaLogin = document.getElementById("login-senha");
+  const avisoLogin = document.getElementById("aviso-login");
+
+  formLogin.addEventListener("submit", function (evento) {
+    evento.preventDefault();
+
+    const email = document.getElementById("login-email").value.trim();
+    const senha = inputSenhaLogin ? inputSenhaLogin.value : "";
+
+    if (!email || !senha) {
+      avisoLogin.textContent = "Informe seu e-mail e sua senha para entrar.";
+      return;
+    }
+
+    avisoLogin.innerHTML =
+      'Acesso demonstrativo validado! <a href="solucao01.html" class="link-seta">Ir para a Plataforma do Cidadão &rarr;</a>';
+  });
+}
+
+// =====================================================
+// MOSTRAR / OCULTAR SENHA (login.html e cadastro.html)
+// =====================================================
+const botoesToggleSenha = document.querySelectorAll(".btn-toggle-senha");
+
+for (let i = 0; i < botoesToggleSenha.length; i++) {
+  botoesToggleSenha[i].addEventListener("click", function () {
+    const inputAlvo = this.parentElement.querySelector("input");
+    if (!inputAlvo) return;
+
+    const estaOculta = inputAlvo.type === "password";
+    inputAlvo.type = estaOculta ? "text" : "password";
+    this.setAttribute("aria-pressed", estaOculta ? "true" : "false");
+    this.setAttribute(
+      "aria-label",
+      estaOculta ? "Ocultar senha" : "Mostrar senha"
+    );
+  });
+}
+
