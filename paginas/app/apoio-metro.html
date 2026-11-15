@@ -3,36 +3,109 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>Apoio no Metrô | Meu Tempo</title>
-    <link rel="stylesheet" href="../assets/css/style.css" />
+
+    <link rel="stylesheet" href="../../css/style.css" />
   </head>
 
   <body class="app">
+    <!-- Atalho para quem navega pelo teclado -->
     <a href="#conteudo-principal" class="pular-conteudo">
       Ir para o conteúdo
     </a>
 
     <div class="aplicativo">
-      <!-- Menu lateral -->
+      <!-- Menu lateral para computadores -->
       <aside class="menu-lateral">
         <a href="inicio.html" class="logo">
-          <strong>meu tempo</strong>
-          <small class="slogan">A cidade no seu ritmo.</small>
+          <img
+            src="../../assets/icones/vibracao.svg"
+            class="icone-logo"
+            alt=""
+          />
+
+          <div class="texto-logo">
+            <strong>meu tempo</strong>
+            <small class="slogan">A cidade no seu ritmo.</small>
+          </div>
         </a>
 
+        <!-- Navegação principal do aplicativo -->
         <nav class="menu-navegacao" aria-label="Menu principal">
           <ul>
-            <li><a href="inicio.html">Início</a></li>
-            <li><a href="servicos.html">Serviços</a></li>
-            <li><a href="solicitacoes.html">Solicitações</a></li>
-            <li><a href="iara.html">Assistente IARA</a></li>
-            <li><a href="perfil.html">Perfil e acessibilidade</a></li>
+            <li>
+              <a href="inicio.html">
+                <img
+                  src="../../assets/icones/piso-tatil.svg"
+                  class="icone"
+                  alt=""
+                />
+                <span>Início</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="servicos.html" aria-current="location">
+                <img
+                  src="../../assets/icones/lista.svg"
+                  class="icone"
+                  alt=""
+                />
+                <span>Serviços</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="solicitacoes.html">
+                <img
+                  src="../../assets/icones/vibracao.svg"
+                  class="icone"
+                  alt=""
+                />
+                <span>Pedidos</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="iara.html">
+                <img
+                  src="../../assets/icones/audio.svg"
+                  class="icone"
+                  alt=""
+                />
+                <span>IARA</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="perfil.html">
+                <img
+                  src="../../assets/icones/configuracoes.svg"
+                  class="icone"
+                  alt=""
+                />
+                <span>Perfil</span>
+              </a>
+            </li>
           </ul>
         </nav>
 
+        <!-- Opções complementares do menu -->
         <div class="menu-inferior">
-          <a href="perfil.html">Acessibilidade</a>
-          <a href="../index.html">Voltar ao site</a>
+          <a href="perfil.html#preferencias-acessibilidade">
+            <img
+              src="../../assets/icones/libras.svg"
+              class="icone"
+              alt=""
+            />
+            <span>Acessibilidade</span>
+          </a>
+
+          <a href="../index.html">
+            <img src="../../assets/icones/seta-direita.svg" class="icone" alt="" />
+            <span>Voltar ao site</span>
+          </a>
         </div>
       </aside>
 
@@ -44,38 +117,81 @@
             <strong>Apoio no Metrô</strong>
           </div>
 
+          <!-- Logo exibida em tablets e celulares -->
+          <a href="inicio.html" class="logo-mobile">
+            <img
+              src="../../assets/icones/vibracao.svg"
+              class="icone-logo"
+              alt=""
+            />
+
+            <strong>meu tempo</strong>
+          </a>
+
+          <!-- Menu do usuário -->
           <details class="menu-usuario">
             <summary>
-              <span class="avatar" id="usuario-iniciais">U</span>
+              <span class="avatar" id="usuario-iniciais"> U </span>
 
               <span class="dados-usuario">
                 <small>Olá,</small>
                 <strong id="usuario-nome">Usuário</strong>
               </span>
+
+              <img
+                src="../../assets/icones/expandir.svg"
+                class="icone seta-menu-usuario"
+                alt=""
+              />
             </summary>
 
             <div class="opcoes-usuario">
-              <a href="perfil.html">Meu perfil</a>
-              <button type="button" id="ler-credencial" disabled>
-                Ler minha credencial
-              </button>
-              <a href="../index.html">Voltar ao site</a>
+              <a href="perfil.html">
+                <img
+                  src="../../assets/icones/configuracoes.svg"
+                  class="icone"
+                  alt=""
+                />
+                Meu perfil
+              </a>
+
+              <a href="perfil.html#abrir-leitor-documentos" id="identificar-documento">
+                <img
+                  src="../../assets/icones/camera.svg"
+                  class="icone"
+                  alt=""
+                />
+                Identificar meu documento
+              </a>
+
+              <a href="../index.html">
+                <img src="../../assets/icones/seta-direita.svg" class="icone" alt="" />
+                Voltar ao site
+              </a>
             </div>
           </details>
         </header>
 
-        <!-- Conteúdo exclusivo do serviço de metrô -->
+        <!-- Conteúdo da página de apoio no metrô -->
         <main
           class="conteudo-app pagina-apoio-metro"
           id="conteudo-principal"
           tabindex="-1"
         >
+          <!-- Apresentação do serviço -->
           <section class="introducao-pagina">
-            <h1>Apoio no Metrô</h1>
-            <p>Vamos encontrar a ajuda de que você precisa.</p>
+            <span class="icone-introducao">
+              <img src="../../assets/icones/metro.svg" class="icone" alt="" />
+            </span>
+
+            <div class="texto-introducao">
+              <h1>Apoio no Metrô</h1>
+
+              <p>Vamos encontrar a ajuda de que você precisa.</p>
+            </div>
           </section>
 
-          <!-- Formulário para solicitar assistência -->
+          <!-- Card com o formulário de solicitação de assistência -->
           <form
             class="formulario-servico"
             id="formulario-apoio-metro"
@@ -83,76 +199,177 @@
           >
             <h2>Onde você precisa de apoio?</h2>
 
-            <!-- Seleção da linha do metrô -->
-            <label class="campo-formulario" for="linha-metro">
-              Linha *
+            <!-- Agrupa os campos de identificação da estação -->
+            <div class="campos-estacao">
+              <!-- Seleção da linha do metrô -->
+              <div class="campo-formulario">
+                <label for="linha-metro"> Linha * </label>
 
-              <select id="linha-metro" name="linha" required>
-                <option value="verde">2 — Verde</option>
-                <option value="amarela">4 — Amarela</option>
-                <option value="vermelha">3 — Vermelha</option>
-              </select>
-            </label>
+                <select id="linha-metro" name="linha" required>
+                  <option value="verde">2 — Verde</option>
+                  <option value="amarela">4 — Amarela</option>
+                  <option value="vermelha">3 — Vermelha</option>
+                </select>
+              </div>
 
-            <!-- As estações mudarão conforme a linha selecionada -->
-            <label class="campo-formulario" for="estacao-metro">
-              Estação *
+              <!-- As estações serão atualizadas conforme a linha escolhida -->
+              <div class="campo-formulario">
+                <label for="estacao-metro"> Estação * </label>
 
-              <select id="estacao-metro" name="estacao" required>
-                <option>Consolação</option>
-                <option>Trianon-Masp</option>
-                <option>Brigadeiro</option>
-              </select>
-            </label>
+                <select id="estacao-metro" name="estacao" required>
+                  <option value="consolacao">Consolação</option>
 
-            <!-- Tipo de assistência necessária -->
-            <label class="campo-formulario" for="tipo-apoio">
-              De que ajuda precisa? *
+                  <option value="trianon-masp">Trianon-Masp</option>
+
+                  <option value="brigadeiro">Brigadeiro</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Seleção do tipo de assistência necessária -->
+            <div class="campo-formulario">
+              <label for="tipo-apoio"> De que ajuda precisa? * </label>
 
               <select id="tipo-apoio" name="tipo-apoio" required>
-                <option>Acompanhamento até a plataforma</option>
-                <option>Ajuda na catraca</option>
-                <option>Rampa móvel para embarque</option>
-                <option>Orientação dentro da estação</option>
-                <option>Apoio para utilização do elevador</option>
-                <option>Outro tipo de auxílio</option>
-              </select>
-            </label>
+                <option value="acompanhamento">
+                  Acompanhamento até a plataforma
+                </option>
 
-            <!-- Local onde o funcionário encontrará o usuário -->
-            <label class="campo-formulario" for="ponto-encontro">
-              Onde podemos encontrar você? *
+                <option value="catraca">Ajuda na catraca</option>
+
+                <option value="embarque">Rampa móvel para embarque</option>
+
+                <option value="orientacao">Orientação dentro da estação</option>
+
+                <option value="elevador">
+                  Apoio para utilização do elevador
+                </option>
+
+                <option value="outro">Outro tipo de auxílio</option>
+              </select>
+            </div>
+
+            <!-- Local onde o funcionário poderá encontrar o usuário -->
+            <div class="campo-formulario">
+              <label for="ponto-encontro">
+                Onde podemos encontrar você? *
+              </label>
 
               <input
                 type="text"
                 id="ponto-encontro"
                 name="ponto-encontro"
-                placeholder="Ex.: entrada, catraca ou plataforma"
+                placeholder="Ex.: entrada principal, catraca ou plataforma"
                 required
               />
-            </label>
+            </div>
 
-            <!-- Informações demonstrativas sobre os elevadores -->
+            <!-- Informações sobre os elevadores da estação -->
             <details class="elevadores-estacao" id="elevadores-estacao">
-              <summary>Ver elevadores da estação</summary>
+              <summary class="titulo-elevadores">
+                <img
+                  src="../../assets/icones/elevador.svg"
+                  class="icone"
+                  alt=""
+                />
 
-              <div class="card-elevador">
-                <strong>Elevador 01</strong>
-                <p>Acesso da rua ao mezanino</p>
-                <span class="status-elevador">Operando</span>
+                <span>Ver elevadores da estação</span>
+
+                <img
+                  src="../../assets/icones/expandir.svg"
+                  class="icone seta-expansao"
+                  alt=""
+                />
+              </summary>
+
+              <!-- Conteúdo exibido ao expandir a seção -->
+              <div class="conteudo-elevadores">
+                <div class="cabecalho-elevadores">
+                  <h3 id="estacao-elevadores">Elevadores — Consolação</h3>
+
+                  <small> Situação demonstrativa dos elevadores. </small>
+                </div>
+
+                <!-- Lista que será atualizada conforme a estação -->
+                <div class="lista-elevadores" id="lista-elevadores">
+                  <!-- Informações do primeiro elevador -->
+                  <article class="card-elevador">
+                    <span class="icone-elevador">
+                      <img
+                        src="../../assets/icones/elevador.svg"
+                        class="icone"
+                        alt=""
+                      />
+                    </span>
+
+                    <div class="dados-elevador">
+                      <strong>Elevador 01</strong>
+
+                      <p>Acesso da rua ao mezanino</p>
+                    </div>
+
+                    <span class="status-elevador status-operando">
+                      <img
+                        src="../../assets/icones/confirmacao.svg"
+                        class="icone"
+                        alt=""
+                      />
+
+                      Operando
+                    </span>
+                  </article>
+
+                  <!-- Informações do segundo elevador -->
+                  <article class="card-elevador">
+                    <span class="icone-elevador">
+                      <img
+                        src="../../assets/icones/elevador.svg"
+                        class="icone"
+                        alt=""
+                      />
+                    </span>
+
+                    <div class="dados-elevador">
+                      <strong>Elevador 02</strong>
+
+                      <p>Acesso do mezanino à plataforma</p>
+                    </div>
+
+                    <span class="status-elevador status-operando">
+                      <img
+                        src="../../assets/icones/confirmacao.svg"
+                        class="icone"
+                        alt=""
+                      />
+
+                      Operando
+                    </span>
+                  </article>
+                </div>
+
+                <!-- Orientação caso algum elevador esteja indisponível -->
+                <div class="aviso-elevadores">
+                  <img
+                    src="../../assets/icones/libras.svg"
+                    class="icone"
+                    alt=""
+                  />
+
+                  <p>
+                    Você pode pedir apoio mesmo se um elevador estiver em
+                    manutenção.
+                  </p>
+                </div>
               </div>
-
-              <div class="card-elevador">
-                <strong>Elevador 02</strong>
-                <p>Acesso do mezanino à plataforma</p>
-                <span class="status-elevador">Operando</span>
-              </div>
-
-              <p>
-                Você pode pedir apoio mesmo se um elevador estiver em
-                manutenção.
-              </p>
             </details>
+
+            <!-- Mensagem exibida caso exista algum problema no formulário -->
+            <p
+              class="aviso-formulario"
+              id="aviso-apoio-metro"
+              role="status"
+              hidden
+            ></p>
 
             <!-- Envio do pedido de assistência -->
             <button
@@ -161,21 +378,172 @@
               id="pedir-apoio"
               disabled
             >
-              Pedir apoio
+              <span>Pedir apoio</span>
+
+              <img
+                src="../../assets/icones/seta-direita.svg"
+                class="icone"
+                alt=""
+              />
             </button>
           </form>
+
+          <!-- Confirmação exibida após registrar o pedido -->
+          <section
+            class="resultado-servico"
+            id="resultado-apoio-metro"
+            role="status"
+            hidden
+          >
+            <span class="icone-resultado-servico">
+              <img src="../../assets/icones/sucesso.svg" class="icone" alt="" />
+            </span>
+
+            <h2>Pedido de apoio registrado!</h2>
+
+            <p>Você poderá acompanhar as atualizações na página de pedidos.</p>
+
+            <!-- Número gerado após a solicitação -->
+            <p class="protocolo-solicitacao">
+              Protocolo:
+              <strong id="protocolo-apoio-metro"></strong>
+            </p>
+
+            <a href="solicitacoes.html" class="botao-principal">
+              <span>Acompanhar meu pedido</span>
+
+              <img
+                src="../../assets/icones/seta-direita.svg"
+                class="icone"
+                alt=""
+              />
+            </a>
+
+            <a href="servicos.html" class="voltar-servicos">
+              Voltar aos serviços
+            </a>
+          </section>
         </main>
       </div>
 
+      <!-- Navegação inferior para tablets e celulares -->
+      <nav
+        class="navegacao-inferior"
+        aria-label="Menu principal para telas menores"
+      >
+        <ul>
+          <li>
+            <a href="inicio.html">
+              <img src="../../assets/icones/piso-tatil.svg" class="icone" alt="" />
+              <span>Início</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="servicos.html" aria-current="location">
+              <img
+                src="../../assets/icones/lista.svg"
+                class="icone"
+                alt=""
+              />
+              <span>Serviços</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="solicitacoes.html">
+              <img src="../../assets/icones/vibracao.svg" class="icone" alt="" />
+              <span>Pedidos</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="iara.html">
+              <img
+                src="../../assets/icones/audio.svg"
+                class="icone"
+                alt=""
+              />
+              <span>IARA</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="perfil.html">
+              <img src="../../assets/icones/configuracoes.svg" class="icone" alt="" />
+              <span>Perfil</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Botão flutuante de ajuda -->
       <button
         type="button"
         class="botao-ajuda"
         id="botao-ajuda"
         aria-label="Preciso de ajuda"
-        disabled
+        aria-haspopup="dialog"
+        aria-controls="modal-ajuda"
       >
-        ?
+        <img src="../../assets/icones/ajuda.svg" class="icone" alt="" />
       </button>
     </div>
+
+    <!-- Janela de ajuda compartilhada entre as páginas -->
+    <dialog
+      class="modal-ajuda"
+      id="modal-ajuda"
+      aria-labelledby="titulo-modal-ajuda"
+    >
+      <header class="cabecalho-modal-ajuda">
+        <h2 id="titulo-modal-ajuda">Como podemos ajudar?</h2>
+
+        <form method="dialog">
+          <button
+            type="submit"
+            class="fechar-modal-ajuda"
+            aria-label="Fechar janela"
+          >
+            <img src="../../assets/icones/fechar.svg" class="icone" alt="" />
+          </button>
+        </form>
+      </header>
+
+      <p>
+        Escolha um serviço para pedir apoio. Em “Pedidos”, você acompanha cada
+        atualização.
+      </p>
+
+      <div class="opcoes-ajuda">
+        <a href="iara.html" class="ajuda-iara">
+          <img src="../../assets/icones/audio.svg" class="icone" alt="" />
+
+          <span>Conversar com a IARA</span>
+
+          <img
+            src="../../assets/icones/seta-direita.svg"
+            class="icone"
+            alt=""
+          />
+        </a>
+
+        <a
+          href="perfil.html#preferencias-acessibilidade"
+          class="ajuda-acessibilidade"
+        >
+          <img
+            src="../../assets/icones/libras.svg"
+            class="icone"
+            alt=""
+          />
+
+          <span>Ajustar acessibilidade</span>
+        </a>
+      </div>
+    </dialog>
+
+    <!-- Funcionalidades gerais, navegação, acessibilidade, preferências, formulários, solicitações e regras dos serviços. -->
+    <script src="../../js/app.js" defer></script>
   </body>
 </html>

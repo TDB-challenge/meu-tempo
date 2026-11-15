@@ -3,36 +3,108 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>Assistente IARA | Meu Tempo</title>
-    <link rel="stylesheet" href="../assets/css/style.css" />
+
+    <link rel="stylesheet" href="../../css/style.css" />
   </head>
 
   <body class="app">
+    <!-- Atalho para quem navega pelo teclado -->
     <a href="#conteudo-principal" class="pular-conteudo">
       Ir para o conteúdo
     </a>
 
     <div class="aplicativo">
-      <!-- Menu lateral -->
+      <!-- Menu lateral do aplicativo -->
       <aside class="menu-lateral">
         <a href="inicio.html" class="logo">
-          <strong>meu tempo</strong>
-          <small class="slogan">A cidade no seu ritmo.</small>
+          <img
+            src="../../assets/icones/vibracao.svg"
+            class="icone-logo"
+            alt=""
+          />
+
+          <div class="texto-logo">
+            <strong>meu tempo</strong>
+            <small class="slogan">A cidade no seu ritmo.</small>
+          </div>
         </a>
 
         <nav class="menu-navegacao" aria-label="Menu principal">
           <ul>
-            <li><a href="inicio.html">Início</a></li>
-            <li><a href="servicos.html">Serviços</a></li>
-            <li><a href="solicitacoes.html">Solicitações</a></li>
-            <li><a href="iara.html" aria-current="page">Assistente IARA</a></li>
-            <li><a href="perfil.html">Perfil e acessibilidade</a></li>
+            <li>
+              <a href="inicio.html">
+                <img
+                  src="../../assets/icones/piso-tatil.svg"
+                  class="icone"
+                  alt=""
+                />
+                <span>Início</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="servicos.html">
+                <img
+                  src="../../assets/icones/lista.svg"
+                  class="icone"
+                  alt=""
+                />
+                <span>Serviços</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="solicitacoes.html">
+                <img
+                  src="../../assets/icones/vibracao.svg"
+                  class="icone"
+                  alt=""
+                />
+                <span>Pedidos</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="iara.html" aria-current="page">
+                <img
+                  src="../../assets/icones/audio.svg"
+                  class="icone"
+                  alt=""
+                />
+                <span>IARA</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="perfil.html">
+                <img
+                  src="../../assets/icones/configuracoes.svg"
+                  class="icone"
+                  alt=""
+                />
+                <span>Perfil</span>
+              </a>
+            </li>
           </ul>
         </nav>
 
+        <!-- Opções complementares do menu -->
         <div class="menu-inferior">
-          <a href="perfil.html">Acessibilidade</a>
-          <a href="../index.html">Voltar ao site</a>
+          <a href="perfil.html#preferencias-acessibilidade">
+            <img
+              src="../../assets/icones/libras.svg"
+              class="icone"
+              alt=""
+            />
+            <span>Acessibilidade</span>
+          </a>
+
+          <a href="../index.html">
+            <img src="../../assets/icones/seta-direita.svg" class="icone" alt="" />
+            <span>Voltar ao site</span>
+          </a>
         </div>
       </aside>
 
@@ -44,52 +116,105 @@
             <strong>Assistente IARA</strong>
           </div>
 
+          <!-- Logo exibida em telas menores -->
+          <a href="inicio.html" class="logo-mobile">
+            <img
+              src="../../assets/icones/vibracao.svg"
+              class="icone-logo"
+              alt=""
+            />
+
+            <strong>meu tempo</strong>
+          </a>
+
+          <!-- Menu do usuário -->
           <details class="menu-usuario">
             <summary>
-              <span class="avatar" id="usuario-iniciais">U</span>
+              <span class="avatar" id="usuario-iniciais"> U </span>
 
               <span class="dados-usuario">
                 <small>Olá,</small>
                 <strong id="usuario-nome">Usuário</strong>
               </span>
+
+              <img
+                src="../../assets/icones/expandir.svg"
+                class="icone seta-menu-usuario"
+                alt=""
+              />
             </summary>
 
             <div class="opcoes-usuario">
-              <a href="perfil.html">Meu perfil</a>
-              <button type="button" id="ler-credencial" disabled>
-                Ler minha credencial
-              </button>
-              <a href="../index.html">Voltar ao site</a>
+              <a href="perfil.html">
+                <img
+                  src="../../assets/icones/configuracoes.svg"
+                  class="icone"
+                  alt=""
+                />
+                Meu perfil
+              </a>
+
+              <a href="perfil.html#abrir-leitor-documentos" id="identificar-documento">
+                <img
+                  src="../../assets/icones/camera.svg"
+                  class="icone"
+                  alt=""
+                />
+                Identificar meu documento
+              </a>
+
+              <a href="../index.html">
+                <img src="../../assets/icones/seta-direita.svg" class="icone" alt="" />
+                Voltar ao site
+              </a>
             </div>
           </details>
         </header>
 
-        <!-- Interface do chatbot -->
+        <!-- Área principal da assistente virtual -->
         <main
           class="conteudo-app pagina-iara"
           id="conteudo-principal"
           tabindex="-1"
         >
-          <section class="chat-iara">
-            <!-- Cabeçalho da conversa -->
+          <!-- Estrutura da janela de conversa -->
+          <section
+            class="chat-iara"
+            id="chat-iara"
+            aria-labelledby="titulo-iara"
+          >
+            <!-- Cabeçalho com a identificação da assistente -->
             <header class="cabecalho-chat">
+              <span class="icone-iara">
+                <img
+                  src="../../assets/icones/lista.svg"
+                  class="icone"
+                  alt=""
+                />
+              </span>
+
               <div class="identificacao-iara">
-                <h1>IARA, sua assistente</h1>
+                <h1 id="titulo-iara">IARA, sua assistente</h1>
+
                 <p>Estou aqui para ajudar você.</p>
               </div>
 
+              <!-- Permite ouvir as respostas da assistente -->
               <button
                 type="button"
                 class="botao-ouvir"
                 id="ouvir-mensagem"
+                aria-label="Ouvir resposta da IARA"
                 disabled
               >
-                Ouvir
+                <img src="../../assets/icones/audio.svg" class="icone" alt="" />
+
+                <span>Ouvir</span>
               </button>
             </header>
 
-            <!-- Área onde aparecerão as mensagens -->
-            <div class="conversa-iara">
+            <!-- Área que receberá as mensagens da conversa -->
+            <div class="conversa-iara" id="conversa-iara">
               <div
                 class="mensagens"
                 id="mensagens"
@@ -97,7 +222,7 @@
                 aria-live="polite"
                 aria-label="Conversa com a IARA"
               >
-                <!-- Mensagem inicial da assistente -->
+                <!-- Mensagem inicial exibida ao acessar a página -->
                 <div class="mensagem mensagem-iara">
                   <p>
                     Olá! Sou a IARA, sua assistente de acessibilidade urbana.
@@ -106,8 +231,8 @@
                 </div>
               </div>
 
-              <!-- Sugestões para começar uma conversa -->
-              <div class="sugestoes-iara">
+              <!-- Sugestões para facilitar o início do atendimento -->
+              <div class="sugestoes-iara" id="sugestoes-iara">
                 <button
                   type="button"
                   class="botao-sugestao"
@@ -144,22 +269,30 @@
                   Como funciona o Meu Tempo?
                 </button>
               </div>
+
+              <!-- Avisos de carregamento ou falha na comunicação -->
+              <p class="aviso-chat" id="aviso-chat" role="status" hidden></p>
             </div>
 
-            <!-- Área de envio de mensagens -->
+            <!-- Área utilizada para enviar mensagens -->
             <div class="area-envio">
               <form class="formulario-chat" id="formulario-chat" method="post">
-                <!-- Permite enviar mensagens por voz -->
+                <!-- Botão para utilizar o microfone -->
                 <button
                   type="button"
                   class="botao-microfone"
                   id="botao-microfone"
+                  aria-label="Falar com a IARA"
                   disabled
                 >
-                  Falar
+                  <img
+                    src="../../assets/icones/audio.svg"
+                    class="icone"
+                    alt=""
+                  />
                 </button>
 
-                <!-- Campo para digitar a mensagem -->
+                <!-- Campo para escrever a mensagem -->
                 <input
                   type="text"
                   class="campo-mensagem"
@@ -171,13 +304,19 @@
                   required
                 />
 
+                <!-- Botão para enviar a mensagem -->
                 <button
                   type="submit"
                   class="botao-enviar"
                   id="enviar-mensagem"
+                  aria-label="Enviar mensagem"
                   disabled
                 >
-                  Enviar
+                  <img
+                    src="../../assets/icones/seta-direita.svg"
+                    class="icone"
+                    alt=""
+                  />
                 </button>
               </form>
 
@@ -190,15 +329,133 @@
         </main>
       </div>
 
+      <!-- Navegação inferior para tablets e celulares -->
+      <nav
+        class="navegacao-inferior"
+        aria-label="Menu principal para telas menores"
+      >
+        <ul>
+          <li>
+            <a href="inicio.html">
+              <img src="../../assets/icones/piso-tatil.svg" class="icone" alt="" />
+              <span>Início</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="servicos.html">
+              <img
+                src="../../assets/icones/lista.svg"
+                class="icone"
+                alt=""
+              />
+              <span>Serviços</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="solicitacoes.html">
+              <img src="../../assets/icones/vibracao.svg" class="icone" alt="" />
+              <span>Pedidos</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="iara.html" aria-current="page">
+              <img
+                src="../../assets/icones/audio.svg"
+                class="icone"
+                alt=""
+              />
+              <span>IARA</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="perfil.html">
+              <img src="../../assets/icones/configuracoes.svg" class="icone" alt="" />
+              <span>Perfil</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Botão flutuante de ajuda -->
       <button
         type="button"
         class="botao-ajuda"
         id="botao-ajuda"
         aria-label="Preciso de ajuda"
-        disabled
+        aria-haspopup="dialog"
+        aria-controls="modal-ajuda"
       >
-        ?
+        <img src="../../assets/icones/ajuda.svg" class="icone" alt="" />
       </button>
     </div>
+
+    <!-- Janela de ajuda do aplicativo -->
+    <dialog
+      class="modal-ajuda"
+      id="modal-ajuda"
+      aria-labelledby="titulo-modal-ajuda"
+    >
+      <header class="cabecalho-modal-ajuda">
+        <h2 id="titulo-modal-ajuda">Como podemos ajudar?</h2>
+
+        <form method="dialog">
+          <button
+            type="submit"
+            class="fechar-modal-ajuda"
+            aria-label="Fechar janela"
+          >
+            <img src="../../assets/icones/fechar.svg" class="icone" alt="" />
+          </button>
+        </form>
+      </header>
+
+      <p>
+        Escolha um serviço para pedir apoio. Em “Pedidos”, você acompanha cada
+        atualização.
+      </p>
+
+      <div class="opcoes-ajuda">
+        <a href="iara.html" class="ajuda-iara">
+          <img src="../../assets/icones/audio.svg" class="icone" alt="" />
+
+          <span>Conversar com a IARA</span>
+
+          <img
+            src="../../assets/icones/seta-direita.svg"
+            class="icone"
+            alt=""
+          />
+        </a>
+
+        <a
+          href="perfil.html#preferencias-acessibilidade"
+          class="ajuda-acessibilidade"
+        >
+          <img
+            src="../../assets/icones/libras.svg"
+            class="icone"
+            alt=""
+          />
+
+          <span>Ajustar acessibilidade</span>
+        </a>
+      </div>
+    </dialog>
+
+    <!-- Funcionalidades gerais, navegação, acessibilidade, preferências, formulários, solicitações e regras dos serviços. -->
+    <script src="../../js/app.js" defer></script>
+
+    <!-- Integração com o chatbot e funcionalidades de voz. -->
+    <script src="../../js/iara.js" defer></script>
+
+    <!--
+        A integração com o chatbot do Telegram será realizada
+        quando tivermos o endereço de comunicação com o Node-RED.
+        O token do bot não deverá ficar exposto no HTML ou no JS público.
+    -->
   </body>
 </html>
