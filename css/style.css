@@ -1,127 +1,134 @@
-
-@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&family=Fraunces:wght@400;500;600&family=Atkinson+Hyperlegible:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&family=Fraunces:wght@400;500;600&family=Atkinson+Hyperlegible:wght@400;700&display=swap");
 
 /* Variáveis globais */
 :root {
-    /* Cores principais */
-    --verde-floresta: #203D2E;
-    --verde-escuro: #0C201A;
-    --verde-natural: #3B654A;
-    --verde-salvia: #B5D3B7;
-    --verde-claro: #EEF5E8;
-    --creme: #F6F3EA;
-    --terracota: #8A4B32;
-    --branco: #FFFFFF;
+  /* Cores principais */
+  --verde-floresta: #203d2e;
+  --verde-escuro: #0c201a;
+  --verde-natural: #3b654a;
+  --verde-salvia: #b5d3b7;
+  --verde-claro: #eef5e8;
+  --creme: #f6f3ea;
+  --terracota: #8a4b32;
+  --branco: #ffffff;
 
-    /* Cores de texto e bordas */
-    --texto-principal: #1B2922;
-    --texto-secundario: #59645B;
-    --borda: #DCE0D4;
-    --borda-input: #B8C3B6;
+  /* Cores de texto e bordas */
+  --texto-principal: #1b2922;
+  --texto-secundario: #59645b;
+  --borda: #dce0d4;
+  --borda-input: #b8c3b6;
 
-    /* Cores do aplicativo */
-    --app-fundo: #F5F4EE;
-    --app-menu: #0C241C;
-    --app-menu-ativo: #203F2F;
-    --app-card-verde: #CCDFC7;
-    --app-card-terracota: #E9D6C7;
-    --app-iara: #E0EBD9;
+  /* Cores do aplicativo */
+  --app-fundo: #f5f4ee;
+  --app-menu: #0c241c;
+  --app-menu-ativo: #203f2f;
+  --app-card-verde: #ccdfc7;
+  --app-card-terracota: #e9d6c7;
+  --app-iara: #e0ebd9;
 
-    /* Fontes */
-    --fonte-principal: 'Nunito Sans', sans-serif;
-    --fonte-titulo: 'Fraunces', serif;
-    --fonte-acessivel: 'Atkinson Hyperlegible', sans-serif;
+  /* Fontes */
+  --fonte-principal: "Nunito Sans", sans-serif;
+  --fonte-titulo: "Fraunces", serif;
+  --fonte-acessivel: "Atkinson Hyperlegible", sans-serif;
 
-    /* Espaçamentos */
-    --espaco-pequeno: 8px;
-    --espaco-medio: 16px;
-    --espaco-grande: 24px;
+  /* Espaçamentos */
+  --espaco-pequeno: 8px;
+  --espaco-medio: 16px;
+  --espaco-grande: 24px;
 
-    /* Arredondamentos */
-    --radius-pequeno: 7px;
-    --radius-medio: 10px;
-    --radius-grande: 24px;
+  /* Arredondamentos */
+  --radius-pequeno: 7px;
+  --radius-medio: 10px;
+  --radius-grande: 24px;
 }
 
 /* Reset CSS */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 html {
-    font-size: 100%;
+  font-size: 100%;
 }
 
 /* Estilos gerais */
 body {
-    font-family: var(--fonte-principal);
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 1.5;
-    background-color: var(--creme);
-    color: var(--texto-principal);
-    min-height: 100vh;
+  font-family: var(--fonte-principal);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  background-color: var(--creme);
+  color: var(--texto-principal);
+  min-height: 100vh;
 }
 
 /* Tipografia */
-h1, h2, h3, h4, h5, h6 {
-    font-family: var(--fonte-titulo);
-    font-weight: 500;
-    color: var(--verde-floresta);
-    line-height: 1.2;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--fonte-titulo);
+  font-weight: 500;
+  color: var(--verde-floresta);
+  line-height: 1.2;
 }
 
 h1 {
-    font-size: 2rem;
+  font-size: 2rem;
 }
 
 h2 {
-    font-size: 1.95rem;
+  font-size: 1.95rem;
 }
 
 h3 {
-    font-size: 1.7rem;
+  font-size: 1.7rem;
 }
 
 p {
-    font-size: 1rem;
-    line-height: 1.65;
+  font-size: 1rem;
+  line-height: 1.65;
 }
 
 a {
-    color: var(--verde-natural);
+  color: var(--verde-natural);
 }
 
 /* Imagens */
 img {
-    max-width: 100%;
-    height: auto;
+  max-width: 100%;
+  height: auto;
 }
 
 /* Elementos de formulário */
-button, input, select, textarea {
-    font: inherit;
-    color: inherit;
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
 }
 
 button {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 /* Acessibilidade */
 
 /* Destaca o elemento em foco durante a navegação pelo teclado */
 :focus-visible {
-    outline: 2px solid var(--verde-natural);
-    outline-offset: 3px;
+  outline: 2px solid var(--verde-natural);
+  outline-offset: 3px;
 }
 
 /* Personaliza as cores ao selecionar um texto */
 ::selection {
-    background-color: var(--verde-salvia);
-    color: var(--texto-principal);
+  background-color: var(--verde-salvia);
+  color: var(--texto-principal);
 }
 
 
@@ -132,3 +139,447 @@ button {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ============================================================================================================ */
+
+/* MEU TEMPO - APLICATIVO CSS ================================================================================== */
+
+/*
+    css da área do cidadão - meu tempo
+    esse css é responsável pela estilização dos htmls que estão
+    dentro da pasta paginas/app:
+    - inicio.html
+    - servicos.html
+    - solicitacoes.html
+    - iara.html
+    - perfil.html
+    - travessia.html
+    - apoio-metro.html
+    - zeladoria.html
+    utilizei a classe app como base para separar os estilos
+    do aplicativo dos estilos das outras páginas do site.
+*/
+
+/* DOCUMENTAÇÃO DAS CLASSES, IDS E SELETORES =================================================================== */
+/*
+    configurações gerais:
+    .app
+        classe presente no body dos oito htmls. nela ficam as
+        variáveis de cores, fontes, tamanhos, sombras e as
+        configurações gerais do aplicativo.
+
+    .app *
+        seleciona todos os elementos que estão dentro do app.
+
+    .app *::before
+        seleciona os elementos criados pelo css antes do
+        conteúdo de um elemento.
+
+    .app *::after
+        seleciona os elementos criados pelo css depois do
+        conteúdo de um elemento.
+
+    títulos e textos:
+    .app h1
+        título principal de cada página.
+
+    .app h2
+        títulos das seções, formulários e alguns cards.
+
+    .app h3
+        títulos menores, como os nomes dos serviços
+        e informações dentro dos cards.
+
+    .app h4
+        títulos de informações complementares.
+
+    .app p
+        parágrafos, descrições, mensagens e avisos do app.
+
+    .app a
+        links utilizados na navegação, cards e botões
+        que direcionam para outras páginas.
+
+    formulários:
+    .app button
+        botões utilizados nas interações do aplicativo.
+
+    .app input
+        campos de texto, seleção, envio de arquivos
+        e outras informações preenchidas pelo usuário.
+
+    .app select
+        campos com opções de seleção, como as linhas
+        e estações do metrô e o tamanho das fontes.
+
+    .app textarea
+        campo de texto maior, utilizado principalmente
+        na descrição dos problemas da zeladoria.
+
+    .app fieldset
+        agrupa campos relacionados dentro de um formulário,
+        como as categorias de problemas e os cruzamentos.
+
+    .app button:disabled
+        seleciona os botões que estão desabilitados
+        e não podem ser utilizados naquele momento.
+
+
+    navegação e elementos expansíveis:
+    .app nav ul
+        listas que agrupam os links do menu lateral
+        e da navegação inferior.
+
+    .app summary
+        parte clicável de um details que permite
+        abrir ou fechar seu conteúdo.
+
+    .app summary::-webkit-details-marker
+        seta padrão que alguns navegadores colocam no summary.
+        retirei essa seta porque estou utilizando os svg locais.
+
+    .app [hidden]
+        seleciona os elementos que possuem o atributo hidden
+        e que precisam continuar escondidos até serem exibidos.
+
+    imagens e ícones:
+
+    .app img
+        imagens utilizadas no aplicativo, incluindo os svg,
+        fotos e documentos enviados pelo usuário.
+
+    .app .icone
+        classe usada nos ícones dos menus, serviços,
+        formulários, cards e botões.
+
+    .app .icone-logo
+        ícone do relógio que faz parte da logo do meu tempo,
+        presente no menu lateral e no cabeçalho mobile.
+
+    .app .seta-expansao
+        seta que indica se uma seção pode ser aberta ou fechada.
+        aparece no perfil, nos elevadores e nos mapas.
+
+    .app details[open] > summary .seta-expansao[src$="expandir.svg"]
+        seleciona a seta para baixo quando o details está aberto,
+        fazendo com que ela seja girada para cima.
+
+    .app details[open] > summary .seta-expansao[src$="avancar.svg"]
+        seleciona a seta lateral quando o details está aberto,
+        fazendo com que ela seja girada para baixo.
+
+
+    acessibilidade:
+
+    .app :focus-visible
+        destaca o elemento que está recebendo o foco,
+        principalmente durante a navegação pelo teclado.
+
+    .app .pular-conteudo
+        link presente no início dos oito htmls que permite
+        pular a navegação e ir direto ao conteúdo.
+
+    .app .pular-conteudo:focus
+        faz o link aparecer quando recebe o foco pelo teclado.
+
+    .app #conteudo-principal
+        id presente no main dos oito htmls.
+        é o destino do link pular-conteudo.
+
+    @media (prefers-reduced-motion: reduce)
+        reduz as animações e transições do aplicativo
+        caso essa seja a preferência do usuário no dispositivo.
+
+*/
+
+/* CONFIGURAÇÕES GERAIS ======================================================================================= */
+
+/* a classe app fica no body dos oito htmls, assim os estilos
+   não interferem nas outras páginas do site */
+.app {
+  /* paleta de cores do protótipo */
+  --verde-floresta: #203d2e;
+  --verde-escuro: #0c201a;
+  --verde-natural: #3b654a;
+  --verde-salvia: #b5d3b7;
+  --verde-claro: #eef5e8;
+  --creme: #f6f3ea;
+  --terracota: #8a4b32;
+  --branco: #ffffff;
+
+  /* cores dos textos e bordas */
+  --texto-principal: #1b2922;
+  --texto-secundario: #59645b;
+  --borda: #dce0d4;
+  --borda-input: #b8c3b6;
+
+  /* cores do fundo, menu e cards */
+  --app-fundo: #f5f4ee;
+  --app-menu: #0c241c;
+  --app-menu-ativo: #203f2f;
+  --app-card-verde: #ccdfc7;
+  --app-card-terracota: #e9d6c7;
+  --app-iara: #e0ebd9;
+
+  /* cores dos avisos e status dos serviços */
+  --cor-sucesso: #203d2e;
+  --cor-erro: #a12e32;
+  --cor-alerta: #8a4b32;
+  --cor-sem-suporte: #626c64;
+
+  /* fontes dos textos, títulos e opção de acessibilidade */
+  --fonte-principal: "Nunito Sans", Arial, sans-serif;
+  --fonte-titulo: "Fraunces", Georgia, serif;
+  --fonte-acessivel: "Atkinson Hyperlegible", Arial, sans-serif;
+
+  /* tamanhos das bordas arredondadas */
+  --raio-pequeno: 8px;
+  --raio-medio: 12px;
+  --raio-grande: 20px;
+  --raio-circular: 999px;
+
+  /* sombras dos cards e modais */
+  --sombra-leve: 0 4px 16px rgba(12, 32, 26, 0.06);
+  --sombra-media: 0 8px 30px rgba(12, 32, 26, 0.12);
+  --sombra-modal: 0 20px 60px rgba(12, 32, 26, 0.2);
+
+  /* medidas dos menus, cabeçalho e conteúdo */
+  --largura-menu: 286px;
+  --altura-cabecalho: 80px;
+  --altura-menu-inferior: 76px;
+  --espacamento-conteudo: 44px;
+
+  /* configurações do body */
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background-color: var(--app-fundo);
+  color: var(--texto-principal);
+  font-family: var(--fonte-principal);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+/* reset dos elementos */
+
+/* evita que o padding e as bordas aumentem o tamanho dos elementos */
+.app,
+.app *,
+.app *::before,
+.app *::after {
+  box-sizing: border-box;
+}
+
+/* remove as margens padrões dos títulos e parágrafos */
+.app h1,
+.app h2,
+.app h3,
+.app h4,
+.app p {
+  margin: 0;
+}
+
+/* define a fonte e a cor dos títulos do app */
+.app h1,
+.app h2,
+.app h3 {
+  font-family: var(--fonte-titulo);
+  color: var(--verde-floresta);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+/* mantém a mesma fonte nos botões e campos dos formulários */
+.app button,
+.app input,
+.app select,
+.app textarea {
+  font: inherit;
+  color: inherit;
+}
+
+/* remove a decoração padrão dos links */
+.app a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* remove os marcadores das listas dos menus */
+.app nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* remove a borda dos fieldsets usados nos formulários */
+.app fieldset {
+  min-width: 0;
+  padding: 0;
+  margin: 0;
+  border: none;
+}
+
+/* evita que as imagens ultrapassem o espaço disponível */
+.app img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* indica quais elementos podem ser clicados */
+.app button,
+.app select,
+.app summary {
+  cursor: pointer;
+}
+
+/* indica quando um botão está desabilitado */
+.app button:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* mantém escondidos os elementos que dependem do js para aparecer */
+.app [hidden] {
+  display: none !important;
+}
+
+/* remove a seta padrão do summary, pois já temos os ícones svg */
+.app summary {
+  list-style: none;
+}
+
+.app summary::-webkit-details-marker {
+  display: none;
+}
+
+/* permite redimensionar o campo de descrição apenas na vertical */
+.app textarea {
+  resize: vertical;
+}
+
+/* acessibilidade */
+
+/* destaca os elementos durante a navegação pelo teclado */
+.app :focus-visible {
+  outline: 3px solid var(--terracota);
+  outline-offset: 4px;
+}
+
+/* link presente nos oito htmls para ir direto ao conteúdo */
+.app .pular-conteudo {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 3000;
+
+  padding: 12px 20px;
+  background-color: var(--verde-floresta);
+  color: var(--branco);
+
+  border-radius: var(--raio-medio);
+  font-weight: 700;
+
+  transform: translateY(-200%);
+}
+
+/* mostra o link quando ele recebe o foco pelo teclado */
+.app .pular-conteudo:focus {
+  transform: translateY(0);
+}
+
+/* id do main de cada página, onde o link acima direciona */
+.app #conteudo-principal {
+  scroll-margin-top: 24px;
+}
+
+/* ícones */
+
+/* classe usada nos ícones svg dos menus, cards e botões */
+.app .icone {
+  display: block;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  object-fit: contain;
+}
+
+/* relógio da logo presente no menu lateral e cabeçalho mobile */
+.app .icone-logo {
+  display: block;
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  object-fit: contain;
+}
+
+/* seta usada nas opções expansíveis do perfil, elevadores e mapas */
+.app .seta-expansao {
+  width: 18px;
+  height: 18px;
+  margin-left: auto;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+/* gira a seta para cima quando o details estiver aberto */
+.app details[open] > summary .seta-expansao[src$="expandir.svg"] {
+  transform: rotate(180deg);
+}
+
+/* gira a seta lateral para baixo quando o details estiver aberto */
+.app details[open] > summary .seta-expansao[src$="avancar.svg"] {
+  transform: rotate(90deg);
+}
+
+/* desativa as animações caso essa seja a preferência do usuário */
+@media (prefers-reduced-motion: reduce) {
+  .app *,
+  .app *::before,
+  .app *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
