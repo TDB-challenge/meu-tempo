@@ -1483,3 +1483,112 @@ img {
     padding: 28px;
   }
 }
+
+/* =====================================================
+   13. ESTILOS ESPECÍFICOS DA PÁGINA NOSSA SOLUÇÃO
+   ===================================================== */
+.solucao-topo {
+  padding: 64px 0 36px;
+}
+
+.solucao-topo h1 {
+  max-width: 560px;
+}
+
+.solucao-lead {
+  font-size: 1.05rem;
+  color: var(--texto-secundario);
+  max-width: 600px;
+  margin-bottom: 0;
+}
+
+.solucao-bloco {
+  padding: 56px 0;
+  border-bottom: 1px solid var(--borda);
+}
+
+.solucao-bloco:last-of-type {
+  border-bottom: none;
+}
+
+/* Quadros ilustrados grandes */
+.solucao-arte {
+  height: 310px;
+  border-radius: 16px 96px 16px 16px;
+  position: relative;
+  overflow: hidden;
+  padding: 18px 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid var(--borda);
+}
+
+.semaforo-grande {
+  left: 31%;
+  top: 34px;
+  transform: scale(1.25) rotate(-3deg);
+}
+
+.faixa-grande {
+  left: 48%;
+  top: 118px;
+  transform: scale(1.2) rotate(-8deg);
+}
+
+.trem-grande {
+  top: 66px;
+  transform: translateX(-50%) scale(1.32) rotate(7deg);
+}
+
+.trem-trilhos {
+  position: absolute;
+  left: 50%;
+  bottom: 54px;
+  width: 220px;
+  height: 8px;
+  border-top: 3px solid #7d8f7b;
+  border-bottom: 3px solid #7d8f7b;
+  transform: translateX(-50%) rotate(7deg);
+}
+
+.pino-grande {
+  width: 60px;
+  height: 60px;
+  left: 41%;
+  top: 108px;
+}
+
+/* Simuladores expansíveis */
+.caixa-simulador {
+  display: none;
+  margin-top: 32px;
+  padding-top: 28px;
+  border-top: 1px dashed var(--borda);
+}
+
+.caixa-simulador.aberto {
+  display: block;
+}
+
+/* Cards das Duas Frentes (Cidadão, CET e Metrô) */
+.solucao-frentes {
+  padding: 68px 0 80px;
+}
+
+.card-frente {
+  background-color: var(--branco);
+  border: 1px solid var(--borda);
+  border-radius: 14px;
+  padding: 26px;
+}
+
+.card-frente h3 {
+  font-size: 1.25rem;
+  margin-bottom: 10px;
+}
+
+.card-frente p {
+  font-size: 0.92rem;
+  margin-bottom: 0;
+}

@@ -101,6 +101,21 @@ if (formIara) {
 // =====================================================
 // 4. SIMULADORES DA PÁGINA NOSSA SOLUÇÃO (solucao.html)
 // =====================================================
+
+// Abrir e fechar os simuladores ao clicar em "Usar este serviço"
+const botoesSimulador = document.querySelectorAll(".btn-abrir-simulador");
+
+for (let i = 0; i < botoesSimulador.length; i++) {
+  botoesSimulador[i].addEventListener("click", function () {
+    const idAlvo = botoesSimulador[i].getAttribute("data-alvo");
+    const caixa = document.getElementById(idAlvo);
+    if (caixa) {
+      caixa.classList.toggle("aberto");
+    }
+  });
+}
+
+// Simulador 01: Travessia com regra automática dos 8 segundos
 const formTravessia = document.getElementById("form-travessia");
 const statusTravessia = document.getElementById("status-travessia");
 
@@ -108,16 +123,26 @@ if (formTravessia) {
   formTravessia.addEventListener("submit", function (event) {
     event.preventDefault();
     const cruzamento = document.getElementById("cruzamento").value;
-    const ritmo = document.getElementById("ritmo").value;
+    const tempoRestante = Number(document.getElementById("tempo-semaforo").value);
+    const guia = document.getElementById("guia-sensorial").value;
 
-    statusTravessia.innerHTML =
-      "<h3>Pedido confirmado!</h3>" +
-      "<p><strong>Cruzamento:</strong> " + cruzamento + "</p>" +
-      "<p><strong>Opção:</strong> " + ritmo + "</p>" +
-      '<p class="aviso-ok">Tempo extra programado para o próximo ciclo. Aguarde o sinal verde de pedestres na via.</p>';
+    if (tempoRestante < 8) {
+      statusTravessia.innerHTML =
+        "<h3>Ciclo atual com menos de 8 segundos (" + tempoRestante + "s)</h3>" +
+        "<p><strong>Local:</strong> " + cruzamento + "</p>" +
+        "<p><strong>Guia ativado:</strong> " + guia + "</p>" +
+        '<p class="aviso-erro">Para não travar o fluxo de veículos, o sistema programou automaticamente o tempo estendido para o <strong>próximo sinal verde</strong>. Aguarde o aviso sonoro e a vibração no celular.</p>';
+    } else {
+      statusTravessia.innerHTML =
+        "<h3>Tempo estendido ativado agora! (" + tempoRestante + "s + 12s extras)</h3>" +
+        "<p><strong>Local:</strong> " + cruzamento + "</p>" +
+        "<p><strong>Guia ativado:</strong> " + guia + "</p>" +
+        '<p class="aviso-ok">Semáforo sincronizado automaticamente sem intermediários. Pode iniciar a travessia seguindo o sinal musical e a vibração do seu celular.</p>';
+    }
   });
 }
 
+// Simulador 02: Chamado geolocalizado no Metrô / CPTM
 const formMetro = document.getElementById("form-metro");
 const statusMetro = document.getElementById("status-metro");
 
@@ -125,16 +150,19 @@ if (formMetro) {
   formMetro.addEventListener("submit", function (event) {
     event.preventDefault();
     const estacao = document.getElementById("estacao").value;
+    const ponto = document.getElementById("ponto-estacao").value;
     const apoio = document.getElementById("apoio").value;
 
     statusMetro.innerHTML =
-      "<h3>Apoio solicitado!</h3>" +
+      "<h3>Chamado enviado ao painel da estação!</h3>" +
       "<p><strong>Estação:</strong> " + estacao + "</p>" +
+      "<p><strong>Localização exata:</strong> " + ponto + "</p>" +
       "<p><strong>Atendimento:</strong> " + apoio + "</p>" +
-      '<p class="aviso-ok">A equipe operacional da estação foi avisada. Aguarde próximo aos bloqueios.</p>';
+      '<p class="aviso-ok">O administrador da estação aceitou o chamado e designou um agente para ir até você. Previsão de chegada: 2 minutos.</p>';
   });
 }
 
+// Simulador 03: Zeladoria urbana
 const formZeladoria = document.getElementById("form-zeladoria");
 const statusZeladoria = document.getElementById("status-zeladoria");
 
@@ -146,13 +174,48 @@ if (formZeladoria) {
 
     if (local === "") {
       statusZeladoria.innerHTML =
-        '<p class="aviso-erro">Por favor, informe o endereço ou ponto de referência.</p>';
+        '<p class="aviso-erro">Por favor, informe o endereço ou a estação onde está o problema.</p>';
       return;
     }
 
     statusZeladoria.innerHTML =
-      '<p class="aviso-ok">Ocorrência registrada (' + tipo + " em " + local + "). Obrigado pela colaboração!</p>";
+      "<h3>Relato registrado com sucesso!</h3>" +
+      "<p><strong>Ocorrência:</strong> " + tipo + "</p>" +
+      "<p><strong>Local:</strong> " + local + "</p>" +
+      '<p class="aviso-ok">Alerta publicado para os cidadãos na região e enviado aos indicadores da CET / Metrô.</p>';
     formZeladoria.reset();
+  });
+}
+
+// Simulador 04: Demonstração guiada da IARA (Av. Paulista, 5502)
+const btnDemoIara = document.getElementById("btn-demo-iara");
+const demoIaraBox = document.getElementById("demo-iara-box");
+const btnIaraSim = document.getElementById("btn-iara-sim");
+const btnIaraNao = document.getElementById("btn-iara-nao");
+const demoIaraMensagens = document.getElementById("demo-iara-mensagens");
+const demoIaraAcoes = document.getElementById("demo-iara-acoes");
+
+if (btnDemoIara && demoIaraBox) {
+  btnDemoIara.addEventListener("click", function () {
+    demoIaraBox.classList.toggle("aberto");
+  });
+}
+
+if (btnIaraSim && demoIaraMensagens) {
+  btnIaraSim.addEventListener("click", function () {
+    demoIaraMensagens.innerHTML +=
+      '<div class="msg-usuario">“Sim, estou na Avenida Paulista, 5502.”</div>' +
+      '<div class="msg-iara">Local confirmado! Conectei ao semáforo do cruzamento: o ciclo atual tem menos de 8 segundos, então já reservei seu <strong>tempo estendido + sinal musical e vibração</strong> para o próximo sinal verde. Avisarei por voz assim que abrir!</div>';
+    demoIaraAcoes.style.display = "none";
+  });
+}
+
+if (btnIaraNao && demoIaraMensagens) {
+  btnIaraNao.addEventListener("click", function () {
+    demoIaraMensagens.innerHTML +=
+      '<div class="msg-usuario">“Não, estou um quarteirão antes.”</div>' +
+      '<div class="msg-iara">Sem problemas! Pode me dizer o número ou ponto de referência próximo, ou abrir o seletor de cruzamentos logo acima.</div>';
+    demoIaraAcoes.style.display = "none";
   });
 }
 
