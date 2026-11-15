@@ -171,3 +171,92 @@
         </div>
       </div>
     </section>
+
+    <!-- 3. Bloco 02: Apoio no Metrô e CPTM -->
+    <section id="metro" class="container solucao-bloco">
+      <div class="grid-2">
+        <!-- Arte do Trem (igual ao Figma) -->
+        <div class="solucao-arte arte-metro">
+          <span class="arte-tag-topo">MOBILIDADE COM APOIO</span>
+
+          <div class="trem-frente trem-grande" aria-hidden="true">
+            <div class="trem-letreiro"></div>
+            <div class="trem-janelas">
+              <span></span>
+              <span></span>
+            </div>
+            <div class="trem-farois">
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+          <div class="trem-trilhos" aria-hidden="true"></div>
+
+          <span class="arte-legenda">
+            <img src="assets/icones/subway.png" alt="" class="icone-pequeno" />
+            Próxima parada: autonomia.
+          </span>
+        </div>
+
+        <!-- Texto + Botão -->
+        <div>
+          <div class="etiqueta">Apoio no Metrô e CPTM</div>
+          <h2>Apoio para ir mais longe.</h2>
+          <p>
+            Informe a estação e onde você está. O pedido gera um chamado em tempo real no <strong>painel operacional da estação</strong> com a sua localização exata, permitindo que um agente vá diretamente ao seu encontro.
+          </p>
+          <p>
+            A situação dos elevadores e escadas rolantes aparece no mesmo formulário, sem precisar sair da tarefa.
+          </p>
+          <button type="button" class="btn btn-abrir-simulador" data-alvo="simulador-metro">
+            Usar este serviço &rarr;
+          </button>
+        </div>
+      </div>
+
+      <!-- Simulador Interativo: Chamado Geolocalizado no Metrô -->
+      <div id="simulador-metro" class="caixa-simulador">
+        <div class="grid-2">
+          <form id="form-metro" class="card-branco">
+            <h3>Solicitar acompanhamento na estação</h3>
+            <div class="campo">
+              <label for="estacao">Estação</label>
+              <select id="estacao">
+                <option value="Estação Paulista (Linha 4-Amarela)">Estação Paulista (Linha 4-Amarela)</option>
+                <option value="Estação Consolação (Linha 2-Verde)">Estação Consolação (Linha 2-Verde)</option>
+                <option value="Estação Sé (Linhas 1-Azul e 3-Vermelha)">Estação Sé (Linhas 1-Azul e 3-Vermelha)</option>
+              </select>
+            </div>
+
+            <div class="campo">
+              <label for="ponto-estacao">Ponto exato na estação</label>
+              <select id="ponto-estacao">
+                <option value="Plataforma sentido Vila Sônia — Porta 3">Plataforma sentido Vila Sônia — Porta 3</option>
+                <option value="Mezanino — Próximo aos bloqueios (catracas)">Mezanino — Próximo aos bloqueios (catracas)</option>
+                <option value="Acesso ao elevador da rua">Acesso ao elevador da rua</option>
+              </select>
+            </div>
+
+            <div class="campo">
+              <label for="apoio">Tipo de apoio</label>
+              <select id="apoio">
+                <option value="Acompanhamento até a plataforma e embarque">Acompanhamento até a plataforma e embarque</option>
+                <option value="Auxílio na transferência entre linhas">Auxílio na transferência entre linhas</option>
+                <option value="Rampa de acesso para cadeira de rodas">Rampa de acesso para cadeira de rodas</option>
+              </select>
+            </div>
+
+            <button type="submit" class="btn">Enviar chamado geolocalizado &rarr;</button>
+          </form>
+
+          <div id="status-metro" class="painel-status">
+            <h3>Status operacional da estação</h3>
+            <p><strong>Elevadores:</strong> 2 em operação normal · 0 em manutenção.</p>
+            <p><strong>Escadas rolantes:</strong> Operação normal no acesso principal.</p>
+            <p style="margin-bottom: 0;">
+              Assim que você confirmar, o chamado aparece na tela do administrador da estação para designar o agente mais próximo.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
