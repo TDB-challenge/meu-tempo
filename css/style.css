@@ -2301,3 +2301,57 @@ img {
   height: 20px;
   object-fit: contain;
 }
+
+/* =====================================================
+   22. ESTILOS ESPECÍFICOS DA PÁGINA PRIVACIDADE
+   ===================================================== */
+.privacidade-topo {
+  padding: 64px 0 40px;
+}
+
+.privacidade-topo h1 {
+  max-width: 680px;
+}
+
+.privacidade-lead {
+  font-size: 1.05rem;
+  color: var(--texto-secundario);
+  max-width: 620px;
+  margin-bottom: 0;
+}
+
+.privacidade-secao {
+  padding: 16px 0 96px;
+}
+
+.privacidade-coluna {
+  max-width: 660px;
+  margin: 0 auto;
+}
+
+.privacidade-bloco {
+  margin-bottom: 40px;
+}
+
+.privacidade-bloco h2 {
+  font-size: 1.65rem;
+  margin-bottom: 14px;
+}
+
+.privacidade-bloco p {
+  font-size: 0.96rem;
+  line-height: 1.75;
+  color: var(--texto-secundario);
+  margin-bottom: 0;
+}
+
+.privacidade-acoes {
+  margin-top: 32px;
+}
+
+.aviso-privacidade:not(:empty) {
+  margin-top: 14px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--verde-floresta);
+}

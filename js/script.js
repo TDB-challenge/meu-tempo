@@ -426,3 +426,31 @@ if (formContato) {
     formContato.reset();
   });
 }
+
+// =====================================================
+// APAGAR PREFERÊNCIAS LOCAIS (privacidade.html)
+// =====================================================
+const btnApagarPreferencias = document.getElementById("btn-apagar-preferencias");
+const avisoPrivacidade = document.getElementById("aviso-privacidade");
+
+if (btnApagarPreferencias) {
+  btnApagarPreferencias.addEventListener("click", function () {
+    localStorage.clear();
+    sessionStorage.clear();
+
+    document.body.classList.remove(
+      "alto-contraste",
+      "fonte-legivel",
+      "tema-escuro",
+      "voz-iara-ativa",
+      "vibracao-ativa",
+      "musical-ativo"
+    );
+    document.documentElement.style.fontSize = "";
+
+    if (avisoPrivacidade) {
+      avisoPrivacidade.textContent =
+        "Preferências locais e dados de sessão apagados deste navegador.";
+    }
+  });
+}
