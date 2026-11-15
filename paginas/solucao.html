@@ -393,3 +393,51 @@
         </div>
       </div>
     </section>
+
+    <!-- 6. Faixa da IARA -->
+    <section class="secao secao-suave">
+      <div class="container">
+        <div class="etiqueta">VOCÊ ESCOLHE COMO PEDIR</div>
+        <h2>Com a IARA, também pode ser uma conversa.</h2>
+        <p style="max-width: 720px;">
+          Fale ou escreva o que precisa. A assistente ajuda a confirmar o local por GPS e prepara o pedido sem exigir digitação — ideal para pessoas cegas, idosas ou em movimento.
+        </p>
+
+        <button type="button" id="btn-demo-iara" class="btn btn-contorno">
+          Conversar com a IARA &rarr;
+        </button>
+
+        <!-- Demonstração guiada do fluxo por voz da Av. Paulista -->
+        <div id="demo-iara-box" class="caixa-simulador" style="margin-top: 28px;">
+          <div class="chat-card" style="max-width: 720px;">
+            <div class="chat-cabecalho">
+              <span class="chat-avatar">
+                <img src="assets/icones/walking.png" alt="" class="icone icone-branco" />
+              </span>
+              <div>
+                <strong>IARA · Inteligência de Apoio à Rotina Acessível</strong>
+                <span class="logo-sub">Simulação de comando de voz e rastreamento GPS</span>
+              </div>
+            </div>
+
+            <div id="demo-iara-mensagens" class="chat-lista" style="max-height: 300px;">
+              <div class="msg-usuario">
+                “IARA, estou aqui na Paulista e quero solicitar mais tempo para a minha travessia.”
+              </div>
+              <div class="msg-iara">
+                Claro, posso te ajudar! Vou verificar sua localização em tempo real... Você está na <strong>Avenida Paulista, 5502</strong>?
+              </div>
+            </div>
+
+            <div id="demo-iara-acoes" style="display: flex; gap: 10px; flex-wrap: wrap;">
+              <button type="button" id="btn-iara-sim" class="btn btn-pequeno">
+                Sim, confirmar local (Av. Paulista, 5502)
+              </button>
+              <button type="button" id="btn-iara-nao" class="btn btn-pequeno btn-contorno">
+                Não, corrigir endereço
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
