@@ -4112,3 +4112,719 @@ button {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+/* APOIO-METRO.HTML ========================================================================================== */
+
+/* pagina-apoio-metro: main da página de solicitação de assistência. */
+.app .pagina-apoio-metro {
+    max-width: 1100px; /* limita a largura do formulário em telas grandes */
+}
+
+
+/* formulario-apoio-metro: id do form que contém os dados da solicitação. */
+.app #formulario-apoio-metro {
+    display: flex; /* organiza os campos do formulário */
+    flex-direction: column; /* deixa os campos um abaixo do outro */
+    gap: 22px; /* espaço entre os campos */
+    padding: 30px; /* espaço interno do formulário */
+    background-color: var(--branco); /* fundo branco */
+    border: 1px solid var(--borda); /* contorno do card */
+    border-radius: var(--raio-grande); /* arredonda os cantos */
+}
+
+
+/* título onde você precisa de apoio. */
+.app #formulario-apoio-metro > h2 {
+    font-size: 1.55rem; /* tamanho do título */
+    font-weight: 500; /* mantém o título mais leve */
+}
+
+
+/* campos-estacao: div que agrupa os selects de linha e estação. */
+.app .campos-estacao {
+    display: grid; /* permite organizar os dois campos em colunas */
+    grid-template-columns: repeat(2, minmax(0, 1fr)); /* cria duas colunas iguais */
+    gap: 18px; /* espaço entre os campos */
+}
+
+
+/*
+    ids dos campos do formulário:
+
+    #linha-metro: select que identifica a linha escolhida.
+    #estacao-metro: select que recebe as estações da linha.
+    #tipo-apoio: select que identifica a assistência necessária.
+    #ponto-encontro: input com o local para encontrar o usuário.
+
+    os campos já utilizam a estilização compartilhada de campo-formulario.
+    as opções serão atualizadas posteriormente pelo app.js.
+*/
+
+.app #linha-metro,
+.app #estacao-metro,
+.app #tipo-apoio {
+    padding-right: 32px; /* reserva espaço para a seta do select */
+}
+
+
+/* campo em que o usuário informa onde está na estação. */
+.app #ponto-encontro {
+    min-width: 0; /* permite ajustar o campo em telas menores */
+}
+
+
+/* ELEVADORES =============================================================================================== */
+
+/* elevadores-estacao: details que contém as informações dos elevadores. */
+.app .elevadores-estacao {
+    background-color: var(--app-fundo); /* fundo diferente do formulário */
+    border: 1px solid var(--borda); /* contorno da seção */
+    border-radius: var(--raio-medio); /* arredonda os cantos */
+}
+
+
+/* titulo-elevadores: summary que abre ou fecha a lista de elevadores. */
+.app .titulo-elevadores {
+    display: flex; /* coloca o ícone, texto e seta lado a lado */
+    align-items: center; /* centraliza na vertical */
+    gap: 12px; /* espaço entre os elementos */
+    min-height: 54px; /* altura mínima da área clicável */
+    padding: 14px 18px; /* espaço interno */
+    color: var(--verde-floresta); /* cor do título */
+    font-weight: 700; /* destaca a opção */
+}
+
+
+/* conteudo-elevadores: div que aparece quando o details estiver aberto. */
+.app .conteudo-elevadores {
+    display: flex; /* organiza as informações */
+    flex-direction: column; /* deixa a lista abaixo do cabeçalho */
+    gap: 16px; /* espaço entre as informações */
+    padding: 18px; /* espaço interno */
+    border-top: 1px solid var(--borda); /* separa o título do conteúdo */
+}
+
+
+/* cabecalho-elevadores: div que contém a identificação da estação. */
+.app .cabecalho-elevadores {
+    display: flex; /* organiza os textos */
+    flex-direction: column; /* deixa a descrição abaixo do título */
+    gap: 5px; /* espaço entre os textos */
+}
+
+
+/* estacao-elevadores: id do título que identifica a estação escolhida. */
+.app #estacao-elevadores {
+    font-size: 1.2rem; /* tamanho do título */
+    font-weight: 600; /* destaca o nome da estação */
+}
+
+
+/* informa que os dados apresentados são demonstrativos. */
+.app .cabecalho-elevadores small {
+    color: var(--texto-secundario); /* cor da informação */
+    font-size: 0.75rem; /* tamanho do texto */
+}
+
+
+/* lista-elevadores: div que recebe os cards da estação escolhida. */
+.app .lista-elevadores {
+    display: flex; /* organiza os cards */
+    flex-direction: column; /* deixa um elevador abaixo do outro */
+    gap: 10px; /* espaço entre os cards */
+}
+
+
+/* card-elevador: article com as informações de um elevador. */
+.app .card-elevador {
+    display: flex; /* coloca as informações lado a lado */
+    align-items: center; /* centraliza os elementos */
+    gap: 12px; /* espaço entre os elementos */
+    padding: 14px; /* espaço interno */
+    background-color: var(--branco); /* fundo branco */
+    border: 1px solid var(--borda); /* contorno do card */
+    border-radius: var(--raio-medio); /* arredonda os cantos */
+}
+
+
+/* icone-elevador: círculo que contém o svg do elevador. */
+.app .icone-elevador {
+    display: flex; /* permite centralizar o svg */
+    align-items: center; /* centraliza na vertical */
+    justify-content: center; /* centraliza na horizontal */
+    width: 38px; /* largura do círculo */
+    height: 38px; /* altura do círculo */
+    flex-shrink: 0; /* mantém o tamanho do círculo */
+    background-color: var(--app-iara); /* fundo verde claro */
+    border-radius: 50%; /* deixa o elemento circular */
+}
+
+
+/* dados-elevador: div que contém o nome e a localização do elevador. */
+.app .dados-elevador {
+    display: flex; /* organiza os textos */
+    flex-direction: column; /* deixa a localização abaixo do nome */
+    gap: 4px; /* espaço entre as informações */
+    flex: 1; /* empurra o status para a direita */
+    min-width: 0; /* permite a quebra de linha */
+}
+
+
+/* nome ou número do elevador. */
+.app .dados-elevador strong {
+    font-size: 0.9rem; /* tamanho do nome */
+    font-weight: 800; /* destaca a identificação */
+}
+
+
+/* informação de acesso do elevador. */
+.app .dados-elevador p {
+    font-size: 0.8rem; /* tamanho da descrição */
+    color: var(--texto-secundario); /* cor da descrição */
+    line-height: 1.5; /* facilita a leitura */
+}
+
+
+/* status-elevador: span que informa a situação do equipamento. */
+.app .status-elevador {
+    display: inline-flex; /* coloca o ícone ao lado do texto */
+    align-items: center; /* centraliza os elementos */
+    gap: 5px; /* espaço entre o ícone e o status */
+    padding: 7px 10px; /* espaço interno */
+    border-radius: var(--raio-circular); /* deixa o status arredondado */
+    font-size: 0.75rem; /* tamanho do texto */
+    font-weight: 700; /* destaca a situação */
+}
+
+
+/* status-operando: elevador disponível. */
+.app .status-operando {
+    background-color: var(--app-iara); /* fundo verde claro */
+    color: var(--verde-natural); /* cor do texto */
+}
+
+
+/* status-manutencao: classe que poderá ser utilizada pelo app.js
+   quando for necessário mostrar um elevador indisponível. */
+.app .status-manutencao {
+    background-color: var(--app-card-terracota); /* fundo de atenção */
+    color: var(--terracota); /* cor do texto */
+}
+
+
+/* ícone que acompanha a situação do elevador. */
+.app .status-elevador .icone {
+    width: 14px; /* largura do svg */
+    height: 14px; /* altura do svg */
+}
+
+
+/* aviso-elevadores: orientação sobre a solicitação de assistência. */
+.app .aviso-elevadores {
+    display: flex; /* coloca o ícone ao lado do texto */
+    align-items: flex-start; /* alinha os elementos pelo topo */
+    gap: 10px; /* espaço entre os elementos */
+    color: var(--texto-secundario); /* cor da informação */
+}
+
+
+/* descrição do aviso. */
+.app .aviso-elevadores p {
+    font-size: 0.8rem; /* tamanho do texto */
+    line-height: 1.6; /* facilita a leitura */
+}
+
+
+/* pedir-apoio: id do botão que envia a solicitação.
+   utiliza a estilização compartilhada de botao-principal. */
+.app #pedir-apoio {
+    margin-top: 4px; /* separa o botão dos campos anteriores */
+}
+
+
+/* RESPONSIVIDADE DO APOIO NO METRÔ ========================================================================= */
+
+@media (max-width: 600px) {
+
+    /* reduz o espaço interno do formulário */
+    .app #formulario-apoio-metro {
+        padding: 20px; /* aproveita a largura disponível */
+        gap: 18px; /* aproxima os campos */
+    }
+
+    /* permite selecionar a linha e a estação em linhas diferentes */
+    .app .campos-estacao {
+        grid-template-columns: minmax(0, 1fr); /* cria uma única coluna */
+        gap: 16px; /* espaço entre os selects */
+    }
+
+    /* permite que o status desça quando o card ficar estreito */
+    .app .card-elevador {
+        flex-wrap: wrap; /* permite a quebra de linha */
+    }
+
+    /* reduz o espaço interno das informações dos elevadores */
+    .app .conteudo-elevadores {
+        padding: 12px; /* aproveita a largura da seção */
+    }
+
+}
+
+
+
+
+
+
+
+
+
+/* ZELADORIA.HTML ============================================================================================ */
+
+/* pagina-zeladoria: main da página de relatos urbanos. */
+.app .pagina-zeladoria {
+    max-width: 1100px; /* limita a largura do formulário */
+}
+
+
+/* formulario-zeladoria: id do form que reúne os dados do relato. */
+.app #formulario-zeladoria {
+    display: flex; /* organiza as seções do formulário */
+    flex-direction: column; /* deixa os campos um abaixo do outro */
+    gap: 24px; /* espaço entre as seções */
+    padding: 30px; /* espaço interno do formulário */
+    background-color: var(--branco); /* fundo branco */
+    border: 1px solid var(--borda); /* contorno do card */
+    border-radius: var(--raio-grande); /* arredonda os cantos */
+}
+
+
+/* CATEGORIAS DOS PROBLEMAS =================================================================================== */
+
+/* tipos-problema: fieldset que agrupa as categorias de problemas urbanos. */
+.app .tipos-problema {
+    min-width: 0; /* permite que as categorias se ajustem ao formulário */
+}
+
+
+/* legend que contém o texto o que você encontrou. */
+.app .tipos-problema legend {
+    margin-bottom: 16px; /* espaço abaixo do título */
+    padding: 0; /* remove o espaço padrão */
+    color: var(--verde-floresta); /* cor do título */
+    font-family: var(--fonte-titulo); /* mantém a fonte dos títulos */
+    font-size: 1.5rem; /* tamanho do texto */
+    font-weight: 500; /* deixa o título mais leve */
+}
+
+
+/* lista-problemas: div que agrupa as seis categorias. */
+.app .lista-problemas {
+    display: grid; /* permite organizar as categorias em colunas */
+    grid-template-columns: repeat(2, minmax(0, 1fr)); /* cria duas colunas iguais */
+    gap: 12px; /* distância entre as categorias */
+}
+
+
+/*
+    opcao-problema: label que agrupa o radio, o ícone e o nome da categoria.
+
+    os radios possuem o mesmo name problema, então apenas uma
+    categoria pode ser selecionada por vez.
+*/
+.app .opcao-problema {
+    position: relative; /* referência para posicionar o radio */
+    display: flex; /* coloca o ícone ao lado do texto */
+    align-items: center; /* centraliza os elementos na vertical */
+    gap: 12px; /* espaço entre os elementos */
+    min-height: 58px; /* altura mínima da opção */
+    padding: 14px 16px; /* espaço interno */
+    background-color: var(--branco); /* fundo da opção não selecionada */
+    color: var(--texto-principal); /* cor do texto */
+    border: 1px solid var(--borda-input); /* contorno da categoria */
+    border-radius: var(--raio-medio); /* arredonda os cantos */
+    font-size: 0.9rem; /* tamanho do texto */
+    font-weight: 600; /* destaca o nome da categoria */
+    cursor: pointer; /* indica que a opção pode ser escolhida */
+}
+
+
+/* esconde visualmente o radio sem remover sua função.
+   dessa forma ainda é possível selecionar pelo teclado. */
+.app .opcao-problema input[type="radio"] {
+    position: absolute; /* não ocupa espaço na organização do card */
+    width: 1px; /* reduz a largura visual */
+    height: 1px; /* reduz a altura visual */
+    opacity: 0; /* deixa o radio invisível */
+    overflow: hidden; /* evita que o elemento ultrapasse a área */
+}
+
+
+/* destaca a categoria que possui um radio selecionado. */
+.app .opcao-problema:has(input:checked) {
+    background-color: var(--app-iara); /* fundo da categoria escolhida */
+    border-color: var(--verde-natural); /* contorno verde */
+    color: var(--verde-floresta); /* cor do texto selecionado */
+    font-weight: 800; /* diferencia a opção selecionada */
+}
+
+
+/* cria o check que aparece à direita da categoria selecionada. */
+.app .opcao-problema:has(input:checked)::after {
+    content: ""; /* cria o elemento decorativo */
+    width: 18px; /* largura do check */
+    height: 18px; /* altura do check */
+    margin-left: auto; /* empurra o check para a direita */
+    flex-shrink: 0; /* mantém o tamanho do ícone */
+    background-image: url("../icones/confirmacao.svg"); /* utiliza o svg local */
+    background-position: center; /* centraliza o svg */
+    background-size: contain; /* mantém a proporção do svg */
+    background-repeat: no-repeat; /* evita repetir a imagem */
+}
+
+
+/* destaca a categoria durante a navegação pelo teclado. */
+.app .opcao-problema:has(input:focus-visible) {
+    outline: 3px solid var(--terracota); /* contorno de acessibilidade */
+    outline-offset: 3px; /* distância do contorno */
+}
+
+
+/* destaca as categorias quando o mouse passa por cima. */
+.app .opcao-problema:hover {
+    border-color: var(--verde-natural); /* altera a cor do contorno */
+}
+
+
+/* ícones que representam as categorias de problemas. */
+.app .opcao-problema .icone {
+    width: 23px; /* largura dos ícones */
+    height: 23px; /* altura dos ícones */
+}
+
+
+/* LOCALIZAÇÃO DO RELATO ===================================================================================== */
+
+/* localizacao-relato: section com o endereço e os botões de localização. */
+.app .localizacao-relato {
+    display: flex; /* organiza as informações */
+    flex-direction: column; /* deixa os botões abaixo do campo */
+    gap: 12px; /* distância entre os elementos */
+}
+
+
+/* endereco-relato: id do input que recebe o endereço.
+   pode ser preenchido manualmente ou através do mapa e da localização. */
+.app #endereco-relato {
+    width: 100%; /* ocupa toda a largura disponível */
+}
+
+
+/*
+    #latitude-relato e #longitude-relato são inputs do tipo hidden.
+    vão guardar as coordenadas obtidas pelo js e não precisam de estilização.
+*/
+
+
+/* acoes-localizacao: div que agrupa os dois botões de localização. */
+.app .acoes-localizacao {
+    display: grid; /* organiza os botões em colunas */
+    grid-template-columns: repeat(2, minmax(0, 1fr)); /* cria duas colunas iguais */
+    gap: 12px; /* distância entre os botões */
+}
+
+
+/*
+    botao-localizacao: classe compartilhada pelas ações de localização.
+
+    #usar-localizacao: solicita permissão para obter a localização real.
+    #escolher-mapa: abre ou fecha a área do mapa dentro do formulário.
+*/
+.app .botao-localizacao {
+    display: flex; /* coloca o ícone ao lado do texto */
+    align-items: center; /* centraliza na vertical */
+    justify-content: center; /* centraliza na horizontal */
+    gap: 8px; /* espaço entre o ícone e o texto */
+    min-height: 46px; /* mantém uma área adequada para clique */
+    padding: 10px 12px; /* espaço interno */
+    background-color: var(--branco); /* fundo branco */
+    color: var(--verde-floresta); /* cor do texto */
+    border: 1px solid var(--borda-input); /* contorno do botão */
+    border-radius: var(--raio-medio); /* arredonda os cantos */
+    font-size: 0.85rem; /* tamanho do texto */
+    font-weight: 700; /* destaca as opções */
+    text-align: center; /* centraliza o texto */
+}
+
+
+/* destaca os botões de localização disponíveis. */
+.app .botao-localizacao:not(:disabled):hover {
+    background-color: var(--verde-claro); /* altera o fundo */
+}
+
+
+/* destaca a opção escolher no mapa quando estiver aberta. */
+.app #escolher-mapa[aria-expanded="true"] {
+    background-color: var(--app-iara); /* fundo da opção ativa */
+    border-color: var(--verde-natural); /* destaca o contorno */
+}
+
+
+/* aviso-localizacao: mensagem sobre permissão, carregamento ou erro. */
+.app .aviso-localizacao {
+    font-size: 0.8rem; /* tamanho do aviso */
+    color: var(--texto-secundario); /* cor da mensagem */
+    line-height: 1.5; /* facilita a leitura */
+}
+
+
+/* MAPA DA ZELADORIA ========================================================================================= */
+
+/* mapa-regiao: details que permite expandir o mapa dentro do formulário. */
+.app .mapa-regiao {
+    background-color: var(--app-fundo); /* fundo da seção */
+    border: 1px solid var(--borda); /* contorno da área */
+    border-radius: var(--raio-medio); /* arredonda os cantos */
+}
+
+
+/* titulo-mapa-regiao: summary que abre ou fecha o mapa. */
+.app .titulo-mapa-regiao {
+    display: flex; /* organiza o ícone, texto e seta */
+    align-items: center; /* centraliza os elementos */
+    gap: 12px; /* espaço entre os elementos */
+    min-height: 54px; /* altura mínima da área clicável */
+    padding: 14px 18px; /* espaço interno */
+    color: var(--verde-floresta); /* cor do texto */
+    font-weight: 700; /* destaca o título */
+    font-size: 0.9rem; /* tamanho do texto */
+}
+
+
+/* área do mapa que fica dentro do details da zeladoria. */
+.app .mapa-regiao > .selecao-cruzamento {
+    padding: 18px; /* espaço interno da área expandida */
+    border-top: 1px solid var(--borda); /* separa o título do mapa */
+}
+
+
+/* mapa-zeladoria: id do mapa utilizado na página de relatos.
+   reutiliza os estilos do mapa compartilhado. */
+.app #mapa-zeladoria {
+    height: 400px; /* deixa o mapa maior nessa página */
+}
+
+
+/* DESCRIÇÃO E ANEXOS ======================================================================================== */
+
+/* descricao-relato: id do textarea em que o usuário explica o problema. */
+.app #descricao-relato {
+    min-height: 140px; /* mantém espaço para escrever a descrição */
+    resize: vertical; /* permite alterar apenas a altura */
+    line-height: 1.6; /* facilita a leitura do texto digitado */
+}
+
+
+/* anexos-relato: div que agrupa as opções de foto e áudio. */
+.app .anexos-relato {
+    display: grid; /* organiza os anexos em colunas */
+    grid-template-columns: repeat(2, minmax(0, 1fr)); /* cria duas colunas iguais */
+    gap: 14px; /* espaço entre os anexos */
+}
+
+
+/* anexo-relato: div que contém o campo de arquivo e sua prévia. */
+.app .anexo-relato {
+    position: relative; /* referência para posicionar o campo de arquivo */
+    display: flex; /* organiza os elementos */
+    flex-direction: column; /* deixa a prévia abaixo do botão */
+    gap: 12px; /* espaço entre o botão e a prévia */
+    min-width: 0; /* permite ajustar o anexo à coluna */
+}
+
+
+/*
+    campo-anexo: input utilizado para selecionar um arquivo.
+
+    #foto-relato: permite adicionar uma imagem.
+    #audio-relato: permite adicionar um arquivo de áudio.
+
+    deixei o input invisível visualmente, mas acessível pelo teclado.
+*/
+.app .campo-anexo {
+    position: absolute; /* retira o campo da organização visual */
+    width: 1px; /* reduz a largura visual */
+    height: 1px; /* reduz a altura visual */
+    opacity: 0; /* deixa o campo invisível */
+    overflow: hidden; /* evita que ultrapasse o espaço disponível */
+}
+
+
+/* botao-anexo: label que funciona como área para selecionar o arquivo. */
+.app .botao-anexo {
+    display: flex; /* coloca o ícone ao lado do texto */
+    align-items: center; /* centraliza na vertical */
+    justify-content: center; /* centraliza na horizontal */
+    gap: 10px; /* espaço entre os elementos */
+    min-height: 65px; /* altura mínima da área clicável */
+    padding: 16px; /* espaço interno */
+    background-color: var(--branco); /* fundo branco */
+    color: var(--verde-floresta); /* cor do texto */
+    border: 1px dashed var(--borda-input); /* contorno tracejado dos anexos */
+    border-radius: var(--raio-medio); /* arredonda os cantos */
+    font-size: 0.85rem; /* tamanho do texto */
+    font-weight: 700; /* destaca a opção */
+    text-align: center; /* centraliza o texto */
+    cursor: pointer; /* indica que o label pode ser clicado */
+}
+
+
+/* destaca a área de anexo quando o mouse passa por cima. */
+.app .botao-anexo:hover {
+    background-color: var(--verde-claro); /* altera o fundo */
+    border-color: var(--verde-natural); /* destaca o contorno */
+}
+
+
+/* mostra o foco no label quando o input invisível recebe o foco. */
+.app .anexo-relato:has(.campo-anexo:focus-visible) .botao-anexo {
+    outline: 3px solid var(--terracota); /* contorno de acessibilidade */
+    outline-offset: 3px; /* distância do contorno */
+}
+
+
+/* previa-anexo: div que mostra a foto ou o áudio selecionado. */
+.app .previa-anexo {
+    position: relative; /* referência para posicionar o botão de remover */
+    display: flex; /* organiza o conteúdo da prévia */
+    flex-direction: column; /* deixa as informações abaixo do arquivo */
+    gap: 10px; /* espaço entre os elementos */
+    padding: 12px; /* espaço interno */
+    background-color: var(--app-fundo); /* fundo da prévia */
+    border: 1px solid var(--borda); /* contorno */
+    border-radius: var(--raio-medio); /* arredonda os cantos */
+}
+
+
+/* imagem-relato: id da imagem utilizada para mostrar a foto selecionada. */
+.app #imagem-relato {
+    width: 100%; /* ocupa a largura disponível */
+    max-height: 240px; /* limita a altura da imagem */
+    object-fit: contain; /* mantém a imagem inteira sem cortar */
+    border-radius: var(--raio-pequeno); /* arredonda os cantos */
+}
+
+
+/* reprodutor-audio: id do elemento audio utilizado na prévia. */
+.app #reprodutor-audio {
+    width: 100%; /* ocupa a largura disponível */
+    max-width: 100%; /* evita que ultrapasse a largura da coluna */
+}
+
+
+/* nome-foto e nome-audio: ids que recebem o nome dos arquivos. */
+.app #nome-foto,
+.app #nome-audio {
+    color: var(--texto-secundario); /* cor do texto */
+    font-size: 0.75rem; /* tamanho do nome */
+    overflow-wrap: anywhere; /* permite quebrar nomes muito grandes */
+}
+
+
+/* remover-anexo: botão que permite retirar o arquivo selecionado. */
+.app .remover-anexo {
+    display: flex; /* permite centralizar o ícone */
+    align-items: center; /* centraliza na vertical */
+    justify-content: center; /* centraliza na horizontal */
+    align-self: flex-end; /* posiciona o botão à direita */
+    width: 40px; /* largura da área clicável */
+    height: 40px; /* altura da área clicável */
+    padding: 0; /* remove o espaço padrão */
+    background-color: var(--branco); /* fundo branco */
+    color: var(--terracota); /* cor do botão */
+    border: 1px solid var(--borda); /* contorno do botão */
+    border-radius: 50%; /* deixa o botão circular */
+}
+
+
+/* registrar-relato: id do botão que envia o formulário.
+   reutiliza as propriedades da classe botao-principal. */
+.app #registrar-relato {
+    margin-top: 4px; /* separa o botão dos anexos */
+}
+
+
+/* RESPONSIVIDADE DA ZELADORIA ================================================================================ */
+
+@media (max-width: 700px) {
+
+    /* ajusta o tamanho do mapa da zeladoria */
+    .app #mapa-zeladoria {
+        height: 320px; /* reduz a altura em telas menores */
+    }
+
+    /* diminui o espaço interno do mapa expandido */
+    .app .mapa-regiao > .selecao-cruzamento {
+        padding: 12px; /* aproveita melhor a largura disponível */
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    /* reduz o espaço interno do formulário */
+    .app #formulario-zeladoria {
+        padding: 18px; /* aproveita a largura do celular */
+        gap: 20px; /* reduz o espaço entre os campos */
+    }
+
+    /* diminui a distância entre as categorias */
+    .app .lista-problemas {
+        gap: 10px; /* espaço entre as opções */
+    }
+
+    /* ajusta os cards de seleção dos problemas */
+    .app .opcao-problema {
+        padding: 12px; /* reduz o espaço interno */
+        gap: 8px; /* aproxima os ícones dos textos */
+        font-size: 0.8rem; /* ajusta o tamanho dos nomes */
+        min-height: 66px; /* mantém uma área confortável para toque */
+    }
+
+    /* diminui os ícones das categorias */
+    .app .opcao-problema .icone {
+        width: 20px; /* largura do svg */
+        height: 20px; /* altura do svg */
+    }
+
+    /* adapta as opções de localização e os anexos */
+    .app .botao-localizacao,
+    .app .botao-anexo {
+        padding: 10px; /* aproveita melhor a largura */
+        font-size: 0.8rem; /* tamanho do texto */
+    }
+
+}
+
+@media (max-width: 380px) {
+
+    /* coloca as opções em uma coluna quando a tela for muito estreita */
+    .app .lista-problemas,
+    .app .acoes-localizacao,
+    .app .anexos-relato {
+        grid-template-columns: minmax(0, 1fr); /* evita que os textos fiquem apertados */
+    }
+
+}
+
+
