@@ -36,7 +36,7 @@
     <div class="container">
       <a href="index.html" class="logo">
         <span class="logo-circulo">
-          <img src="/assets/icones/ícone.png" alt="" class="icone" />
+          <img src="/assets/icones/clock-three.png" alt="" class="icone" />
         </span>
         <div>
           <span class="logo-titulo">meu tempo</span>
@@ -259,10 +259,16 @@
     </div>
   </footer>
 
-  <!-- Botão flutuante de Libras -->
-  <button type="button" id="btn-libras" class="btn-libras">
-    <img src="../assets/icones/libras.png" alt="" class="icone icone-branco" />
-    <span>Libras</span>
-  </button>
+  <!-- Integração oficial do VLibras -->
+  <div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+      <div class="vw-plugin-top-wrapper"></div>
+    </div>
+  </div>
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script>
 </body>
 </html>
