@@ -1355,3 +1355,943 @@ button {
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* COMPONENTES COMPARTILHADOS =============================================================================== */
+
+/* introducao-pagina: agrupa o ícone, o título e a descrição
+   no começo das páginas de serviços, pedidos, travessia, metrô e zeladoria. */
+.app .introducao-pagina {
+    display: flex; /* coloca o ícone ao lado dos textos */
+    align-items: center; /* centraliza os elementos na vertical */
+    gap: 18px; /* espaço entre o ícone e os textos */
+    margin-bottom: 32px; /* separa a introdução do restante da página */
+}
+
+
+/* icone-introducao: círculo que contém o ícone de cada página. */
+.app .icone-introducao {
+    display: flex; /* permite centralizar o svg */
+    align-items: center; /* centraliza na vertical */
+    justify-content: center; /* centraliza na horizontal */
+    width: 64px; /* largura do círculo */
+    height: 64px; /* altura do círculo */
+    flex-shrink: 0; /* evita que o círculo seja comprimido */
+    background-color: var(--app-iara); /* fundo verde claro */
+    border-radius: 50%; /* deixa o elemento circular */
+}
+
+
+/* svg dentro do círculo da introdução. */
+.app .icone-introducao .icone {
+    width: 30px; /* largura do svg */
+    height: 30px; /* altura do svg */
+}
+
+
+/* texto-introducao: div que contém o h1 e o parágrafo da introdução. */
+.app .texto-introducao {
+    display: flex; /* organiza os textos */
+    flex-direction: column; /* deixa a descrição abaixo do título */
+    gap: 6px; /* espaço entre os textos */
+    min-width: 0; /* permite que o conteúdo se ajuste à largura disponível */
+}
+
+
+/* título principal das páginas que possuem uma introdução. */
+.app .texto-introducao h1 {
+    font-size: clamp(1.8rem, 3vw, 2.5rem); /* adapta o tamanho do título à tela */
+    font-weight: 500; /* mantém o título mais leve */
+    line-height: 1.2; /* controla o espaço entre as linhas */
+}
+
+
+/* descrição que aparece abaixo do título. */
+.app .texto-introducao p {
+    font-size: 1rem; /* tamanho da descrição */
+    color: var(--texto-secundario); /* diferencia a descrição do título */
+    line-height: 1.5; /* facilita a leitura do texto */
+}
+
+
+/* botao-principal: utilizado no envio dos formulários
+   e nas confirmações das solicitações. */
+.app .botao-principal {
+    display: flex; /* organiza o texto e o ícone */
+    align-items: center; /* centraliza na vertical */
+    justify-content: center; /* centraliza na horizontal */
+    gap: 12px; /* espaço entre o texto e a seta */
+    width: 100%; /* ocupa toda a largura disponível */
+    min-height: 54px; /* mantém uma área confortável para clicar */
+    padding: 14px 24px; /* espaço interno do botão */
+    background-color: var(--verde-floresta); /* fundo verde */
+    color: var(--branco); /* texto branco */
+    border: 1px solid var(--verde-floresta); /* mantém a borda da mesma cor do fundo */
+    border-radius: var(--raio-circular); /* deixa o botão arredondado */
+    font-weight: 700; /* destaca o texto */
+    text-align: center; /* centraliza o texto */
+    transition: background-color 0.2s ease; /* suaviza a mudança de cor */
+}
+
+
+/* ícones que ficam dentro dos botões principais. */
+.app .botao-principal .icone {
+    width: 21px; /* largura do ícone */
+    height: 21px; /* altura do ícone */
+    filter: brightness(0) invert(1); /* deixa o svg branco */
+}
+
+
+/* altera o fundo somente quando o botão estiver disponível. */
+.app .botao-principal:not(:disabled):hover {
+    background-color: var(--verde-escuro); /* escurece o fundo */
+}
+
+
+/* campo-formulario: div que agrupa o label e o campo correspondente.
+   aparece nos formulários de metrô e zeladoria. */
+.app .campo-formulario {
+    display: flex; /* organiza os elementos internos */
+    flex-direction: column; /* deixa o label acima do campo */
+    gap: 8px; /* espaço entre o label e o campo */
+    min-width: 0; /* evita que os campos ultrapassem a largura disponível */
+}
+
+
+/* label que identifica o que deve ser preenchido em cada campo. */
+.app .campo-formulario label {
+    color: var(--texto-principal); /* cor do texto */
+    font-size: 0.95rem; /* tamanho do label */
+    font-weight: 700; /* destaca a identificação do campo */
+}
+
+
+/* propriedades que se repetem nos campos dos formulários. */
+.app .campo-formulario input:not([type="file"]),
+.app .campo-formulario select,
+.app .campo-formulario textarea {
+    width: 100%; /* ocupa toda a largura do campo-formulario */
+    min-height: 48px; /* mantém uma altura confortável */
+    padding: 12px 14px; /* espaço interno dos campos */
+    background-color: var(--branco); /* fundo branco */
+    color: var(--texto-principal); /* cor do texto preenchido */
+    border: 1px solid var(--borda-input); /* contorno dos campos */
+    border-radius: var(--raio-medio); /* arredonda os cantos */
+    font-size: 1rem; /* tamanho do texto preenchido */
+}
+
+
+/* texto de exemplo que aparece antes de preencher os campos. */
+.app input::placeholder,
+.app textarea::placeholder {
+    color: var(--texto-secundario); /* deixa o exemplo com uma cor mais discreta */
+    opacity: 1; /* mantém a legibilidade do texto */
+}
+
+
+/* campos que estão recebendo dados do usuário. */
+.app .campo-formulario input:focus,
+.app .campo-formulario select:focus,
+.app .campo-formulario textarea:focus {
+    border-color: var(--verde-natural); /* destaca a borda do campo selecionado */
+}
+
+
+/* aviso-formulario: mensagem de erro ou orientação dos formulários. */
+.app .aviso-formulario {
+    padding: 12px 16px; /* espaço interno do aviso */
+    background-color: var(--app-card-terracota); /* fundo terracota claro */
+    color: var(--terracota); /* cor do texto */
+    border-radius: var(--raio-pequeno); /* arredonda os cantos */
+    font-size: 0.9rem; /* tamanho da mensagem */
+}
+
+
+/* resultado-servico: seção escondida no html que será exibida
+   após registrar uma solicitação pelo js. */
+.app .resultado-servico {
+    display: flex; /* organiza os elementos da confirmação */
+    flex-direction: column; /* deixa os elementos um abaixo do outro */
+    align-items: center; /* centraliza os elementos */
+    gap: 18px; /* espaço entre as informações */
+    width: 100%; /* ocupa a largura disponível */
+    max-width: 620px; /* limita a largura do card */
+    margin: 0 auto; /* centraliza o card */
+    padding: 36px; /* espaço interno */
+    background-color: var(--branco); /* fundo branco */
+    border: 1px solid var(--borda); /* contorno do card */
+    border-radius: var(--raio-grande); /* arredonda os cantos */
+    text-align: center; /* centraliza os textos */
+}
+
+
+/* icone-resultado-servico: círculo com o ícone de confirmação. */
+.app .icone-resultado-servico {
+    display: flex; /* permite centralizar o ícone */
+    align-items: center; /* centraliza na vertical */
+    justify-content: center; /* centraliza na horizontal */
+    width: 68px; /* largura do círculo */
+    height: 68px; /* altura do círculo */
+    background-color: var(--app-iara); /* fundo verde claro */
+    border-radius: 50%; /* deixa o elemento circular */
+}
+
+
+/* ícone de confirmação que aparece no resultado do serviço. */
+.app .icone-resultado-servico .icone,
+.app .resultado-servico > .icone {
+    width: 34px; /* largura do ícone */
+    height: 34px; /* altura do ícone */
+}
+
+
+/* descrição que aparece abaixo da confirmação do pedido. */
+.app .resultado-servico p {
+    color: var(--texto-secundario); /* cor da descrição */
+    line-height: 1.6; /* espaço entre as linhas */
+}
+
+
+/* voltar-servicos: link para retornar à página de serviços. */
+.app .voltar-servicos {
+    font-weight: 700; /* destaca o texto */
+    color: var(--verde-floresta); /* cor do link */
+    text-decoration: underline; /* indica que o texto pode ser clicado */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* INICIO.HTML =============================================================================================== */
+
+/* pagina-inicio: classe específica do main da página inicial. */
+.app .pagina-inicio {
+    display: flex; /* organiza as seções da página */
+    flex-direction: column; /* deixa as seções uma abaixo da outra */
+    gap: 32px; /* espaço entre as seções */
+}
+
+
+/* boas-vindas: section que contém a saudação e a localização. */
+.app .boas-vindas {
+    display: flex; /* coloca a saudação e a localização lado a lado */
+    align-items: flex-start; /* alinha os elementos pelo topo */
+    justify-content: space-between; /* distribui os elementos nas extremidades */
+    gap: 24px; /* espaço entre a saudação e a localização */
+}
+
+
+/* saudacao: div que agrupa a data, o nome do usuário e a descrição. */
+.app .saudacao {
+    display: flex; /* organiza os textos */
+    flex-direction: column; /* deixa os textos um abaixo do outro */
+    gap: 12px; /* espaço entre os textos */
+    flex: 1; /* ocupa o espaço disponível */
+    min-width: 0; /* permite que os textos quebrem de linha */
+}
+
+
+/* data-atual: parágrafo que recebe a data atual através do app.js. */
+.app .data-atual {
+    display: flex; /* permite colocar a linha verde ao lado da data */
+    align-items: center; /* centraliza a linha com o texto */
+    gap: 10px; /* espaço entre a linha e a data */
+    color: var(--verde-natural); /* cor da data */
+    font-size: 0.75rem; /* deixa a data menor que a saudação */
+    font-weight: 700; /* destaca o texto */
+    letter-spacing: 1.2px; /* aumenta a distância entre as letras */
+    text-transform: uppercase; /* exibe a data em maiúsculo */
+}
+
+
+/* linha decorativa que aparece antes da data.
+   utilizei before para não precisar adicionar outra tag no html. */
+.app .data-atual::before {
+    content: ""; /* cria o elemento decorativo */
+    display: block; /* permite definir largura e altura */
+    width: 26px; /* comprimento da linha */
+    height: 2px; /* espessura da linha */
+    background-color: var(--verde-natural); /* cor da linha */
+    flex-shrink: 0; /* evita que a linha seja comprimida */
+}
+
+
+/* esconde o espaço da data enquanto ela não for preenchida pelo js. */
+.app .data-atual:empty {
+    display: none; /* evita mostrar somente a linha decorativa */
+}
+
+
+/* título de boas-vindas da página inicial. */
+.app .saudacao h1 {
+    max-width: 760px; /* limita a largura do título */
+    font-size: clamp(2rem, 3.8vw, 3.25rem); /* adapta o tamanho à largura da tela */
+    font-weight: 500; /* mantém a aparência mais leve */
+    line-height: 1.15; /* aproxima as linhas do título */
+    letter-spacing: -0.8px; /* aproxima um pouco as letras */
+}
+
+
+/* usuario-primeiro-nome: id do span que recebe o nome pelo js. */
+.app #usuario-primeiro-nome {
+    color: inherit; /* mantém a mesma cor da saudação */
+}
+
+
+/* em dentro da saudação: palavra hoje destacada em itálico. */
+.app .saudacao h1 em {
+    color: var(--verde-natural); /* destaca a palavra em verde */
+    font-style: italic; /* mantém o texto inclinado */
+    font-weight: 500; /* acompanha o peso do restante do título */
+}
+
+
+/* descrição que aparece abaixo da saudação. */
+.app .saudacao > p:not(.data-atual) {
+    color: var(--texto-secundario); /* cor da descrição */
+    font-size: 1rem; /* tamanho do texto */
+    line-height: 1.6; /* facilita a leitura */
+}
+
+
+/* LOCALIZAÇÃO =============================================================================================== */
+
+/* localizacao: card que mostra a localização atual do usuário. */
+.app .localizacao {
+    display: flex; /* coloca o ícone, endereço e botão lado a lado */
+    align-items: center; /* centraliza os elementos na vertical */
+    gap: 12px; /* espaço entre os elementos */
+    min-width: 0; /* evita que o card ultrapasse a largura disponível */
+    max-width: 100%; /* limita a largura do card */
+    padding: 14px 16px; /* espaço interno */
+    background-color: var(--branco); /* fundo branco */
+    border: 1px solid var(--borda); /* contorno do card */
+    border-radius: var(--raio-medio); /* arredonda os cantos */
+}
+
+
+/* icone-circular: círculo que contém o marcador de localização. */
+.app .icone-circular {
+    display: flex; /* permite centralizar o svg */
+    align-items: center; /* centraliza na vertical */
+    justify-content: center; /* centraliza na horizontal */
+    width: 42px; /* largura do círculo */
+    height: 42px; /* altura do círculo */
+    flex-shrink: 0; /* evita que o círculo seja comprimido */
+    background-color: var(--app-iara); /* fundo verde claro */
+    border-radius: 50%; /* deixa o elemento circular */
+}
+
+
+/* dados-localizacao: div que contém o texto e o endereço. */
+.app .dados-localizacao {
+    display: flex; /* organiza os textos */
+    flex-direction: column; /* coloca o endereço abaixo do texto */
+    gap: 3px; /* espaço entre as linhas */
+    min-width: 0; /* permite que o endereço se ajuste ao card */
+}
+
+
+/* texto sua localização. */
+.app .dados-localizacao small {
+    color: var(--texto-secundario); /* deixa o texto mais discreto */
+    font-size: 0.7rem; /* tamanho menor que o endereço */
+}
+
+
+/* usuario-localizacao: id do strong que recebe a localização pelo js. */
+.app #usuario-localizacao {
+    color: var(--verde-floresta); /* cor do endereço */
+    font-size: 0.85rem; /* tamanho do texto */
+    font-weight: 800; /* destaca a localização */
+    overflow-wrap: anywhere; /* evita que endereços grandes ultrapassem o card */
+}
+
+
+/* alterar-localizacao: id do botão que solicita a localização. */
+.app #alterar-localizacao {
+    padding: 8px 4px; /* aumenta a área clicável */
+    background-color: transparent; /* retira o fundo padrão */
+    border: none; /* retira a borda padrão */
+    color: var(--verde-natural); /* cor do texto */
+    font-size: 0.8rem; /* tamanho do botão */
+    font-weight: 800; /* destaca a opção de alterar */
+    flex-shrink: 0; /* evita que o botão seja comprimido */
+}
+
+
+/* CARDS DOS SERVIÇOS - INICIO.HTML E SERVICOS.HTML ============================================================ */
+
+/* servicos: section que agrupa o título e os três cards. */
+.app .servicos {
+    display: flex; /* organiza o conteúdo da seção */
+    flex-direction: column; /* deixa os cards abaixo do título */
+    gap: 20px; /* espaço entre o título e os cards */
+}
+
+
+/* titulo-secao: div que contém o título e a quantidade de serviços. */
+.app .titulo-secao {
+    display: flex; /* coloca os textos lado a lado */
+    align-items: center; /* centraliza os textos na vertical */
+    justify-content: space-between; /* distribui os textos nas extremidades */
+    gap: 12px; /* evita que os textos fiquem muito próximos */
+}
+
+
+/* título o que você precisa. */
+.app .titulo-secao h2 {
+    font-size: 1.8rem; /* tamanho do título */
+    font-weight: 500; /* deixa o texto mais leve */
+}
+
+
+/* texto 3 serviços disponíveis. */
+.app .titulo-secao p {
+    font-size: 0.75rem; /* deixa o texto menor que o título */
+    color: var(--texto-secundario); /* cor da informação */
+    text-align: right; /* alinha o texto à direita */
+}
+
+
+/* lista-servicos: agrupa os cards de travessia, metrô e zeladoria. */
+.app .lista-servicos {
+    display: grid; /* permite organizar os cards em colunas */
+    grid-template-columns: repeat(3, minmax(0, 1fr)); /* cria três colunas iguais */
+    gap: 18px; /* distância entre os cards */
+}
+
+
+/* card-servico: classe compartilhada pelos três serviços.
+   cada card é um link que direciona para seu respectivo html. */
+.app .card-servico {
+    display: flex; /* organiza os elementos internos */
+    flex-direction: column; /* deixa o ícone acima do título */
+    justify-content: space-between; /* separa o topo da parte inferior */
+    gap: 24px; /* espaço entre as partes do card */
+    min-width: 0; /* evita que o card ultrapasse a coluna */
+    min-height: 230px; /* mantém uma altura mínima entre os cards */
+    padding: 24px; /* espaço interno */
+    border: 1px solid transparent; /* mantém o mesmo tamanho de borda */
+    border-radius: var(--raio-grande); /* arredonda os cantos */
+    color: var(--verde-floresta); /* cor padrão do conteúdo */
+    transition: transform 0.2s ease, box-shadow 0.2s ease; /* suaviza o efeito do hover */
+}
+
+
+/* card-travessia: card que direciona para travessia.html. */
+.app .card-travessia {
+    background-color: var(--app-card-verde); /* fundo verde claro */
+}
+
+
+/* card-metro: card que direciona para apoio-metro.html. */
+.app .card-metro {
+    background-color: var(--branco); /* fundo branco */
+    border-color: var(--borda); /* contorno para diferenciar o card do fundo */
+}
+
+
+/* card-zeladoria: card que direciona para zeladoria.html. */
+.app .card-zeladoria {
+    background-color: var(--app-card-terracota); /* fundo terracota claro */
+}
+
+
+/* efeito dos cards quando o mouse passa por cima. */
+.app .card-servico:hover {
+    transform: translateY(-3px); /* movimenta o card um pouco para cima */
+    box-shadow: var(--sombra-leve); /* destaca o card */
+}
+
+
+/* topo-card: div que contém o ícone e o número do serviço. */
+.app .topo-card {
+    display: flex; /* coloca os elementos lado a lado */
+    align-items: flex-start; /* alinha os elementos pelo topo */
+    justify-content: space-between; /* deixa o ícone à esquerda e o número à direita */
+    gap: 12px; /* espaço entre os elementos */
+}
+
+
+/* icone-card: círculo que fica atrás do svg de cada serviço. */
+.app .icone-card {
+    display: flex; /* permite centralizar o svg */
+    align-items: center; /* centraliza na vertical */
+    justify-content: center; /* centraliza na horizontal */
+    width: 56px; /* largura do círculo */
+    height: 56px; /* altura do círculo */
+    flex-shrink: 0; /* mantém o tamanho do círculo */
+    border-radius: 50%; /* deixa o fundo circular */
+    background-color: rgba(255, 255, 255, 0.55); /* fundo branco com transparência */
+}
+
+
+/* fundo do ícone no card branco de metrô. */
+.app .card-metro .icone-card {
+    background-color: var(--app-iara); /* destaca o círculo no fundo branco */
+}
+
+
+/* ícone que fica dentro do círculo de cada serviço. */
+.app .icone-card .icone {
+    width: 28px; /* largura do svg */
+    height: 28px; /* altura do svg */
+}
+
+
+/* numero-servico: span que contém os números 01, 02 e 03. */
+.app .numero-servico {
+    color: var(--texto-secundario); /* deixa o número mais discreto */
+    font-family: var(--fonte-principal); /* mantém a fonte dos textos */
+    font-size: 0.8rem; /* tamanho do número */
+    font-weight: 700; /* dá destaque à numeração */
+    font-style: normal; /* retira a inclinação do texto */
+}
+
+
+/* conteudo-card: div que agrupa os textos e a seta do serviço. */
+.app .conteudo-card {
+    display: flex; /* coloca os textos e a seta lado a lado */
+    align-items: flex-end; /* alinha os elementos pela parte inferior */
+    justify-content: space-between; /* empurra a seta para o canto direito */
+    gap: 12px; /* espaço entre o texto e a seta */
+}
+
+
+/* texto-card: div que agrupa o título e a descrição do serviço. */
+.app .texto-card {
+    display: flex; /* organiza os textos */
+    flex-direction: column; /* deixa a descrição abaixo do título */
+    gap: 8px; /* espaço entre os textos */
+    flex: 1; /* ocupa o espaço restante do card */
+    min-width: 0; /* permite que o texto quebre de linha */
+}
+
+
+/* títulos dos cards, h3 no inicio.html e h2 no servicos.html. */
+.app .texto-card h2,
+.app .texto-card h3 {
+    font-family: var(--fonte-titulo); /* mantém a fonte dos títulos */
+    font-size: clamp(1.2rem, 1.7vw, 1.65rem); /* adapta o tamanho à tela */
+    font-weight: 500; /* deixa o título mais leve */
+    line-height: 1.2; /* controla o espaço entre as linhas */
+}
+
+
+/* descrição de cada serviço. */
+.app .texto-card p {
+    color: var(--texto-secundario); /* cor da descrição */
+    font-size: 0.85rem; /* tamanho do texto */
+    line-height: 1.5; /* espaço entre as linhas */
+}
+
+
+/* seta-card: círculo com a seta no canto inferior direito. */
+.app .seta-card {
+    display: flex; /* permite centralizar a seta */
+    align-items: center; /* centraliza na vertical */
+    justify-content: center; /* centraliza na horizontal */
+    width: 38px; /* largura do círculo */
+    height: 38px; /* altura do círculo */
+    flex-shrink: 0; /* impede que o círculo seja comprimido */
+    border: 1px solid rgba(32, 61, 46, 0.25); /* contorno verde mais transparente */
+    border-radius: 50%; /* deixa o elemento circular */
+}
+
+
+/* svg dentro da seta-card. */
+.app .seta-card .icone {
+    width: 18px; /* largura da seta */
+    height: 18px; /* altura da seta */
+}
+
+
+/* BANNER DA IARA ============================================================================================ */
+
+/* assistente-iara: section que contém o banner da assistente. */
+.app .assistente-iara {
+    width: 100%; /* ocupa toda a largura disponível */
+}
+
+
+/* banner-iara: link que direciona para o iara.html. */
+.app .banner-iara {
+    position: relative; /* referência para posicionar o círculo decorativo */
+    isolation: isolate; /* mantém a decoração dentro do próprio banner */
+    display: flex; /* coloca o microfone, textos e seta lado a lado */
+    align-items: center; /* centraliza os elementos na vertical */
+    gap: 24px; /* espaço entre os elementos */
+    min-height: 146px; /* altura mínima do banner */
+    padding: 28px; /* espaço interno */
+    background-color: var(--app-iara); /* fundo verde claro */
+    border-radius: var(--raio-grande); /* arredonda os cantos */
+    overflow: hidden; /* esconde a parte do círculo que ultrapassa o banner */
+}
+
+
+/* círculo decorativo no lado direito do banner. */
+.app .banner-iara::after {
+    content: ""; /* cria o círculo sem adicionar outra tag no html */
+    position: absolute; /* permite posicionar livremente no banner */
+    right: -42px; /* deixa uma parte do círculo fora do banner */
+    top: 50%; /* posiciona no meio da altura */
+    width: 220px; /* largura do círculo */
+    height: 220px; /* altura do círculo */
+    border-radius: 50%; /* deixa o elemento circular */
+    background-color: rgba(59, 101, 74, 0.09); /* fundo verde transparente */
+    transform: translateY(-50%); /* centraliza o círculo na vertical */
+    z-index: -1; /* mantém a decoração atrás dos textos */
+    pointer-events: none; /* evita que a decoração interfira nos cliques */
+}
+
+
+/* icone-banner-iara: círculo terracota com o microfone. */
+.app .icone-banner-iara {
+    display: flex; /* permite centralizar o svg */
+    align-items: center; /* centraliza na vertical */
+    justify-content: center; /* centraliza na horizontal */
+    width: 62px; /* largura do círculo */
+    height: 62px; /* altura do círculo */
+    flex-shrink: 0; /* mantém o tamanho do círculo */
+    background-color: var(--terracota); /* fundo terracota */
+    border-radius: 50%; /* deixa o elemento circular */
+    box-shadow: 0 0 0 8px rgba(138, 75, 50, 0.09); /* cria o círculo externo decorativo */
+}
+
+
+/* microfone que fica dentro do círculo da iara. */
+.app .icone-banner-iara .icone {
+    width: 29px; /* largura do microfone */
+    height: 29px; /* altura do microfone */
+    filter: brightness(0) invert(1); /* deixa o svg branco */
+}
+
+
+/* conteudo-iara: div que agrupa os três textos do banner. */
+.app .conteudo-iara {
+    display: flex; /* organiza os textos */
+    flex-direction: column; /* deixa os textos um abaixo do outro */
+    gap: 5px; /* espaço entre os textos */
+    flex: 1; /* ocupa o espaço entre o microfone e a seta */
+    min-width: 0; /* permite a quebra de linha */
+}
+
+
+/* texto prefere falar. */
+.app .conteudo-iara small {
+    color: var(--terracota); /* destaca o texto em terracota */
+    font-size: 0.7rem; /* tamanho do texto */
+    font-weight: 800; /* deixa o texto mais destacado */
+    letter-spacing: 1px; /* separa um pouco as letras */
+    text-transform: uppercase; /* exibe o texto em maiúsculo */
+}
+
+
+/* título converse com a iara. */
+.app .conteudo-iara h2 {
+    font-size: clamp(1.5rem, 2.4vw, 2rem); /* adapta o tamanho do título à tela */
+    font-weight: 500; /* mantém a aparência do protótipo */
+}
+
+
+/* descrição sua assistente, no seu ritmo. */
+.app .conteudo-iara p {
+    color: var(--texto-secundario); /* cor da descrição */
+    font-size: 0.9rem; /* tamanho do texto */
+}
+
+
+/* seta-banner-iara: seta que fica no lado direito do banner. */
+.app .seta-banner-iara {
+    width: 26px; /* largura da seta */
+    height: 26px; /* altura da seta */
+    flex-shrink: 0; /* mantém o tamanho da seta */
+    margin-right: 10px; /* distancia a seta da lateral */
+    transition: transform 0.2s ease; /* suaviza o movimento */
+}
+
+
+/* movimenta a seta quando o mouse passa pelo banner. */
+.app .banner-iara:hover .seta-banner-iara {
+    transform: translateX(4px); /* desloca a seta um pouco para a direita */
+}
+
+
+/* ACOMPANHAR SOLICITAÇÕES =================================================================================== */
+
+/* acompanhar-solicitacoes: link da página inicial que direciona
+   para solicitacoes.html. */
+.app .acompanhar-solicitacoes {
+    display: inline-flex; /* coloca o relógio, texto e seta lado a lado */
+    align-items: center; /* centraliza os elementos na vertical */
+    align-self: flex-start; /* evita que o link ocupe toda a largura */
+    gap: 10px; /* espaço entre os elementos */
+    padding: 8px 0; /* aumenta a área clicável */
+    color: var(--verde-floresta); /* cor do texto */
+    font-size: 0.9rem; /* tamanho do texto */
+    font-weight: 800; /* destaca o link */
+    text-decoration: none; /* mantém o texto sem sublinhado */
+}
+
+
+/* ícones do link de acompanhamento. */
+.app .acompanhar-solicitacoes .icone {
+    width: 20px; /* largura dos ícones */
+    height: 20px; /* altura dos ícones */
+}
+
+
+/* destaca o link quando o mouse passa por cima. */
+.app .acompanhar-solicitacoes:hover {
+    color: var(--verde-natural); /* altera a cor do texto */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* SERVICOS.HTML ============================================================================================= */
+
+/* pagina-servicos: classe específica do main da página de serviços. */
+.app .pagina-servicos {
+    display: flex; /* organiza as seções da página */
+    flex-direction: column; /* deixa a introdução acima dos cards e do banner */
+    gap: 28px; /* espaço entre as seções */
+}
+
+
+/* introdução da página de serviços.
+   retirei a margem porque o espaçamento já é feito pelo gap da página. */
+.app .pagina-servicos .introducao-pagina {
+    margin-bottom: 0; /* evita que os espaçamentos sejam somados */
+}
+
+
+/* cards da página de serviços.
+   os outros estilos são reaproveitados da classe card-servico. */
+.app .pagina-servicos .card-servico {
+    min-height: 250px; /* deixa os cards um pouco maiores nessa página */
+}
+
+
+/* banner da iara que aparece abaixo dos serviços. */
+.app .pagina-servicos .assistente-iara {
+    margin-top: 4px; /* acrescenta um pequeno espaço acima do banner */
+}
+
+
+/* RESPONSIVIDADE DO INICIO.HTML E SERVICOS.HTML ============================================================= */
+
+/* ajustes em telas intermediárias. */
+@media (max-width: 1200px) {
+
+    /* reorganiza a saudação e a localização quando falta espaço */
+    .app .boas-vindas {
+        flex-wrap: wrap; /* permite que a localização desça para outra linha */
+    }
+
+    /* reduz os espaços internos dos cards */
+    .app .card-servico {
+        padding: 20px; /* aproveita melhor a largura das colunas */
+        min-height: 220px; /* ajusta a altura dos cards */
+    }
+
+    /* reduz a distância entre os textos e a seta */
+    .app .conteudo-card {
+        gap: 8px; /* deixa o conteúdo mais compacto */
+    }
+
+}
+
+
+/* ajustes para tablets.
+   mantém os três cards lado a lado, igual ao protótipo. */
+@media (max-width: 900px) {
+
+    /* ajusta o espaço entre os cards */
+    .app .lista-servicos {
+        gap: 12px; /* reduz a distância entre as colunas */
+    }
+
+    /* título da saudação */
+    .app .saudacao h1 {
+        font-size: clamp(2rem, 4.8vw, 2.8rem); /* adapta o título ao tablet */
+    }
+
+    /* cards dos serviços */
+    .app .card-servico,
+    .app .pagina-servicos .card-servico {
+        min-height: 210px; /* mantém a altura mínima dos cards */
+        padding: 18px; /* reduz o espaço interno */
+    }
+
+    /* título dos serviços nos cards */
+    .app .texto-card h2,
+    .app .texto-card h3 {
+        font-size: 1.35rem; /* mantém os títulos legíveis */
+    }
+
+    /* círculo dos ícones dos serviços */
+    .app .icone-card {
+        width: 46px; /* reduz a largura */
+        height: 46px; /* reduz a altura */
+    }
+
+    /* svg dentro dos círculos */
+    .app .icone-card .icone {
+        width: 24px; /* largura do ícone */
+        height: 24px; /* altura do ícone */
+    }
+
+}
+
+
+/* ajustes para celulares.
+   aqui os cards passam a ocupar somente uma coluna. */
+@media (max-width: 600px) {
+
+    /* espaçamento entre as seções das páginas */
+    .app .pagina-inicio,
+    .app .pagina-servicos {
+        gap: 24px; /* reduz a distância entre as seções */
+    }
+
+    /* deixa a localização abaixo da saudação */
+    .app .boas-vindas {
+        flex-direction: column; /* organiza os elementos na vertical */
+        align-items: stretch; /* faz os elementos ocuparem a largura disponível */
+        gap: 18px; /* espaço entre a saudação e a localização */
+    }
+
+    /* card da localização */
+    .app .localizacao {
+        width: 100%; /* ocupa toda a largura */
+    }
+
+    /* permite que o endereço utilize o espaço restante */
+    .app .dados-localizacao {
+        flex: 1; /* ocupa o espaço entre o ícone e o botão */
+    }
+
+    /* título da seção de serviços */
+    .app .titulo-secao h2 {
+        font-size: 1.45rem; /* reduz o título para caber na tela */
+    }
+
+    /* reorganiza os cards em uma coluna */
+    .app .lista-servicos {
+        grid-template-columns: minmax(0, 1fr); /* cria uma única coluna */
+    }
+
+    /* reduz a altura dos cards em celulares */
+    .app .card-servico,
+    .app .pagina-servicos .card-servico {
+        min-height: 170px; /* altura mínima em telas menores */
+        padding: 20px; /* espaço interno */
+        gap: 16px; /* espaço entre o topo e os textos */
+    }
+
+    /* ajusta o banner da iara */
+    .app .banner-iara {
+        min-height: 125px; /* reduz a altura do banner */
+        padding: 20px; /* espaço interno */
+        gap: 16px; /* distância entre os elementos */
+    }
+
+    /* reduz o círculo do microfone */
+    .app .icone-banner-iara {
+        width: 48px; /* largura do círculo */
+        height: 48px; /* altura do círculo */
+    }
+
+    /* reduz o svg do microfone */
+    .app .icone-banner-iara .icone {
+        width: 24px; /* largura do svg */
+        height: 24px; /* altura do svg */
+    }
+
+    /* título do banner */
+    .app .conteudo-iara h2 {
+        font-size: 1.45rem; /* tamanho do título no celular */
+    }
+
+    /* seta do banner */
+    .app .seta-banner-iara {
+        width: 20px; /* largura da seta */
+        height: 20px; /* altura da seta */
+        margin-right: 0; /* retira o espaço extra da lateral */
+    }
+
+    /* diminui o espaço entre o ícone e o título das páginas */
+    .app .introducao-pagina {
+        gap: 12px; /* aproxima o ícone dos textos */
+        margin-bottom: 24px; /* reduz o espaço abaixo da introdução */
+    }
+
+    /* círculo que aparece ao lado do título */
+    .app .icone-introducao {
+        width: 48px; /* largura do círculo */
+        height: 48px; /* altura do círculo */
+    }
+
+    /* svg da introdução */
+    .app .icone-introducao .icone {
+        width: 24px; /* largura do svg */
+        height: 24px; /* altura do svg */
+    }
+
+    /* card de confirmação dos pedidos */
+    .app .resultado-servico {
+        padding: 24px; /* reduz o espaço interno */
+    }
+
+}
