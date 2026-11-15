@@ -75,8 +75,8 @@
 
           <div class="cadastro-foto-arco">
             <img
-              src="../assets/imagens/cadastro-caminhada.jpg"
-              alt="Casal de pessoas idosas caminhando com tranquilidade por um parque arborizado"
+              src="../assets/imagens/homem_acessib.jpg"
+              alt="Homem com perna amputada usando muletas"
             />
           </div>
         </div>
@@ -84,7 +84,7 @@
         <!-- Coluna Direita: Cartão branco com formulário em 3 etapas -->
         <div class="card-branco cadastro-card">
           <div class="cadastro-area-tag">
-            <img src="../assets/icones/usuario.png" alt="" class="icone" />
+            <img src="../assets/icones/user.png" alt="" class="icone" />
             <span>Área do cidadão</span>
           </div>
 
@@ -106,3 +106,68 @@
               <span>3. Preferências</span>
             </div>
           </div>
+
+          <form id="form-cadastro" novalidate>
+            <!-- ================= ETAPA 1: DADOS BÁSICOS ================= -->
+            <div id="cadastro-passo-1" class="cadastro-passo">
+              <!-- Box verde de validação obrigatória por QR Code -->
+              <div id="box-qrcode-cadastro" class="cadastro-qrcode-box">
+                <div class="qrcode-box-topo">
+                  <span class="qrcode-icone-wrap">
+                    <img src="../assets/icones/qr.png" alt="" class="icone" />
+                  </span>
+                  <div>
+                    <strong>Valide sua credencial com QR Code <span class="asterisco">*</span></strong>
+                    <p>
+                      Obrigatório para evitar fraudes e liberar os benefícios (CIN, CIPCD, CIPTEA ou Carteira da Pessoa Idosa).
+                    </p>
+                  </div>
+                </div>
+
+                <button type="button" id="btn-simular-qrcode" class="btn-qrcode-ler">
+                  <img src="../assets/icones/qr.png" alt="" class="icone" />
+                  <span>Ler QR Code da credencial</span>
+                </button>
+
+                <p id="status-qrcode-cadastro" class="qrcode-nota">
+                  Após validar o QR Code, confira ou complete seus dados básicos abaixo.
+                </p>
+              </div>
+
+              <div class="form-contato">
+                <div class="campo-grupo">
+                  <label for="cad-nome">Nome completo <span class="asterisco">*</span></label>
+                  <input type="text" id="cad-nome" name="nome" required />
+                </div>
+
+                <div class="campo-grupo">
+                  <label for="cad-email">E-mail <span class="asterisco">*</span></label>
+                  <input type="email" id="cad-email" name="email" required />
+                </div>
+
+                <div class="campo-grupo">
+                  <label for="cad-senha">Senha <span class="asterisco">*</span></label>
+                  <input type="password" id="cad-senha" name="senha" minlength="8" required />
+                </div>
+
+                <div class="campo-grupo">
+                  <label for="cad-confirma-senha">Confirme a senha <span class="asterisco">*</span></label>
+                  <input type="password" id="cad-confirma-senha" name="confirmaSenha" minlength="8" required />
+                  <small class="campo-dica">Use pelo menos 8 caracteres.</small>
+                </div>
+
+                <label class="checkbox-termos" for="cad-termos">
+                  <input type="checkbox" id="cad-termos" required />
+                  <span>
+                    Li os <a href="acessibilidade.html#termos-uso">termos de uso</a> e as
+                    <a href="privacidade.html">informações de privacidade</a>.
+                  </span>
+                </label>
+
+                <div>
+                  <button type="button" id="btn-cad-ir-passo2" class="btn">
+                    Continuar &rarr;
+                  </button>
+                </div>
+              </div>
+            </div>
