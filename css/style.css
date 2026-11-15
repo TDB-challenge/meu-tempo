@@ -2295,3 +2295,689 @@ button {
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* SOLICITACOES.HTML ========================================================================================= */
+
+/* pagina-solicitacoes: main da página que acompanha os pedidos. */
+.app .pagina-solicitacoes {
+    display: flex; /* organiza as seções */
+    flex-direction: column; /* deixa os elementos um abaixo do outro */
+    gap: 24px; /* espaço entre a introdução, filtros e pedidos */
+}
+
+
+/* retira a margem da introdução, pois a página já possui gap. */
+.app .pagina-solicitacoes .introducao-pagina {
+    margin-bottom: 0; /* evita espaços duplicados */
+}
+
+
+/* filtros-solicitacoes: div com os botões todas, em andamento e finalizadas. */
+.app .filtros-solicitacoes {
+    display: flex; /* coloca os filtros lado a lado */
+    flex-wrap: wrap; /* permite quebrar de linha em telas menores */
+    gap: 10px; /* espaço entre os botões */
+}
+
+
+/* botao-filtro: classe compartilhada pelos três filtros. */
+.app .botao-filtro {
+    min-height: 42px; /* altura mínima da área clicável */
+    padding: 10px 20px; /* espaço interno do botão */
+    background-color: var(--branco); /* fundo dos filtros não selecionados */
+    color: var(--verde-floresta); /* cor do texto */
+    border: 1px solid var(--borda); /* contorno do botão */
+    border-radius: var(--raio-circular); /* deixa o botão arredondado */
+    font-size: 0.9rem; /* tamanho do texto */
+    font-weight: 700; /* destaca o texto */
+    transition: background-color 0.2s ease; /* suaviza a mudança de fundo */
+}
+
+
+/* aria-pressed true indica qual filtro está selecionado.
+   esse atributo será atualizado no app.js. */
+.app .botao-filtro[aria-pressed="true"] {
+    background-color: var(--verde-floresta); /* fundo do filtro selecionado */
+    color: var(--branco); /* texto branco para contrastar com o fundo */
+    border-color: var(--verde-floresta); /* mantém a borda da mesma cor */
+}
+
+
+/* destaca os filtros que não estão selecionados. */
+.app .botao-filtro[aria-pressed="false"]:hover {
+    background-color: var(--verde-claro); /* altera o fundo ao passar o mouse */
+}
+
+
+/* lista-solicitacoes: section que recebe os cards dos pedidos. */
+.app .lista-solicitacoes {
+    display: flex; /* organiza os cards */
+    flex-direction: column; /* deixa um pedido abaixo do outro */
+    gap: 14px; /* espaço entre os pedidos */
+}
+
+
+/* card-solicitacao: details que contém o resumo e o histórico de cada pedido. */
+.app .card-solicitacao {
+    background-color: var(--branco); /* fundo branco do card */
+    border: 1px solid var(--borda); /* contorno do card */
+    border-radius: var(--raio-grande); /* arredonda os cantos */
+}
+
+
+/* summary do pedido: parte que aparece antes de abrir o histórico. */
+.app .card-solicitacao > summary {
+    display: grid; /* organiza as informações em colunas */
+    grid-template-columns: auto minmax(0, 1fr) auto auto; /* ícone, textos, status e seta */
+    align-items: center; /* centraliza os elementos na vertical */
+    gap: 16px; /* espaço entre as colunas */
+    min-height: 92px; /* altura mínima do resumo */
+    padding: 20px 24px; /* espaço interno do card */
+}
+
+
+/* icone-solicitacao: círculo que identifica o serviço solicitado. */
+.app .icone-solicitacao {
+    display: flex; /* permite centralizar o svg */
+    align-items: center; /* centraliza na vertical */
+    justify-content: center; /* centraliza na horizontal */
+    width: 48px; /* largura do círculo */
+    height: 48px; /* altura do círculo */
+    background-color: var(--app-iara); /* fundo verde claro */
+    border-radius: 50%; /* deixa o elemento circular */
+}
+
+
+/* ícone do serviço dentro do círculo. */
+.app .icone-solicitacao .icone {
+    width: 24px; /* largura do ícone */
+    height: 24px; /* altura do ícone */
+}
+
+
+/* dados-solicitacao: span com o nome do pedido e suas informações. */
+.app .dados-solicitacao {
+    display: flex; /* organiza os textos */
+    flex-direction: column; /* deixa as informações abaixo do nome */
+    gap: 5px; /* espaço entre os textos */
+    min-width: 0; /* permite que os textos quebrem de linha */
+}
+
+
+/* nome do serviço solicitado. */
+.app .dados-solicitacao strong {
+    color: var(--texto-principal); /* cor do título */
+    font-size: 1rem; /* tamanho do texto */
+    font-weight: 800; /* destaca o nome do pedido */
+}
+
+
+/* informações menores, como horário, estação e endereço. */
+.app .dados-solicitacao small {
+    color: var(--texto-secundario); /* deixa as informações mais discretas */
+    font-size: 0.8rem; /* tamanho do texto */
+    font-weight: 400; /* mantém o texto sem negrito */
+    line-height: 1.5; /* melhora a leitura quando quebrar de linha */
+}
+
+
+/* status-solicitacao: span que informa a situação atual do pedido. */
+.app .status-solicitacao {
+    display: inline-flex; /* permite centralizar o texto */
+    align-items: center; /* centraliza na vertical */
+    justify-content: center; /* centraliza na horizontal */
+    padding: 7px 12px; /* espaço interno do status */
+    border-radius: var(--raio-circular); /* deixa o formato arredondado */
+    font-size: 0.75rem; /* tamanho do texto */
+    font-weight: 700; /* destaca a situação do pedido */
+    text-align: center; /* centraliza o texto */
+}
+
+
+/* status-andamento e status-finalizada: situações dos pedidos.
+   deixei os dois em verde, seguindo o protótipo. */
+.app .status-andamento,
+.app .status-finalizada {
+    background-color: var(--app-iara); /* fundo verde claro */
+    color: var(--verde-natural); /* cor do texto */
+}
+
+
+/* seta-solicitacao: ícone que indica que o pedido pode ser aberto. */
+.app .seta-solicitacao {
+    width: 19px; /* largura da seta */
+    height: 19px; /* altura da seta */
+    transition: transform 0.2s ease; /* suaviza o movimento */
+}
+
+
+/* altera a direção da seta quando o pedido estiver aberto. */
+.app .card-solicitacao[open] .seta-solicitacao {
+    transform: rotate(90deg); /* gira a seta para baixo */
+}
+
+
+/* historico-solicitacao: div que aparece ao abrir o pedido. */
+.app .historico-solicitacao {
+    display: flex; /* organiza as informações do histórico */
+    flex-direction: column; /* deixa o protocolo acima da linha do tempo */
+    gap: 18px; /* espaço entre as informações */
+    margin: 0 24px; /* espaço nas laterais */
+    padding: 20px 0 24px 64px; /* alinha o histórico com os textos do resumo */
+    border-top: 1px solid var(--borda); /* separa o resumo do histórico */
+}
+
+
+/* protocolo-solicitacao: número de identificação do pedido. */
+.app .protocolo-solicitacao {
+    color: var(--texto-secundario); /* cor do protocolo */
+    font-size: 0.8rem; /* tamanho do texto */
+    font-weight: 700; /* destaca o número */
+    letter-spacing: 0.4px; /* aumenta um pouco o espaço entre as letras */
+}
+
+
+/* linha-tempo: lista ordenada das etapas de uma solicitação. */
+.app .linha-tempo {
+    display: flex; /* organiza as etapas */
+    flex-direction: column; /* deixa uma atualização abaixo da outra */
+    list-style: none; /* remove a numeração padrão da lista */
+    margin: 0; /* remove a margem padrão */
+    padding: 0; /* remove o espaço interno padrão */
+}
+
+
+/* etapa-solicitacao: li que contém uma atualização do pedido. */
+.app .etapa-solicitacao {
+    position: relative; /* referência para desenhar a linha vertical */
+    display: flex; /* coloca o ícone ao lado da atualização */
+    align-items: flex-start; /* alinha os elementos pelo topo */
+    gap: 14px; /* espaço entre o ícone e os textos */
+    padding-bottom: 24px; /* distância até a próxima atualização */
+}
+
+
+/* linha vertical que conecta os círculos das etapas. */
+.app .etapa-solicitacao:not(:last-child)::before {
+    content: ""; /* cria a linha sem adicionar outra tag no html */
+    position: absolute; /* posiciona a linha dentro da etapa */
+    top: 26px; /* começa abaixo do círculo */
+    bottom: 0; /* estende até a próxima etapa */
+    left: 12px; /* centraliza a linha com o círculo */
+    width: 2px; /* espessura da linha */
+    background-color: var(--verde-salvia); /* cor da linha */
+}
+
+
+/* retira o espaço extra da última atualização. */
+.app .etapa-solicitacao:last-child {
+    padding-bottom: 0; /* finaliza a linha do tempo */
+}
+
+
+/* icone-etapa: círculo com o check de cada atualização. */
+.app .icone-etapa {
+    position: relative; /* permite manter o círculo acima da linha */
+    display: flex; /* permite centralizar o check */
+    align-items: center; /* centraliza na vertical */
+    justify-content: center; /* centraliza na horizontal */
+    width: 26px; /* largura do círculo */
+    height: 26px; /* altura do círculo */
+    flex-shrink: 0; /* mantém o tamanho do círculo */
+    background-color: var(--verde-floresta); /* fundo verde */
+    border-radius: 50%; /* deixa o elemento circular */
+}
+
+
+/* check dentro do círculo da etapa. */
+.app .icone-etapa .icone {
+    width: 14px; /* largura do check */
+    height: 14px; /* altura do check */
+    filter: brightness(0) invert(1); /* deixa o svg branco */
+}
+
+
+/* dados-etapa: div com o nome, horário e descrição da atualização. */
+.app .dados-etapa {
+    display: flex; /* organiza os textos */
+    flex-direction: column; /* posiciona o horário abaixo do nome */
+    gap: 4px; /* espaço entre as informações */
+    min-width: 0; /* permite a quebra de linha */
+}
+
+
+/* nome da atualização. */
+.app .dados-etapa strong {
+    font-size: 0.9rem; /* tamanho do texto */
+    font-weight: 700; /* destaca a atualização */
+    color: var(--texto-principal); /* cor do texto */
+}
+
+
+/* horário e descrição da atualização. */
+.app .dados-etapa p {
+    font-size: 0.8rem; /* tamanho das informações */
+    color: var(--texto-secundario); /* deixa o texto mais discreto */
+    line-height: 1.5; /* melhora a leitura */
+}
+
+
+/* sem-solicitacoes: mensagem exibida quando não houver pedidos. */
+.app .sem-solicitacoes {
+    padding: 32px 20px; /* espaço interno da mensagem */
+    background-color: var(--branco); /* fundo branco */
+    color: var(--texto-secundario); /* cor do texto */
+    border: 1px dashed var(--borda-input); /* contorno tracejado */
+    border-radius: var(--raio-medio); /* arredonda os cantos */
+    text-align: center; /* centraliza a mensagem */
+}
+
+
+/* RESPONSIVIDADE DAS SOLICITAÇÕES =========================================================================== */
+
+@media (max-width: 600px) {
+
+    /* reduz o espaço dos botões de filtro */
+    .app .botao-filtro {
+        padding: 9px 14px; /* deixa os filtros mais compactos */
+        font-size: 0.8rem; /* diminui um pouco o texto */
+    }
+
+    /* reorganiza o card em duas linhas sem esconder o status */
+    .app .card-solicitacao > summary {
+        grid-template-columns: auto minmax(0, 1fr) auto; /* ícone, informações e seta */
+        gap: 10px; /* reduz o espaço entre os elementos */
+        padding: 16px; /* diminui o espaço interno */
+    }
+
+    /* deixa a situação abaixo do nome do pedido */
+    .app .status-solicitacao {
+        grid-column: 2; /* coloca o status na coluna dos textos */
+        grid-row: 2; /* posiciona na segunda linha */
+        justify-self: start; /* mantém o status alinhado à esquerda */
+    }
+
+    /* mantém a seta no canto direito da primeira linha */
+    .app .seta-solicitacao {
+        grid-column: 3; /* posiciona na última coluna */
+        grid-row: 1; /* mantém a seta na primeira linha */
+    }
+
+    /* ajusta o espaço interno do histórico */
+    .app .historico-solicitacao {
+        margin: 0 16px; /* reduz as margens laterais */
+        padding: 18px 0; /* aproveita a largura disponível */
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* IARA.HTML ================================================================================================= */
+
+/* pagina-iara: main que recebe a interface de conversa. */
+.app .pagina-iara {
+    display: flex; /* permite organizar a janela do chat */
+    flex-direction: column; /* mantém a estrutura na vertical */
+}
+
+
+/* chat-iara: section que envolve todo o chat da assistente. */
+.app .chat-iara {
+    display: flex; /* permite dividir o chat em três áreas */
+    flex-direction: column; /* cabeçalho, conversa e envio */
+    width: 100%; /* ocupa toda a largura disponível */
+    min-height: 560px; /* mantém espaço para a conversa */
+    height: calc(100dvh - var(--altura-cabecalho) - 100px); /* adapta a altura à janela */
+    background-color: var(--branco); /* fundo do chat */
+    border: 1px solid var(--borda); /* contorno da janela */
+    border-radius: var(--raio-grande); /* arredonda os cantos */
+    overflow: hidden; /* mantém os elementos dentro dos cantos arredondados */
+}
+
+
+/* cabecalho-chat: header com o ícone, nome da assistente e botão ouvir. */
+.app .cabecalho-chat {
+    display: flex; /* organiza os elementos lado a lado */
+    align-items: center; /* centraliza os elementos na vertical */
+    gap: 16px; /* espaço entre os elementos */
+    padding: 22px 26px; /* espaço interno do cabeçalho */
+    border-bottom: 1px solid var(--borda); /* separa o cabeçalho da conversa */
+}
+
+
+/* icone-iara: círculo com o svg que representa a assistente. */
+.app .icone-iara {
+    display: flex; /* permite centralizar o svg */
+    align-items: center; /* centraliza na vertical */
+    justify-content: center; /* centraliza na horizontal */
+    width: 52px; /* largura do círculo */
+    height: 52px; /* altura do círculo */
+    flex-shrink: 0; /* evita que o círculo seja comprimido */
+    background-color: var(--app-iara); /* fundo verde claro */
+    border-radius: 50%; /* deixa o elemento circular */
+}
+
+
+/* svg que fica dentro do círculo da assistente. */
+.app .icone-iara .icone {
+    width: 27px; /* largura do ícone */
+    height: 27px; /* altura do ícone */
+}
+
+
+/* identificacao-iara: div que contém o nome e a descrição da assistente. */
+.app .identificacao-iara {
+    display: flex; /* organiza os textos */
+    flex-direction: column; /* deixa a descrição abaixo do nome */
+    gap: 4px; /* espaço entre os textos */
+    flex: 1; /* ocupa o espaço entre o ícone e o botão ouvir */
+    min-width: 0; /* permite a quebra de linha dos textos */
+}
+
+
+/* título que identifica a iara. */
+.app .identificacao-iara h1 {
+    font-size: clamp(1.4rem, 2.4vw, 1.9rem); /* adapta o título à tela */
+    font-weight: 500; /* deixa o texto mais leve */
+}
+
+
+/* descrição da assistente. */
+.app .identificacao-iara p {
+    color: var(--texto-secundario); /* cor da descrição */
+    font-size: 0.85rem; /* tamanho do texto */
+}
+
+
+/* botao-ouvir: botão responsável por reproduzir a resposta da iara. */
+.app .botao-ouvir {
+    display: flex; /* coloca o ícone ao lado do texto */
+    align-items: center; /* centraliza os elementos */
+    justify-content: center; /* centraliza o conteúdo do botão */
+    gap: 8px; /* espaço entre ícone e texto */
+    min-height: 42px; /* altura mínima do botão */
+    padding: 9px 16px; /* espaço interno */
+    background-color: var(--branco); /* fundo branco */
+    color: var(--verde-floresta); /* cor do texto */
+    border: 1px solid var(--borda-input); /* contorno do botão */
+    border-radius: var(--raio-circular); /* deixa o botão arredondado */
+    font-size: 0.85rem; /* tamanho do texto */
+    font-weight: 700; /* destaca o texto */
+    flex-shrink: 0; /* evita que o botão seja comprimido */
+}
+
+
+/* conversa-iara: área que recebe as mensagens e sugestões. */
+.app .conversa-iara {
+    display: flex; /* organiza as mensagens e sugestões */
+    flex-direction: column; /* deixa os elementos um abaixo do outro */
+    gap: 22px; /* distância entre as mensagens e sugestões */
+    flex: 1; /* ocupa o espaço restante do chat */
+    min-height: 0; /* permite que a área interna tenha rolagem */
+    padding: 28px; /* espaço interno da conversa */
+    overflow-y: auto; /* permite rolar as mensagens */
+    background-color: var(--app-fundo); /* fundo da área de conversa */
+}
+
+
+/* mensagens: div que recebe as mensagens da conversa pelo js. */
+.app .mensagens {
+    display: flex; /* organiza as mensagens */
+    flex-direction: column; /* deixa uma mensagem abaixo da outra */
+    gap: 16px; /* distância entre as mensagens */
+}
+
+
+/* mensagem: classe compartilhada pelas mensagens da conversa. */
+.app .mensagem {
+    max-width: 80%; /* evita que a mensagem ocupe toda a linha */
+    padding: 16px 20px; /* espaço interno do balão */
+    border-radius: 16px; /* arredonda os cantos */
+    font-size: 0.95rem; /* tamanho do texto */
+    line-height: 1.6; /* espaço entre as linhas */
+    overflow-wrap: anywhere; /* permite quebrar palavras muito grandes */
+}
+
+
+/* mensagem-iara: balão com as respostas da assistente. */
+.app .mensagem-iara {
+    align-self: flex-start; /* posiciona as respostas à esquerda */
+    background-color: var(--app-iara); /* fundo verde claro */
+    color: var(--texto-principal); /* cor do texto */
+    border-bottom-left-radius: 4px; /* diferencia o canto do balão */
+}
+
+
+/* mensagem-usuario: classe que será criada pelo iara.js
+   para mostrar as mensagens enviadas pela pessoa. */
+.app .mensagem-usuario {
+    align-self: flex-end; /* posiciona as mensagens à direita */
+    background-color: var(--verde-floresta); /* fundo verde escuro */
+    color: var(--branco); /* texto branco */
+    border-bottom-right-radius: 4px; /* diferencia o canto do balão */
+}
+
+
+/* sugestoes-iara: div com perguntas prontas para iniciar a conversa. */
+.app .sugestoes-iara {
+    display: flex; /* coloca as sugestões lado a lado */
+    flex-wrap: wrap; /* permite que as sugestões quebrem de linha */
+    gap: 10px; /* espaço entre os botões */
+}
+
+
+/* botao-sugestao: classe compartilhada pelas perguntas prontas. */
+.app .botao-sugestao {
+    padding: 10px 16px; /* espaço interno do botão */
+    background-color: var(--branco); /* fundo branco */
+    color: var(--verde-floresta); /* cor do texto */
+    border: 1px solid var(--borda-input); /* contorno do botão */
+    border-radius: var(--raio-circular); /* formato arredondado */
+    font-size: 0.85rem; /* tamanho do texto */
+    font-weight: 600; /* destaca a sugestão */
+}
+
+
+/* sugestão disponível quando o mouse passa por cima. */
+.app .botao-sugestao:not(:disabled):hover {
+    background-color: var(--verde-claro); /* destaca a sugestão */
+}
+
+
+/* aviso-chat: mensagem de carregamento ou erro da comunicação. */
+.app .aviso-chat {
+    color: var(--texto-secundario); /* cor da mensagem */
+    font-size: 0.85rem; /* tamanho do texto */
+    line-height: 1.5; /* espaço entre as linhas */
+}
+
+
+/* area-envio: div que contém o formulário e a orientação do chat. */
+.app .area-envio {
+    display: flex; /* organiza os elementos */
+    flex-direction: column; /* deixa a orientação abaixo do formulário */
+    gap: 10px; /* distância entre os elementos */
+    padding: 20px 24px; /* espaço interno */
+    background-color: var(--branco); /* fundo branco */
+    border-top: 1px solid var(--borda); /* separa o envio da conversa */
+}
+
+
+/* formulario-chat: form que contém microfone, campo de texto e enviar. */
+.app .formulario-chat {
+    display: flex; /* coloca os três elementos lado a lado */
+    align-items: center; /* centraliza os elementos na vertical */
+    gap: 12px; /* espaço entre os elementos */
+}
+
+
+/* campo-mensagem: input em que a pessoa escreve para a iara. */
+.app .campo-mensagem {
+    flex: 1; /* ocupa o espaço entre os botões */
+    min-width: 0; /* permite que o campo diminua em telas menores */
+    min-height: 48px; /* altura mínima do campo */
+    padding: 12px 18px; /* espaço interno do campo */
+    background-color: var(--app-fundo); /* fundo do campo de texto */
+    color: var(--texto-principal); /* cor do texto digitado */
+    border: 1px solid var(--borda-input); /* contorno do campo */
+    border-radius: var(--raio-circular); /* deixa o campo arredondado */
+    font-size: 0.95rem; /* tamanho do texto digitado */
+}
+
+
+/* botao-microfone e botao-enviar: botões circulares do formulário. */
+.app .botao-microfone,
+.app .botao-enviar {
+    display: flex; /* permite centralizar os ícones */
+    align-items: center; /* centraliza na vertical */
+    justify-content: center; /* centraliza na horizontal */
+    width: 48px; /* largura dos botões */
+    height: 48px; /* altura dos botões */
+    padding: 0; /* remove o espaço interno padrão */
+    flex-shrink: 0; /* impede que os círculos sejam comprimidos */
+    border-radius: 50%; /* deixa os botões circulares */
+}
+
+
+/* botão utilizado para acessar o microfone. */
+.app .botao-microfone {
+    background-color: var(--branco); /* fundo branco */
+    color: var(--verde-floresta); /* cor do conteúdo */
+    border: 1px solid var(--borda-input); /* contorno do botão */
+}
+
+
+/* botão utilizado para enviar uma mensagem. */
+.app .botao-enviar {
+    background-color: var(--verde-floresta); /* fundo verde escuro */
+    color: var(--branco); /* cor do conteúdo */
+    border: 1px solid var(--verde-floresta); /* mantém a borda da mesma cor */
+}
+
+
+/* seta dentro do botão de enviar. */
+.app .botao-enviar .icone {
+    filter: brightness(0) invert(1); /* deixa a seta branca */
+}
+
+
+/* orientacao-chat: texto abaixo do formulário de mensagens. */
+.app .orientacao-chat {
+    color: var(--texto-secundario); /* cor do texto */
+    font-size: 0.75rem; /* tamanho da orientação */
+    text-align: center; /* centraliza a mensagem */
+    line-height: 1.5; /* facilita a leitura */
+}
+
+
+/* RESPONSIVIDADE DA IARA ==================================================================================== */
+
+@media (max-width: 900px) {
+
+    /* ajusta a altura do chat para considerar o menu inferior */
+    .app .chat-iara {
+        height: calc(100dvh - var(--altura-cabecalho) - var(--altura-menu-inferior) - 100px); /* desconta o espaço dos menus */
+        min-height: 460px; /* mantém uma área mínima para conversar */
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    /* diminui os espaços internos do chat */
+    .app .cabecalho-chat,
+    .app .conversa-iara,
+    .app .area-envio {
+        padding: 16px; /* aproveita melhor a largura do celular */
+    }
+
+    /* diminui a distância dos elementos do cabeçalho */
+    .app .cabecalho-chat {
+        gap: 10px; /* aproxima os elementos */
+    }
+
+    /* círculo da assistente */
+    .app .icone-iara {
+        width: 42px; /* largura do círculo */
+        height: 42px; /* altura do círculo */
+    }
+
+    /* botão ouvir */
+    .app .botao-ouvir {
+        padding: 8px 10px; /* deixa o botão mais compacto */
+        font-size: 0.75rem; /* diminui o tamanho do texto */
+    }
+
+    /* balões das mensagens */
+    .app .mensagem {
+        max-width: 94%; /* permite que a mensagem ocupe mais espaço no celular */
+        padding: 13px 16px; /* reduz o espaço interno */
+    }
+
+    /* organização do formulário de envio */
+    .app .formulario-chat {
+        gap: 8px; /* aproxima os campos e botões */
+    }
+
+    /* botões circulares */
+    .app .botao-microfone,
+    .app .botao-enviar {
+        width: 44px; /* largura dos botões */
+        height: 44px; /* altura dos botões */
+    }
+
+    /* campo onde a mensagem é digitada */
+    .app .campo-mensagem {
+        padding: 10px 12px; /* aproveita o espaço disponível */
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
