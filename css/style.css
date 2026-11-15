@@ -1998,3 +1998,149 @@ img {
     width: auto;
   }
 }
+
+/* =====================================================
+   20. ESTILOS ESPECÍFICOS DA PÁGINA INTEGRANTES
+   ===================================================== */
+.equipe-topo {
+  padding: 64px 0 36px;
+}
+
+.equipe-topo h1 {
+  max-width: 620px;
+}
+
+.equipe-lead {
+  font-size: 1.05rem;
+  color: var(--texto-secundario);
+  max-width: 620px;
+  margin-bottom: 0;
+}
+
+.equipe-secao {
+  padding: 16px 0 84px;
+}
+
+/* Perspectiva 3D para a grade */
+.grade-equipe-3d {
+  perspective: 1100px;
+}
+
+.card-integrante {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 20px 24px;
+  transform-style: preserve-3d;
+  transition:
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
+  will-change: transform;
+}
+
+/* Efeito 3D: traz o card para frente com elevação e sombra */
+.card-integrante:hover,
+.card-integrante:focus-within {
+  transform: translateY(-8px) scale(1.02) translateZ(20px);
+  box-shadow: 0 20px 36px rgba(24, 58, 42, 0.14);
+  border-color: var(--verde-natural);
+}
+
+/* Moldura ampla da foto no topo do card */
+.topo-integrante {
+  position: relative;
+  width: 100%;
+  height: 260px;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  background-color: var(--verde-claro);
+}
+
+.foto-integrante {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 15%;
+  display: block;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.card-integrante:hover .foto-integrante {
+  transform: scale(1.05);
+}
+
+/* Badge do RM flutuando sobre o canto da foto */
+.badge-rm {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background-color: rgba(250, 249, 245, 0.94);
+  backdrop-filter: blur(4px);
+  color: var(--verde-floresta);
+  font-size: 0.76rem;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 20px;
+  letter-spacing: 0.4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.card-integrante h3 {
+  font-size: 1.14rem;
+  margin-bottom: 6px;
+}
+
+.cargo-integrante {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--verde-natural);
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.card-integrante p {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.links-integrante {
+  margin-top: auto;
+  display: flex;
+  gap: 18px;
+  padding-top: 14px;
+  border-top: 1px solid var(--borda);
+}
+
+.equipe-manifesto {
+  margin-top: 64px;
+  max-width: 680px;
+}
+
+.equipe-manifesto h2 {
+  font-size: 1.75rem;
+  margin-bottom: 14px;
+}
+
+.equipe-manifesto p {
+  font-size: 0.98rem;
+  line-height: 1.7;
+  color: var(--texto-secundario);
+  margin-bottom: 0;
+}
+
+/* Respeita usuários que preferem redução de movimento */
+@media (prefers-reduced-motion: reduce) {
+  .card-integrante,
+  .foto-integrante {
+    transition: none;
+  }
+
+  .card-integrante:hover,
+  .card-integrante:focus-within {
+    transform: none;
+  }
+}
