@@ -260,3 +260,83 @@
         </div>
       </div>
     </section>
+
+    <!-- 4. Bloco 03: Zeladoria Urbana -->
+    <section id="zeladoria" class="container solucao-bloco">
+      <div class="grid-2">
+        <!-- Arte do Mapa (igual ao Figma) -->
+        <div class="solucao-arte arte-mapa">
+          <span></span>
+
+          <div class="mapa-rua-1" aria-hidden="true"></div>
+          <div class="mapa-rua-2" aria-hidden="true"></div>
+
+          <div class="pino-verde pino-grande" aria-hidden="true">
+            <img src="assets/icones/map-pin.png" alt="" class="icone-grande icone-branco" />
+          </div>
+
+          <div class="pino-marrom" aria-hidden="true">
+            <img src="assets/icones/check-circle.png" alt="" class="icone-pequeno icone-branco" />
+          </div>
+
+          <span class="arte-legenda">
+            <img src="assets/icones/marker.png" alt="" class="icone-pequeno" />
+            Sua voz melhora o caminho.
+          </span>
+        </div>
+
+        <!-- Texto + Botão -->
+        <div>
+          <div class="etiqueta">Zeladoria urbana</div>
+          <h2>Uma cidade melhor começa aqui.</h2>
+          <p>
+            Encontrou um elevador quebrado na estação, uma escada rolante parada, uma calçada obstruída ou um cruzamento que precisa de semáforo inteligente?
+          </p>
+          <p>
+            Registre o problema por voz ou texto. Cada relato orienta outros cidadãos em tempo real e alimenta os indicadores de planejamento da CET e do Metrô.
+          </p>
+          <button type="button" class="btn btn-abrir-simulador" data-alvo="simulador-zeladoria">
+            Usar este serviço &rarr;
+          </button>
+        </div>
+      </div>
+
+      <!-- Simulador Interativo: Registro de Zeladoria -->
+      <div id="simulador-zeladoria" class="caixa-simulador">
+        <div class="grid-2">
+          <form id="form-zeladoria" class="card-branco">
+            <h3>Registrar ocorrência de acessibilidade</h3>
+            <div class="campo">
+              <label for="tipo-barreira">O que você encontrou?</label>
+              <select id="tipo-barreira">
+                <option value="Elevador ou escada rolante inoperante">Elevador ou escada rolante inoperante</option>
+                <option value="Cruzamento sem semáforo inteligente">Cruzamento sem semáforo inteligente</option>
+                <option value="Calçada danificada ou rampa obstruída">Calçada danificada ou rampa obstruída</option>
+                <option value="Catraca acessível com defeito">Catraca acessível com defeito</option>
+              </select>
+            </div>
+
+            <div class="campo">
+              <label for="local-barreira">Endereço ou estação</label>
+              <input
+                type="text"
+                id="local-barreira"
+                placeholder="Ex.: Estação República, acesso Praça da República"
+              />
+            </div>
+
+            <button type="submit" class="btn">Registrar relato &rarr;</button>
+          </form>
+
+          <div id="status-zeladoria" class="painel-status">
+            <h3>Impacto do seu relato</h3>
+            <p>
+              <strong>Alerta imediato:</strong> outros usuários que passam pelo mesmo trajeto recebem aviso antecipado pela IARA.
+            </p>
+            <p style="margin-bottom: 0;">
+              <strong>Planejamento urbano:</strong> os registros geram mapas de calor para priorizar manutenções e novos semáforos inteligentes em São Paulo.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
