@@ -623,7 +623,7 @@ if (formCadastro) {
     }
 
     avisoCadastro.innerHTML =
-      "Cadastro de <strong>Carlos Eduardo Mendes</strong> concluído com sucesso! Voltando à tela inicial...";
+      "Cadastro de <strong>Carlos Eduardo Mendes</strong> concluído com sucesso! Abrindo a plataforma...";
 
     setTimeout(function () {
       document.body.classList.remove("alto-contraste", "fonte-legivel", "tema-escuro");
@@ -648,7 +648,7 @@ if (formCadastro) {
         btnConcluir.disabled = false;
       }
 
-      irParaEtapaCadastro(1);
+      window.location.assign("app/inicio.html");
     }, 3300);
   });
 }
@@ -673,8 +673,8 @@ if (formLogin) {
       return;
     }
 
-    avisoLogin.innerHTML =
-      'Acesso demonstrativo validado! <a href="solucao01.html" class="link-seta">Ir para a Plataforma do Cidadão &rarr;</a>';
+    avisoLogin.textContent = "Acesso demonstrativo validado! Abrindo a plataforma...";
+    window.location.assign("app/inicio.html");
   });
 }
 
