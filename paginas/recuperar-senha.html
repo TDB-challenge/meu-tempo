@@ -79,3 +79,34 @@
             />
           </div>
         </div>
+
+        <!-- Coluna Direita: Cartão branco de recuperação de senha -->
+        <div class="card-branco cadastro-card">
+          <div class="cadastro-area-tag">
+            <img src="../assets/icones/usuario.png" alt="" class="icone" />
+            <span>Área do cidadão</span>
+          </div>
+
+          <h2>Vamos recuperar seu acesso?</h2>
+          <p class="cadastro-subtitulo">Informe o e-mail da sua conta.</p>
+
+          <form id="form-recuperar-senha" class="form-contato" novalidate>
+            <div class="campo-grupo">
+              <label for="rec-email">E-mail <span class="asterisco">*</span></label>
+              <input
+                type="email"
+                id="rec-email"
+                name="email"
+                autocomplete="email"
+                required
+              />
+            </div>
+
+            <div>
+              <button type="submit" class="btn">
+                Solicitar recuperação
+              </button>
+            </div>
+
+            <div id="aviso-recuperar" class="aviso-contato" role="status" aria-live="polite"></div>
+          </form>
