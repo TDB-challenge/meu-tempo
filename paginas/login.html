@@ -71,3 +71,82 @@
       <a href="solucao.html" class="btn btn-pequeno header-cta">Acessar plataforma &rarr;</a>
     </div>
   </header>
+
+  <main>
+    <section class="container cadastro-secao">
+      <div class="cadastro-layout">
+        <!-- Coluna Esquerda: Boas-vindas e foto em arco -->
+        <div class="cadastro-apresentacao">
+          <div class="etiqueta">SEJA BEM-VINDO AO MEU TEMPO</div>
+          <h1>Seu próximo caminho começa por aqui.</h1>
+          <p class="cadastro-lead">
+            Mais autonomia para seguir no seu ritmo. Escolha como você quer começar.
+          </p>
+
+          <div class="cadastro-foto-arco">
+            <img
+              src="../assets/imagens/deficiencia-visual.jpg"
+              alt="deficiência visual: pessoa com bengala caminhando pela rua"
+            />
+          </div>
+        </div>
+
+        <!-- Coluna Direita: Cartão branco de login -->
+        <div class="card-branco cadastro-card">
+          <div class="cadastro-area-tag">
+            <img src="../assets/icones/user.png" alt="" class="icone" />
+            <span>Área do cidadão</span>
+          </div>
+
+          <h2>Que bom ter você aqui.</h2>
+          <p class="cadastro-subtitulo">Entre para acompanhar seus pedidos.</p>
+
+          <form id="form-login" class="form-contato" novalidate>
+            <div class="campo-grupo">
+              <label for="login-email">E-mail <span class="asterisco">*</span></label>
+              <input
+                type="email"
+                id="login-email"
+                name="email"
+                autocomplete="email"
+                required
+              />
+            </div>
+
+            <div class="campo-grupo">
+              <label for="login-senha">Senha <span class="asterisco">*</span></label>
+              <div class="campo-senha-wrap">
+                <input
+                  type="password"
+                  id="login-senha"
+                  name="senha"
+                  autocomplete="current-password"
+                  required
+                />
+                <button
+                  type="button"
+                  id="btn-toggle-senha"
+                  class="btn-toggle-senha"
+                  aria-label="Mostrar senha"
+                  aria-pressed="false"
+                >
+                  <img src="../assets/icones/eye.png" alt="" class="icone" />
+                </button>
+              </div>
+            </div>
+
+            <div class="login-esqueci-linha">
+              <a href="recuperar-senha.html" class="login-link-esqueci">Esqueci minha senha</a>
+            </div>
+
+            <button type="submit" class="btn login-btn-full">
+              Entrar &rarr;
+            </button>
+
+            <div id="aviso-login" class="aviso-contato" role="status" aria-live="polite"></div>
+          </form>
+
+          <!-- Divisor "ou" -->
+          <div class="login-divisor" aria-hidden="true">
+            <span>ou</span>
+          </div>
