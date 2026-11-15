@@ -1,12 +1,214 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contato | Meu Tempo</title>
-    <link rel="stylesheet" href="../css/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contato | Meu Tempo</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <script src="../js/script.js" defer></script>
 </head>
 <body>
+  <!-- Barra superior -->
+  <div class="barra-util">
+    <div class="container">
+      <span>Uma cidade para todas as pessoas. Um caminho de cada vez.</span>
+      <button type="button" id="btn-abrir-acess" class="btn-acess-topo">
+        Recursos de acessibilidade &rsaquo;
+      </button>
+    </div>
+  </div>
 
+  <!-- Barra de ajustes rápidos -->
+  <div id="painel-acess-rapido" class="painel-acess-rapido">
+    <div class="container">
+      <strong>Ajustes rápidos de leitura:</strong>
+      <div class="botoes-acess">
+        <button type="button" class="acao-aumentar">A+ Aumentar texto</button>
+        <button type="button" class="acao-diminuir">A- Texto normal</button>
+        <button type="button" class="acao-contraste">Alto contraste</button>
+        <button type="button" class="acao-tema">Tema escuro</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cabeçalho -->
+  <header class="cabecalho">
+    <div class="container">
+      <a href="index.html" class="logo">
+        <span class="logo-circulo">
+          <img src="/assets/icones/clock-three.png" alt="" class="icone" />
+        </span>
+        <div>
+          <span class="logo-titulo">meu tempo</span>
+          <span class="logo-sub">A cidade no seu ritmo.</span>
+        </div>
+      </a>
+
+      <button type="button" id="btn-menu" class="btn-menu">Menu</button>
+
+      <nav id="menu-navegacao" class="menu">
+        <a href="index.html">Início</a>
+        <a href="sobre.html">Sobre</a>
+        <a href="solucao.html">Nossa solução</a>
+        <a href="acessibilidade.html">Acessibilidade</a>
+        <a href="integrantes.html">Equipe</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contato.html" class="ativo">Contato</a>
+      </nav>
+
+      <a href="solucao.html" class="btn btn-pequeno header-cta">Acessar plataforma &rarr;</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- 1. Cabeçalho da página Contato -->
+    <section class="container contato-topo">
+      <div class="etiqueta">VAMOS CONVERSAR</div>
+      <h1>Sua experiência<br />importa para nós.</h1>
+      <p class="contato-lead">
+        Dúvidas, sugestões ou uma barreira que você encontrou na plataforma? Queremos ouvir.
+      </p>
+    </section>
+
+    <!-- 2. Layout em duas colunas: Informações à esquerda + Formulário à direita -->
+    <section class="container contato-secao">
+      <div class="contato-layout">
+        <!-- Coluna Esquerda: Texto editorial e avisos -->
+        <div class="contato-info-coluna">
+          <h2>Um espaço para construir juntos.</h2>
+          <p class="contato-info-intro">
+            O Meu Tempo está em desenvolvimento. A escuta é parte essencial de criar uma experiência que funcione para pessoas diferentes.
+          </p>
+
+          <div class="contato-lista-avisos">
+            <div class="contato-aviso-item">
+              <span class="contato-aviso-icone">
+                <img src="/assets/icones/envelope.png" alt="" class="icone" />
+              </span>
+              <div>
+                <strong>Contato do projeto</strong>
+                <p>suporte.meutempo@gmail.com</p>
+              </div>
+            </div>
+
+            <div class="contato-aviso-item">
+              <span class="contato-aviso-icone">
+                <img src="/assets/icones/shield-check.png" alt="" class="icone" />
+              </span>
+              <div>
+                <strong>Não é um canal de emergência</strong>
+                <p>Para situações urgentes, procure o serviço de emergência responsável.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Coluna Direita: Cartão branco com formulário -->
+        <div class="card-branco contato-card-form">
+          <p class="contato-nota-obrigatorio">
+            Os campos com <span class="asterisco">*</span> são obrigatórios. Não envie dados sensíveis.
+          </p>
+
+          <form id="form-contato" class="form-contato" novalidate>
+            <div class="campo-grupo">
+              <label for="nome">Seu nome <span class="asterisco">*</span></label>
+              <input
+                type="text"
+                id="nome"
+                name="nome"
+                required
+              />
+            </div>
+
+            <div class="campo-grupo">
+              <label for="email">E-mail <span class="asterisco">*</span></label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+              />
+            </div>
+
+            <div class="campo-grupo">
+              <label for="assunto">Sobre o que você quer falar? <span class="asterisco">*</span></label>
+              <select id="assunto" name="assunto" required>
+                <option value="duvida">Dúvida sobre o projeto</option>
+                <option value="sugestao">Sugestão de melhoria</option>
+                <option value="barreira">Relatar uma barreira de acessibilidade</option>
+                <option value="academico">Projeto acadêmico · FIAP 2026</option>
+                <option value="outro">Outro assunto</option>
+              </select>
+            </div>
+
+            <div class="campo-grupo">
+              <label for="mensagem">Sua mensagem <span class="asterisco">*</span></label>
+              <textarea
+                id="mensagem"
+                name="mensagem"
+                rows="5"
+                required
+              ></textarea>
+            </div>
+
+            <div>
+              <button type="submit" class="btn">Enviar mensagem &rarr;</button>
+            </div>
+
+            <div id="aviso-contato" class="aviso-contato" role="status" aria-live="polite"></div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Rodapé -->
+  <footer class="rodape">
+    <div class="container">
+      <div class="rodape-grid">
+        <div>
+          <h3>meu tempo</h3>
+          <p>Tecnologia que acolhe.<br />Uma cidade que respeita você.</p>
+          <p>Um projeto acadêmico · FIAP 2026</p>
+        </div>
+        <div>
+          <h3>Conheça o Meu Tempo</h3>
+          <a href="sobre.html">Sobre o projeto</a>
+          <a href="solucao.html">Nossa solução</a>
+          <a href="integrantes.html">Nossa equipe</a>
+        </div>
+        <div>
+          <h3>Estamos com você</h3>
+          <a href="acessibilidade.html">Acessibilidade</a>
+          <a href="faq.html">Perguntas frequentes</a>
+          <a href="contato.html">Fale com a gente</a>
+        </div>
+        <div>
+          <h3>Outros caminhos</h3>
+          <a href="solucao01.html">Plataforma do cidadão</a>
+          <a href="solucao02.html">Acesso administrativo</a>
+          <a href="privacidade.html">Privacidade e termos</a>
+        </div>
+      </div>
+
+      <div class="rodape-base">
+        <span>© 2026 Meu Tempo. A cidade no seu ritmo.</span>
+        <span>Acolhimento, autonomia e acessibilidade.</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Integração oficial do VLibras -->
+  <div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+      <div class="vw-plugin-top-wrapper"></div>
+    </div>
+  </div>
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script>
 </body>
 </html>

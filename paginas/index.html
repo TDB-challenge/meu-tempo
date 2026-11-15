@@ -7,6 +7,507 @@
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
+    <!-- Barra superior -->
+<div class="barra-util">
+    <div class="container">
+      <span>Uma cidade para todas as pessoas. Um caminho de cada vez.</span>
+      <button type="button" id="btn-abrir-acess" class="btn-acess-topo">
+        Recursos de acessibilidade &rsaquo;
+      </button>
+    </div>
+  </div>
 
+  <div id="painel-acess-rapido" class="painel-acess-rapido">
+    <div class="container">
+      <strong>Ajustes rápidos de leitura:</strong>
+      <div class="botoes-acess">
+        <button type="button" class="acao-aumentar">A+ Aumentar texto</button>
+        <button type="button" class="acao-diminuir">A- Texto normal</button>
+        <button type="button" class="acao-contraste">Alto contraste</button>
+        <button type="button" class="acao-tema">Tema escuro</button>
+      </div>
+    </div>
+  </div>
+
+  <header class="cabecalho">
+    <div class="container">
+      <a href="index.html" class="logo">
+        <span class="logo-circulo">
+          <img src="/assets/icones/clock-three.png" alt="" class="icone" />
+        </span>
+        <div>
+          <span class="logo-titulo">meu tempo</span>
+          <span class="logo-sub">A cidade no seu ritmo.</span>
+        </div>
+      </a>
+
+      <nav id="menu-navegacao" class="menu">
+        <a href="index.html" class="ativo">Início</a>
+        <a href="sobre.html">Sobre</a>
+        <a href="solucao.html">Nossa solução</a>
+        <a href="acessibilidade.html">Acessibilidade</a>
+        <a href="integrantes.html">Equipe</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contato.html">Contato</a>
+      </nav>
+
+      <a href="solucao.html" class="btn btn-pequeno header-cta">Acessar plataforma &rarr;</a>
+    </div>
+    </header>
+
+    <main>
+    <!-- 1. Hero -->
+    <section class="container hero">
+      <div>
+        <div class="etiqueta">ACESSIBILIDADE QUE ACOMPANHA VOCÊ</div>
+        <h1>A cidade <span>no seu ritmo.</span></h1>
+        <p class="hero-destaque">
+          Mais autonomia, segurança e acessibilidade para acompanhar você em cada caminho.
+        </p>
+        <p class="hero-sub">
+          Para quem precisa de mais tempo, de uma mão amiga ou de um caminho sem barreiras. Estamos aqui.
+        </p>
+
+        <div class="hero-acoes">
+          <a href="solucao.html" class="btn">Começar agora &rarr;</a>
+          <a href="sobre.html" class="link-seta">Conhecer nossa solução &rarr;</a>
+        </div>
+
+        <div class="hero-nota">
+          <img src="/assets/icones/heart.png" alt="" class="icone-pequeno" />
+          <span>Feito para pessoas. Pensado para a vida real.</span>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="icone-sol">
+          <img src="/assets/icones/brightness.png" alt="" class="icone-grande" />
+        </div>
+
+        <div class="arco-moldura">
+          <img
+            src="/assets/imagens/idosos1 (1).jpg"
+            alt="Três pessoas idosas caminhando juntas, sorrindo e se divertindo, em um parque com árvores e grama ao fundo."/>
+        </div>
+        <div class="arco-linha-externa" aria-hidden="true"></div>
+        <span class="texto-vertical" aria-hidden="true">MAIS AUTONOMIA. MAIS POSSIBILIDADES.</span>
+
+        <div class="selo-flutuante">
+          <span class="selo-icone">
+            <img src="/assets/icones/walking.png" alt="" class="icone" />
+          </span>
+          <div>
+            <small>Cada passo importa.</small>
+            <strong>Cada pessoa também.</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Faixa dos 4 pilares -->
+    <section class="faixa-pilares">
+      <div class="container grid-4">
+        <div class="pilar-item">
+          <img src="/assets/icones/walking.png" alt="" class="icone" />
+          <span>Autonomia para ir e vir</span>
+        </div>
+
+        <div class="pilar-item">
+          <img src="/assets/icones/shield-check.png" alt="" class="icone" />
+          <span>Segurança em cada caminho</span>
+        </div>
+
+        <div class="pilar-item">
+          <img src="/assets/icones/people-group.png" alt="" class="icone" />
+          <span>Acessibilidade de verdade</span>
+        </div>
+
+        <div class="pilar-item">
+          <img src="/assets/icones/heart.png" alt="" class="icone" />
+          <span>Tecnologia com cuidado</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Pequenos apoios. Grandes possibilidades. -->
+    <section class="secao container">
+      <div class="cabecalho-secao">
+        <div>
+          <div class="etiqueta">COMO PODEMOS AJUDAR</div>
+          <h2>Pequenos apoios.<br />Grandes possibilidades.</h2>
+        </div>
+        <p>Três formas de tornar o seu dia a dia mais simples, com a autonomia que você merece.</p>
+      </div>
+
+      <div class="grid-3">
+        <!-- Cartão 01 -->
+        <article class="card-servico">
+          <div class="arte-card arte-semaforo">
+            <span></span>
+
+            <div class="faixa-pedestre" aria-hidden="true">
+              <span></span><span></span><span></span><span></span><span></span>
+            </div>
+
+            <div class="semaforo-conjunto" aria-hidden="true">
+              <div class="semaforo-caixa">
+                <span class="luz"></span>
+                <span class="luz"></span>
+                <span class="luz ativa">
+                  <img src="/assets/icones/walking.png" alt="" class="icone-pequeno" />
+                </span>
+              </div>
+              <div class="semaforo-poste"></div>
+            </div>
+
+            <span class="arte-legenda">
+              <img src="/assets/icones/clock.png" alt="" class="icone-pequeno" />
+              No seu ritmo.
+            </span>
+          </div>
+
+          <div class="corpo-card">
+            <div class="topo-card">
+              <span class="topo-card-titulo">
+                <img src="/assets/icones/walking.png" alt="" class="icone-pequeno" />
+                Travessia acessível
+              </span>
+              <span>01</span>
+            </div>
+            <h3>Seu tempo para atravessar.</h3>
+            <p>
+              Solicite uma travessia assistida e acompanhe cada etapa, com avisos que respeitam suas necessidades.
+            </p>
+            <a href="solucao.html#travessia" class="link-seta">Conhecer o serviço &rarr;</a>
+          </div>
+        </article>
+
+      <!-- Cartão 02 -->
+        <article class="card-servico">
+          <div class="arte-card arte-metro">
+            <span class="arte-tag-topo">MOBILIDADE COM APOIO</span>
+
+            <div class="trem-frente" aria-hidden="true">
+              <div class="trem-letreiro"></div>
+              <div class="trem-janelas">
+                <span></span>
+                <span></span>
+              </div>
+              <div class="trem-farois">
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+
+            <span class="arte-legenda">
+              <img src="/assets/icones/subway.png" alt="" class="icone-pequeno" />
+              Próxima parada: autonomia.
+            </span>
+          </div>
+
+          <div class="corpo-card">
+            <div class="topo-card">
+              <span class="topo-card-titulo">
+                <img src="/assets/icones/subway.png" alt="" class="icone-pequeno" />
+                Apoio no Metrô e CPTM
+              </span>
+              <span>02</span>
+            </div>
+            <h3>Apoio para ir mais longe.</h3>
+            <p>
+              Peça ajuda na estação, no embarque ou no caminho até a plataforma. Você não precisa fazer tudo sozinho.
+            </p>
+            <a href="solucao.html#metro" class="link-seta">Conhecer o serviço &rarr;</a>
+          </div>
+        </article>
+
+        <!-- Cartão 03 -->
+        <article class="card-servico">
+          <div class="arte-card arte-mapa">
+            <span></span>
+
+            <div class="mapa-rua-1" aria-hidden="true"></div>
+            <div class="mapa-rua-2" aria-hidden="true"></div>
+
+            <div class="pino-verde" aria-hidden="true">
+              <img src="/assets/icones/map-pin.png" alt="" class="icone icone-branco" />
+            </div>
+
+            <div class="pino-marrom" aria-hidden="true">
+              <img src="assets/icones/check-circle.png" alt="" class="icone-pequeno icone-branco" />
+            </div>
+
+            <span class="arte-legenda">
+              <img src="/assets/icones/marker.png" alt="" class="icone-pequeno" />
+              Sua voz melhora o caminho.
+            </span>
+          </div>
+
+          <div class="corpo-card">
+            <div class="topo-card">
+              <span class="topo-card-titulo">
+                <img src="/assets/icones/marker.png" alt="" class="icone-pequeno" />
+                Zeladoria urbana
+              </span>
+              <span>03</span>
+            </div>
+            <h3>Uma cidade melhor começa aqui.</h3>
+            <p>
+              Encontrou uma barreira no caminho? Registre o problema e ajude a tornar os espaços mais acessíveis.
+            </p>
+            <a href="solucao.html#zeladoria" class="link-seta">Conhecer o serviço &rarr;</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- 4. Por que o Meu Tempo existe -->
+    <section class="secao secao-suave">
+      <div class="container grid-2">
+        <div class="foto-contexto-box">
+          <img
+            src="/assets/imagens/homem levando cadeirante grama.png"
+            alt="homem levando cadeirante pela grama."
+          />
+          <div class="selo-escuro-foto">O direito de ir e vir é de todos nós.</div>
+        </div>
+
+        <div>
+          <div class="etiqueta">POR QUE O MEU TEMPO EXISTE</div>
+          <h2>A cidade nem sempre espera por todo mundo.</h2>
+          <p>
+            Um sinal que fecha cedo demais. Uma calçada que interrompe o caminho. Uma estação onde não é fácil encontrar ajuda.
+          </p>
+          <p>
+            Para pessoas idosas, com deficiência ou com mobilidade reduzida, essas situações podem transformar um deslocamento simples em um grande desafio.
+          </p>
+          <p>
+            O Meu Tempo nasce para aproximar as pessoas do apoio de que precisam — sem complicar o que já é difícil.
+          </p>
+          <a href="sobre.html" class="link-seta">Conheça a nossa história &rarr;</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Assistente Virtual IARA -->
+    <section class="secao container">
+      <div class="grid-2">
+        <div>
+          <div class="etiqueta">PODE FALAR. A IARA ESCUTA.</div>
+          <h2>Às vezes, tudo começa com uma boa conversa.</h2>
+          <p>
+            Você não precisa saber onde clicar. Conte à IARA o que precisa, por texto ou voz, e ela ajuda a encontrar o caminho.
+          </p>
+          <p>
+            Prefere usar os botões? Tudo bem também. Aqui, você escolhe a forma mais confortável de pedir ajuda.
+          </p>
+          <a href="solucao.html" class="btn">Conhecer a IARA &rarr;</a>
+        </div>
+
+        <div class="chat-card">
+          <div class="chat-cabecalho">
+            <span class="chat-avatar">
+              <img src="/assets/icones/circle-microphone.png" alt="" class="icone icone-branco" />
+            </span>
+            <div>
+              <strong>IARA</strong>
+              <span class="logo-sub">Sua assistente de acessibilidade</span>
+            </div>
+          </div>
+
+          <div id="chat-lista" class="chat-lista">
+            <div class="msg-iara">Olá! Eu sou a IARA. Como posso ajudar você hoje?</div>
+            <div class="msg-usuario">
+              Estou na estação Consolação e preciso de ajuda para chegar à plataforma.
+            </div>
+            <div class="msg-iara">
+              Claro. Posso ajudar a preparar seu pedido de acompanhamento. Vamos confirmar onde você está?
+            </div>
+          </div>
+
+          <form id="form-iara" class="chat-form">
+            <input type="text" id="input-iara" placeholder="Escreva ou toque para falar" />
+            <button type="submit" class="btn-enviar-chat" aria-label="Enviar mensagem">
+              <img src="/assets/icones/send-message.png" alt="" class="icone-pequeno icone-branco" />
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. Você pede. A gente aproxima. -->
+    <section class="secao secao-suave">
+      <div class="container">
+        <div class="etiqueta">UM CAMINHO SIMPLES, DO COMEÇO AO FIM</div>
+        <h2>Você pede. A gente aproxima.</h2>
+
+        <div class="grid-4" style="margin-top: 32px;">
+          <div class="passo-item">
+            <div class="passo-numero">01</div>
+            <h3>Acesse do seu jeito</h3>
+            <p>Pelo celular, tablet ou computador. Sem instalar nada.</p>
+          </div>
+
+          <div class="passo-item">
+            <div class="passo-numero">02</div>
+            <h3>Conte o que precisa</h3>
+            <p>Escolha um serviço ou converse com a IARA.</p>
+          </div>
+
+          <div class="passo-item">
+            <div class="passo-numero">03</div>
+            <h3>Confirme o local</h3>
+            <p>Informe onde está e confira os detalhes do pedido.</p>
+          </div>
+
+          <div class="passo-item">
+            <div class="passo-numero">04</div>
+            <h3>Acompanhe a resposta</h3>
+            <p>Veja cada atualização e saiba qual é o próximo passo.</p>
+          </div>
+        </div>
+
+        <p class="nota-rodape-secao">
+          Você recebe uma confirmação e acompanha cada atualização em Meus pedidos.
+        </p>
+      </div>
+    </section>
+
+    <!-- 7. Mais presente. Menos complicado. -->
+    <section class="secao container">
+      <div class="grid-2">
+        <div class="dispositivos-arco">
+          <div class="celular-mockup">
+            <div class="celular-topo">meu tempo</div>
+            <div class="celular-titulo">O que você precisa hoje?</div>
+            <div class="celular-opcao"><span>Atravessar a rua</span><span>&rsaquo;</span></div>
+            <div class="celular-opcao"><span>Apoio no Metrô</span><span>&rsaquo;</span></div>
+            <div class="celular-opcao"><span>Relatar problema</span><span>&rsaquo;</span></div>
+            <div class="celular-btn">Fale com a IARA</div>
+          </div>
+
+          <div class="relogio-mockup">
+            <div>&#10003;</div>
+            <strong>Pedido recebido</strong>
+            <small>Acompanhe no celular</small>
+          </div>
+
+          <span class="legenda-dispositivos">Celular, relógio e pulseira</span>
+        </div>
+
+        <div>
+          <div class="etiqueta">TECNOLOGIA QUE ACOMPANHA VOCÊ</div>
+          <h2>Mais presente.<br />Menos complicado.</h2>
+          <p>
+            Uma mensagem na tela. Uma orientação por voz. Uma vibração no pulso. A informação pode chegar de diferentes formas, de acordo com o que funciona para você.
+          </p>
+          <p>
+            A proposta inclui integração futura com relógios inteligentes e pulseiras, para receber avisos sem precisar manter o celular nas mãos.
+          </p>
+          <a href="solucao.html" class="link-seta">Explorar os dispositivos &rarr;</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. A experiência se adapta a você. -->
+    <section class="secao secao-suave">
+      <div class="container grid-2">
+        <div>
+          <div class="etiqueta">DIFERENTES PESSOAS. DIFERENTES JEITOS.</div>
+          <h2>A experiência se adapta a você. Não o contrário.</h2>
+          <p>
+            Letras maiores, alto contraste, navegação por teclado e alternativas por texto. Acessibilidade desde o primeiro contato.
+          </p>
+          <a href="acessibilidade.html" class="btn btn-contorno">Conhecer os recursos &rarr;</a>
+        </div>
+
+        <div>
+          <div class="grid-recursos">
+            <div class="recurso-item">
+              <img src="/assets/icones/eye.png" alt="" class="icone-grande" />
+              <span>Alto contraste</span>
+            </div>
+
+            <div class="recurso-item">
+              <img src="/assets/icones/volume.png" alt="" class="icone-grande" />
+              <span>Orientações por voz</span>
+            </div>
+
+            <div class="recurso-item">
+              <img src="/assets/icones/hand-paper.png" alt="" class="icone-grande" />
+              <span>Conteúdo em Libras*</span>
+            </div>
+
+            <div class="recurso-item">
+              <img src="/assets/icones/universal-access.png" alt="" class="icone-grande" />
+              <span>Leitores de tela</span>
+            </div>
+          </div>
+
+          <p class="nota-rodape-secao">*Conteúdos finais dependem de tradução e revisão.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. Faixa verde-escura final -->
+    <section class="faixa-cta">
+      <div class="container">
+        <div>
+          <div class="etiqueta">CADA PESSOA TEM SEU TEMPO</div>
+          <h2>Seu caminho merece respeito. Seu tempo também.</h2>
+          <p>Encontre novas formas de se mover pela cidade, do seu jeito.</p>
+        </div>
+        <a href="solucao.html" class="btn btn-branco">Conhecer a plataforma &rarr;</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Rodapé -->
+  <footer class="rodape">
+    <div class="container">
+      <div class="rodape-grid">
+        <div>
+          <h3>meu tempo</h3>
+          <p>Tecnologia que acolhe.<br />Uma cidade que respeita você.</p>
+          <p>Um projeto acadêmico · FIAP 2026</p>
+        </div>
+        <div>
+          <h3>Conheça o Meu Tempo</h3>
+          <a href="sobre.html">Sobre o projeto</a>
+          <a href="solucao.html">Nossa solução</a>
+          <a href="integrantes.html">Nossa equipe</a>
+        </div>
+        <div>
+          <h3>Estamos com você</h3>
+          <a href="acessibilidade.html">Acessibilidade</a>
+          <a href="faq.html">Perguntas frequentes</a>
+          <a href="contato.html">Fale com a gente</a>
+        </div>
+        <div>
+          <h3>Outros caminhos</h3>
+          <a href="solucao.html#travessia">Plataforma do cidadão</a>
+          <a href="solucao.html#metro">Apoio no Metrô e CPTM</a>
+          <a href="solucao.html#zeladoria">Zeladoria urbana</a>
+        </div>
+      </div>
+
+      <div class="rodape-base">
+        <span>© 2026 Meu Tempo. A cidade no seu ritmo.</span>
+        <span>Acolhimento, autonomia e acessibilidade.</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Integração oficial do VLibras -->
+  <div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+      <div class="vw-plugin-top-wrapper"></div>
+    </div>
+  </div>
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script>
 </body>
 </html>

@@ -1,12 +1,231 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Privacidade | Meu Tempo</title>
-    <link rel="stylesheet" href="../css/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacidade | Meu Tempo</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <script src="../js/script.js" defer></script>
 </head>
 <body>
+  <!-- Barra superior -->
+  <div class="barra-util">
+    <div class="container">
+      <span>Uma cidade para todas as pessoas. Um caminho de cada vez.</span>
+      <button type="button" id="btn-abrir-acess" class="btn-acess-topo">
+        Recursos de acessibilidade &rsaquo;
+      </button>
+    </div>
+  </div>
 
+  <!-- Barra de ajustes rápidos -->
+  <div id="painel-acess-rapido" class="painel-acess-rapido">
+    <div class="container">
+      <strong>Ajustes rápidos de leitura:</strong>
+      <div class="botoes-acess">
+        <button type="button" class="acao-aumentar">A+ Aumentar texto</button>
+        <button type="button" class="acao-diminuir">A- Texto normal</button>
+        <button type="button" class="acao-contraste">Alto contraste</button>
+        <button type="button" class="acao-tema">Tema escuro</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cabeçalho -->
+  <header class="cabecalho">
+    <div class="container">
+      <a href="index.html" class="logo">
+        <span class="logo-circulo">
+          <img src="../assets/icones/clock-three.png" alt="" class="icone" />
+        </span>
+        <div>
+          <span class="logo-titulo">meu tempo</span>
+          <span class="logo-sub">A cidade no seu ritmo.</span>
+        </div>
+      </a>
+
+      <button type="button" id="btn-menu" class="btn-menu">Menu</button>
+
+      <nav id="menu-navegacao" class="menu">
+        <a href="index.html">Início</a>
+        <a href="sobre.html" class="ativo">Sobre</a>
+        <a href="solucao.html">Nossa solução</a>
+        <a href="acessibilidade.html">Acessibilidade</a>
+        <a href="integrantes.html">Equipe</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contato.html">Contato</a>
+      </nav>
+
+      <a href="solucao.html" class="btn btn-pequeno header-cta">Acessar plataforma &rarr;</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- 1. Cabeçalho da página Privacidade -->
+    <section class="container privacidade-topo">
+      <div class="etiqueta">TRANSPARÊNCIA E CUIDADO</div>
+      <h1>Seus dados merecem respeito.</h1>
+      <p class="privacidade-lead">
+        Informações sobre seus dados e o funcionamento desta versão.
+      </p>
+    </section>
+
+    <!-- 2. Conteúdo Editorial de Transparência e Uso -->
+    <section class="container privacidade-secao">
+      <div class="privacidade-coluna">
+        <article class="privacidade-bloco">
+          <h2>O que fica no navegador</h2>
+          <p>
+            As preferências de fonte, contraste, tema e avisos são salvas localmente neste navegador. Pedidos e conversas demonstrativas ficam na memória da sessão e são apagados ao recarregar a página.
+          </p>
+        </article>
+
+        <article class="privacidade-bloco">
+          <h2>O que não acontece aqui</h2>
+          <p>
+            Não há autenticação real, envio de pedidos a serviços públicos, validação oficial de credenciais ou entrega de mensagens de contato. Não informe documentos, senhas reais ou informações sensíveis.
+          </p>
+        </article>
+
+        <article class="privacidade-bloco">
+          <h2>Permissões opcionais</h2>
+          <p>
+            Localização e microfone só devem ser utilizados com sua autorização. Você pode negar essas permissões e continuar por texto ou informar o local manualmente. As fotografias ilustrativas e as fontes são servidas junto com o protótipo. A função de voz, quando autorizada, pode utilizar serviços externos do navegador.
+          </p>
+        </article>
+
+        <article class="privacidade-bloco">
+          <h2>Leitura de QR Code</h2>
+          <p>
+            A câmera e as imagens são processadas no navegador, sem envio ou armazenamento das imagens. Os códigos de exemplo consultam um cadastro local fictício. Ler um QR Code não comprova autenticidade; a validação oficial depende da fonte emissora e de uma camada segura.
+          </p>
+        </article>
+
+        <article class="privacidade-bloco">
+          <h2>Mapa e dados de atendimento</h2>
+          <p>
+            As localizações do mapa são geográficas; a disponibilidade dos semáforos, os nomes e os atendimentos são fictícios. A cobertura exibida não é um cadastro oficial de equipamentos conectados. O desenho das ruas é simplificado e serve para localizar os pontos desta experiência, não para orientar trajetos.
+          </p>
+        </article>
+
+        <article class="privacidade-bloco">
+          <h2>Limites de uso</h2>
+          <p>
+            Este é um protótipo acadêmico, não um serviço de emergência nem um sistema de orientação para atravessar ruas. As regras de 8 e 28 segundos são exclusivamente demonstrativas.
+          </p>
+        </article>
+
+        <div class="privacidade-acoes">
+          <button type="button" id="btn-apagar-preferencias" class="btn btn-contorno">
+            Apagar preferências deste navegador
+          </button>
+          <p id="aviso-privacidade" class="aviso-privacidade" role="status" aria-live="polite"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Termos de Uso e Diretrizes de Segurança -->
+    <section id="termos-uso" class="container termos-secao">
+      <div class="termos-cabecalho">
+        <div class="etiqueta">TERMOS DE USO E SEGURANÇA</div>
+        <h2>Regras para um uso seguro e justo da plataforma.</h2>
+        <p>
+          Para proteger os cidadãos e manter a fluidez do trânsito e das estações, o uso do Meu Tempo segue diretrizes claras de elegibilidade e operação.
+        </p>
+      </div>
+
+      <div class="termos-grid">
+        <article class="card-branco">
+          <h3>1. Finalidade da plataforma</h3>
+          <p>
+            O <strong>Meu Tempo</strong> é uma solução de mobilidade urbana acessível desenvolvida como projeto acadêmico para a Global Solution 2026 da FIAP, voltada ao apoio de pessoas com deficiência, pessoas idosas, neurodivergentes ou com mobilidade reduzida.
+          </p>
+        </article>
+
+        <article class="card-branco">
+          <h3>2. Elegibilidade e prevenção contra fraudes</h3>
+          <p>
+            O acesso aos benefícios operacionais exige a comprovação obrigatória por <strong>QR Code</strong> de documento oficial (CIN com identificação de deficiência, CIPCD, CIPTEA ou Carteira da Pessoa Idosa). O uso indevido ou empréstimo de credenciais não é permitido.
+          </p>
+        </article>
+
+        <article class="card-branco">
+          <h3>3. Segurança na travessia e no Metrô</h3>
+          <p>
+            Os alertas sonoros, musicais e vibratórios são apoios complementares e não substituem a atenção às condições reais da via. O pedido aceito no aplicativo não libera a travessia imediata: aguarde sempre a abertura do sinal verde de pedestres.
+          </p>
+        </article>
+
+        <article class="card-branco">
+          <h3>4. Caráter demonstrativo desta versão</h3>
+          <p>
+            Esta plataforma web é um protótipo funcional. As simulações de tempo semafórico (regras de 8 e 28 segundos), conversas com a IARA e painéis operacionais são demonstrativos e não estão conectados em tempo real à CET, Metrô ou CPTM.
+          </p>
+        </article>
+      </div>
+    </section>
+    <br/>
+
+    <!-- 3. Faixa verde-escura final -->
+    <section class="faixa-cta">
+      <div class="container">
+        <div>
+          <div class="etiqueta">CADA PESSOA TEM SEU TEMPO</div>
+          <h2>Seu caminho merece respeito.<br />Seu tempo também.</h2>
+          <p>Encontre novas formas de se mover pela cidade, do seu jeito.</p>
+        </div>
+        <a href="solucao.html" class="btn btn-branco">Conhecer a plataforma &rarr;</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Rodapé -->
+  <footer class="rodape">
+    <div class="container">
+      <div class="rodape-grid">
+        <div>
+          <h3>meu tempo</h3>
+          <p>Tecnologia que acolhe.<br />Uma cidade que respeita você.</p>
+          <p>Um projeto acadêmico · FIAP 2026</p>
+        </div>
+        <div>
+          <h3>Conheça o Meu Tempo</h3>
+          <a href="sobre.html">Sobre o projeto</a>
+          <a href="solucao.html">Nossa solução</a>
+          <a href="integrantes.html">Nossa equipe</a>
+        </div>
+        <div>
+          <h3>Estamos com você</h3>
+          <a href="acessibilidade.html">Acessibilidade</a>
+          <a href="faq.html">Perguntas frequentes</a>
+          <a href="contato.html">Fale com a gente</a>
+        </div>
+        <div>
+          <h3>Outros caminhos</h3>
+          <a href="solucao01.html">Plataforma do cidadão</a>
+          <a href="solucao02.html">Acesso administrativo</a>
+          <a href="privacidade.html">Privacidade e termos</a>
+        </div>
+      </div>
+
+      <div class="rodape-base">
+        <span>© 2026 Meu Tempo. A cidade no seu ritmo.</span>
+        <span>Acolhimento, autonomia e acessibilidade.</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Integração oficial do VLibras -->
+  <div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+      <div class="vw-plugin-top-wrapper"></div>
+    </div>
+  </div>
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script>
 </body>
 </html>

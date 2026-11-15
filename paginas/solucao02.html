@@ -1,12 +1,339 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solução 02 | Meu Tempo</title>
-    <link rel="stylesheet" href="../css/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Apoio e Zeladoria | Meu Tempo</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <script src="../js/script.js" defer></script>
 </head>
 <body>
+  <!-- Barra superior -->
+  <div class="barra-util">
+    <div class="container">
+      <span>Uma cidade para todas as pessoas. Um caminho de cada vez.</span>
+      <button type="button" id="btn-abrir-acess" class="btn-acess-topo">
+        Recursos de acessibilidade &rsaquo;
+      </button>
+    </div>
+  </div>
 
+  <!-- Barra de ajustes rápidos -->
+  <div id="painel-acess-rapido" class="painel-acess-rapido">
+    <div class="container">
+      <strong>Ajustes rápidos de leitura:</strong>
+      <div class="botoes-acess">
+        <button type="button" class="acao-aumentar">A+ Aumentar texto</button>
+        <button type="button" class="acao-diminuir">A- Texto normal</button>
+        <button type="button" class="acao-contraste">Alto contraste</button>
+        <button type="button" class="acao-tema">Tema escuro</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cabeçalho -->
+  <header class="cabecalho">
+    <div class="container">
+      <a href="index.html" class="logo">
+        <span class="logo-circulo">
+          <img src="/assets/icones/clock-three.png" alt="" class="icone" />
+        </span>
+        <div>
+          <span class="logo-titulo">meu tempo</span>
+          <span class="logo-sub">A cidade no seu ritmo.</span>
+        </div>
+      </a>
+
+      <button type="button" id="btn-menu" class="btn-menu">Menu</button>
+
+      <nav id="menu-navegacao" class="menu">
+        <a href="index.html">Início</a>
+        <a href="sobre.html" class="ativo">Sobre</a>
+        <a href="solucao.html">Nossa solução</a>
+        <a href="acessibilidade.html">Acessibilidade</a>
+        <a href="integrantes.html">Equipe</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contato.html">Contato</a>
+      </nav>
+
+      <a href="solucao.html" class="btn btn-pequeno header-cta">Acessar plataforma &rarr;</a>
+    </div>
+  </header>
+
+  <!-- LEMBRETE: ESSA PÁGINA SSERÁ ALTERADA E TERÁ CONECTIVIDADE COM A DEMONSTRAÇÃO DO APP-->
+
+  <main>
+    <!-- 1. Topo -->
+    <section class="container solucao-topo">
+      <div class="etiqueta">NOSSA SOLUÇÃO · APOIO E ZELADORIA</div>
+      <h1>O apoio certo.<br />No seu caminho.</h1>
+      <p class="solucao-lead">
+        Peça ajuda, encontre informações e acompanhe tudo em um só lugar.
+      </p>
+    </section>
+
+    <!-- 2. Serviço: Apoio no Metrô e CPTM -->
+    <section id="metro" class="container solucao-bloco">
+      <div class="grid-2">
+        <div class="solucao-arte arte-metro">
+          <span class="arte-tag-topo">MOBILIDADE COM APOIO</span>
+
+          <div class="trem-frente trem-grande" aria-hidden="true">
+            <div class="trem-letreiro"></div>
+            <div class="trem-janelas">
+              <span></span>
+              <span></span>
+            </div>
+            <div class="trem-farois">
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+          <div class="trem-trilhos" aria-hidden="true"></div>
+
+          <span class="arte-legenda">
+            <img src="../assets/icones/subway.png" alt="" class="icone-pequeno" />
+            Próxima parada: autonomia.
+          </span>
+        </div>
+
+        <div>
+          <div class="etiqueta">Apoio no Metrô e CPTM</div>
+          <h2>Apoio para ir mais longe.</h2>
+          <p>
+            Informe a estação, onde você está e de que ajuda precisa. O pedido envia sua localização exata ao painel operacional da estação, e o administrador designa um agente para ir diretamente até você.
+          </p>
+          <p>
+            A situação dos elevadores e escadas rolantes aparece no mesmo formulário, sem precisar sair da tarefa.
+          </p>
+          <button type="button" class="btn btn-abrir-simulador" data-alvo="simulador-metro">
+            Usar este serviço &rarr;
+          </button>
+        </div>
+      </div>
+
+      <!-- Simulador de Chamado Geolocalizado no Metrô -->
+      <div id="simulador-metro" class="caixa-simulador aberto">
+        <div class="grid-2">
+          <form id="form-metro" class="card-branco">
+            <h3>Solicitar acompanhamento na estação</h3>
+            <div class="campo">
+              <label for="estacao">Estação</label>
+              <select id="estacao">
+                <option value="Estação Paulista (Linha 4-Amarela)">Estação Paulista (Linha 4-Amarela)</option>
+                <option value="Estação Consolação (Linha 2-Verde)">Estação Consolação (Linha 2-Verde)</option>
+                <option value="Estação Sé (Linhas 1-Azul e 3-Vermelha)">Estação Sé (Linhas 1-Azul e 3-Vermelha)</option>
+              </select>
+            </div>
+
+            <div class="campo">
+              <label for="ponto-estacao">Ponto exato na estação</label>
+              <select id="ponto-estacao">
+                <option value="Plataforma sentido Vila Sônia — Porta 3">Plataforma sentido Vila Sônia — Porta 3</option>
+                <option value="Mezanino — Próximo aos bloqueios (catracas)">Mezanino — Próximo aos bloqueios (catracas)</option>
+                <option value="Acesso ao elevador da rua">Acesso ao elevador da rua</option>
+              </select>
+            </div>
+
+            <div class="campo">
+              <label for="apoio">Tipo de apoio</label>
+              <select id="apoio">
+                <option value="Acompanhamento até a plataforma e embarque">Acompanhamento até a plataforma e embarque</option>
+                <option value="Auxílio na transferência entre linhas">Auxílio na transferência entre linhas</option>
+                <option value="Rampa de acesso para cadeira de rodas">Rampa de acesso para cadeira de rodas</option>
+              </select>
+            </div>
+
+            <button type="submit" class="btn">Enviar chamado geolocalizado &rarr;</button>
+          </form>
+
+          <div id="status-metro" class="painel-status">
+            <h3>Situação dos equipamentos na estação</h3>
+            <p><strong>Elevadores:</strong> 2 em operação normal · 0 em manutenção.</p>
+            <p><strong>Escadas rolantes:</strong> Operação normal no acesso principal.</p>
+            <p style="margin-bottom: 0;">
+              Ao enviar, o chamado entra na fila do painel administrativo da estação para despacho imediato do agente.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Serviço: Zeladoria Urbana -->
+    <section id="zeladoria" class="container solucao-bloco">
+      <div class="grid-2">
+        <div class="solucao-arte arte-mapa">
+          <span></span>
+
+          <div class="mapa-rua-1" aria-hidden="true"></div>
+          <div class="mapa-rua-2" aria-hidden="true"></div>
+
+          <div class="pino-verde pino-grande" aria-hidden="true">
+            <img src="../assets/icones/map-pin.png" alt="" class="icone-grande icone-branco" />
+          </div>
+
+          <div class="pino-marrom" aria-hidden="true">
+            <img src="../assets/icones/check-circle.png" alt="" class="icone-pequeno icone-branco" />
+          </div>
+
+          <span class="arte-legenda">
+            <img src="../assets/icones/marker.png" alt="" class="icone-pequeno" />
+            Sua voz melhora o caminho.
+          </span>
+        </div>
+
+        <div>
+          <div class="etiqueta">Zeladoria urbana</div>
+          <h2>Uma cidade melhor começa aqui.</h2>
+          <p>
+            Escolha o local no mapa ou informe um endereço. Conte qual é a barreira — elevador quebrado, escada rolante parada, catraca com defeito ou calçada obstruída — e ajude a orientar outras pessoas.
+          </p>
+          <div style="display: flex; gap: 14px; flex-wrap: wrap;">
+            <button type="button" class="btn btn-abrir-simulador" data-alvo="simulador-zeladoria">
+              Usar este serviço &rarr;
+            </button>
+            <a href="solucao01.html" class="btn btn-contorno">&larr; Voltar para Travessia</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Simulador de Zeladoria -->
+      <div id="simulador-zeladoria" class="caixa-simulador">
+        <div class="grid-2">
+          <form id="form-zeladoria" class="card-branco">
+            <h3>Registrar ocorrência de acessibilidade</h3>
+            <div class="campo">
+              <label for="tipo-barreira">O que você encontrou?</label>
+              <select id="tipo-barreira">
+                <option value="Elevador ou escada rolante inoperante">Elevador ou escada rolante inoperante</option>
+                <option value="Cruzamento sem semáforo inteligente">Cruzamento sem semáforo inteligente</option>
+                <option value="Calçada danificada ou rampa obstruída">Calçada danificada ou rampa obstruída</option>
+                <option value="Catraca acessível com defeito">Catraca acessível com defeito</option>
+              </select>
+            </div>
+
+            <div class="campo">
+              <label for="local-barreira">Endereço ou estação</label>
+              <input
+                type="text"
+                id="local-barreira"
+                placeholder="Ex.: Estação República, acesso Praça da República"
+              />
+            </div>
+
+            <button type="submit" class="btn">Registrar relato &rarr;</button>
+          </form>
+
+          <div id="status-zeladoria" class="painel-status">
+            <h3>Para onde vai seu relato</h3>
+            <p>
+              <strong>Aviso aos cidadãos:</strong> quem passa pelo mesmo trajeto recebe alerta imediato pela IARA.
+            </p>
+            <p style="margin-bottom: 0;">
+              <strong>Painel administrativo:</strong> alimenta os indicadores de manutenção do Metrô/CPTM e de expansão de faróis inteligentes da CET.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Faixa da IARA -->
+    <section class="secao secao-suave">
+      <div class="container">
+        <div class="etiqueta">VOCÊ ESCOLHE COMO PEDIR</div>
+        <h2>Com a IARA, também pode ser uma conversa.</h2>
+        <p style="max-width: 720px;">
+          Fale ou escreva o que precisa. A assistente ajuda a confirmar o local e os detalhes. As decisões de atendimento ficam com o serviço responsável.
+        </p>
+
+        <button type="button" id="btn-demo-iara" class="btn btn-contorno">
+          Conversar com a IARA &rarr;
+        </button>
+
+        <div id="demo-iara-box" class="caixa-simulador" style="margin-top: 28px;">
+          <div class="chat-card" style="max-width: 720px;">
+            <div class="chat-cabecalho">
+              <span class="chat-avatar">
+                <img src="../assets/icones/subway.png" alt="" class="icone icone-branco" />
+              </span>
+              <div>
+                <strong>IARA · Inteligência de Apoio à Rotina Acessível</strong>
+                <span class="logo-sub">Simulação de pedido de apoio por voz no metrô</span>
+              </div>
+            </div>
+
+            <div id="demo-iara-mensagens" class="chat-lista" style="max-height: 300px;">
+              <div class="msg-usuario">
+                “IARA, estou na Estação Paulista e preciso de ajuda para embarcar.”
+              </div>
+              <div class="msg-iara">
+                Já enviei sua localização exata (Plataforma sentido Vila Sônia) para a equipe da estação. Um agente está a caminho!
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Faixa verde-escura final -->
+    <section class="faixa-cta">
+      <div class="container">
+        <div>
+          <div class="etiqueta">CADA PESSOA TEM SEU TEMPO</div>
+          <h2>Seu caminho merece respeito. Seu tempo também.</h2>
+          <p>Encontre novas formas de se mover pela cidade, do seu jeito.</p>
+        </div>
+        <a href="solucao.html" class="btn btn-branco">Conhecer a plataforma &rarr;</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Rodapé -->
+  <footer class="rodape">
+    <div class="container">
+      <div class="rodape-grid">
+        <div>
+          <h3>meu tempo</h3>
+          <p>Tecnologia que acolhe.<br />Uma cidade que respeita você.</p>
+          <p>Um projeto acadêmico · FIAP 2026</p>
+        </div>
+        <div>
+          <h3>Conheça o Meu Tempo</h3>
+          <a href="sobre.html">Sobre o projeto</a>
+          <a href="solucao.html">Nossa solução</a>
+          <a href="integrantes.html">Nossa equipe</a>
+        </div>
+        <div>
+          <h3>Estamos com você</h3>
+          <a href="acessibilidade.html">Acessibilidade</a>
+          <a href="faq.html">Perguntas frequentes</a>
+          <a href="contato.html">Fale com a gente</a>
+        </div>
+        <div>
+          <h3>Outros caminhos</h3>
+          <a href="solucao01.html">Travessia acessível</a>
+          <a href="solucao02.html">Apoio e zeladoria</a>
+          <a href="privacidade.html">Privacidade e termos</a>
+        </div>
+      </div>
+
+      <div class="rodape-base">
+        <span>© 2026 Meu Tempo. A cidade no seu ritmo.</span>
+        <span>Acolhimento, autonomia e acessibilidade.</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Integração oficial do VLibras -->
+  <div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+      <div class="vw-plugin-top-wrapper"></div>
+    </div>
+  </div>
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script>
 </body>
 </html>

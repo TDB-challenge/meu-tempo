@@ -1,12 +1,370 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perguntas frequentes | Meu Tempo</title>
-    <link rel="stylesheet" href="../css/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FAQ | Meu Tempo</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <script src="../js/script.js" defer></script>
 </head>
 <body>
+  <!-- Barra superior -->
+  <div class="barra-util">
+    <div class="container">
+      <span>Uma cidade para todas as pessoas. Um caminho de cada vez.</span>
+      <button type="button" id="btn-abrir-acess" class="btn-acess-topo">
+        Recursos de acessibilidade &rsaquo;
+      </button>
+    </div>
+  </div>
 
+  <!-- Barra de ajustes rápidos -->
+  <div id="painel-acess-rapido" class="painel-acess-rapido">
+    <div class="container">
+      <strong>Ajustes rápidos de leitura:</strong>
+      <div class="botoes-acess">
+        <button type="button" class="acao-aumentar">A+ Aumentar texto</button>
+        <button type="button" class="acao-diminuir">A- Texto normal</button>
+        <button type="button" class="acao-contraste">Alto contraste</button>
+        <button type="button" class="acao-tema">Tema escuro</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cabeçalho -->
+  <header class="cabecalho">
+    <div class="container">
+      <a href="index.html" class="logo">
+        <span class="logo-circulo">
+          <img src="/assets/icones/clock-three.png" alt="" class="icone" />
+        </span>
+        <div>
+          <span class="logo-titulo">meu tempo</span>
+          <span class="logo-sub">A cidade no seu ritmo.</span>
+        </div>
+      </a>
+
+      <button type="button" id="btn-menu" class="btn-menu">Menu</button>
+
+      <nav id="menu-navegacao" class="menu">
+        <a href="index.html">Início</a>
+        <a href="sobre.html" >Sobre</a>
+        <a href="solucao.html">Nossa solução</a>
+        <a href="acessibilidade.html">Acessibilidade</a>
+        <a href="integrantes.html">Equipe</a>
+        <a href="faq.html" class="ativo">FAQ</a>
+        <a href="contato.html">Contato</a>
+      </nav>
+
+      <a href="solucao.html" class="btn btn-pequeno header-cta">Acessar plataforma &rarr;</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- 1. Cabeçalho da página FAQ -->
+    <section class="container faq-topo">
+      <div class="etiqueta">PODEMOS AJUDAR?</div>
+      <h1>Respostas para seguir<br />com mais tranquilidade.</h1>
+      <p class="faq-lead">
+        Reunimos as principais dúvidas sobre o Meu Tempo. Se preferir, você também pode conversar com a IARA.
+      </p>
+    </section>
+
+    <!-- 2. Layout em duas colunas: Filtro lateral + Busca e Perguntas -->
+    <section class="container faq-conteudo">
+      <div class="faq-layout">
+        <!-- Coluna Esquerda: Assuntos + Card IARA -->
+        <aside class="faq-sidebar">
+          <strong class="faq-sidebar-titulo">Encontre por assunto</strong>
+
+          <nav class="faq-categorias" aria-label="Filtrar perguntas por assunto">
+            <button type="button" class="faq-cat-btn ativo" data-categoria="todas">
+              <span>Todas</span>
+              <span aria-hidden="true">&rsaquo;</span>
+            </button>
+            <button type="button" class="faq-cat-btn" data-categoria="primeiros-passos">
+              <span>Primeiros passos</span>
+              <span aria-hidden="true">&rsaquo;</span>
+            </button>
+            <button type="button" class="faq-cat-btn" data-categoria="cadastro-login">
+              <span>Cadastro e login</span>
+              <span aria-hidden="true">&rsaquo;</span>
+            </button>
+            <button type="button" class="faq-cat-btn" data-categoria="acessibilidade">
+              <span>Acessibilidade</span>
+              <span aria-hidden="true">&rsaquo;</span>
+            </button>
+            <button type="button" class="faq-cat-btn" data-categoria="travessias">
+              <span>Travessias</span>
+              <span aria-hidden="true">&rsaquo;</span>
+            </button>
+            <button type="button" class="faq-cat-btn" data-categoria="apoio-metro">
+              <span>Apoio no Metrô</span>
+              <span aria-hidden="true">&rsaquo;</span>
+            </button>
+            <button type="button" class="faq-cat-btn" data-categoria="relogio-pulseira">
+              <span>Relógio e pulseira</span>
+              <span aria-hidden="true">&rsaquo;</span>
+            </button>
+            <button type="button" class="faq-cat-btn" data-categoria="privacidade">
+              <span>Privacidade</span>
+              <span aria-hidden="true">&rsaquo;</span>
+            </button>
+            <button type="button" class="faq-cat-btn" data-categoria="inteligencia-artificial">
+              <span>Inteligência artificial</span>
+              <span aria-hidden="true">&rsaquo;</span>
+            </button>
+            <button type="button" class="faq-cat-btn" data-categoria="libras">
+              <span>Libras</span>
+              <span aria-hidden="true">&rsaquo;</span>
+            </button>
+          </nav>
+
+          <!-- Card lateral da IARA -->
+          <div class="faq-card-iara">
+            <img src="/assets/icones/artificial-intelligence.png" alt="" class="icone" />
+            <strong>Prefere conversar?</strong>
+            <p>A IARA pode mostrar por onde começar.</p>
+            <a href="solucao.html#demo-iara-box" class="link-seta">Falar com a IARA &rarr;</a>
+          </div>
+        </aside>
+
+        <!-- Coluna Direita: Campo de Busca + Lista Sanfona -->
+        <div class="faq-lista-area">
+          <div class="faq-busca-wrapper">
+            <span class="faq-busca-icone" aria-hidden="true">&#128269;</span>
+            <input
+              type="text"
+              id="busca-faq"
+              placeholder="Buscar uma pergunta"
+              aria-label="Buscar uma pergunta"
+            />
+            <button
+              type="button"
+              id="btn-limpar-faq"
+              class="faq-limpar-btn"
+              aria-label="Limpar busca"
+              hidden
+            >
+              &times;
+            </button>
+          </div>
+
+          <p id="contador-faq" class="faq-contador">12 perguntas encontradas</p>
+
+          <div class="faq-acordeao">
+
+            <!-- Pergunta 01 -->
+            <article class="faq-item" data-categoria="primeiros-passos">
+              <button type="button" class="faq-pergunta" aria-expanded="false">
+                <span>O que é o Meu Tempo?</span>
+                <span class="faq-sinal" aria-hidden="true">+</span>
+              </button>
+              <div class="faq-resposta" hidden>
+                <p>
+                  O <strong>Meu Tempo</strong> é uma plataforma de mobilidade urbana acessível (Civic Tech) pensada para São Paulo. Ela conecta pessoas cegas, idosas, neurodivergentes ou com mobilidade reduzida a travessias com tempo estendido, acompanhamento geolocalizado no Metrô e na CPTM e relatos de zeladoria urbana, tudo com apoio da assistente de voz <strong>IARA</strong>.
+                </p>
+              </div>
+            </article>
+
+            <!-- Pergunta 02 -->
+            <article class="faq-item" data-categoria="primeiros-passos">
+              <button type="button" class="faq-pergunta" aria-expanded="false">
+                <span>Preciso instalar um aplicativo?</span>
+                <span class="faq-sinal" aria-hidden="true">+</span>
+              </button>
+              <div class="faq-resposta" hidden>
+                <p>
+                  No dia a dia na rua, o cidadão utiliza o <strong>aplicativo mobile do Meu Tempo</strong> (para usar GPS em tempo real, vibração rítmica e comandos de voz com a IARA). Já esta plataforma web permite conhecer o projeto, testar os simuladores, ajustar preferências de acessibilidade e acessar os painéis administrativos da CET e das estações.
+                </p>
+              </div>
+            </article>
+
+            <!-- Pergunta 03 -->
+            <article class="faq-item" data-categoria="cadastro-login">
+              <button type="button" class="faq-pergunta" aria-expanded="false">
+                <span>Posso usar sem criar uma conta?</span>
+                <span class="faq-sinal" aria-hidden="true">+</span>
+              </button>
+              <div class="faq-resposta" hidden>
+                <p>
+                  Você pode consultar informações de acessibilidade e testar os simuladores da plataforma web livremente. Para solicitar extensão de tempo em semáforos na rua ou abrir chamados geolocalizados para agentes do Metrô/CPTM, é necessário entrar na sua conta para garantir segurança e evitar acionamentos indevidos na via.
+                </p>
+              </div>
+            </article>
+
+            <!-- Pergunta 04 -->
+            <article class="faq-item" data-categoria="acessibilidade">
+              <button type="button" class="faq-pergunta" aria-expanded="false">
+                <span>Preciso comprovar uma deficiência?</span>
+                <span class="faq-sinal" aria-hidden="true">+</span>
+              </button>
+              <div class="faq-resposta" hidden>
+                <p>
+                  <strong>Sim, a comprovação é obrigatória</strong> para evitar fraudes e garantir que os benefícios operacionais — como a extensão do tempo de semáforo e o acompanhamento presencial nas estações — sejam usados exclusivamente por quem realmente necessita de acessibilidade. A validação é feita no momento do cadastro por meio do <strong>QR Code</strong> de documentos oficiais, como a <strong>Nova Carteira de Identidade Nacional (CIN)</strong> com identificação de deficiência, a <strong>Carteira da Pessoa com Deficiência (CIPCD)</strong>, a <strong>CIPTEA</strong> ou a <strong>Carteira da Pessoa Idosa</strong>. Assim que o documento é validado, o aplicativo já libera o acesso e configura automaticamente o perfil ideal para você.
+                </p>
+              </div>
+            </article>
+
+            <!-- Pergunta 05 -->
+            <article class="faq-item" data-categoria="travessias">
+              <button type="button" class="faq-pergunta" aria-expanded="false">
+                <span>O pedido aceito já permite atravessar?</span>
+                <span class="faq-sinal" aria-hidden="true">+</span>
+              </button>
+              <div class="faq-resposta" hidden>
+                <p>
+                  <strong>Aguarde sempre o sinal verde de pedestres e o aviso sonoro/vibratório no celular.</strong> Se o ciclo atual do semáforo tiver menos de 8 segundos restantes, o sistema reserva automaticamente o tempo estendido para o <strong>próximo sinal verde</strong>, garantindo sua segurança e mantendo a fluidez do trânsito.
+                </p>
+              </div>
+            </article>
+
+            <!-- Pergunta 06 -->
+            <article class="faq-item" data-categoria="apoio-metro">
+              <button type="button" class="faq-pergunta" aria-expanded="false">
+                <span>Como sei que um funcionário está a caminho?</span>
+                <span class="faq-sinal" aria-hidden="true">+</span>
+              </button>
+              <div class="faq-resposta" hidden>
+                <p>
+                  Assim que o operador da estação aceita o seu chamado geolocalizado, você recebe uma confirmação imediata na tela e por voz pela IARA com o status do atendimento e a previsão de chegada do agente até o ponto exato onde você está (bloqueios, mezanino ou plataforma).
+                </p>
+              </div>
+            </article>
+
+            <!-- Pergunta 07 -->
+            <article class="faq-item" data-categoria="apoio-metro">
+              <button type="button" class="faq-pergunta" aria-expanded="false">
+                <span>E se o elevador estiver em manutenção?</span>
+                <span class="faq-sinal" aria-hidden="true">+</span>
+              </button>
+              <div class="faq-resposta" hidden>
+                <p>
+                  A situação dos elevadores e escadas rolantes aparece em tempo real no próprio formulário de apoio da estação antes mesmo de você concluir o pedido. Caso encontre um equipamento parado que ainda não foi atualizado, você também pode registrá-lo em <strong>Zeladoria urbana</strong> para alertar outros passageiros e a equipe técnica.
+                </p>
+              </div>
+            </article>
+
+            <!-- Pergunta 08 -->
+            <article class="faq-item" data-categoria="relogio-pulseira">
+              <button type="button" class="faq-pergunta" aria-expanded="false">
+                <span>Já posso conectar meu relógio?</span>
+                <span class="faq-sinal" aria-hidden="true">+</span>
+              </button>
+              <div class="faq-resposta" hidden>
+                <p>
+                  A integração com smartwatches e pulseiras inteligentes faz parte da evolução do ecossistema <strong>Meu Tempo</strong> para emitir vibrações discretas direto no pulso durante a travessia. Na versão atual do projeto, todos os alertas vibratórios e musicais funcionam diretamente pelo próprio smartphone.
+                </p>
+              </div>
+            </article>
+
+            <!-- Pergunta 09 -->
+            <article class="faq-item" data-categoria="privacidade">
+              <button type="button" class="faq-pergunta" aria-expanded="false">
+                <span>Meus dados são enviados para os órgãos públicos?</span>
+                <span class="faq-sinal" aria-hidden="true">+</span>
+              </button>
+              <div class="faq-resposta" hidden>
+                <p>
+                  Sua localização exata só é compartilhada no momento em que você solicita apoio ativo em uma estação ou cruzamento. Para o planejamento urbano da <strong>CET</strong> e do <strong>Metrô/CPTM</strong>, os dados são consolidados de forma anonimizada em mapas de calor e indicadores estatísticos, respeitando a <strong>LGPD</strong>.
+                </p>
+              </div>
+            </article>
+
+            <!-- Pergunta 10 -->
+            <article class="faq-item" data-categoria="inteligencia-artificial">
+              <button type="button" class="faq-pergunta" aria-expanded="false">
+                <span>A IARA controla os semáforos?</span>
+                <span class="faq-sinal" aria-hidden="true">+</span>
+              </button>
+              <div class="faq-resposta" hidden>
+                <p>
+                  Não diretamente. A <strong>IARA</strong> atua como sua interface conversacional: ela entende seu pedido por voz, confirma sua localização por GPS e encaminha a solicitação ao sistema semafórico integrado ou ao painel da estação. A extensão de tempo segue rigorosamente as regras automáticas de segurança viária da CET (como o limite mínimo de 8 segundos no ciclo).
+                </p>
+              </div>
+            </article>
+          </div>
+
+          <!-- Pergunta 11 -->
+            <article class="faq-item" data-categoria="libras">
+              <button type="button" class="faq-pergunta" aria-expanded="false">
+                <span>O Meu Tempo oferece suporte em Libras?</span>
+                <span class="faq-sinal" aria-hidden="true">+</span>
+              </button>
+              <div class="faq-resposta" hidden>
+                <p>
+                  <strong>Sim.</strong> Como a Língua Brasileira de Sinais (Libras) é a primeira língua de grande parte da comunidade surda no Brasil, esta plataforma conta com o intérprete virtual do <strong>VLibras</strong> — basta clicar no ícone azul na lateral direita da tela e selecionar qualquer texto para ver a tradução na hora. No aplicativo mobile, o apoio em Libras também orienta etapas importantes como o cadastro via QR Code e o envio de chamados.
+                </p>
+              </div>
+            </article>
+
+            <!-- Pergunta 12 -->
+            <article class="faq-item" data-categoria="acessibilidade">
+              <button type="button" class="faq-pergunta" aria-expanded="false">
+                <span>Como funciona a comunicação para pessoas surdas na rua e no Metrô?</span>
+                <span class="faq-sinal" aria-hidden="true">+</span>
+              </button>
+              <div class="faq-resposta" hidden>
+                <p>
+                  Nas estações do <strong>Metrô e da CPTM</strong>, o usuário surdo não precisa depender de comandos de voz: todo o pedido de acompanhamento é feito por toque visual na tela e traduzido em status claros até a chegada do agente. Já nas travessias de rua, o aplicativo combina <strong>alertas visuais de alto contraste</strong> com <strong>vibrações rítmicas no celular</strong> para indicar com segurança o momento de atravessar.
+                </p>
+              </div>
+            </article>
+
+          <p id="sem-resultado" class="painel-status" style="display: none; margin-top: 20px;">
+            Nenhuma pergunta encontrada para esse termo. Tente buscar por outra palavra ou fale diretamente com a IARA.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Rodapé -->
+  <footer class="rodape">
+    <div class="container">
+      <div class="rodape-grid">
+        <div>
+          <h3>meu tempo</h3>
+          <p>Tecnologia que acolhe.<br />Uma cidade que respeita você.</p>
+          <p>Um projeto acadêmico · FIAP 2026</p>
+        </div>
+        <div>
+          <h3>Conheça o Meu Tempo</h3>
+          <a href="sobre.html">Sobre o projeto</a>
+          <a href="solucao.html">Nossa solução</a>
+          <a href="integrantes.html">Nossa equipe</a>
+        </div>
+        <div>
+          <h3>Estamos com você</h3>
+          <a href="acessibilidade.html">Acessibilidade</a>
+          <a href="faq.html">Perguntas frequentes</a>
+          <a href="contato.html">Fale com a gente</a>
+        </div>
+        <div>
+          <h3>Outros caminhos</h3>
+          <a href="solucao01.html">Travessia acessível</a>
+          <a href="solucao02.html">Apoio e zeladoria</a>
+          <a href="privacidade.html">Privacidade e termos</a>
+        </div>
+      </div>
+
+      <div class="rodape-base">
+        <span>© 2026 Meu Tempo. A cidade no seu ritmo.</span>
+        <span>Acolhimento, autonomia e acessibilidade.</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Integração oficial do VLibras -->
+  <div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+      <div class="vw-plugin-top-wrapper"></div>
+    </div>
+  </div>
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script>
 </body>
 </html>
