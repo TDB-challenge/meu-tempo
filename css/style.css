@@ -4828,3 +4828,259 @@ button {
 }
 
 
+
+
+
+
+
+/* MODOS DE ACESSIBILIDADE ==================================================================================== */
+
+/* fonte-legivel: classe que será adicionada ao body pelo app.js
+   quando o usuário selecionar a opção de fonte mais legível. */
+.app.fonte-legivel {
+    --fonte-principal: var(--fonte-acessivel); /* altera a fonte dos textos */
+    --fonte-titulo: var(--fonte-acessivel); /* altera também a fonte dos títulos */
+}
+
+
+/* tema-escuro: classe que será adicionada ao body quando
+   a opção de tema escuro estiver selecionada. */
+.app.tema-escuro {
+
+    color-scheme: dark; /* adapta os elementos nativos do navegador */
+
+    --app-fundo: #101913; /* fundo geral do aplicativo */
+    --branco: #1e2c23; /* fundo dos cards e campos */
+    --creme: #1e2c23; /* fundo dos modais */
+    --verde-floresta: #cce3c5; /* cor dos títulos e textos destacados */
+    --verde-natural: #a6cba4; /* cor dos textos complementares */
+    --verde-escuro: #233c2b; /* cor dos botões ao passar o mouse */
+    --verde-salvia: #91b88b; /* cor dos detalhes e contornos */
+    --verde-claro: #2b4031; /* fundo dos elementos selecionados */
+    --app-card-verde: #294231; /* fundo do card de travessia */
+    --app-card-terracota: #493127; /* fundo do card de zeladoria */
+    --app-iara: #2b4031; /* fundo do banner da iara */
+    --terracota: #efb39a; /* cor dos textos de destaque */
+    --texto-principal: #f0f4ed; /* aumenta a legibilidade dos textos */
+    --texto-secundario: #bac7bc; /* cor das descrições */
+    --borda: #3e5042; /* contorno dos cards */
+    --borda-input: #778e7a; /* contorno dos campos */
+}
+
+
+/* botões principais e ações do modal no tema escuro.
+   deixei as cores explícitas para manter o contraste. */
+.app.tema-escuro .botao-principal,
+.app.tema-escuro .botao-salvar,
+.app.tema-escuro .botao-ajuda,
+.app.tema-escuro .botao-enviar,
+.app.tema-escuro .ajuda-iara {
+    background-color: #cce3c5; /* fundo verde claro */
+    color: #10251a; /* texto escuro */
+    border-color: #cce3c5; /* mantém a borda da mesma cor */
+}
+
+
+/* ícones dos botões claros no tema escuro. */
+.app.tema-escuro .botao-principal .icone,
+.app.tema-escuro .botao-ajuda .icone,
+.app.tema-escuro .botao-enviar .icone,
+.app.tema-escuro .ajuda-iara .icone {
+    filter: brightness(0); /* deixa os ícones escuros */
+}
+
+
+/* altera os ícones escuros dos cards para ficarem visíveis no tema escuro. */
+.app.tema-escuro .conteudo-app img.icone {
+    filter: brightness(0) invert(1); /* deixa os ícones brancos */
+}
+
+
+/* mantém os ícones dos botões claros na cor escura. */
+.app.tema-escuro .conteudo-app .botao-principal img.icone,
+.app.tema-escuro .conteudo-app .botao-enviar img.icone {
+    filter: brightness(0); /* mantém o contraste com o fundo claro */
+}
+
+
+/* mantém o menu lateral e inferior com textos claros. */
+.app.tema-escuro .menu-lateral,
+.app.tema-escuro .menu-navegacao a,
+.app.tema-escuro .navegacao-inferior,
+.app.tema-escuro .navegacao-inferior a {
+    color: #ffffff; /* evita que os textos fiquem escuros no menu */
+}
+
+
+/* mantém as mensagens enviadas e os filtros ativos legíveis. */
+.app.tema-escuro .mensagem-usuario,
+.app.tema-escuro .botao-filtro[aria-pressed="true"] {
+    background-color: #cce3c5; /* fundo claro */
+    color: #10251a; /* texto escuro */
+}
+
+
+/* mantém o estado ligado identificável nos interruptores. */
+.app.tema-escuro .interruptor:checked {
+    background-color: #a6cba4; /* fundo claro do interruptor ligado */
+}
+
+
+/* bolinha dos interruptores no tema escuro. */
+.app.tema-escuro .interruptor::before {
+    background-color: #ffffff; /* mantém a bolinha visível */
+}
+
+
+/* ALTO CONTRASTE ============================================================================================ */
+
+/* alto-contraste: classe que altera a paleta quando essa preferência
+   estiver ativada no perfil. */
+.app.alto-contraste {
+
+    color-scheme: dark; /* adapta os elementos nativos */
+
+    --app-fundo: #000000; /* fundo preto */
+    --app-menu: #000000; /* fundo dos menus */
+    --app-menu-ativo: #303030; /* fundo da opção selecionada */
+    --branco: #000000; /* fundo dos cards */
+    --creme: #000000; /* fundo dos modais */
+    --verde-floresta: #ffffff; /* cor dos títulos */
+    --verde-escuro: #ffffff; /* cor alternativa dos elementos */
+    --verde-natural: #ffffff; /* cor dos textos */
+    --verde-salvia: #ffffff; /* cor dos detalhes */
+    --verde-claro: #202020; /* fundo de elementos selecionados */
+    --terracota: #ffff00; /* cor dos elementos de atenção */
+    --texto-principal: #ffffff; /* cor principal dos textos */
+    --texto-secundario: #ffffff; /* cor das descrições */
+    --borda: #ffffff; /* contorno dos elementos */
+    --borda-input: #ffffff; /* contorno dos campos */
+    --app-card-verde: #000000; /* fundo do card de travessia */
+    --app-card-terracota: #000000; /* fundo do card de zeladoria */
+    --app-iara: #000000; /* fundo do banner da iara */
+    --cor-sem-suporte: #424242; /* diferencia os marcadores sem suporte */
+}
+
+
+/* aumenta a identificação visual dos cards no alto contraste. */
+.app.alto-contraste .card-servico,
+.app.alto-contraste .banner-iara {
+    border: 2px solid #ffffff; /* cria um contorno branco */
+}
+
+
+/* mantém os ícones visíveis sobre superfícies escuras. */
+.app.alto-contraste img.icone,
+.app.alto-contraste img.icone-logo {
+    filter: brightness(0) invert(1); /* deixa os svg brancos */
+}
+
+
+/* destaca os botões principais no alto contraste. */
+.app.alto-contraste .botao-principal,
+.app.alto-contraste .botao-salvar,
+.app.alto-contraste .botao-ajuda,
+.app.alto-contraste .botao-enviar,
+.app.alto-contraste .ajuda-iara,
+.app.alto-contraste .botao-filtro[aria-pressed="true"] {
+    background-color: #ffff00; /* fundo amarelo */
+    color: #000000; /* texto preto */
+    border: 2px solid #ffff00; /* contorno amarelo */
+}
+
+
+/* mantém os ícones pretos dentro dos botões amarelos. */
+.app.alto-contraste .botao-principal img.icone,
+.app.alto-contraste .botao-ajuda img.icone,
+.app.alto-contraste .botao-enviar img.icone,
+.app.alto-contraste .ajuda-iara img.icone {
+    filter: brightness(0); /* deixa os svg pretos */
+}
+
+
+/* destaca a seleção das categorias e dos cruzamentos. */
+.app.alto-contraste .opcao-problema:has(input:checked),
+.app.alto-contraste .opcao-cruzamento:has(input:checked) {
+    border: 2px solid #ffff00; /* contorno amarelo na opção escolhida */
+}
+
+
+/* destaca a navegação por teclado no alto contraste. */
+.app.alto-contraste :focus-visible {
+    outline: 3px solid #ffff00; /* cor do contorno */
+    outline-offset: 4px; /* distância entre o contorno e o elemento */
+}
+
+
+/* interruptor ligado no alto contraste. */
+.app.alto-contraste .interruptor:checked {
+    background-color: #ffff00; /* identifica a opção ligada */
+}
+
+
+/* bolinha do interruptor ligado. */
+.app.alto-contraste .interruptor:checked::before {
+    background-color: #000000; /* deixa a bolinha preta */
+}
+
+
+/* interruptor desligado no alto contraste. */
+.app.alto-contraste .interruptor:not(:checked) {
+    background-color: #303030; /* fundo escuro */
+    border-color: #ffffff; /* contorno branco */
+}
+
+
+/* bolinha do interruptor desligado. */
+.app.alto-contraste .interruptor:not(:checked)::before {
+    background-color: #ffffff; /* deixa a bolinha branca */
+}
+
+
+/* marcador com suporte no alto contraste. */
+.app.alto-contraste .marcador-semaforo.com-suporte {
+    background-color: #000000; /* fundo preto */
+    border-color: #ffffff; /* contorno branco */
+}
+
+
+/* marcador selecionado no alto contraste. */
+.app.alto-contraste .marcador-semaforo[aria-pressed="true"] {
+    box-shadow: 0 0 0 5px #ffff00; /* destaca o local escolhido */
+}
+
+
+/* AJUSTES PARA TELAS MUITO ESTREITAS ========================================================================= */
+
+@media (max-width: 360px) {
+
+    /* reduz o espaço lateral da página */
+    .app {
+        --espacamento-conteudo: 12px; /* aproveita melhor a largura */
+    }
+
+    /* permite que o cabeçalho tenha quebra de linha */
+    .app .cabecalho-app {
+        flex-wrap: wrap; /* evita que a logo e o perfil ultrapassem a tela */
+    }
+
+    /* ajusta os textos do menu inferior */
+    .app .navegacao-inferior a {
+        font-size: 0.65rem; /* diminui o texto sem esconder as opções */
+    }
+
+    /* informação de quantidade dos serviços */
+    .app .titulo-secao {
+        flex-wrap: wrap; /* permite que os textos fiquem em linhas diferentes */
+    }
+
+    /* botões do formulário de conversa */
+    .app .botao-microfone,
+    .app .botao-enviar {
+        width: 44px; /* mantém uma área mínima para interação */
+        height: 44px; /* mantém a altura dos botões */
+    }
+
+}
+
+
