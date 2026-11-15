@@ -1,130 +1,1274 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&family=Fraunces:wght@400;500;600&family=Atkinson+Hyperlegible:wght@400;700&display=swap');
 
-/* Variáveis globais */
+/* =====================================================
+   1. VARIÁVEIS GLOBAIS DO PROJETO
+   ===================================================== */
 :root {
-    /* Cores principais */
-    --verde-floresta: #203D2E;
-    --verde-escuro: #0C201A;
-    --verde-natural: #3B654A;
-    --verde-salvia: #B5D3B7;
-    --verde-claro: #EEF5E8;
-    --creme: #F6F3EA;
-    --terracota: #8A4B32;
-    --branco: #FFFFFF;
+  /* Cores principais */
+  --verde-floresta: #203D2E;
+  --verde-escuro: #0C201A;
+  --verde-natural: #3B654A;
+  --verde-salvia: #B5D3B7;
+  --verde-claro: #EEF5E8;
+  --creme: #F6F3EA;
+  --terracota: #8A4B32;
+  --branco: #FFFFFF;
 
-    /* Cores de texto e bordas */
-    --texto-principal: #1B2922;
-    --texto-secundario: #59645B;
-    --borda: #DCE0D4;
-    --borda-input: #B8C3B6;
+  /* Cores de texto e bordas */
+  --texto-principal: #1B2922;
+  --texto-secundario: #59645B;
+  --borda: #DCE0D4;
+  --borda-input: #B8C3B6;
 
-    /* Cores do aplicativo */
-    --app-fundo: #F5F4EE;
-    --app-menu: #0C241C;
-    --app-menu-ativo: #203F2F;
-    --app-card-verde: #CCDFC7;
-    --app-card-terracota: #E9D6C7;
-    --app-iara: #E0EBD9;
+  /* Cores do aplicativo */
+  --app-fundo: #F5F4EE;
+  --app-menu: #0C241C;
+  --app-menu-ativo: #203F2F;
+  --app-card-verde: #CCDFC7;
+  --app-card-terracota: #E9D6C7;
+  --app-iara: #E0EBD9;
 
-    /* Fontes */
-    --fonte-principal: 'Nunito Sans', sans-serif;
-    --fonte-titulo: 'Fraunces', serif;
-    --fonte-acessivel: 'Atkinson Hyperlegible', sans-serif;
+  /* Fontes */
+  --fonte-principal: 'Nunito Sans', sans-serif;
+  --fonte-titulo: 'Fraunces', serif;
+  --fonte-acessivel: 'Atkinson Hyperlegible', sans-serif;
 
-    /* Espaçamentos */
-    --espaco-pequeno: 8px;
-    --espaco-medio: 16px;
-    --espaco-grande: 24px;
+  /* Espaçamentos */
+  --espaco-pequeno: 8px;
+  --espaco-medio: 16px;
+  --espaco-grande: 24px;
 
-    /* Arredondamentos */
-    --radius-pequeno: 7px;
-    --radius-medio: 10px;
-    --radius-grande: 24px;
+  /* Arredondamentos */
+  --radius-pequeno: 7px;
+  --radius-medio: 10px;
+  --radius-grande: 24px;
 }
 
-/* Reset CSS */
+/* =====================================================
+   2. RESET E ESTILOS GERAIS
+   ===================================================== */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 html {
-    font-size: 100%;
+  font-size: 100%;
 }
 
-/* Estilos gerais */
 body {
-    font-family: var(--fonte-principal);
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 1.5;
-    background-color: var(--creme);
-    color: var(--texto-principal);
-    min-height: 100vh;
+  font-family: var(--fonte-principal);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  background-color: var(--creme);
+  color: var(--texto-principal);
+  min-height: 100vh;
+}
+
+/* Classes ativadas pelos botões de acessibilidade no JS */
+body.fonte-grande {
+  font-size: 1.18rem;
+}
+
+body.fonte-legivel,
+body.fonte-legivel h1,
+body.fonte-legivel h2,
+body.fonte-legivel h3 {
+  font-family: var(--fonte-acessivel);
+}
+
+body.tema-escuro {
+  --creme: #141d18;
+  --branco: #1c2822;
+  --verde-claro: #213028;
+  --verde-floresta: #a7d4b7;
+  --verde-natural: #87bc9a;
+  --texto-principal: #f2f5f3;
+  --texto-secundario: #c5d1c9;
+  --borda: #34473d;
+}
+
+body.alto-contraste {
+  --creme: #ffffff;
+  --branco: #ffffff;
+  --verde-claro: #f0f0f0;
+  --verde-floresta: #000000;
+  --verde-natural: #000000;
+  --texto-principal: #000000;
+  --texto-secundario: #111111;
+  --borda: #000000;
 }
 
 /* Tipografia */
 h1, h2, h3, h4, h5, h6 {
-    font-family: var(--fonte-titulo);
-    font-weight: 500;
-    color: var(--verde-floresta);
-    line-height: 1.2;
+  font-family: var(--fonte-titulo);
+  font-weight: 500;
+  color: var(--verde-floresta);
+  line-height: 1.2;
 }
 
 h1 {
-    font-size: 2rem;
+  font-size: 3.1rem;
+  margin-bottom: 18px;
 }
 
 h2 {
-    font-size: 1.95rem;
+  font-size: 2.2rem;
+  margin-bottom: 16px;
 }
 
 h3 {
-    font-size: 1.7rem;
+  font-size: 1.25rem;
 }
 
 p {
-    font-size: 1rem;
-    line-height: 1.65;
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--texto-secundario);
+  margin-bottom: 16px;
 }
 
 a {
-    color: var(--verde-natural);
+  color: inherit;
+  text-decoration: none;
 }
 
-/* Imagens */
 img {
-    max-width: 100%;
-    height: auto;
+  max-width: 100%;
+  display: block;
 }
 
-/* Elementos de formulário */
-button, input, select, textarea {
-    font: inherit;
-    color: inherit;
+.container {
+  width: 90%;
+  max-width: 1180px;
+  margin: 0 auto;
 }
 
-button {
-    cursor: pointer;
+/* Etiqueta superior com bolinha verde (padrão do Figma) */
+.etiqueta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--verde-floresta);
+  margin-bottom: 14px;
 }
 
-/* Acessibilidade */
-
-/* Destaca o elemento em foco durante a navegação pelo teclado */
-:focus-visible {
-    outline: 2px solid var(--verde-natural);
-    outline-offset: 3px;
+.etiqueta::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--verde-natural);
 }
 
-/* Personaliza as cores ao selecionar um texto */
-::selection {
-    background-color: var(--verde-salvia);
-    color: var(--texto-principal);
-}
 /* =====================================================
-   9. TAMANHO E COR DOS ÍCONES (TAG IMG)
+   3. BARRA DE ACESSIBILIDADE E CABEÇALHO
+   ===================================================== */
+.barra-util {
+  background-color: var(--verde-claro);
+  border-bottom: 1px solid var(--borda);
+  padding: 8px 0;
+  font-size: 0.82rem;
+  color: var(--texto-secundario);
+}
+
+.barra-util .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn-acess-topo {
+  background: none;
+  border: none;
+  color: var(--texto-principal);
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+.painel-acess-rapido {
+  display: none;
+  background-color: var(--branco);
+  border-bottom: 1px solid var(--borda);
+  padding: 12px 0;
+}
+
+.painel-acess-rapido.aberto {
+  display: block;
+}
+
+.painel-acess-rapido .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.botoes-acess {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.botoes-acess button {
+  background-color: var(--verde-claro);
+  color: var(--verde-floresta);
+  border: 1px solid var(--borda);
+  padding: 6px 12px;
+  border-radius: var(--radius-pequeno);
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+.botoes-acess button:hover {
+  background-color: #203D2E;
+  color: #F6F3EA;
+}
+
+.cabecalho {
+  background-color: var(--creme);
+  padding: 18px 0;
+  border-bottom: 1px solid var(--borda);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.cabecalho .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-circulo {
+  width: 34px;
+  height: 34px;
+  border: 2px solid var(--verde-floresta);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-titulo {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--texto-principal);
+  line-height: 1.1;
+}
+
+.logo-sub {
+  display: block;
+  font-size: 0.7rem;
+  color: var(--texto-secundario);
+}
+
+.menu {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.menu a {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--texto-secundario);
+  padding-bottom: 4px;
+  position: relative;
+}
+
+.menu a:hover,
+.menu a.ativo {
+  color: var(--texto-principal);
+  font-weight: 700;
+}
+
+.menu a.ativo::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 14px;
+  height: 2px;
+  background-color: var(--verde-floresta);
+}
+
+.btn-menu {
+  display: none;
+  background-color: #203D2E;
+  color: #F6F3EA;
+  border: none;
+  padding: 8px 14px;
+  border-radius: var(--radius-pequeno);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* Botões padrão */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background-color: #203D2E;
+  color: #F6F3EA;
+  border: 1px solid #203D2E;
+  padding: 13px 22px;
+  border-radius: var(--radius-medio);
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #3B654A;
+  border-color: #3B654A;
+}
+
+.btn-pequeno {
+  padding: 10px 18px;
+  font-size: 0.85rem;
+}
+
+.btn-contorno {
+  background-color: transparent;
+  color: var(--texto-principal);
+  border: 1px solid var(--borda);
+}
+
+.btn-contorno:hover {
+  background-color: var(--verde-claro);
+  color: var(--texto-principal);
+}
+
+.btn-branco {
+  background-color: #F6F3EA;
+  color: #203D2E;
+  border-color: #F6F3EA;
+}
+
+.btn-branco:hover {
+  background-color: #FFFFFF;
+}
+
+.link-seta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--texto-principal);
+}
+
+.link-seta:hover {
+  color: var(--verde-natural);
+}
+
+/* =====================================================
+   4. HERO (SEÇÃO PRINCIPAL DO INÍCIO)
+   ===================================================== */
+.hero {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  align-items: center;
+  gap: 48px;
+  padding: 60px 0 72px;
+}
+
+.hero h1 span {
+  color: var(--verde-natural);
+  display: block;
+}
+
+.hero-destaque {
+  font-size: 1.12rem;
+  color: var(--texto-principal);
+  max-width: 470px;
+  margin-bottom: 14px;
+}
+
+.hero-sub {
+  font-size: 0.95rem;
+  max-width: 460px;
+  margin-bottom: 28px;
+}
+
+.hero-acoes {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+}
+
+.hero-nota {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: var(--texto-secundario);
+}
+
+/* Moldura em arco da foto principal */
+.hero-visual {
+  position: relative;
+  padding: 14px 26px 18px 14px;
+}
+
+.arco-moldura {
+  position: relative;
+  border-radius: 240px 240px 14px 14px;
+  overflow: hidden;
+  border: 1px solid var(--borda);
+}
+
+.arco-moldura img {
+  width: 100%;
+  height: 450px;
+  object-fit: cover;
+}
+
+.arco-linha-externa {
+  position: absolute;
+  top: 4px;
+  right: 16px;
+  bottom: 8px;
+  left: 24px;
+  border: 1px solid var(--borda);
+  border-radius: 240px 240px 14px 14px;
+  pointer-events: none;
+}
+
+.icone-sol {
+  position: absolute;
+  top: 18px;
+  right: 34px;
+}
+
+.texto-vertical {
+  position: absolute;
+  right: -46px;
+  top: 50%;
+  transform: rotate(90deg);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--texto-secundario);
+  white-space: nowrap;
+}
+
+.selo-flutuante {
+  position: absolute;
+  bottom: 6px;
+  left: -14px;
+  background-color: var(--branco);
+  border: 1px solid var(--borda);
+  border-radius: 12px;
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+}
+
+.selo-icone {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background-color: var(--verde-claro);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.selo-flutuante small {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--texto-secundario);
+}
+
+.selo-flutuante strong {
+  font-size: 0.88rem;
+  color: var(--texto-principal);
+}
+
+/* =====================================================
+   5. FAIXA DE 4 PILARES E CARTÕES DOS 3 SERVIÇOS
+   ===================================================== */
+.faixa-pilares {
+  background-color: var(--verde-claro);
+  padding: 26px 0;
+  border-top: 1px solid var(--borda);
+  border-bottom: 1px solid var(--borda);
+}
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.pilar-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--texto-principal);
+}
+
+.secao {
+  padding: 76px 0;
+}
+
+.secao-suave {
+  background-color: var(--verde-claro);
+}
+
+.cabecalho-secao {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+  margin-bottom: 36px;
+  flex-wrap: wrap;
+}
+
+.cabecalho-secao p {
+  max-width: 380px;
+  margin-bottom: 0;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.card-servico {
+  background-color: var(--branco);
+  border: 1px solid var(--borda);
+  border-radius: 14px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.arte-card {
+  height: 205px;
+  position: relative;
+  overflow: hidden;
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.arte-semaforo {
+  background-color: #e4eadc;
+}
+
+.arte-metro {
+  background-color: var(--app-card-terracota);
+}
+
+.arte-mapa {
+  background-color: #e2e9db;
+}
+
+.arte-legenda {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #34473d;
+  z-index: 3;
+}
+
+.arte-tag-topo {
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  color: #6b7267;
+  z-index: 3;
+}
+
+/* Semáforo */
+.semaforo-conjunto {
+  position: absolute;
+  left: 33%;
+  top: 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: rotate(-7deg);
+  z-index: 2;
+}
+
+.semaforo-caixa {
+  width: 38px;
+  background-color: #203D2E;
+  border-radius: 19px;
+  padding: 8px 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.luz {
+  width: 21px;
+  height: 21px;
+  border-radius: 50%;
+  background-color: #315341;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.luz.ativa {
+  background-color: var(--verde-salvia);
+}
+
+.semaforo-poste {
+  width: 5px;
+  height: 95px;
+  background-color: #203D2E;
+}
+
+.faixa-pedestre {
+  position: absolute;
+  left: 48%;
+  top: 40px;
+  display: flex;
+  gap: 9px;
+  transform: rotate(-9deg);
+  z-index: 1;
+}
+
+.faixa-pedestre span {
+  width: 13px;
+  height: 88px;
+  background-color: rgba(255, 255, 255, 0.72);
+  border-radius: 2px;
+}
+
+/* Trem */
+.trem-frente {
+  width: 94px;
+  height: 114px;
+  background-color: #203D2E;
+  border-radius: 26px 26px 12px 12px;
+  position: absolute;
+  left: 50%;
+  top: 36px;
+  transform: translateX(-50%) rotate(5deg);
+  padding: 12px 13px 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 2;
+}
+
+.trem-letreiro {
+  width: 34px;
+  height: 4px;
+  background-color: #5b7b67;
+  border-radius: 4px;
+  margin: 0 auto;
+}
+
+.trem-janelas {
+  display: flex;
+  gap: 8px;
+}
+
+.trem-janelas span {
+  flex: 1;
+  height: 38px;
+  background-color: var(--verde-salvia);
+  border-radius: 6px;
+}
+
+.trem-farois {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 6px;
+}
+
+.trem-farois span {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background-color: #F6F3EA;
+}
+
+/* Mapa */
+.mapa-rua-1,
+.mapa-rua-2 {
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.75);
+}
+
+.mapa-rua-1 {
+  width: 140%;
+  height: 13px;
+  top: 64px;
+  left: -20%;
+  transform: rotate(18deg);
+}
+
+.mapa-rua-2 {
+  width: 13px;
+  height: 150%;
+  left: 48%;
+  top: -20%;
+  transform: rotate(18deg);
+}
+
+.pino-verde {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: #203D2E;
+  border: 6px solid var(--verde-salvia);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  left: 38%;
+  top: 46px;
+  z-index: 2;
+}
+
+.pino-marrom {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: var(--terracota);
+  border: 4px solid #e2ccc1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  right: 22%;
+  top: 96px;
+  z-index: 2;
+}
+
+.corpo-card {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.corpo-card h3 {
+  font-size: 1.35rem;
+  margin-bottom: 10px;
+}
+
+.topo-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--verde-natural);
+  margin-bottom: 12px;
+}
+
+.topo-card-titulo {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.topo-card span:last-child {
+  color: var(--texto-secundario);
+  font-weight: 600;
+}
+
+.corpo-card .link-seta {
+  margin-top: auto;
+  padding-top: 12px;
+}
+
+/* =====================================================
+   6. CONTEXTO, CHAT IARA, 4 PASSOS E DISPOSITIVOS
+   ===================================================== */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 54px;
+}
+
+.foto-contexto-box {
+  position: relative;
+}
+
+.foto-contexto-box img {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 14px 120px 14px 14px;
+}
+
+.selo-escuro-foto {
+  position: absolute;
+  right: -14px;
+  bottom: 20px;
+  background-color: #203D2E;
+  color: #F6F3EA;
+  padding: 14px 20px;
+  border-radius: var(--radius-medio);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+/* Chat da IARA */
+.chat-card {
+  background-color: var(--app-iara);
+  border: 1px solid var(--borda);
+  border-radius: 16px;
+  padding: 24px;
+}
+
+.chat-cabecalho {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.chat-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #203D2E;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chat-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 250px;
+  overflow-y: auto;
+  margin-bottom: 16px;
+}
+
+.msg-iara {
+  background-color: var(--branco);
+  color: var(--texto-principal);
+  padding: 14px 16px;
+  border-radius: 12px;
+  font-size: 0.88rem;
+  max-width: 85%;
+}
+
+.msg-usuario {
+  background-color: #203D2E;
+  color: #F6F3EA;
+  padding: 14px 16px;
+  border-radius: 12px;
+  font-size: 0.88rem;
+  max-width: 85%;
+  align-self: flex-end;
+}
+
+.chat-form {
+  background-color: var(--branco);
+  border-radius: 12px;
+  padding: 6px 8px 6px 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.chat-form input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 0.88rem;
+  color: var(--texto-principal);
+  outline: none;
+}
+
+.btn-enviar-chat {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: #203D2E;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* 4 Passos */
+.passo-item {
+  border-top: 1px solid var(--borda);
+  padding-top: 20px;
+}
+
+.passo-item h3 {
+  font-family: var(--fonte-principal);
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.passo-numero {
+  font-family: var(--fonte-titulo);
+  font-size: 1.7rem;
+  color: var(--verde-natural);
+  margin-bottom: 12px;
+}
+
+.nota-rodape-secao {
+  margin-top: 28px;
+  font-size: 0.82rem;
+}
+
+/* Mockup Celular + Relógio */
+.dispositivos-arco {
+  background-color: var(--verde-claro);
+  border-radius: 220px 220px 14px 14px;
+  padding: 40px 24px 20px;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 18px;
+  overflow: hidden;
+}
+
+.celular-mockup {
+  width: 215px;
+  background-color: var(--branco);
+  border: 6px solid #203D2E;
+  border-radius: 28px;
+  padding: 16px 14px;
+  transform: rotate(-4deg);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+}
+
+.celular-topo {
+  text-align: right;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #203D2E;
+  margin-bottom: 10px;
+}
+
+.celular-titulo {
+  font-family: var(--fonte-titulo);
+  font-size: 1.15rem;
+  color: #1B2922;
+  margin-bottom: 12px;
+}
+
+.celular-opcao {
+  border: 1px solid var(--borda);
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #1B2922;
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.celular-btn {
+  background-color: #203D2E;
+  color: #F6F3EA;
+  border-radius: 8px;
+  padding: 9px;
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  margin-top: 6px;
+}
+
+.relogio-mockup {
+  width: 112px;
+  background-color: #203D2E;
+  color: #F6F3EA;
+  border: 5px solid #95a692;
+  border-radius: 22px;
+  padding: 18px 10px;
+  text-align: center;
+  transform: rotate(6deg);
+  margin-bottom: 24px;
+  box-shadow: 0 -34px 0 -18px #b5c2b2, 0 34px 0 -18px #b5c2b2;
+}
+
+.relogio-mockup strong {
+  display: block;
+  font-size: 0.85rem;
+  margin: 6px 0 4px;
+}
+
+.relogio-mockup small {
+  font-size: 0.65rem;
+  color: #d6e2d4;
+}
+
+.legenda-dispositivos {
+  position: absolute;
+  right: 16px;
+  bottom: 10px;
+  font-size: 0.68rem;
+  color: var(--texto-secundario);
+}
+
+/* Grade 2x2 de recursos de acessibilidade */
+.grid-recursos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+}
+
+.recurso-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--texto-principal);
+}
+
+/* =====================================================
+   7. FAIXA ESCURA FINAL, RODAPÉ E BOTÃO LIBRAS
+   ===================================================== */
+.faixa-cta {
+  background-color: #203D2E;
+  color: #F6F3EA;
+  padding: 68px 0;
+}
+
+.faixa-cta .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.faixa-cta .etiqueta {
+  color: #c5d6c3;
+}
+
+.faixa-cta h2 {
+  color: #F6F3EA;
+  max-width: 520px;
+}
+
+.faixa-cta p {
+  color: #d7e2d5;
+  margin-bottom: 0;
+}
+
+.rodape {
+  background-color: var(--verde-escuro);
+  color: #F6F3EA;
+  padding: 56px 0 28px;
+}
+
+.rodape-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  gap: 32px;
+  margin-bottom: 40px;
+}
+
+.rodape h3 {
+  font-family: var(--fonte-principal);
+  color: #F6F3EA;
+  font-size: 0.92rem;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+.rodape p {
+  color: #c5d3c4;
+  font-size: 0.88rem;
+}
+
+.rodape a {
+  display: block;
+  color: #c5d3c4;
+  font-size: 0.88rem;
+  margin-bottom: 10px;
+}
+
+.rodape a:hover {
+  color: #FFFFFF;
+  text-decoration: underline;
+}
+
+.rodape-base {
+  border-top: 1px solid #284032;
+  padding-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: 0.8rem;
+  color: #9cb09e;
+}
+
+/* Botão flutuante de Libras */
+.btn-libras {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  background-color: #203D2E;
+  color: #F6F3EA;
+  border: 1px solid #3c5e4b;
+  padding: 10px 16px;
+  border-radius: var(--radius-medio);
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
+  z-index: 30;
+}
+
+/* =====================================================
+   8. PÁGINAS INTERNAS (FORMULÁRIOS, EQUIPE E FAQ)
+   ===================================================== */
+.card-branco {
+  background-color: var(--branco);
+  border: 1px solid var(--borda);
+  border-radius: 14px;
+  padding: 28px;
+}
+
+.card-branco h3,
+.painel-status h3 {
+  font-size: 1.35rem;
+  margin-bottom: 12px;
+}
+
+.campo {
+  margin-bottom: 16px;
+}
+
+.campo label {
+  display: block;
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin-bottom: 6px;
+}
+
+.campo input,
+.campo select,
+.campo textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--borda-input);
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  background-color: var(--app-fundo);
+  color: var(--texto-principal);
+}
+
+.painel-status {
+  background-color: var(--verde-claro);
+  border: 1px solid var(--borda);
+  border-radius: 14px;
+  padding: 28px;
+}
+
+.aviso-ok {
+  margin-top: 14px;
+  padding: 14px;
+  background-color: #dff0d8;
+  border: 1px solid #b2d3a8;
+  color: #1b2922;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.aviso-erro {
+  margin-top: 14px;
+  padding: 14px;
+  background-color: #f9e2de;
+  border: 1px solid #d99b91;
+  color: #7c2618;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.avatar-equipe {
+  width: 82px;
+  height: 82px;
+  border-radius: 50%;
+  background-color: var(--verde-claro);
+  color: var(--verde-floresta);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1.4rem;
+  margin-bottom: 14px;
+}
+
+.faq-item {
+  background-color: var(--branco);
+  border: 1px solid var(--borda);
+  border-radius: var(--radius-medio);
+  padding: 18px 20px;
+  margin-bottom: 12px;
+}
+
+.faq-item summary {
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.faq-item p {
+  margin-top: 12px;
+  margin-bottom: 0;
+}
+
+/* =====================================================
+   9. ÍCONES (TAG IMG)
    ===================================================== */
 .icone {
   width: 18px;
@@ -144,7 +1288,64 @@ button {
   object-fit: contain;
 }
 
-/* Deixa um ícone preto na cor branca quando estiver em fundo escuro */
 .icone-branco {
   filter: brightness(0) invert(1);
+}
+
+/* =====================================================
+   10. RESPONSIVIDADE (TABLET E CELULAR)
+   ===================================================== */
+@media (max-width: 960px) {
+  .hero,
+  .grid-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .grid-4,
+  .grid-3,
+  .rodape-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .header-cta,
+  .texto-vertical {
+    display: none;
+  }
+}
+
+@media (max-width: 650px) {
+  .btn-menu {
+    display: block;
+  }
+
+  .menu {
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    padding-top: 14px;
+    border-top: 1px solid var(--borda);
+  }
+
+  .menu.ativo {
+    display: flex;
+  }
+
+  .cabecalho .container {
+    flex-wrap: wrap;
+  }
+
+  .grid-4,
+  .grid-3,
+  .rodape-grid {
+    grid-template-columns: 1fr;
+  }
+
+  h1 {
+    font-size: 2.3rem;
+  }
+
+  .arco-moldura img {
+    height: 340px;
+  }
 }
