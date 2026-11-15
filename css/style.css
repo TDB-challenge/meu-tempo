@@ -123,3 +123,28 @@ button {
     background-color: var(--verde-salvia);
     color: var(--texto-principal);
 }
+/* =====================================================
+   9. TAMANHO E COR DOS ÍCONES (TAG IMG)
+   ===================================================== */
+.icone {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+
+.icone-pequeno {
+  width: 14px;
+  height: 14px;
+  object-fit: contain;
+}
+
+.icone-grande {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+}
+
+/* Deixa um ícone preto na cor branca quando estiver em fundo escuro */
+.icone-branco {
+  filter: brightness(0) invert(1);
+}
