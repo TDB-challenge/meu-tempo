@@ -1675,3 +1675,32 @@ img {
     grid-template-columns: 1fr;
   }
 }
+
+/* =====================================================
+   15. PERFIS AUTOMÁTICOS POR QR CODE (ACESSIBILIDADE)
+   ===================================================== */
+.lista-perfis-auto {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.card-perfil-auto {
+  background-color: var(--branco);
+  border: 1px solid var(--borda);
+  border-radius: 12px;
+  padding: 16px 18px;
+}
+
+.card-perfil-auto strong {
+  display: block;
+  font-size: 0.96rem;
+  color: var(--verde-floresta);
+  margin-bottom: 4px;
+}
+
+.card-perfil-auto p {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  margin-bottom: 0;
+}
