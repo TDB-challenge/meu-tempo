@@ -175,6 +175,108 @@
             </div>
 
 
+            <div class="coord-filtros-grid">
+              <div class="campo-grupo">
+                <label for="filtro-coord-orgao">Órgão <span class="asterisco">*</span></label>
+                <select id="filtro-coord-orgao" class="coord-select">
+                  <option value="todos">Todos</option>
+                  <option value="metro">Metrô / CPTM</option>
+                  <option value="cet">CET</option>
+                  <option value="zeladoria">Zeladoria</option>
+                </select>
+              </div>
+
+              <div class="campo-grupo">
+                <label for="filtro-coord-local">Local <span class="asterisco">*</span></label>
+                <select id="filtro-coord-local" class="coord-select">
+                  <option value="todos">Todos</option>
+                  <option value="consolacao">Consolação</option>
+                  <option value="paulista">Paulista</option>
+                  <option value="se">Sé</option>
+                </select>
+              </div>
+
+              <div class="campo-grupo">
+                <label for="filtro-coord-situacao">Situação <span class="asterisco">*</span></label>
+                <select id="filtro-coord-situacao" class="coord-select">
+                  <option value="todos">Todos</option>
+                  <option value="aguardando">Aguardando atendimento</option>
+                  <option value="aprovado">Aprovado</option>
+                  <option value="caminho">Funcionário a caminho</option>
+                  <option value="atendimento">Em atendimento</option>
+                  <option value="concluido">Concluído</option>
+                  <option value="analise">Em análise</option>
+                  <option value="recusado">Recusado</option>
+                </select>
+              </div>
+
+              <div class="campo-grupo">
+                <label for="filtro-coord-periodo">Período <span class="asterisco">*</span></label>
+                <select id="filtro-coord-periodo" class="coord-select">
+                  <option value="sessao">Esta sessão</option>
+                  <option value="hoje">Hoje</option>
+                  <option value="mes">Este mês</option>
+                </select>
+              </div>
+            </div>
+
+            <p id="contagem-coord-pedidos" class="coord-contagem-texto">
+              2 solicitações encontradas · Período selecionado
+            </p>
+
+            <div id="tabela-coord-wrapper" class="coord-tabela-wrapper">
+              <table class="coord-tabela">
+                <thead>
+                  <tr>
+                    <th>Protocolo</th>
+                    <th>Serviço e necessidade</th>
+                    <th>Local</th>
+                    <th>Situação</th>
+                    <th>Horário</th>
+                  </tr>
+                </thead>
+                <tbody id="tbody-coord-pedidos">
+                  <tr data-orgao="zeladoria" data-local="paulista" data-situacao="concluido">
+                    <td class="coord-td-proto">MT-1041</td>
+                    <td>
+                      <strong>Piso tátil danificado</strong>
+                      <span>Zeladoria</span>
+                    </td>
+                    <td>Av. Paulista &times; Rua Pamplona</td>
+                    <td><span class="admin-status-pill cet-pill-aprovado">Concluído</span></td>
+                    <td>Hoje · 09:15</td>
+                  </tr>
+                  <tr data-orgao="metro" data-local="consolacao" data-situacao="caminho">
+                    <td class="coord-td-proto">MT-1042</td>
+                    <td>
+                      <strong>Acompanhamento até a plataforma</strong>
+                      <span>Metrô</span>
+                    </td>
+                    <td>Consolação · Linha 2 — Verde · Entrada principal</td>
+                    <td><span class="admin-status-pill">Funcionário a caminho</span></td>
+                    <td>Hoje · 14:32</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div id="vazio-coord-pedidos" class="coord-estado-vazio" hidden>
+              <strong>Nenhum pedido neste filtro.</strong>
+              <p>Experimente outro filtro para encontrar os pedidos.</p>
+            </div>
+
+            <div class="admin-chamado-acoes" style="margin-top: 24px;">
+              <button type="button" id="btn-exportar-csv" class="btn">
+                Exportar CSV
+              </button>
+              <button type="button" id="btn-imprimir-relatorio" class="btn btn-contorno">
+                Imprimir relatório
+              </button>
+            </div>
+          </section>
+        </section>
+
+
 
 
 </body>
