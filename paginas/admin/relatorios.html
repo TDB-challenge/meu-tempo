@@ -5,8 +5,101 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Relatórios | Administração | Meu Tempo</title>
     <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/admin.css"/>
+    <script src="../../js/script.js" defer></script>
+    <script src="../../js/admin.js" defer></script>
 </head>
-<body>
+<body class="pagina-admin">
+  <div class="admin-shell">
+    <aside id="admin-sidebar" class="admin-sidebar" aria-label="Navegação administrativa">
+      <div class="admin-sidebar-topo">
+        <a href="../index.html" class="admin-logo">
+          <span class="admin-logo-circulo">
+            <img src="../../assets/icones/clock-three.png" alt="" class="icone" />
+          </span>
+          <div>
+            <span class="admin-logo-titulo">meu tempo</span>
+            <span class="admin-logo-sub">A cidade no seu ritmo.</span>
+          </div>
+        </a>
 
+        <div class="admin-ambiente-label">AMBIENTE ADMINISTRATIVO</div>
+
+        <div class="admin-area-select-grupo">
+          <label for="seletor-area-trabalho">Área de trabalho <span class="asterisco">*</span></label>
+          <select id="seletor-area-trabalho" class="admin-select-area">
+            <option value="metro.html">Agente Metrô / CPTM</option>
+            <option value="cet.html">Operador CET</option>
+            <option value="coordenacao.html" selected>Coordenador</option>
+          </select>
+        </div>
+
+        <nav class="admin-nav" aria-label="Seções do painel de Coordenação">
+          <a href="coordenacao.html#visao-geral" class="admin-nav-item">
+            <img src="../../assets/icones/casa.png" alt="" class="icone" />
+            <span>Visão estratégica</span>
+          </a>
+
+          <a href="coordenacao.html#solicitacoes" class="admin-nav-item">
+            <img src="../../assets/icones/papel.png" alt="" class="icone" />
+            <span>Solicitações</span>
+          </a>
+
+          <a href="coordenacao.html#estacoes" class="admin-nav-item">
+            <img src="../../assets/icones/subway.png" alt="" class="icone" />
+            <span>Estações</span>
+          </a>
+
+          <a href="coordenacao.html#cruzamentos" class="admin-nav-item">
+            <img src="../../assets/icones/marker.png" alt="" class="icone" />
+            <span>Cruzamentos</span>
+          </a>
+
+          <a href="coordenacao.html#equipamentos" class="admin-nav-item">
+            <img src="../../assets/icones/elevador.png" alt="" class="icone" />
+            <span>Equipamentos</span>
+          </a>
+
+          <a href="coordenacao.html#indicadores" class="admin-nav-item">
+            <img src="../../assets/icones/gráfico.png" alt="" class="icone" />
+            <span>Indicadores</span>
+          </a>
+
+          <a href="relatorios.html" class="admin-nav-item ativo" aria-current="page">
+            <img src="../../assets/icones/relatório.png" alt="" class="icone" />
+            <span>Relatórios</span>
+          </a>
+
+          <a href="coordenacao.html#gestao-acessos" class="admin-nav-item">
+            <img src="../../assets/icones/shield-check.png" alt="" class="icone" />
+            <span>Gestão de acessos</span>
+          </a>
+
+          <a href="coordenacao.html#historico" class="admin-nav-item">
+            <img src="../../assets/icones/clock.png" alt="" class="icone" />
+            <span>Histórico</span>
+          </a>
+
+          <a href="coordenacao.html#notificacoes" class="admin-nav-item">
+            <img src="../../assets/icones/sino.png" alt="" class="icone" />
+            <span>Notificações</span>
+          </a>
+
+          <a href="coordenacao.html#perfil" class="admin-nav-item">
+            <img src="../../assets/icones/user.png" alt="" class="icone" />
+            <span>Perfil do operador</span>
+          </a>
+        </nav>
+      </div>
+
+      <div class="admin-sidebar-rodape">
+        <a href="../solucao01.html" class="admin-link-secundario">Ver área do cidadão</a>
+        <a href="../index.html" class="admin-link-secundario">Voltar ao site</a>
+        <a href="../solucao02.html" class="admin-link-sair">
+          <img src="../../assets/icones/sair.png" alt="" class="icone" />
+          <span>Sair</span>
+        </a>
+      </div>
+    </aside>
 </body>
 </html>
