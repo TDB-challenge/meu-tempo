@@ -186,6 +186,94 @@
             </article>
           </div>
 
+          <!-- Card Branco: Decisões automáticas -->
+          <section class="card-branco admin-fila-card" aria-labelledby="titulo-decisoes-cet">
+            <div class="admin-fila-topo">
+              <div>
+                <h2 id="titulo-decisoes-cet">Decisões automáticas</h2>
+                <p>Acompanhe as decisões de cada ciclo.</p>
+              </div>
+
+              <div class="cet-acoes-topo">
+                <button type="button" id="btn-cet-add-aprovado" class="btn">
+                  + Pedido aprovado
+                </button>
+                <button type="button" id="btn-cet-add-recusado" class="btn btn-contorno">
+                  + Pedido recusado
+                </button>
+              </div>
+            </div>
+
+            <div id="lista-decisoes-cet" class="admin-chamados-lista">
+              <!-- Ciclo 1: Recusado (<= 8s) -->
+              <article class="admin-chamado-item">
+                <div class="admin-chamado-meta">
+                  <span>TR-102 · 14:37 · Origem: IARA</span>
+                  <span class="admin-status-pill cet-pill-recusado">
+                    <img src="../../assets/icones/X.png" alt="" class="icone" />
+                    RECUSADO
+                  </span>
+                </div>
+
+                <h3>Av. Paulista &times; Rua Augusta</h3>
+
+                <div class="cet-ciclo-grid">
+                  <div>
+                    <span class="cet-ciclo-label">Verde veicular restante</span>
+                    <strong>5 segundos</strong>
+                  </div>
+                  <div>
+                    <span class="cet-ciclo-label">Decisão do ciclo</span>
+                    <strong>Sem alteração neste ciclo</strong>
+                  </div>
+                  <div>
+                    <span class="cet-ciclo-label">Alertas</span>
+                    <strong>Standby · Não liberados</strong>
+                  </div>
+                </div>
+
+                <p class="cet-ciclo-nota">
+                  O ciclo não é alterado quando restam oito segundos ou menos de verde veicular.
+                </p>
+              </article>
+
+              <!-- Ciclo 2: Aprovado (> 8s -> 28s) -->
+              <article class="admin-chamado-item">
+                <div class="admin-chamado-meta">
+                  <span>TR-101 · 14:35 · Origem: IARA</span>
+                  <span class="admin-status-pill cet-pill-aprovado">
+                    <img src="../../assets/icones/check.png" alt="" class="icone" />
+                    APROVADO
+                  </span>
+                </div>
+
+                <h3>Av. Paulista &times; Av. Brigadeiro Luís Antônio</h3>
+
+                <div class="cet-ciclo-grid">
+                  <div>
+                    <span class="cet-ciclo-label">Verde veicular restante</span>
+                    <strong>14 segundos</strong>
+                  </div>
+                  <div>
+                    <span class="cet-ciclo-label">Decisão do ciclo</span>
+                    <strong>28 segundos totais programados</strong>
+                  </div>
+                  <div>
+                    <span class="cet-ciclo-label">Alertas</span>
+                    <strong>Standby · Não liberados</strong>
+                  </div>
+                </div>
+
+                <p class="cet-ciclo-nota">
+                  Pedido aceito. Aguardando transição do ciclo; ainda não é uma liberação de travessia.
+                </p>
+              </article>
+            </div>
+
+            <div id="aviso-decisoes-cet" class="aviso-contato" role="status" aria-live="polite" style="margin-top: 16px;"></div>
+          </section>
+        </section>
+
 
 
 
