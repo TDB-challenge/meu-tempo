@@ -4,9 +4,98 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CET | Administração | Meu Tempo</title>
-    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/admin.css">
+    <script src="../../js/administrativo.js" defer></script>
 </head>
 <body>
+
+    <body class="pagina-admin">
+  <div class="admin-shell">
+    <!-- ================= BARRA LATERAL ESQUERDA ================= -->
+    <aside id="admin-sidebar" class="admin-sidebar" aria-label="Navegação administrativa">
+      <div class="admin-sidebar-topo">
+        <a href="../index.html" class="admin-logo">
+          <span class="admin-logo-circulo">
+            <img src="../../assets/icones/clock-three.png" alt="" class="icone" />
+          </span>
+          <div>
+            <span class="admin-logo-titulo">meu tempo</span>
+            <span class="admin-logo-sub">A cidade no seu ritmo.</span>
+          </div>
+        </a>
+
+        <div class="admin-ambiente-label">AMBIENTE ADMINISTRATIVO</div>
+
+        <div class="admin-area-select-grupo">
+          <label for="seletor-area-trabalho">Área de trabalho <span class="asterisco">*</span></label>
+          <select id="seletor-area-trabalho" class="admin-select-area">
+            <option value="metro.html">Agente Metrô / CPTM</option>
+            <option value="cet.html" selected>Operador CET</option>
+            <option value="coordenacao.html">Coordenador</option>
+          </select>
+        </div>
+
+        <nav class="admin-nav" aria-label="Seções do painel CET">
+          <button type="button" class="admin-nav-item ativo" data-admin-aba="visao-geral">
+            <img src="../../assets/icones/casa.png" alt="" class="icone" />
+            <span>Visão geral</span>
+          </button>
+
+          <button type="button" class="admin-nav-item" data-admin-aba="decisoes">
+            <img src="../../assets/icones/papel.png" alt="" class="icone" />
+            <span>Decisões automáticas</span>
+          </button>
+
+          <button type="button" class="admin-nav-item" data-admin-aba="cruzamentos">
+            <img src="../../assets/icones/marker.png" alt="" class="icone" />
+            <span>Cruzamentos</span>
+          </button>
+
+          <button type="button" class="admin-nav-item" data-admin-aba="zeladoria">
+            <img src="../../assets/icones/filtro.png" alt="" class="icone" />
+            <span>Zeladoria viária</span>
+          </button>
+
+          <button type="button" class="admin-nav-item" data-admin-aba="indicadores">
+            <img src="../../assets/icones/gráfico.png" alt="" class="icone" />
+            <span>Indicadores</span>
+          </button>
+
+          <button type="button" class="admin-nav-item" data-admin-aba="historico">
+            <img src="../../assets/icones/clock.png" alt="" class="icone" />
+            <span>Histórico</span>
+          </button>
+
+          <button type="button" class="admin-nav-item" data-admin-aba="notificacoes">
+            <img src="../../assets/icones/sino.png" alt="" class="icone" />
+            <span>Notificações</span>
+          </button>
+
+          <button type="button" class="admin-nav-item" data-admin-aba="perfil">
+            <img src="../../assets/icones/user.png" alt="" class="icone" />
+            <span>Perfil do operador</span>
+          </button>
+        </nav>
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 </body>
 </html>
