@@ -4,9 +4,981 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CET | Administração | Meu Tempo</title>
-    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/admin.css">
+    <script src="../../js/script.js" defer></script>
+    <script src="../../js/administrativo.js" defer></script>
 </head>
 <body>
 
+    <body class="pagina-admin">
+  <div class="admin-shell">
+    <!-- ================= BARRA LATERAL ESQUERDA ================= -->
+    <aside id="admin-sidebar" class="admin-sidebar" aria-label="Navegação administrativa">
+      <div class="admin-sidebar-topo">
+        <a href="../index.html" class="admin-logo">
+          <span class="admin-logo-circulo">
+            <img src="../../assets/icones/clock-three.png" alt="" class="icone" />
+          </span>
+          <div>
+            <span class="admin-logo-titulo">meu tempo</span>
+            <span class="admin-logo-sub">A cidade no seu ritmo.</span>
+          </div>
+        </a>
+
+        <div class="admin-ambiente-label">AMBIENTE ADMINISTRATIVO</div>
+
+        <div class="admin-area-select-grupo">
+          <label for="seletor-area-trabalho">Área de trabalho <span class="asterisco">*</span></label>
+          <select id="seletor-area-trabalho" class="admin-select-area">
+            <option value="metro.html">Agente Metrô / CPTM</option>
+            <option value="cet.html" selected>Operador CET</option>
+            <option value="coordenacao.html">Coordenador</option>
+          </select>
+        </div>
+
+        <nav class="admin-nav" aria-label="Seções do painel CET">
+          <button type="button" class="admin-nav-item ativo" data-admin-aba="visao-geral">
+            <img src="../../assets/icones/casa.png" alt="" class="icone" />
+            <span>Visão geral</span>
+          </button>
+
+          <button type="button" class="admin-nav-item" data-admin-aba="decisoes">
+            <img src="../../assets/icones/papel.png" alt="" class="icone" />
+            <span>Decisões automáticas</span>
+          </button>
+
+          <button type="button" class="admin-nav-item" data-admin-aba="cruzamentos">
+            <img src="../../assets/icones/marker.png" alt="" class="icone" />
+            <span>Cruzamentos</span>
+          </button>
+
+          <button type="button" class="admin-nav-item" data-admin-aba="zeladoria">
+            <img src="../../assets/icones/filtro.png" alt="" class="icone" />
+            <span>Zeladoria viária</span>
+          </button>
+
+          <button type="button" class="admin-nav-item" data-admin-aba="indicadores">
+            <img src="../../assets/icones/gráfico.png" alt="" class="icone" />
+            <span>Indicadores</span>
+          </button>
+
+          <button type="button" class="admin-nav-item" data-admin-aba="historico">
+            <img src="../../assets/icones/clock.png" alt="" class="icone" />
+            <span>Histórico</span>
+          </button>
+
+          <button type="button" class="admin-nav-item" data-admin-aba="notificacoes">
+            <img src="../../assets/icones/sino.png" alt="" class="icone" />
+            <span>Notificações</span>
+          </button>
+
+          <button type="button" class="admin-nav-item" data-admin-aba="perfil">
+            <img src="../../assets/icones/user.png" alt="" class="icone" />
+            <span>Perfil do operador</span>
+          </button>
+        </nav>
+      </div>
+
+      <div class="admin-sidebar-rodape">
+        <a href="../solucao01.html" class="admin-link-secundario">Ver área do cidadão</a>
+        <a href="../index.html" class="admin-link-secundario">Voltar ao site</a>
+        <a href="../solucao02.html" class="admin-link-sair">
+          <img src="../../assets/icones/sair.png" alt="" class="icone" />
+          <span>Sair</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- ================= ÁREA PRINCIPAL DIREITA ================= -->
+    <div class="admin-conteudo-coluna">
+      <!-- Barra de ajustes rápidos de acessibilidade -->
+      <div id="painel-acess-rapido" class="painel-acess-rapido">
+        <div class="admin-container">
+          <strong>Ajustes rápidos de leitura:</strong>
+          <div class="botoes-acess">
+            <button type="button" class="acao-aumentar">A+ Aumentar texto</button>
+            <button type="button" class="acao-diminuir">A- Texto normal</button>
+            <button type="button" class="acao-fonte-legivel">Fonte Alta Legibilidade</button>
+            <button type="button" class="acao-contraste">Alto contraste</button>
+            <button type="button" class="acao-tema">Tema escuro</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Topbar da Região e Operador -->
+      <header class="admin-topbar">
+        <div class="admin-topbar-esquerda">
+          <button type="button" id="btn-admin-menu-mobile" class="btn-menu">Menu</button>
+          <div>
+            <span class="admin-breadcrumb">MEU TEMPO / CET · GESTÃO VIÁRIA</span>
+            <strong class="admin-estacao-titulo">Região Paulista</strong>
+          </div>
+        </div>
+
+        <div class="admin-topbar-direita">
+          <button
+            type="button"
+            id="btn-admin-acessibilidade"
+            class="admin-icon-btn"
+            aria-label="Abrir recursos de acessibilidade"
+            title="Recursos de acessibilidade"
+          >
+            <img src="../../assets/icones/homem.png" alt="" class="icone" />
+          </button>
+
+          <button
+            type="button"
+            id="btn-admin-notificacoes"
+            class="admin-icon-btn"
+            aria-label="Ver últimas atualizações"
+            title="Notificações"
+          >
+            <img src="../../assets/icones/sino.png" alt="" class="icone" />
+          </button>
+
+          <button
+            type="button"
+            id="btn-admin-perfil"
+            class="admin-operador-chip admin-operador-btn"
+            aria-label="Abrir perfil do operador"
+          >
+            <span class="admin-operador-avatar">
+              <img src="../../assets/icones/user.png" alt="" class="icone" />
+            </span>
+            <div>
+              <strong>Carlos Oliveira</strong>
+              <span>Matrícula 48217</span>
+            </div>
+          </button>
+        </div>
+      </header>
+
+      <!-- Conteúdo Principal -->
+      <main class="admin-main">
+        <!-- ==================== ABA 1: VISÃO GERAL ==================== -->
+        <section id="aba-visao-geral" class="admin-aba-painel">
+          <div class="admin-cabecalho-secao">
+            <div>
+              <div class="etiqueta">CUIDANDO DOS CAMINHOS DA CIDADE</div>
+              <h1>Visão geral</h1>
+            </div>
+
+            <div class="admin-badge-status">
+              <img src="../../assets/icones/wifi.png" alt="" class="icone" />
+              <span>Acompanhamento de pedidos</span>
+            </div>
+          </div>
+
+          <!-- 4 Cards de Indicadores (KPIs) -->
+          <div class="admin-kpis-grid">
+            <article class="card-branco admin-kpi-card">
+              <span class="admin-kpi-titulo">Solicitações recebidas</span>
+              <strong id="kpi-cet-recebidas" class="admin-kpi-valor">2</strong>
+            </article>
+
+            <article class="card-branco admin-kpi-card">
+              <span class="admin-kpi-titulo">Pedidos aprovados</span>
+              <strong id="kpi-cet-aprovados" class="admin-kpi-valor">1</strong>
+            </article>
+
+            <article class="card-branco admin-kpi-card">
+              <span class="admin-kpi-titulo">Pedidos recusados</span>
+              <strong id="kpi-cet-recusados" class="admin-kpi-valor">1</strong>
+            </article>
+
+            <article class="card-branco admin-kpi-card">
+              <span class="admin-kpi-titulo">Cruzamentos cadastrados</span>
+              <strong id="kpi-cet-cruzamentos" class="admin-kpi-valor">5</strong>
+            </article>
+          </div>
+
+          <!-- Card Branco: Decisões automáticas -->
+          <section class="card-branco admin-fila-card" aria-labelledby="titulo-decisoes-cet">
+            <div class="admin-fila-topo">
+              <div>
+                <h2 id="titulo-decisoes-cet">Decisões automáticas</h2>
+                <p>Acompanhe as decisões de cada ciclo.</p>
+              </div>
+
+              <div class="cet-acoes-topo">
+                <button type="button" id="btn-cet-add-aprovado" class="btn">
+                  + Pedido aprovado
+                </button>
+                <button type="button" id="btn-cet-add-recusado" class="btn btn-contorno">
+                  + Pedido recusado
+                </button>
+              </div>
+            </div>
+
+            <div id="lista-decisoes-cet" class="admin-chamados-lista">
+              <!-- Ciclo 1: Recusado (<= 8s) -->
+              <article class="admin-chamado-item">
+                <div class="admin-chamado-meta">
+                  <span>TR-102 · 14:37 · Origem: IARA</span>
+                  <span class="admin-status-pill cet-pill-recusado">
+                    <img src="../../assets/icones/X.png" alt="" class="icone" />
+                    RECUSADO
+                  </span>
+                </div>
+
+                <h3>Av. Paulista &times; Rua Augusta</h3>
+
+                <div class="cet-ciclo-grid">
+                  <div>
+                    <span class="cet-ciclo-label">Verde veicular restante</span>
+                    <strong>5 segundos</strong>
+                  </div>
+                  <div>
+                    <span class="cet-ciclo-label">Decisão do ciclo</span>
+                    <strong>Sem alteração neste ciclo</strong>
+                  </div>
+                  <div>
+                    <span class="cet-ciclo-label">Alertas</span>
+                    <strong>Standby · Não liberados</strong>
+                  </div>
+                </div>
+
+                <p class="cet-ciclo-nota">
+                  O ciclo não é alterado quando restam oito segundos ou menos de verde veicular.
+                </p>
+              </article>
+
+              <!-- Ciclo 2: Aprovado (> 8s -> 28s) -->
+              <article class="admin-chamado-item">
+                <div class="admin-chamado-meta">
+                  <span>TR-101 · 14:35 · Origem: IARA</span>
+                  <span class="admin-status-pill cet-pill-aprovado">
+                    <img src="../../assets/icones/check.png" alt="" class="icone" />
+                    APROVADO
+                  </span>
+                </div>
+
+                <h3>Av. Paulista &times; Av. Brigadeiro Luís Antônio</h3>
+
+                <div class="cet-ciclo-grid">
+                  <div>
+                    <span class="cet-ciclo-label">Verde veicular restante</span>
+                    <strong>14 segundos</strong>
+                  </div>
+                  <div>
+                    <span class="cet-ciclo-label">Decisão do ciclo</span>
+                    <strong>28 segundos totais programados</strong>
+                  </div>
+                  <div>
+                    <span class="cet-ciclo-label">Alertas</span>
+                    <strong>Standby · Não liberados</strong>
+                  </div>
+                </div>
+
+                <p class="cet-ciclo-nota">
+                  Pedido aceito. Aguardando transição do ciclo; ainda não é uma liberação de travessia.
+                </p>
+              </article>
+            </div>
+
+            <div id="aviso-decisoes-cet" class="aviso-contato" role="status" aria-live="polite" style="margin-top: 16px;"></div>
+          </section>
+        </section>
+
+        <!-- ==================== ABA 2: DECISÕES AUTOMÁTICAS ==================== -->
+        <section id="aba-decisoes" class="admin-aba-painel" hidden>
+          <div class="admin-cabecalho-secao">
+            <div>
+              <div class="etiqueta">CUIDANDO DOS CAMINHOS DA CIDADE</div>
+              <h1>Decisões automáticas</h1>
+            </div>
+
+            <div class="admin-badge-status">
+              <img src="../../assets/icones/wifi.png" alt="" class="icone" />
+              <span>Acompanhamento de pedidos</span>
+            </div>
+          </div>
+
+          <div class="card-branco admin-fila-card">
+            <div class="admin-fila-topo">
+              <div>
+                <h2>Log de ciclos semafóricos</h2>
+                <p>Regras de 8s (preservação de fluxo) e 28s (travessia estendida).</p>
+              </div>
+              <button type="button" class="btn btn-contorno" data-voltar-visao>
+                &larr; Voltar para Visão geral
+              </button>
+            </div>
+
+            <div id="espelho-decisoes-cet" class="admin-chamados-lista"></div>
+          </div>
+        </section>
+
+        <!-- ==================== ABA 3: CRUZAMENTOS ==================== -->
+        <section id="aba-cruzamentos" class="admin-aba-painel" hidden>
+          <div class="admin-cabecalho-secao">
+            <div>
+              <div class="etiqueta">CUIDANDO DOS CAMINHOS DA CIDADE</div>
+              <h1>Cruzamentos</h1>
+            </div>
+
+            <div class="admin-badge-status">
+              <img src="../../assets/icones/sinal.png" alt="" class="icone" />
+              <span>Acompanhamento de pedidos</span>
+            </div>
+          </div>
+
+          <div class="card-branco admin-fila-card">
+            <div class="admin-fila-topo">
+              <div>
+                <h2>Cruzamentos cadastrados</h2>
+                <p>Semáforos inteligentes e pontos monitorados na Região Paulista.</p>
+              </div>
+            </div>
+
+            <div class="campo-grupo" style="margin-bottom: 24px;">
+              <label for="busca-cruzamento" class="sr-only">Pesquisar cruzamento</label>
+              <input
+                type="search"
+                id="busca-cruzamento"
+                placeholder="Pesquisar cruzamento..."
+              />
+            </div>
+
+            <div id="lista-cruzamentos-cet" class="admin-chamados-lista">
+              <article class="admin-chamado-item" data-cruzamento="av. paulista rua augusta cr-001">
+                <div class="admin-chamado-meta">
+                  <h3>Av. Paulista &times; Rua Augusta</h3>
+                  <span class="admin-status-pill cet-pill-aprovado">&check; Com suporte</span>
+                </div>
+                <div class="cet-ciclo-grid">
+                  <div>
+                    <span class="cet-ciclo-label">Identificador</span>
+                    <strong>CR-001</strong>
+                  </div>
+                  <div>
+                    <span class="cet-ciclo-label">Acompanhamento</span>
+                    <strong>Ciclo de veículos</strong>
+                  </div>
+                  <div>
+                    <span class="cet-ciclo-label">Alertas</span>
+                    <strong>Aguardando ciclo</strong>
+                  </div>
+                </div>
+              </article>
+
+              <article class="admin-chamado-item" data-cruzamento="av. paulista rua da consolacao cr-002">
+                <div class="admin-chamado-meta">
+                  <h3>Av. Paulista &times; Rua da Consolação</h3>
+                  <span class="admin-status-pill cet-pill-neutro">&times; Sem suporte</span>
+                </div>
+                <div class="cet-ciclo-grid">
+                  <div>
+                    <span class="cet-ciclo-label">Identificador</span>
+                    <strong>CR-002</strong>
+                  </div>
+                  <div>
+                    <span class="cet-ciclo-label">Acompanhamento</span>
+                    <strong>Não monitorado</strong>
+                  </div>
+                  <div>
+                    <span class="cet-ciclo-label">Alertas</span>
+                    <strong>Indisponível</strong>
+                  </div>
+                </div>
+              </article>
+
+              <article class="admin-chamado-item" data-cruzamento="av. paulista rua pamplona cr-003">
+                <div class="admin-chamado-meta">
+                  <h3>Av. Paulista &times; Rua Pamplona</h3>
+                  <span class="admin-status-pill cet-pill-neutro">&times; Sem suporte</span>
+                </div>
+                <div class="cet-ciclo-grid">
+                  <div>
+                    <span class="cet-ciclo-label">Identificador</span>
+                    <strong>CR-003</strong>
+                  </div>
+                  <div>
+                    <span class="cet-ciclo-label">Acompanhamento</span>
+                    <strong>Não monitorado</strong>
+                  </div>
+                  <div>
+                    <span class="cet-ciclo-label">Alertas</span>
+                    <strong>Indisponível</strong>
+                  </div>
+                </div>
+              </article>
+
+              <article class="admin-chamado-item" data-cruzamento="av. paulista alameda campinas cr-004">
+                <div class="admin-chamado-meta">
+                  <h3>Av. Paulista &times; Alameda Campinas</h3>
+                  <span class="admin-status-pill cet-pill-aprovado">&check; Com suporte</span>
+                </div>
+                <div class="cet-ciclo-grid">
+                  <div>
+                    <span class="cet-ciclo-label">Identificador</span>
+                    <strong>CR-004</strong>
+                  </div>
+                  <div>
+                    <span class="cet-ciclo-label">Acompanhamento</span>
+                    <strong>Ciclo de veículos</strong>
+                  </div>
+                  <div>
+                    <span class="cet-ciclo-label">Alertas</span>
+                    <strong>Aguardando ciclo</strong>
+                  </div>
+                </div>
+              </article>
+
+              <article class="admin-chamado-item" data-cruzamento="av. paulista av. brigadeiro luis antonio cr-005">
+                <div class="admin-chamado-meta">
+                  <h3>Av. Paulista &times; Av. Brigadeiro Luís Antônio</h3>
+                  <span class="admin-status-pill cet-pill-aprovado">&check; Com suporte</span>
+                </div>
+                <div class="cet-ciclo-grid">
+                  <div>
+                    <span class="cet-ciclo-label">Identificador</span>
+                    <strong>CR-005</strong>
+                  </div>
+                  <div>
+                    <span class="cet-ciclo-label">Acompanhamento</span>
+                    <strong>Ciclo de veículos</strong>
+                  </div>
+                  <div>
+                    <span class="cet-ciclo-label">Alertas</span>
+                    <strong>Aguardando ciclo</strong>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== ABA 4: ZELADORIA VIÁRIA ==================== -->
+        <section id="aba-zeladoria" class="admin-aba-painel" hidden>
+          <div class="admin-cabecalho-secao">
+            <div>
+              <div class="etiqueta">CUIDANDO DOS CAMINHOS DA CIDADE</div>
+              <h1>Zeladoria viária</h1>
+            </div>
+
+            <div class="admin-badge-status">
+              <img src="../../assets/icones/sinal.png" alt="" class="icone" />
+              <span>Acompanhamento de pedidos</span>
+            </div>
+          </div>
+
+          <div class="card-branco admin-fila-card">
+            <div class="admin-fila-topo">
+              <div>
+                <h2>Ocorrências de acessibilidade</h2>
+                <p>Relatos de manutenção urbana enviados pelos cidadãos na região.</p>
+              </div>
+            </div>
+
+            <article class="admin-chamado-item">
+              <div class="admin-chamado-meta">
+                <span>MT-1041 · Hoje · 09:15</span>
+              </div>
+
+              <h3>Piso tátil danificado</h3>
+              <p class="admin-chamado-local">Av. Paulista &times; Rua Pamplona</p>
+
+              <div style="margin: 12px 0 20px;">
+                <span id="status-zeladoria-mt1041" class="admin-status-pill cet-pill-aprovado">
+                  Concluído
+                </span>
+              </div>
+
+              <div class="admin-chamado-acoes">
+                <button type="button" id="btn-zeladoria-analise" class="btn">
+                  Marcar em análise
+                </button>
+                <button type="button" id="btn-zeladoria-resolvido" class="btn btn-contorno">
+                  Marcar como resolvido
+                </button>
+              </div>
+            </article>
+
+            <div id="aviso-zeladoria" class="aviso-contato" role="status" aria-live="polite" style="margin-top: 16px;"></div>
+          </div>
+        </section>
+
+        <!-- ==================== ABA 5: INDICADORES ==================== -->
+        <section id="aba-indicadores" class="admin-aba-painel" hidden>
+          <div class="admin-cabecalho-secao">
+            <div>
+              <div class="etiqueta">CUIDANDO DOS CAMINHOS DA CIDADE</div>
+              <h1>Indicadores</h1>
+            </div>
+
+            <div class="admin-badge-status">
+              <img src="../../assets/icones/wifi.png" alt="" class="icone" />
+              <span>Acompanhamento de pedidos</span>
+            </div>
+          </div>
+
+          <div class="card-branco admin-fila-card">
+            <div class="admin-fila-topo">
+              <div>
+                <h2>Demanda por serviço</h2>
+                <p>Acompanhe a distribuição dos pedidos:</p>
+              </div>
+              <span class="admin-status-pill">Pedidos por serviço</span>
+            </div>
+
+            <div class="cet-barras-lista" aria-label="Gráfico de barras de demanda por serviço">
+              <div class="cet-barra-linha">
+                <span class="cet-barra-nome">Metrô</span>
+                <div class="cet-barra-trilha">
+                  <div class="cet-barra-preenchimento" style="width: 16%;"></div>
+                </div>
+                <strong class="cet-barra-valor">1</strong>
+              </div>
+
+              <div class="cet-barra-linha">
+                <span class="cet-barra-nome">Travessia</span>
+                <div class="cet-barra-trilha">
+                  <div class="cet-barra-preenchimento" style="width: 100%;"></div>
+                </div>
+                <strong class="cet-barra-valor">6</strong>
+              </div>
+
+              <div class="cet-barra-linha">
+                <span class="cet-barra-nome">Zeladoria</span>
+                <div class="cet-barra-trilha">
+                  <div class="cet-barra-preenchimento" style="width: 16%;"></div>
+                </div>
+                <strong class="cet-barra-valor">1</strong>
+              </div>
+            </div>
+
+            <details class="cet-dados-texto" open>
+              <summary>Ver os dados em texto</summary>
+              <ul>
+                <li>Metrô: 1 solicitações.</li>
+                <li>Travessia: 6 solicitações.</li>
+                <li>Zeladoria: 1 solicitações.</li>
+              </ul>
+            </details>
+
+            <p class="cet-ciclo-nota" style="margin-top: 16px;">
+              A demanda ajuda a identificar locais para avaliação.
+            </p>
+          </div>
+        </section>
+
+<!-- ==================== ABA 6: HISTÓRICO ==================== -->
+        <section id="aba-historico" class="admin-aba-painel" hidden>
+          <div class="admin-cabecalho-secao">
+            <div>
+              <div class="etiqueta">CUIDANDO DOS CAMINHOS DA CIDADE</div>
+              <h1>Histórico</h1>
+            </div>
+
+            <div class="admin-badge-status">
+              <img src="../../assets/icones/wifi.png" alt="" class="icone" />
+              <span>Acompanhamento de pedidos</span>
+            </div>
+          </div>
+
+          <div class="card-branco admin-fila-card">
+            <div class="admin-fila-topo">
+              <div>
+                <h2>Histórico de atividades</h2>
+                <p>Linha do tempo de eventos registrados na Região Paulista.</p>
+              </div>
+            </div>
+
+            <ul class="cet-timeline">
+              <li>
+                <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
+                <div>
+                  <strong>MT-1042 · Funcionário a caminho</strong>
+                  <p>14:35 · Aguarde próximo à entrada principal.</p>
+                </div>
+              </li>
+              <li>
+                <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
+                <div>
+                  <strong>MT-1042 · Aprovado</strong>
+                  <p>14:33</p>
+                </div>
+              </li>
+              <li>
+                <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
+                <div>
+                  <strong>MT-1042 · Pedido recebido</strong>
+                  <p>14:32</p>
+                </div>
+              </li>
+              <li>
+                <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
+                <div>
+                  <strong>MT-1041 · Concluído</strong>
+                  <p>11:45 · Passagem desobstruída.</p>
+                </div>
+              </li>
+              <li>
+                <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
+                <div>
+                  <strong>MT-1041 · Em análise</strong>
+                  <p>09:22</p>
+                </div>
+              </li>
+              <li>
+                <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
+                <div>
+                  <strong>MT-1041 · Pedido recebido</strong>
+                  <p>09:15</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- ==================== ABA 7: NOTIFICAÇÕES ==================== -->
+        <section id="aba-notificacoes" class="admin-aba-painel" hidden>
+          <div class="admin-cabecalho-secao">
+            <div>
+              <div class="etiqueta">CUIDANDO DOS CAMINHOS DA CIDADE</div>
+              <h1>Central de notificações</h1>
+            </div>
+
+            <div class="admin-badge-status">
+              <img src="../../assets/icones/wifi.png" alt="" class="icone" />
+              <span>Acompanhamento de pedidos</span>
+            </div>
+          </div>
+
+          <div class="card-branco admin-fila-card">
+            <div class="admin-fila-topo">
+              <div>
+                <h2>Histórico de atividades</h2>
+                <p>Atualizações recentes dos ciclos semafóricos e ocorrências.</p>
+              </div>
+            </div>
+
+            <ul class="cet-timeline">
+              <li>
+                <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
+                <div>
+                  <strong>MT-1042 · Funcionário a caminho</strong>
+                  <p>14:35 · Aguarde próximo à entrada principal.</p>
+                </div>
+              </li>
+              <li>
+                <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
+                <div>
+                  <strong>TR-102 · Ciclo preservado (8s)</strong>
+                  <p>14:37 · Av. Paulista &times; Rua Augusta mantido sem alteração.</p>
+                </div>
+              </li>
+              <li>
+                <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
+                <div>
+                  <strong>TR-101 · Tempo estendido programado (28s)</strong>
+                  <p>14:35 · Av. Paulista &times; Av. Brigadeiro Luís Antônio aguardando transição.</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- ==================== ABA 8: PERFIL DO OPERADOR ==================== -->
+        <section id="aba-perfil" class="admin-aba-painel" hidden>
+          <div class="admin-cabecalho-secao">
+            <div>
+              <div class="etiqueta">CUIDANDO DOS CAMINHOS DA CIDADE</div>
+              <h1>Perfil do operador</h1>
+            </div>
+
+            <div class="admin-badge-status">
+              <img src="../../assets/icones/wifi.png" alt="" class="icone" />
+              <span>Acompanhamento de pedidos</span>
+            </div>
+          </div>
+
+          <div class="card-branco admin-fila-card">
+            <div class="cet-perfil-topo">
+              <span class="cet-perfil-avatar">
+                <img src="../../assets/icones/user.png" alt="" class="icone" />
+              </span>
+              <div>
+                <h2>Carlos Oliveira</h2>
+                <p>Matrícula 48217 · CET · Gestão viária</p>
+                <p>Vínculo: Região Paulista</p>
+              </div>
+            </div>
+
+            <div class="painel-status" style="margin: 22px 0;">
+              Seu acesso é limitado ao órgão e às localidades vinculadas ao seu perfil.
+            </div>
+
+            <div class="admin-chamado-acoes">
+              <a href="../solucao02.html" class="btn btn-contorno">
+                Trocar perfil &rarr;
+              </a>
+              <a href="../solucao02.html" class="btn">
+                Sair &rarr;
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <!-- Rodapé da área operacional -->
+        <footer class="admin-rodape">
+          <img src="../../assets/icones/shield-check.png" alt="" class="icone" />
+          <span>Operação semafórica e zeladoria · Região Paulista · CET.</span>
+        </footer>
+      </main>
+    </div>
+  </div>
+
+<!-- ================= POP-UP 1: ACESSIBILIDADE ================= -->
+  <div id="modal-admin-acessibilidade" class="admin-modal-overlay" hidden>
+    <div
+      class="admin-modal-caixa"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="titulo-modal-acess"
+    >
+      <div class="admin-modal-topo">
+        <h2 id="titulo-modal-acess">Uma experiência do seu jeito</h2>
+        <button
+          type="button"
+          class="admin-modal-fechar"
+          data-fechar-modal
+          aria-label="Fechar janela de acessibilidade"
+        >
+          &times;
+        </button>
+      </div>
+
+      <div class="admin-modal-grupo-select">
+        <label for="modal-select-fonte">Tamanho das letras</label>
+        <select id="modal-select-fonte" class="admin-modal-select">
+          <option value="100" selected>100% — padrão</option>
+          <option value="115">115% — médio</option>
+          <option value="130">130% — grande</option>
+          <option value="150">150% — extra grande</option>
+        </select>
+      </div>
+
+      <div class="admin-modal-opcoes-lista">
+        <label class="admin-modal-opcao-item" for="modal-toggle-contraste">
+          <div class="admin-modal-opcao-info">
+            <img src="../../assets/icones/eye.png" alt="" class="icone" />
+            <div>
+              <strong>Alto contraste</strong>
+              <span>Textos e botões mais destacados.</span>
+            </div>
+          </div>
+          <span class="admin-switch">
+            <input type="checkbox" id="modal-toggle-contraste" />
+            <span class="admin-switch-trilho"></span>
+          </span>
+        </label>
+
+        <label class="admin-modal-opcao-item" for="modal-toggle-iara">
+          <div class="admin-modal-opcao-info">
+            <img src="../../assets/icones/artificial-intelligence.png" alt="" class="icone" />
+            <div>
+              <strong>Ouvir a IARA</strong>
+              <span>Respostas por voz e por texto.</span>
+            </div>
+          </div>
+          <span class="admin-switch">
+            <input type="checkbox" id="modal-toggle-iara" />
+            <span class="admin-switch-trilho"></span>
+          </span>
+        </label>
+
+        <label class="admin-modal-opcao-item" for="modal-toggle-vibrar">
+          <div class="admin-modal-opcao-info">
+            <img src="../../assets/icones/watch-smart.png" alt="" class="icone" />
+            <div>
+              <strong>Vibrar nos avisos</strong>
+              <span>Quando o dispositivo permitir.</span>
+            </div>
+          </div>
+          <span class="admin-switch">
+            <input type="checkbox" id="modal-toggle-vibrar" />
+            <span class="admin-switch-trilho"></span>
+          </span>
+        </label>
+      </div>
+
+      <!-- Cartão expansível: Mais opções de leitura -->
+      <div class="admin-modal-mais-leitura">
+        <button
+          type="button"
+          id="btn-mais-opcoes-leitura"
+          class="admin-modal-mais-btn"
+          aria-expanded="false"
+        >
+          <span class="admin-modal-mais-esquerda">
+            <img src="../../assets/icones/filtro.png" alt="" class="icone" />
+            <strong>Mais opções de leitura</strong>
+          </span>
+          <span class="admin-modal-seta">&rsaquo;</span>
+        </button>
+
+        <div id="painel-mais-leitura" class="admin-modal-mais-conteudo" hidden>
+          <label class="admin-modal-opcao-item" for="modal-toggle-fonte-legivel">
+            <div class="admin-modal-opcao-info">
+              <div>
+                <strong>Fonte Alta Legibilidade</strong>
+                <span>Espaçamento ampliado entre letras e linhas.</span>
+              </div>
+            </div>
+            <span class="admin-switch">
+              <input type="checkbox" id="modal-toggle-fonte-legivel" />
+              <span class="admin-switch-trilho"></span>
+            </span>
+          </label>
+
+          <label class="admin-modal-opcao-item" for="modal-toggle-tema-escuro">
+            <div class="admin-modal-opcao-info">
+              <div>
+                <strong>Tema escuro</strong>
+                <span>Reduz o brilho da tela em ambientes escuros.</span>
+              </div>
+            </div>
+            <span class="admin-switch">
+              <input type="checkbox" id="modal-toggle-tema-escuro" />
+              <span class="admin-switch-trilho"></span>
+            </span>
+          </label>
+        </div>
+      </div>
+
+      <div class="admin-modal-rodape">
+        <button type="button" id="btn-restaurar-acess" class="btn btn-contorno">
+          Restaurar padrão
+        </button>
+        <a href="../acessibilidade.html" class="link-seta">
+          Conhecer todos os recursos &rarr;
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= POP-UP 2: NOTIFICAÇÕES ================= -->
+  <div id="modal-admin-notificacoes" class="admin-modal-overlay" hidden>
+    <div
+      class="admin-modal-caixa"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="titulo-modal-notif"
+    >
+      <div class="admin-modal-topo">
+        <h2 id="titulo-modal-notif">Últimas atualizações</h2>
+        <button
+          type="button"
+          class="admin-modal-fechar"
+          data-fechar-modal
+          aria-label="Fechar notificações"
+        >
+          &times;
+        </button>
+      </div>
+
+      <div class="card-branco admin-modal-card-interno">
+        <h3>Histórico de atividades</h3>
+
+        <ul class="cet-timeline cet-timeline-conectada">
+          <li>
+            <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
+            <div>
+              <strong>MT-1042 · Funcionário a caminho</strong>
+              <p>14:35 · Aguarde próximo à entrada principal.</p>
+            </div>
+          </li>
+          <li>
+            <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
+            <div>
+              <strong>MT-1042 · Aprovado</strong>
+              <p>14:33</p>
+            </div>
+          </li>
+          <li>
+            <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
+            <div>
+              <strong>MT-1042 · Pedido recebido</strong>
+              <p>14:32</p>
+            </div>
+          </li>
+          <li>
+            <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
+            <div>
+              <strong>MT-1041 · Concluído</strong>
+              <p>11:40 · Passagem desobstruída.</p>
+            </div>
+          </li>
+          <li>
+            <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
+            <div>
+              <strong>MT-1041 · Em análise</strong>
+              <p>09:22</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= POP-UP 3: PERFIL DO OPERADOR ================= -->
+  <div id="modal-admin-perfil" class="admin-modal-overlay" hidden>
+    <div
+      class="admin-modal-caixa"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="titulo-modal-perfil"
+    >
+      <div class="admin-modal-topo">
+        <h2 id="titulo-modal-perfil">Perfil do operador</h2>
+        <button
+          type="button"
+          class="admin-modal-fechar"
+          data-fechar-modal
+          aria-label="Fechar perfil do operador"
+        >
+          &times;
+        </button>
+      </div>
+
+      <div class="card-branco admin-modal-card-interno">
+        <div class="cet-perfil-topo">
+          <span class="cet-perfil-avatar">
+            <img src="../../assets/icones/user.png" alt="" class="icone" />
+          </span>
+          <div>
+            <h3>Carlos Oliveira</h3>
+            <p>Matrícula 48217 · Operação integrada</p>
+            <p>Vínculo: Região Paulista / Estação Consolação</p>
+          </div>
+        </div>
+
+        <div class="painel-status" style="margin: 20px 0;">
+          Seu acesso é limitado ao órgão e às localidades vinculadas ao seu perfil.
+        </div>
+
+        <div class="admin-chamado-acoes">
+          <a href="../solucao02.html" class="btn btn-contorno">Trocar perfil &rarr;</a>
+          <a href="../solucao02.html" class="btn">Sair &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Integração oficial do VLibras -->
+  <div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+      <div class="vw-plugin-top-wrapper"></div>
+    </div>
+  </div>
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script>
 </body>
 </html>

@@ -5,8 +5,495 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Relatórios | Administração | Meu Tempo</title>
     <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/admin.css"/>
+    <script src="../../js/script.js" defer></script>
+    <script src="../../js/administrativo.js" defer></script>
 </head>
-<body>
+<body class="pagina-admin">
+  <div class="admin-shell">
+    <aside id="admin-sidebar" class="admin-sidebar" aria-label="Navegação administrativa">
+      <div class="admin-sidebar-topo">
+        <a href="../index.html" class="admin-logo">
+          <span class="admin-logo-circulo">
+            <img src="../../assets/icones/clock-three.png" alt="" class="icone" />
+          </span>
+          <div>
+            <span class="admin-logo-titulo">meu tempo</span>
+            <span class="admin-logo-sub">A cidade no seu ritmo.</span>
+          </div>
+        </a>
+
+        <div class="admin-ambiente-label">AMBIENTE ADMINISTRATIVO</div>
+
+        <div class="admin-area-select-grupo">
+          <label for="seletor-area-trabalho">Área de trabalho <span class="asterisco">*</span></label>
+          <select id="seletor-area-trabalho" class="admin-select-area">
+            <option value="metro.html">Agente Metrô / CPTM</option>
+            <option value="cet.html">Operador CET</option>
+            <option value="coordenacao.html" selected>Coordenador</option>
+          </select>
+        </div>
+
+        <nav class="admin-nav" aria-label="Seções do painel de Coordenação">
+          <a href="coordenacao.html#visao-geral" class="admin-nav-item">
+            <img src="../../assets/icones/casa.png" alt="" class="icone" />
+            <span>Visão estratégica</span>
+          </a>
+
+          <a href="coordenacao.html#solicitacoes" class="admin-nav-item">
+            <img src="../../assets/icones/papel.png" alt="" class="icone" />
+            <span>Solicitações</span>
+          </a>
+
+          <a href="coordenacao.html#estacoes" class="admin-nav-item">
+            <img src="../../assets/icones/subway.png" alt="" class="icone" />
+            <span>Estações</span>
+          </a>
+
+          <a href="coordenacao.html#cruzamentos" class="admin-nav-item">
+            <img src="../../assets/icones/marker.png" alt="" class="icone" />
+            <span>Cruzamentos</span>
+          </a>
+
+          <a href="coordenacao.html#equipamentos" class="admin-nav-item">
+            <img src="../../assets/icones/elevador.png" alt="" class="icone" />
+            <span>Equipamentos</span>
+          </a>
+
+          <a href="coordenacao.html#indicadores" class="admin-nav-item">
+            <img src="../../assets/icones/gráfico.png" alt="" class="icone" />
+            <span>Indicadores</span>
+          </a>
+
+          <a href="relatorios.html" class="admin-nav-item ativo" aria-current="page">
+            <img src="../../assets/icones/relatório.png" alt="" class="icone" />
+            <span>Relatórios</span>
+          </a>
+
+          <a href="coordenacao.html#gestao-acessos" class="admin-nav-item">
+            <img src="../../assets/icones/shield-check.png" alt="" class="icone" />
+            <span>Gestão de acessos</span>
+          </a>
+
+          <a href="coordenacao.html#historico" class="admin-nav-item">
+            <img src="../../assets/icones/clock.png" alt="" class="icone" />
+            <span>Histórico</span>
+          </a>
+
+          <a href="coordenacao.html#notificacoes" class="admin-nav-item">
+            <img src="../../assets/icones/sino.png" alt="" class="icone" />
+            <span>Notificações</span>
+          </a>
+
+          <a href="coordenacao.html#perfil" class="admin-nav-item">
+            <img src="../../assets/icones/user.png" alt="" class="icone" />
+            <span>Perfil do operador</span>
+          </a>
+        </nav>
+      </div>
+
+      <div class="admin-sidebar-rodape">
+        <a href="../solucao01.html" class="admin-link-secundario">Ver área do cidadão</a>
+        <a href="../index.html" class="admin-link-secundario">Voltar ao site</a>
+        <a href="../solucao02.html" class="admin-link-sair">
+          <img src="../../assets/icones/sair.png" alt="" class="icone" />
+          <span>Sair</span>
+        </a>
+      </div>
+    </aside>
+
+
+    <div class="admin-conteudo-coluna">
+      <!-- Topbar -->
+      <header class="admin-topbar">
+        <div class="admin-topbar-esquerda">
+          <button type="button" id="btn-admin-menu-mobile" class="btn-menu">Menu</button>
+          <div>
+            <span class="admin-breadcrumb">MEU TEMPO / COORDENAÇÃO</span>
+            <strong class="admin-estacao-titulo">Visão consolidada</strong>
+          </div>
+        </div>
+
+        <div class="admin-topbar-direita">
+          <button
+            type="button"
+            id="btn-admin-acessibilidade"
+            class="admin-icon-btn"
+            aria-label="Abrir recursos de acessibilidade"
+            title="Recursos de acessibilidade"
+          >
+            <img src="../../assets/icones/homem.png" alt="" class="icone" />
+          </button>
+
+          <button
+            type="button"
+            id="btn-admin-notificacoes"
+            class="admin-icon-btn"
+            aria-label="Ver últimas atualizações"
+            title="Notificações"
+          >
+            <img src="../../assets/icones/sino.png" alt="" class="icone" />
+          </button>
+
+          <button
+            type="button"
+            id="btn-admin-perfil"
+            class="admin-operador-chip admin-operador-btn"
+            aria-label="Abrir perfil do operador"
+          >
+            <span class="admin-operador-avatar">
+              <img src="../../assets/icones/user.png" alt="" class="icone" />
+            </span>
+            <div>
+              <strong>Carlos Oliveira</strong>
+              <span>Matrícula 48217</span>
+            </div>
+          </button>
+        </div>
+      </header>
+
+      <main class="admin-main">
+        <section class="admin-aba-painel">
+          <div class="admin-cabecalho-secao">
+            <div>
+              <div class="etiqueta">CUIDANDO DOS CAMINHOS DA CIDADE</div>
+              <h1>Relatórios</h1>
+            </div>
+
+            <div class="admin-badge-status">
+              <img src="../../assets/icones/wifi.png" alt="" class="icone" />
+              <span>Acompanhamento de pedidos</span>
+            </div>
+          </div>
+
+          <section class="card-branco admin-fila-card" aria-labelledby="titulo-relatorio-atendimentos">
+            <div class="admin-fila-topo">
+              <div>
+                <h2 id="titulo-relatorio-atendimentos">Relatório de atendimentos</h2>
+                <p>Exporte ou imprima os registros consolidados da sessão.</p>
+              </div>
+            </div>
+
+
+            <div class="coord-filtros-grid">
+              <div class="campo-grupo">
+                <label for="filtro-coord-orgao">Órgão <span class="asterisco">*</span></label>
+                <select id="filtro-coord-orgao" class="coord-select">
+                  <option value="todos">Todos</option>
+                  <option value="metro">Metrô / CPTM</option>
+                  <option value="cet">CET</option>
+                  <option value="zeladoria">Zeladoria</option>
+                </select>
+              </div>
+
+              <div class="campo-grupo">
+                <label for="filtro-coord-local">Local <span class="asterisco">*</span></label>
+                <select id="filtro-coord-local" class="coord-select">
+                  <option value="todos">Todos</option>
+                  <option value="consolacao">Consolação</option>
+                  <option value="paulista">Paulista</option>
+                  <option value="se">Sé</option>
+                </select>
+              </div>
+
+              <div class="campo-grupo">
+                <label for="filtro-coord-situacao">Situação <span class="asterisco">*</span></label>
+                <select id="filtro-coord-situacao" class="coord-select">
+                  <option value="todos">Todos</option>
+                  <option value="aguardando">Aguardando atendimento</option>
+                  <option value="aprovado">Aprovado</option>
+                  <option value="caminho">Funcionário a caminho</option>
+                  <option value="atendimento">Em atendimento</option>
+                  <option value="concluido">Concluído</option>
+                  <option value="analise">Em análise</option>
+                  <option value="recusado">Recusado</option>
+                </select>
+              </div>
+
+              <div class="campo-grupo">
+                <label for="filtro-coord-periodo">Período <span class="asterisco">*</span></label>
+                <select id="filtro-coord-periodo" class="coord-select">
+                  <option value="sessao">Esta sessão</option>
+                  <option value="hoje">Hoje</option>
+                  <option value="mes">Este mês</option>
+                </select>
+              </div>
+            </div>
+
+            <p id="contagem-coord-pedidos" class="coord-contagem-texto">
+              2 solicitações encontradas · Período selecionado
+            </p>
+
+            <div id="tabela-coord-wrapper" class="coord-tabela-wrapper">
+              <table class="coord-tabela">
+                <thead>
+                  <tr>
+                    <th>Protocolo</th>
+                    <th>Serviço e necessidade</th>
+                    <th>Local</th>
+                    <th>Situação</th>
+                    <th>Horário</th>
+                  </tr>
+                </thead>
+                <tbody id="tbody-coord-pedidos">
+                  <tr data-orgao="zeladoria" data-local="paulista" data-situacao="concluido">
+                    <td class="coord-td-proto">MT-1041</td>
+                    <td>
+                      <strong>Piso tátil danificado</strong>
+                      <span>Zeladoria</span>
+                    </td>
+                    <td>Av. Paulista &times; Rua Pamplona</td>
+                    <td><span class="admin-status-pill cet-pill-aprovado">Concluído</span></td>
+                    <td>Hoje · 09:15</td>
+                  </tr>
+                  <tr data-orgao="metro" data-local="consolacao" data-situacao="caminho">
+                    <td class="coord-td-proto">MT-1042</td>
+                    <td>
+                      <strong>Acompanhamento até a plataforma</strong>
+                      <span>Metrô</span>
+                    </td>
+                    <td>Consolação · Linha 2 — Verde · Entrada principal</td>
+                    <td><span class="admin-status-pill">Funcionário a caminho</span></td>
+                    <td>Hoje · 14:32</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div id="vazio-coord-pedidos" class="coord-estado-vazio" hidden>
+              <strong>Nenhum pedido neste filtro.</strong>
+              <p>Experimente outro filtro para encontrar os pedidos.</p>
+            </div>
+
+            <div class="admin-chamado-acoes" style="margin-top: 24px;">
+              <button type="button" id="btn-exportar-csv" class="btn">
+                Exportar CSV
+              </button>
+              <button type="button" id="btn-imprimir-relatorio" class="btn btn-contorno">
+                Imprimir relatório
+              </button>
+            </div>
+          </section>
+        </section>
+
+        <!-- Rodapé -->
+        <footer class="admin-rodape">
+          <img src="../../assets/icones/shield-check.png" alt="" class="icone" />
+          <span>Relatórios consolidados · Área de coordenação operacional · Meu Tempo.</span>
+        </footer>
+      </main>
+    </div>
+  </div>
+
+  <!-- Toast discreto no rodapé -->
+  <div id="admin-toast" class="admin-toast" role="status" aria-live="polite" hidden></div>
+
+  <!-- pop-up acessibilidade -->
+  <div id="modal-admin-acessibilidade" class="admin-modal-overlay" hidden>
+    <div class="admin-modal-caixa" role="dialog" aria-modal="true" aria-labelledby="titulo-modal-acess">
+      <div class="admin-modal-topo">
+        <h2 id="titulo-modal-acess">Uma experiência do seu jeito</h2>
+        <button type="button" class="admin-modal-fechar" data-fechar-modal aria-label="Fechar janela de acessibilidade">&times;</button>
+      </div>
+
+      <div class="admin-modal-grupo-select">
+        <label for="modal-select-fonte">Tamanho das letras</label>
+        <select id="modal-select-fonte" class="admin-modal-select">
+          <option value="100" selected>100% — padrão</option>
+          <option value="115">115% — médio</option>
+          <option value="130">130% — grande</option>
+          <option value="150">150% — extra grande</option>
+        </select>
+      </div>
+
+      <div class="admin-modal-opcoes-lista">
+        <label class="admin-modal-opcao-item" for="modal-toggle-contraste">
+          <div class="admin-modal-opcao-info">
+            <img src="../../assets/icones/eye.png" alt="" class="icone" />
+            <div>
+              <strong>Alto contraste</strong>
+              <span>Textos e botões mais destacados.</span>
+            </div>
+          </div>
+          <span class="admin-switch">
+            <input type="checkbox" id="modal-toggle-contraste" />
+            <span class="admin-switch-trilho"></span>
+          </span>
+        </label>
+
+        <label class="admin-modal-opcao-item" for="modal-toggle-iara">
+          <div class="admin-modal-opcao-info">
+            <img src="../../assets/icones/artificial-intelligence.png" alt="" class="icone" />
+            <div>
+              <strong>Ouvir a IARA</strong>
+              <span>Respostas por voz e por texto.</span>
+            </div>
+          </div>
+          <span class="admin-switch">
+            <input type="checkbox" id="modal-toggle-iara" />
+            <span class="admin-switch-trilho"></span>
+          </span>
+        </label>
+
+        <label class="admin-modal-opcao-item" for="modal-toggle-vibrar">
+          <div class="admin-modal-opcao-info">
+            <img src="../../assets/icones/watch-smart.png" alt="" class="icone" />
+            <div>
+              <strong>Vibrar nos avisos</strong>
+              <span>Quando o dispositivo permitir.</span>
+            </div>
+          </div>
+          <span class="admin-switch">
+            <input type="checkbox" id="modal-toggle-vibrar" />
+            <span class="admin-switch-trilho"></span>
+          </span>
+        </label>
+      </div>
+
+      <div class="admin-modal-mais-leitura">
+        <button type="button" id="btn-mais-opcoes-leitura" class="admin-modal-mais-btn" aria-expanded="false">
+          <span class="admin-modal-mais-esquerda">
+            <img src="../../assets/icones/filtro.png" alt="" class="icone" />
+            <strong>Mais opções de leitura</strong>
+          </span>
+          <span class="admin-modal-seta">&rsaquo;</span>
+        </button>
+
+        <div id="painel-mais-leitura" class="admin-modal-mais-conteudo" hidden>
+          <label class="admin-modal-opcao-item" for="modal-toggle-fonte-legivel">
+            <div class="admin-modal-opcao-info">
+              <div>
+                <strong>Fonte Alta Legibilidade</strong>
+                <span>Espaçamento ampliado entre letras e linhas.</span>
+              </div>
+            </div>
+            <span class="admin-switch">
+              <input type="checkbox" id="modal-toggle-fonte-legivel" />
+              <span class="admin-switch-trilho"></span>
+            </span>
+          </label>
+
+          <label class="admin-modal-opcao-item" for="modal-toggle-tema-escuro">
+            <div class="admin-modal-opcao-info">
+              <div>
+                <strong>Tema escuro</strong>
+                <span>Reduz o brilho da tela em ambientes escuros.</span>
+              </div>
+            </div>
+            <span class="admin-switch">
+              <input type="checkbox" id="modal-toggle-tema-escuro" />
+              <span class="admin-switch-trilho"></span>
+            </span>
+          </label>
+        </div>
+      </div>
+
+      <div class="admin-modal-rodape">
+        <button type="button" id="btn-restaurar-acess" class="btn btn-contorno">Restaurar padrão</button>
+        <a href="../acessibilidade.html" class="link-seta">Conhecer todos os recursos &rarr;</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- pop-up notificações -->
+  <div id="modal-admin-notificacoes" class="admin-modal-overlay" hidden>
+    <div class="admin-modal-caixa" role="dialog" aria-modal="true" aria-labelledby="titulo-modal-notif">
+      <div class="admin-modal-topo">
+        <h2 id="titulo-modal-notif">Últimas atualizações</h2>
+        <button type="button" class="admin-modal-fechar" data-fechar-modal aria-label="Fechar notificações">&times;</button>
+      </div>
+
+      <div class="card-branco admin-modal-card-interno">
+        <h3>Histórico de atividades</h3>
+        <ul class="cet-timeline cet-timeline-conectada">
+          <li>
+            <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
+            <div>
+              <strong>MT-1042 · Funcionário a caminho</strong>
+              <p>14:35 · Aguarde próximo à entrada principal.</p>
+            </div>
+          </li>
+          <li>
+            <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
+            <div>
+              <strong>MT-1042 · Aprovado</strong>
+              <p>14:33</p>
+            </div>
+          </li>
+          <li>
+            <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
+            <div>
+              <strong>MT-1042 · Pedido recebido</strong>
+              <p>14:32</p>
+            </div>
+          </li>
+          <li>
+            <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
+            <div>
+              <strong>MT-1041 · Concluído</strong>
+              <p>11:40 · Passagem desobstruída.</p>
+            </div>
+          </li>
+          <li>
+            <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
+            <div>
+              <strong>MT-1041 · Em análise</strong>
+              <p>09:22</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- pop-up perfil -->
+  <div id="modal-admin-perfil" class="admin-modal-overlay" hidden>
+    <div class="admin-modal-caixa" role="dialog" aria-modal="true" aria-labelledby="titulo-modal-perfil">
+      <div class="admin-modal-topo">
+        <h2 id="titulo-modal-perfil">Perfil do operador</h2>
+        <button type="button" class="admin-modal-fechar" data-fechar-modal aria-label="Fechar perfil do operador">&times;</button>
+      </div>
+
+      <div class="card-branco admin-modal-card-interno">
+        <div class="cet-perfil-topo">
+          <span class="cet-perfil-avatar">
+            <img src="../../assets/icones/user.png" alt="" class="icone" />
+          </span>
+          <div>
+            <h3>Carlos Oliveira</h3>
+            <p>Matrícula 48217 · Coordenação</p>
+            <p>Vínculo: Área de coordenação</p>
+          </div>
+        </div>
+
+        <div class="painel-status" style="margin: 20px 0;">
+          Seu acesso é limitado ao órgão e às localidades vinculadas ao seu perfil.
+        </div>
+
+        <div class="admin-chamado-acoes">
+          <a href="../solucao02.html" class="btn btn-contorno">Trocar perfil &rarr;</a>
+          <a href="../solucao02.html" class="btn">Sair &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Integração oficial do VLibras -->
+  <div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+      <div class="vw-plugin-top-wrapper"></div>
+    </div>
+  </div>
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script>
+</body>
+</html>
+
+
+
 
 </body>
 </html>
