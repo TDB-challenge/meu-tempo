@@ -1163,3 +1163,248 @@ body.tema-escuro .admin-modal-mais-conteudo {
 body.tema-escuro .admin-switch input:checked + .admin-switch-trilho {
   background-color: #5ea87d;
 }
+
+/* =====================================================
+   COMPONENTES DA COORDENAÇÃO (coordenacao.html)
+   ===================================================== */
+.coord-filtros-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.coord-filtros-grid .campo-grupo {
+  margin-bottom: 0;
+}
+
+.coord-select {
+  width: 100%;
+  padding: 11px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--borda);
+  background-color: #ffffff;
+  color: var(--texto-principal);
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.coord-contagem-texto {
+  font-size: 0.84rem;
+  color: var(--texto-secundario);
+  margin-bottom: 14px;
+}
+
+.coord-tabela-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--borda);
+  border-radius: 12px;
+}
+
+.coord-tabela {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.9rem;
+}
+
+.coord-tabela thead th {
+  padding: 14px 18px;
+  background-color: #f7f6f0;
+  border-bottom: 1px solid var(--borda);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--texto-secundario);
+}
+
+.coord-tabela tbody td {
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--borda);
+  vertical-align: middle;
+}
+
+.coord-tabela tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.coord-td-proto {
+  font-weight: 700;
+  color: var(--texto-principal);
+  white-space: nowrap;
+}
+
+.coord-tabela tbody td strong {
+  display: block;
+  font-size: 0.94rem;
+  margin-bottom: 2px;
+}
+
+.coord-tabela tbody td span {
+  font-size: 0.82rem;
+  color: var(--texto-secundario);
+}
+
+.coord-estado-vazio {
+  padding: 40px 20px;
+  text-align: center;
+  border: 1px solid var(--borda);
+  border-radius: 12px;
+  background-color: #faf9f5;
+}
+
+.coord-estado-vazio strong {
+  display: block;
+  font-size: 1.05rem;
+  margin-bottom: 6px;
+}
+
+.coord-estado-vazio p {
+  font-size: 0.88rem;
+  color: var(--texto-secundario);
+  margin-bottom: 0;
+}
+
+/* Lista de Estações */
+.coord-estacao-linha {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.coord-estacao-linha + .coord-estacao-linha {
+  padding-top: 20px;
+  border-top: 1px solid var(--borda);
+}
+
+.coord-estacao-info {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.coord-estacao-icone {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background-color: var(--verde-claro);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.coord-estacao-icone img.icone {
+  width: 20px;
+  height: 20px;
+}
+
+.coord-estacao-info h3 {
+  font-size: 1.06rem;
+  margin-bottom: 2px;
+}
+
+.coord-estacao-info p {
+  font-size: 0.86rem;
+  color: var(--texto-secundario);
+  margin-bottom: 0;
+}
+
+.coord-btn-ver-estacao {
+  background: transparent;
+  border: none;
+  font-family: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+/* Toast flutuante inferior */
+.admin-toast[hidden] {
+  display: none;
+}
+
+.admin-toast {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  background-color: #18231c;
+  color: #ffffff;
+  padding: 13px 22px;
+  border-radius: 10px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+}
+
+/* Modo escuro na Coordenação */
+body.tema-escuro .coord-select {
+  background-color: #202c26;
+  color: #f4f3ee;
+  border-color: #33463c;
+}
+
+body.tema-escuro .coord-tabela-wrapper {
+  border-color: #293830;
+}
+
+body.tema-escuro .coord-tabela thead th {
+  background-color: #151e19;
+  border-bottom-color: #293830;
+  color: #a6b5ac;
+}
+
+body.tema-escuro .coord-tabela tbody td {
+  border-bottom-color: #293830;
+}
+
+body.tema-escuro .coord-estado-vazio {
+  background-color: #151e19;
+  border-color: #293830;
+}
+
+body.tema-escuro .coord-estacao-icone {
+  background-color: #21342a;
+}
+
+body.tema-escuro .coord-estacao-icone img.icone {
+  filter: brightness(0) invert(1);
+}
+
+/* Estilos para impressão do relatório */
+@media print {
+  .admin-sidebar,
+  .admin-topbar,
+  .admin-badge-status,
+  .admin-chamado-acoes,
+  .admin-rodape,
+  [vw] {
+    display: none !important;
+  }
+
+  .admin-shell {
+    display: block;
+  }
+
+  .admin-main {
+    padding: 0;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 900px) {
+  .coord-filtros-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .coord-filtros-grid {
+    grid-template-columns: 1fr;
+  }
+}

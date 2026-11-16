@@ -436,3 +436,140 @@ if (listaDecisoesCet) {
     });
   }
 }
+
+// =====================================================
+// PAINEL COORDENAÇÃO OPERACIONAL (admin/coordenacao.html)
+// =====================================================
+function mostrarToastAdmin(mensagem) {
+  const toast = document.getElementById("admin-toast");
+  if (!toast) return;
+
+  toast.textContent = mensagem;
+  toast.hidden = false;
+
+  clearTimeout(window.timerToastAdmin);
+  window.timerToastAdmin = setTimeout(function () {
+    toast.hidden = true;
+  }, 3500);
+}
+
+// Filtros dinâmicos da Central de acompanhamento
+const filtroCoordOrgao = document.getElementById("filtro-coord-orgao");
+const filtroCoordLocal = document.getElementById("filtro-coord-local");
+const filtroCoordSituacao = document.getElementById("filtro-coord-situacao");
+const filtroCoordPeriodo = document.getElementById("filtro-coord-periodo");
+const tbodyCoordPedidos = document.getElementById("tbody-coord-pedidos");
+
+function filtrarPedidosCoordenacao() {
+  if (!tbodyCoordPedidos) return;
+
+  const orgao = filtroCoordOrgao ? filtroCoordOrgao.value : "todos";
+  const local = filtroCoordLocal ? filtroCoordLocal.value : "todos";
+  const situacao = filtroCoordSituacao ? filtroCoordSituacao.value : "todos";
+
+  const linhas = tbodyCoordPedidos.querySelectorAll("tr");
+  let visiveis = 0;
+
+  for (let i = 0; i < linhas.length; i++) {
+    const matchOrgao = orgao === "todos" || linhas[i].getAttribute("data-orgao") === orgao;
+    const matchLocal = local === "todos" || linhas[i].getAttribute("data-local") === local;
+    const matchSituacao =
+      situacao === "todos" || linhas[i].getAttribute("data-situacao") === situacao;
+
+    const exibir = matchOrgao && matchLocal && matchSituacao;
+    linhas[i].hidden = !exibir;
+    if (exibir) visiveis++;
+  }
+
+  const contagemTexto = document.getElementById("contagem-coord-pedidos");
+  const tabelaWrapper = document.getElementById("tabela-coord-wrapper");
+  const estadoVazio = document.getElementById("vazio-coord-pedidos");
+
+  if (contagemTexto) {
+    const plural = visiveis === 1 ? "solicitação encontrada" : "solicitações encontradas";
+    contagemTexto.textContent = visiveis + " " + plural + " · Período selecionado";
+  }
+
+  if (tabelaWrapper && estadoVazio) {
+    tabelaWrapper.hidden = visiveis === 0;
+    estadoVazio.hidden = visiveis > 0;
+  }
+}
+
+if (tbodyCoordPedidos) {
+  const selectsFiltro = [
+    filtroCoordOrgao,
+    filtroCoordLocal,
+    filtroCoordSituacao,
+    filtroCoordPeriodo
+  ];
+  for (let i = 0; i < selectsFiltro.length; i++) {
+    if (selectsFiltro[i]) {
+      selectsFiltro[i].addEventListener("change", filtrarPedidosCoordenacao);
+    }
+  }
+}
+
+// Botão "Ver solicitações ->" na aba Estações
+const botoesVerEstacao = document.querySelectorAll("[data-filtrar-estacao]");
+for (let i = 0; i < botoesVerEstacao.length; i++) {
+  botoesVerEstacao[i].addEventListener("click", function () {
+    const localEstacao = this.getAttribute("data-filtrar-estacao");
+    abrirAbaAdmin("visao-geral");
+    if (filtroCoordLocal) {
+      filtroCoordLocal.value = localEstacao;
+      filtrarPedidosCoordenacao();
+    }
+  });
+}
+
+// Exportar CSV real + Imprimir relatório na aba Relatórios
+const btnExportarCsv = document.getElementById("btn-exportar-csv");
+if (btnExportarCsv) {
+  btnExportarCsv.addEventListener("click", function () {
+    const conteudoCsv =
+      "\uFEFFProtocolo;Servico e necessidade;Orgao;Local;Situacao;Horario\n" +
+      "MT-1041;Piso tatil danificado;Zeladoria;Av. Paulista x Rua Pamplona;Concluido;Hoje - 09:15\n" +
+      "MT-1042;Acompanhamento ate a plataforma;Metro;Consolacao - Linha 2 Verde - Entrada principal;Funcionario a caminho;Hoje - 14:32\n";
+
+    const blob = new Blob([conteudoCsv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const linkDownload = document.createElement("a");
+    linkDownload.href = url;
+    linkDownload.download = "relatorio-atendimentos-meu-tempo.csv";
+    document.body.appendChild(linkDownload);
+    linkDownload.click();
+    document.body.removeChild(linkDownload);
+    URL.revokeObjectURL(url);
+
+    mostrarToastAdmin("Relatório de atendimentos exportado com os filtros selecionados.");
+  });
+}
+
+const btnImprimirRelatorio = document.getElementById("btn-imprimir-relatorio");
+if (btnImprimirRelatorio) {
+  btnImprimirRelatorio.addEventListener("click", function () {
+    window.print();
+  });
+}
+
+// Gestão de acessos (Aprovar / Recusar cadastro CAD-2048)
+const btnAprovarCadastro = document.getElementById("btn-aprovar-cadastro");
+const btnRecusarCadastro = document.getElementById("btn-recusar-cadastro");
+const statusCadastro = document.getElementById("status-cadastro-cad2048");
+
+if (btnAprovarCadastro && statusCadastro) {
+  btnAprovarCadastro.addEventListener("click", function () {
+    statusCadastro.textContent = "Cadastro aprovado";
+    statusCadastro.className = "admin-status-pill cet-pill-aprovado";
+    mostrarToastAdmin("Cadastro aprovado");
+  });
+}
+
+if (btnRecusarCadastro && statusCadastro) {
+  btnRecusarCadastro.addEventListener("click", function () {
+    statusCadastro.textContent = "Cadastro não autorizado";
+    statusCadastro.className = "admin-status-pill cet-pill-recusado";
+    mostrarToastAdmin("Cadastro não autorizado");
+  });
+}
