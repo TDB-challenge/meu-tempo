@@ -573,3 +573,19 @@ if (btnRecusarCadastro && statusCadastro) {
     mostrarToastAdmin("Cadastro não autorizado");
   });
 }
+
+// Abre a aba correta ao chegar em coordenacao.html via âncora (#estacoes, #solicitacoes, etc.)
+if (window.location.hash && botoesAbaAdmin.length > 0) {
+  const abaHash = window.location.hash.replace("#", "");
+  if (document.getElementById("aba-" + abaHash)) {
+    abrirAbaAdmin(abaHash);
+  }
+}
+
+// Faz o botão "Ver relatórios ->" de coordenacao.html abrir diretamente relatorios.html
+const botoesIrRelatorios = document.querySelectorAll('[data-admin-aba="relatorios"]');
+for (let i = 0; i < botoesIrRelatorios.length; i++) {
+  botoesIrRelatorios[i].addEventListener("click", function () {
+    window.location.href = "relatorios.html";
+  });
+}
