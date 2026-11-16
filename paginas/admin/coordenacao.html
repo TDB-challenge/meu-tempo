@@ -612,6 +612,179 @@
           </div>
         </section>
 
+        <!-- Indicadores -->
+        <section id="aba-indicadores" class="admin-aba-painel" hidden>
+          <div class="admin-cabecalho-secao">
+            <div>
+              <div class="etiqueta">CUIDANDO DOS CAMINHOS DA CIDADE</div>
+              <h1>Indicadores</h1>
+            </div>
+            <div class="admin-badge-status">
+              <img src="../../assets/icones/wifi.png" alt="" class="icone" />
+              <span>Acompanhamento de pedidos</span>
+            </div>
+          </div>
+
+          <section class="card-branco admin-fila-card">
+            <div class="admin-fila-topo">
+              <div>
+                <h2>Demanda por serviço</h2>
+                <p>Acompanhe a distribuição dos pedidos:</p>
+              </div>
+              <span class="admin-status-pill">Pedidos por serviço</span>
+            </div>
+
+            <div class="cet-barras-lista">
+              <div class="cet-barra-linha">
+                <span class="cet-barra-nome">Metrô</span>
+                <div class="cet-barra-trilha">
+                  <div class="cet-barra-preenchimento" style="width: 50%;"></div>
+                </div>
+                <strong class="cet-barra-valor">1</strong>
+              </div>
+
+              <div class="cet-barra-linha">
+                <span class="cet-barra-nome">Travessia</span>
+                <div class="cet-barra-trilha">
+                  <div class="cet-barra-preenchimento" style="width: 100%;"></div>
+                </div>
+                <strong class="cet-barra-valor">2</strong>
+              </div>
+
+              <div class="cet-barra-linha">
+                <span class="cet-barra-nome">Zeladoria</span>
+                <div class="cet-barra-trilha">
+                  <div class="cet-barra-preenchimento" style="width: 50%;"></div>
+                </div>
+                <strong class="cet-barra-valor">1</strong>
+              </div>
+            </div>
+
+            <details class="cet-dados-texto" open>
+              <summary>Ver os dados em texto</summary>
+              <ul>
+                <li>Metrô: 1 solicitações.</li>
+                <li>Travessia: 2 solicitações.</li>
+                <li>Zeladoria: 1 solicitações.</li>
+              </ul>
+            </details>
+
+            <p class="cet-ciclo-nota" style="margin-top: 16px;">
+              A demanda ajuda a identificar locais para avaliação.
+            </p>
+          </section>
+        </section>
+
+        <!-- ==================== ABA 7: RELATÓRIOS ==================== -->
+        <section id="aba-relatorios" class="admin-aba-painel" hidden>
+          <div class="admin-cabecalho-secao">
+            <div>
+              <div class="etiqueta">CUIDANDO DOS CAMINHOS DA CIDADE</div>
+              <h1>Relatórios</h1>
+            </div>
+            <div class="admin-badge-status">
+              <img src="../../assets/icones/wifi.png" alt="" class="icone" />
+              <span>Acompanhamento de pedidos</span>
+            </div>
+          </div>
+
+          <section class="card-branco admin-fila-card">
+            <div class="admin-fila-topo">
+              <div>
+                <h2>Relatório de atendimentos</h2>
+                <p>Exporte ou imprima os registros consolidados da sessão.</p>
+              </div>
+            </div>
+
+            <div class="coord-filtros-grid">
+              <div class="campo-grupo">
+                <label for="rel-orgao">Órgão <span class="asterisco">*</span></label>
+                <select id="rel-orgao" class="coord-select">
+                  <option value="Todos">Todos</option>
+                  <option value="Metrô / CPTM">Metrô / CPTM</option>
+                  <option value="CET">CET</option>
+                  <option value="Zeladoria">Zeladoria</option>
+                </select>
+              </div>
+
+              <div class="campo-grupo">
+                <label for="rel-local">Local <span class="asterisco">*</span></label>
+                <select id="rel-local" class="coord-select">
+                  <option value="Todos">Todos</option>
+                  <option value="Consolação">Consolação</option>
+                  <option value="Paulista">Paulista</option>
+                  <option value="Sé">Sé</option>
+                </select>
+              </div>
+
+              <div class="campo-grupo">
+                <label for="rel-situacao">Situação <span class="asterisco">*</span></label>
+                <select id="rel-situacao" class="coord-select">
+                  <option value="Todos">Todos</option>
+                  <option value="Concluído">Concluído</option>
+                  <option value="Funcionário a caminho">Funcionário a caminho</option>
+                </select>
+              </div>
+
+              <div class="campo-grupo">
+                <label for="rel-periodo">Período <span class="asterisco">*</span></label>
+                <select id="rel-periodo" class="coord-select">
+                  <option value="Esta sessão">Esta sessão</option>
+                  <option value="Hoje">Hoje</option>
+                  <option value="Este mês">Este mês</option>
+                </select>
+              </div>
+            </div>
+
+            <p class="coord-contagem-texto">2 solicitações encontradas · Período selecionado</p>
+
+            <div class="coord-tabela-wrapper">
+              <table class="coord-tabela">
+                <thead>
+                  <tr>
+                    <th>Protocolo</th>
+                    <th>Serviço e necessidade</th>
+                    <th>Local</th>
+                    <th>Situação</th>
+                    <th>Horário</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="coord-td-proto">MT-1041</td>
+                    <td>
+                      <strong>Piso tátil danificado</strong>
+                      <span>Zeladoria</span>
+                    </td>
+                    <td>Av. Paulista &times; Rua Pamplona</td>
+                    <td><span class="admin-status-pill cet-pill-aprovado">Concluído</span></td>
+                    <td>Hoje · 09:15</td>
+                  </tr>
+                  <tr>
+                    <td class="coord-td-proto">MT-1042</td>
+                    <td>
+                      <strong>Acompanhamento até a plataforma</strong>
+                      <span>Metrô</span>
+                    </td>
+                    <td>Consolação · Linha 2 — Verde · Entrada principal</td>
+                    <td><span class="admin-status-pill">Funcionário a caminho</span></td>
+                    <td>Hoje · 14:32</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="admin-chamado-acoes" style="margin-top: 24px;">
+              <button type="button" id="btn-exportar-csv" class="btn">
+                Exportar CSV
+              </button>
+              <button type="button" id="btn-imprimir-relatorio" class="btn btn-contorno">
+                Imprimir relatório
+              </button>
+            </div>
+          </section>
+        </section>
+
 
 
 
