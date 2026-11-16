@@ -274,6 +274,175 @@
           </section>
         </section>
 
+        <!-- ==================== ABA 2: DECISÕES AUTOMÁTICAS ==================== -->
+        <section id="aba-decisoes" class="admin-aba-painel" hidden>
+          <div class="admin-cabecalho-secao">
+            <div>
+              <div class="etiqueta">CUIDANDO DOS CAMINHOS DA CIDADE</div>
+              <h1>Decisões automáticas</h1>
+            </div>
+
+            <div class="admin-badge-status">
+              <img src="../../assets/icones/wifi.png" alt="" class="icone" />
+              <span>Acompanhamento de pedidos</span>
+            </div>
+          </div>
+
+          <div class="card-branco admin-fila-card">
+            <div class="admin-fila-topo">
+              <div>
+                <h2>Log de ciclos semafóricos</h2>
+                <p>Regras de 8s (preservação de fluxo) e 28s (travessia estendida).</p>
+              </div>
+              <button type="button" class="btn btn-contorno" data-voltar-visao>
+                &larr; Voltar para Visão geral
+              </button>
+            </div>
+
+            <div id="espelho-decisoes-cet" class="admin-chamados-lista"></div>
+          </div>
+        </section>
+
+        <!-- ==================== ABA 3: CRUZAMENTOS ==================== -->
+        <section id="aba-cruzamentos" class="admin-aba-painel" hidden>
+          <div class="admin-cabecalho-secao">
+            <div>
+              <div class="etiqueta">CUIDANDO DOS CAMINHOS DA CIDADE</div>
+              <h1>Cruzamentos</h1>
+            </div>
+
+            <div class="admin-badge-status">
+              <img src="../../assets/icones/sinal.png" alt="" class="icone" />
+              <span>Acompanhamento de pedidos</span>
+            </div>
+          </div>
+
+          <div class="card-branco admin-fila-card">
+            <div class="admin-fila-topo">
+              <div>
+                <h2>Cruzamentos cadastrados</h2>
+                <p>Semáforos inteligentes e pontos monitorados na Região Paulista.</p>
+              </div>
+            </div>
+
+            <div class="campo-grupo" style="margin-bottom: 24px;">
+              <label for="busca-cruzamento" class="sr-only">Pesquisar cruzamento</label>
+              <input
+                type="search"
+                id="busca-cruzamento"
+                placeholder="Pesquisar cruzamento..."
+              />
+            </div>
+
+            <div id="lista-cruzamentos-cet" class="admin-chamados-lista">
+              <article class="admin-chamado-item" data-cruzamento="av. paulista rua augusta cr-001">
+                <div class="admin-chamado-meta">
+                  <h3>Av. Paulista &times; Rua Augusta</h3>
+                  <span class="admin-status-pill cet-pill-aprovado">&check; Com suporte</span>
+                </div>
+                <div class="cet-ciclo-grid">
+                  <div>
+                    <span class="cet-ciclo-label">Identificador</span>
+                    <strong>CR-001</strong>
+                  </div>
+                  <div>
+                    <span class="cet-ciclo-label">Acompanhamento</span>
+                    <strong>Ciclo de veículos</strong>
+                  </div>
+                  <div>
+                    <span class="cet-ciclo-label">Alertas</span>
+                    <strong>Aguardando ciclo</strong>
+                  </div>
+                </div>
+              </article>
+
+              <article class="admin-chamado-item" data-cruzamento="av. paulista rua da consolacao cr-002">
+                <div class="admin-chamado-meta">
+                  <h3>Av. Paulista &times; Rua da Consolação</h3>
+                  <span class="admin-status-pill cet-pill-neutro">&times; Sem suporte</span>
+                </div>
+                <div class="cet-ciclo-grid">
+                  <div>
+                    <span class="cet-ciclo-label">Identificador</span>
+                    <strong>CR-002</strong>
+                  </div>
+                  <div>
+                    <span class="cet-ciclo-label">Acompanhamento</span>
+                    <strong>Não monitorado</strong>
+                  </div>
+                  <div>
+                    <span class="cet-ciclo-label">Alertas</span>
+                    <strong>Indisponível</strong>
+                  </div>
+                </div>
+              </article>
+
+              <article class="admin-chamado-item" data-cruzamento="av. paulista rua pamplona cr-003">
+                <div class="admin-chamado-meta">
+                  <h3>Av. Paulista &times; Rua Pamplona</h3>
+                  <span class="admin-status-pill cet-pill-neutro">&times; Sem suporte</span>
+                </div>
+                <div class="cet-ciclo-grid">
+                  <div>
+                    <span class="cet-ciclo-label">Identificador</span>
+                    <strong>CR-003</strong>
+                  </div>
+                  <div>
+                    <span class="cet-ciclo-label">Acompanhamento</span>
+                    <strong>Não monitorado</strong>
+                  </div>
+                  <div>
+                    <span class="cet-ciclo-label">Alertas</span>
+                    <strong>Indisponível</strong>
+                  </div>
+                </div>
+              </article>
+
+              <article class="admin-chamado-item" data-cruzamento="av. paulista alameda campinas cr-004">
+                <div class="admin-chamado-meta">
+                  <h3>Av. Paulista &times; Alameda Campinas</h3>
+                  <span class="admin-status-pill cet-pill-aprovado">&check; Com suporte</span>
+                </div>
+                <div class="cet-ciclo-grid">
+                  <div>
+                    <span class="cet-ciclo-label">Identificador</span>
+                    <strong>CR-004</strong>
+                  </div>
+                  <div>
+                    <span class="cet-ciclo-label">Acompanhamento</span>
+                    <strong>Ciclo de veículos</strong>
+                  </div>
+                  <div>
+                    <span class="cet-ciclo-label">Alertas</span>
+                    <strong>Aguardando ciclo</strong>
+                  </div>
+                </div>
+              </article>
+
+              <article class="admin-chamado-item" data-cruzamento="av. paulista av. brigadeiro luis antonio cr-005">
+                <div class="admin-chamado-meta">
+                  <h3>Av. Paulista &times; Av. Brigadeiro Luís Antônio</h3>
+                  <span class="admin-status-pill cet-pill-aprovado">&check; Com suporte</span>
+                </div>
+                <div class="cet-ciclo-grid">
+                  <div>
+                    <span class="cet-ciclo-label">Identificador</span>
+                    <strong>CR-005</strong>
+                  </div>
+                  <div>
+                    <span class="cet-ciclo-label">Acompanhamento</span>
+                    <strong>Ciclo de veículos</strong>
+                  </div>
+                  <div>
+                    <span class="cet-ciclo-label">Alertas</span>
+                    <strong>Aguardando ciclo</strong>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div>
+        </section>
+
 
 
 
