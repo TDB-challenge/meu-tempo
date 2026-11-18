@@ -15,19 +15,44 @@
   </head>
 
   <body class="cadastro-administrativo">
-    <div class="barra-util">
-      <div class="container">
-        <span> Uma cidade para todas as pessoas. Um caminho de cada vez. </span>
-        <!-- controla a abertura do painel de acessibilidade pelo javascript -->
+    <div class="barra-acessibilidade barra-util">
+      <div class="conteiner container">
+        <span>Uma cidade para todas as pessoas. Um caminho de cada vez.</span>
+
+        <!-- controla a abertura do painel pelo javascript -->
         <button
           type="button"
-          id="btn-abrir-acess"
-          class="btn-acess-topo"
-          aria-controls="painel-acess-rapido"
+          id="abrir-painel-acessibilidade"
+          class="botao-acessibilidade btn-acess-topo"
+          aria-controls="painel-acessibilidade"
           aria-expanded="false"
         >
           Recursos de acessibilidade &rsaquo;
         </button>
+      </div>
+    </div>
+
+    <!-- painel controlado pelo javascript -->
+    <div
+      id="painel-acessibilidade"
+      class="painel-acessibilidade painel-acess-rapido"
+    >
+      <div class="conteiner container">
+        <strong>Ajustes rápidos de leitura:</strong>
+
+        <div class="botoes-acessibilidade botoes-acess">
+          <button type="button" class="aumentar-texto">
+            A+ Aumentar texto
+          </button>
+
+          <button type="button" class="restaurar-texto">A- Texto normal</button>
+
+          <button type="button" class="alternar-contraste">
+            Alto contraste
+          </button>
+
+          <button type="button" class="alternar-tema">Tema escuro</button>
+        </div>
       </div>
     </div>
   </body>
