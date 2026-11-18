@@ -2009,3 +2009,165 @@ body.tema-escuro .coord-estacao-icone img.icone {
     line-height: 1.6; /* espaço entre as linhas */
     margin: 0; /* remove as margens */
 }
+
+
+
+/* REVISÃO DOS DADOS ================================================== */
+
+/* cartão com o resumo das informações */
+.resumo-cadastro {
+    background-color: #f7f8f4; /* fundo claro */
+    border: 1px solid #d5ddd1; /* borda */
+    border-radius: 12px; /* cantos arredondados */
+    padding: 16px; /* espaço interno */
+    margin-bottom: 16px; /* espaço inferior */
+}
+
+/* título do resumo */
+.resumo-cadastro h3 {
+    font-size: 1rem; /* tamanho do título */
+    color: #203d2e; /* cor verde escura */
+    margin-bottom: 16px; /* espaço inferior */
+}
+
+/* lista de informações */
+.lista-resumo-cadastro {
+    margin: 0; /* remove a margem padrão */
+    padding: 0; /* remove o espaço interno */
+}
+
+/* cada informação do resumo */
+.item-resumo {
+    margin-bottom: 14px; /* espaço entre as informações */
+}
+
+/* nome da informação */
+.item-resumo dt {
+    font-size: 0.85rem; /* tamanho do texto */
+    color: #59645b; /* cor secundária */
+    margin-bottom: 4px; /* espaço inferior */
+}
+
+/* valor da informação */
+.item-resumo dd {
+    font-size: 0.95rem; /* tamanho do texto */
+    color: #203d2e; /* cor principal */
+    font-weight: bold; /* texto em negrito */
+    margin: 0; /* remove a margem padrão */
+    overflow-wrap: anywhere; /* quebra textos muito longos */
+}
+
+/* botão para editar os dados */
+.botao-editar-dados {
+    background-color: transparent; /* fundo transparente */
+    border: none; /* remove a borda */
+    color: #456b50; /* cor verde */
+    font-size: 0.9rem; /* tamanho do texto */
+    font-weight: bold; /* texto em negrito */
+    text-decoration: underline; /* adiciona sublinhado */
+    padding: 10px 0; /* espaço interno */
+    cursor: pointer; /* indica que pode ser clicado */
+}
+
+/* destaca o botão ao receber foco */
+.botao-editar-dados:focus {
+    outline: 2px solid #456b50; /* contorno de foco */
+}
+
+
+/* CONFIRMAÇÃO DO CADASTRO ============================================= */
+
+/* organiza a confirmação */
+.confirmacao-cadastro {
+    text-align: center; /* centraliza o conteúdo */
+    padding: 20px 0; /* espaço interno */
+}
+
+/* círculo do ícone de confirmação */
+.icone-confirmacao-cadastro {
+    background-color: #e8eee4; /* fundo verde claro */
+    width: 80px; /* largura do círculo */
+    height: 80px; /* altura do círculo */
+    border-radius: 50%; /* formato circular */
+    display: flex; /* organiza o ícone */
+    align-items: center; /* centraliza verticalmente */
+    justify-content: center; /* centraliza horizontalmente */
+    margin: 0 auto 20px; /* centraliza o círculo */
+}
+
+/* imagem de confirmação */
+.icone-confirmacao-cadastro img {
+    width: 40px; /* largura da imagem */
+    height: 40px; /* altura da imagem */
+}
+
+/* título da confirmação */
+.confirmacao-cadastro h2 {
+    color: #203d2e; /* cor do título */
+    margin-bottom: 12px; /* espaço inferior */
+}
+
+/* textos da confirmação */
+.confirmacao-cadastro p {
+    font-size: 0.95rem; /* tamanho do texto */
+    line-height: 1.6; /* espaço entre as linhas */
+    margin-bottom: 16px; /* espaço inferior */
+}
+
+/* cartão com protocolo e situação */
+.dados-solicitacao-cadastro {
+    background-color: #f7f8f4; /* fundo claro */
+    border: 1px solid #d5ddd1; /* borda */
+    border-radius: 12px; /* cantos arredondados */
+    padding: 20px; /* espaço interno */
+    margin: 20px 0; /* espaço externo */
+    text-align: left; /* alinha os dados à esquerda */
+}
+
+/* situação de aprovação pendente */
+.item-resumo .situacao-pendente {
+    color: #71501b; /* cor de atenção */
+    font-weight: bold; /* destaca a situação */
+}
+
+/* orientações sobre as próximas etapas */
+.proximas-etapas-cadastro {
+    text-align: left; /* alinha o texto à esquerda */
+    margin: 20px 0; /* espaço externo */
+}
+
+/* título das próximas etapas */
+.proximas-etapas-cadastro h3 {
+    font-size: 1rem; /* tamanho do título */
+    color: #203d2e; /* cor do título */
+    margin-bottom: 12px; /* espaço inferior */
+}
+
+/* lista das próximas etapas */
+.proximas-etapas-cadastro ol {
+    padding-left: 20px; /* espaço para a numeração */
+}
+
+/* cada etapa da aprovação */
+.proximas-etapas-cadastro li {
+    font-size: 0.9rem; /* tamanho do texto */
+    line-height: 1.6; /* espaço entre as linhas */
+    margin-bottom: 10px; /* espaço entre os itens */
+}
+
+/* aviso sobre o ambiente demonstrativo */
+.confirmacao-cadastro .aviso-cadastro-demonstrativo {
+    background-color: #faf1db; /* fundo amarelo claro */
+    color: #71501b; /* cor do texto */
+    padding: 12px; /* espaço interno */
+    border-radius: 8px; /* cantos arredondados */
+    font-size: 0.85rem; /* tamanho do texto */
+}
+
+/* botões da confirmação */
+.acoes-confirmacao-cadastro {
+    display: flex; /* organiza os botões */
+    flex-direction: column; /* posiciona um abaixo do outro */
+    gap: 12px; /* espaço entre os botões */
+    margin-top: 24px; /* espaço superior */
+}
