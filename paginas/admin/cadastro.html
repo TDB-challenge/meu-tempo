@@ -138,7 +138,7 @@
               Precisamos de poucas informações para solicitar seu acesso.
             </p>
 
-            <!-- o javascript atualiza a etapa ativa conforme o avanço do cadastro -->
+            <!-- o javascript atualiza o indicador conforme a etapa atual -->
             <ol
               class="etapas-cadastro"
               id="etapas-cadastro"
@@ -170,6 +170,8 @@
               class="formulario-cadastro-admin"
               method="post"
             >
+              <!-- ETAPA 01 - IDENTIFICAÇÃO PROFISSIONAL -->
+
               <fieldset
                 id="etapa-identificacao"
                 class="campos-etapa-cadastro"
@@ -273,7 +275,7 @@
                   </div>
                 </div>
 
-                <!-- os requisitos serão atualizados durante a digitação da senha -->
+                <!-- requisitos validados individualmente durante a digitação -->
                 <ul id="requisitos-senha" class="requisitos-senha">
                   <li data-requisito="comprimento">Pelo menos 8 caracteres</li>
                   <li data-requisito="maiuscula">Uma letra maiúscula</li>
@@ -357,7 +359,9 @@
                 </div>
               </fieldset>
 
-              <!-- a segunda etapa permanece oculta até a validação da identificação -->
+              <!-- ETAPA 02 - VÍNCULO PROFISSIONAL -->
+
+              <!-- permanece oculta até a validação da primeira etapa -->
               <fieldset
                 id="etapa-vinculo"
                 class="campos-etapa-cadastro"
@@ -389,7 +393,7 @@
                   </select>
                 </div>
 
-                <!-- as funções disponíveis serão definidas de acordo com a instituição selecionada -->
+                <!-- funções carregadas conforme a instituição selecionada -->
                 <div class="campo-cadastro">
                   <label for="funcao">
                     Função <span class="asterisco">*</span>
@@ -402,7 +406,7 @@
                   </select>
                 </div>
 
-                <!-- os campos de transporte serão exibidos conforme o vínculo profissional -->
+                <!-- linhas e estações carregadas dinamicamente pelo javascript -->
                 <div id="campos-transporte" class="campos-transporte" hidden>
                   <div class="campo-cadastro">
                     <label for="linha">
@@ -432,7 +436,7 @@
                   </small>
                 </div>
 
-                <!-- campo utilizado para os profissionais que atuam por região ou unidade -->
+                <!-- exibido para funções que possuem atuação por região ou unidade -->
                 <div id="campo-regiao" class="campo-cadastro" hidden>
                   <label for="regiao">
                     Região ou unidade de atuação
@@ -488,9 +492,229 @@
                   </button>
                 </div>
               </fieldset>
+
+              <!-- ETAPA 03 - REVISÃO DOS DADOS -->
+
+              <!-- resumo preenchido pelo javascript com os dados das etapas anteriores -->
+              <fieldset
+                id="etapa-revisao"
+                class="campos-etapa-cadastro"
+                data-etapa-formulario="3"
+                hidden
+                disabled
+              >
+                <legend>Revise suas informações</legend>
+
+                <p class="orientacao-etapa">
+                  Confira seus dados antes de enviar a solicitação de acesso
+                  profissional.
+                </p>
+
+                <section
+                  class="resumo-cadastro"
+                  aria-labelledby="titulo-resumo-identificacao"
+                >
+                  <h3 id="titulo-resumo-identificacao">
+                    Identificação profissional
+                  </h3>
+
+                  <dl class="lista-resumo-cadastro">
+                    <div class="item-resumo">
+                      <dt>Nome completo</dt>
+                      <dd id="resumo-nome">Não informado</dd>
+                    </div>
+
+                    <div class="item-resumo">
+                      <dt>Matrícula funcional</dt>
+                      <dd id="resumo-matricula">Não informada</dd>
+                    </div>
+
+                    <div class="item-resumo">
+                      <dt>E-mail institucional</dt>
+                      <dd id="resumo-email">Não informado</dd>
+                    </div>
+                  </dl>
+
+                  <button
+                    type="button"
+                    id="editar-identificacao"
+                    class="botao-editar-dados"
+                  >
+                    Editar identificação
+                  </button>
+                </section>
+
+                <section
+                  class="resumo-cadastro"
+                  aria-labelledby="titulo-resumo-vinculo"
+                >
+                  <h3 id="titulo-resumo-vinculo">Vínculo profissional</h3>
+
+                  <dl class="lista-resumo-cadastro">
+                    <div class="item-resumo">
+                      <dt>Órgão ou operadora</dt>
+                      <dd id="resumo-orgao">Não informado</dd>
+                    </div>
+
+                    <div class="item-resumo">
+                      <dt>Função</dt>
+                      <dd id="resumo-funcao">Não informada</dd>
+                    </div>
+
+                    <div class="item-resumo" id="item-resumo-linha" hidden>
+                      <dt>Linha de atuação</dt>
+                      <dd id="resumo-linha">Não informada</dd>
+                    </div>
+
+                    <div class="item-resumo" id="item-resumo-estacao" hidden>
+                      <dt>Estação de atuação</dt>
+                      <dd id="resumo-estacao">Não informada</dd>
+                    </div>
+
+                    <div class="item-resumo" id="item-resumo-regiao" hidden>
+                      <dt>Região ou unidade</dt>
+                      <dd id="resumo-regiao">Não informada</dd>
+                    </div>
+                  </dl>
+
+                  <button
+                    type="button"
+                    id="editar-vinculo"
+                    class="botao-editar-dados"
+                  >
+                    Editar vínculo
+                  </button>
+                </section>
+
+                <div class="aviso-aprovacao">
+                  <img
+                    src="../../assets/icones/shield-check.png"
+                    alt=""
+                    class="icone"
+                  />
+
+                  <div>
+                    <strong>Seu acesso precisa ser autorizado</strong>
+
+                    <p>
+                      Após a análise e aprovação do seu vínculo profissional,
+                      será disponibilizada uma credencial administrativa com o
+                      domínio @meutempo.org.br.
+                    </p>
+
+                    <p>
+                      A solicitação de cadastro não garante a liberação imediata
+                      do acesso.
+                    </p>
+                  </div>
+                </div>
+
+                <p
+                  id="mensagem-revisao"
+                  class="mensagem-formulario"
+                  role="alert"
+                  hidden
+                ></p>
+
+                <div class="acoes-etapa-cadastro">
+                  <button
+                    type="button"
+                    id="voltar-vinculo"
+                    class="botao-voltar-etapa"
+                  >
+                    &larr; Voltar
+                  </button>
+
+                  <button
+                    type="submit"
+                    id="enviar-solicitacao"
+                    class="botao-avancar-etapa"
+                    disabled
+                  >
+                    Solicitar acesso &rarr;
+                  </button>
+                </div>
+              </fieldset>
             </form>
 
-            <p class="cadastro-login">
+            <!-- CONFIRMAÇÃO DA SOLICITAÇÃO -->
+
+            <!-- exibida após o registro bem-sucedido da solicitação demonstrativa -->
+            <section
+              id="confirmacao-cadastro"
+              class="confirmacao-cadastro"
+              aria-labelledby="titulo-confirmacao"
+              hidden
+            >
+              <div class="icone-confirmacao-cadastro">
+                <img src="../../assets/icones/confirmacao.svg" alt="" />
+              </div>
+
+              <h2 id="titulo-confirmacao" tabindex="-1">
+                Solicitação recebida!
+              </h2>
+
+              <p>
+                Seu cadastro foi registrado e está aguardando a análise do
+                vínculo profissional.
+              </p>
+
+              <div class="dados-solicitacao-cadastro">
+                <dl class="lista-resumo-cadastro">
+                  <div class="item-resumo">
+                    <dt>Protocolo da solicitação</dt>
+                    <dd id="protocolo-cadastro"></dd>
+                  </div>
+
+                  <div class="item-resumo">
+                    <dt>Situação do cadastro</dt>
+                    <dd id="situacao-cadastro" class="situacao-pendente">
+                      Aguardando aprovação
+                    </dd>
+                  </div>
+                </dl>
+              </div>
+
+              <div class="proximas-etapas-cadastro">
+                <h3>O que acontece agora?</h3>
+
+                <ol>
+                  <li>
+                    Seu vínculo profissional será analisado pela coordenação.
+                  </li>
+                  <li>
+                    As permissões serão definidas conforme sua função e área de
+                    atuação.
+                  </li>
+                  <li>
+                    Após a aprovação, será disponibilizada sua credencial
+                    administrativa.
+                  </li>
+                </ol>
+              </div>
+
+              <p class="orientacao-credencial">
+                A credencial seguirá o domínio @meutempo.org.br e será
+                necessária para acessar o painel administrativo.
+              </p>
+
+              <p class="aviso-cadastro-demonstrativo">
+                Este ambiente é demonstrativo. Nenhum e-mail real será enviado
+                automaticamente.
+              </p>
+
+              <div class="acoes-confirmacao-cadastro">
+                <a href="login.html" class="botao-avancar-etapa">
+                  Ir para o login administrativo &rarr;
+                </a>
+
+                <a href="../index.html" class="botao-voltar-etapa">
+                  Voltar ao site
+                </a>
+              </div>
+            </section>
+
+            <p class="cadastro-login" id="cadastro-login">
               Já possui acesso profissional?
               <a href="login.html">Entrar no painel</a>
             </p>
@@ -499,7 +723,7 @@
       </section>
     </main>
 
-    <!-- integração do vlibras para tradução dos conteúdos em libras -->
+    <!-- integração do vlibras -->
     <div vw class="enabled">
       <div vw-access-button class="active"></div>
 
