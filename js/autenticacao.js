@@ -427,3 +427,208 @@ if (senhaCadastro && confirmarSenha && mensagemConfirmacao) {
   validarSenha();
   validarConfirmacao();
 }
+
+// =================================================================
+// NAVEGAÇÃO ENTRE AS ETAPAS DO CADASTRO
+// =================================================================
+
+// seleciona as três etapas do formulário
+const etapaIdentificacao = document.getElementById("etapa-identificacao");
+const etapaVinculo = document.getElementById("etapa-vinculo");
+const etapaRevisao = document.getElementById("etapa-revisao");
+
+// seleciona os botões de navegação
+const avancarIdentificacao = document.getElementById("avancar-identificacao");
+const avancarVinculo = document.getElementById("avancar-vinculo");
+const voltarIdentificacao = document.getElementById("voltar-identificacao");
+const voltarVinculo = document.getElementById("voltar-vinculo");
+
+// seleciona os botões de edição da revisão
+const editarIdentificacao = document.getElementById("editar-identificacao");
+const editarVinculo = document.getElementById("editar-vinculo");
+
+// seleciona os indicadores de progresso
+const indicadoresEtapas = document.querySelectorAll(".etapa-cadastro");
+
+// seleciona os campos da primeira etapa
+const nomeCompleto = document.getElementById("nome-completo");
+const matriculaFuncional = document.getElementById("matricula-funcional");
+const emailInstitucional = document.getElementById("email-institucional");
+const aceitarTermos = document.getElementById("aceitar-termos");
+
+// seleciona os campos da segunda etapa
+const orgaoCadastro = document.getElementById("orgao");
+const funcaoCadastro = document.getElementById("funcao");
+
+// seleciona as mensagens de erro
+const mensagemIdentificacao = document.getElementById("mensagem-identificacao");
+const mensagemVinculo = document.getElementById("mensagem-vinculo");
+
+// =================================================================
+// EXIBIÇÃO DAS ETAPAS
+// =================================================================
+
+// numero representa a etapa que será exibida
+function mostrarEtapa(numero) {
+  // esconde todas as etapas
+  etapaIdentificacao.hidden = true;
+  etapaVinculo.hidden = true;
+  etapaRevisao.hidden = true;
+
+  // desativa os campos das etapas escondidas
+  etapaIdentificacao.disabled = true;
+  etapaVinculo.disabled = true;
+  etapaRevisao.disabled = true;
+
+  // mostra e ativa a etapa escolhida
+  if (numero === 1) {
+    etapaIdentificacao.hidden = false;
+    etapaIdentificacao.disabled = false;
+  } else if (numero === 2) {
+    etapaVinculo.hidden = false;
+    etapaVinculo.disabled = false;
+  } else if (numero === 3) {
+    etapaRevisao.hidden = false;
+    etapaRevisao.disabled = false;
+  }
+
+  // atualiza o indicador de progresso
+  atualizarIndicadores(numero);
+}
+
+// =================================================================
+// INDICADOR DE PROGRESSO
+// =================================================================
+
+// função que atualiza a aparência das etapas
+function atualizarIndicadores(numero) {
+  // percorre os três indicadores
+  for (let i = 0; i < indicadoresEtapas.length; i++) {
+    // remove as classes anteriores
+    indicadoresEtapas[i].classList.remove("etapa-ativa");
+    indicadoresEtapas[i].classList.remove("etapa-concluida");
+
+    // remove a indicação anterior de etapa atual
+    indicadoresEtapas[i].removeAttribute("aria-current");
+
+    // verifica se é a etapa atual
+    if (i + 1 === numero) {
+      // destaca a etapa atual
+      indicadoresEtapas[i].classList.add("etapa-ativa");
+
+      // informa a etapa atual ao leitor de tela
+      indicadoresEtapas[i].setAttribute("aria-current", "step");
+    } else if (i + 1 < numero) {
+      // destaca as etapas anteriores como concluídas
+      indicadoresEtapas[i].classList.add("etapa-concluida");
+    }
+  }
+}
+
+// =================================================================
+// VALIDAÇÃO DA IDENTIFICAÇÃO
+// =================================================================
+
+// função que verifica os dados da primeira etapa
+function validarIdentificacao() {
+  // esconde mensagens anteriores
+  mensagemIdentificacao.hidden = true;
+
+  // atualiza a validação das senhas
+  validarSenha();
+  validarConfirmacao();
+
+  // verifica se o nome foi preenchido
+  if (nomeCompleto.value.trim() === "") {
+    mensagemIdentificacao.textContent = "Informe seu nome completo.";
+  } else if (matriculaFuncional.value.trim() === "") {
+    mensagemIdentificacao.textContent = "Informe sua matrícula funcional.";
+  } else if (!emailInstitucional.checkValidity()) {
+    mensagemIdentificacao.textContent =
+      "Informe um e-mail institucional válido.";
+  } else if (senhaValida === false) {
+    mensagemIdentificacao.textContent =
+      "Preencha todos os requisitos da senha.";
+  } else if (senhasIguais === false) {
+    mensagemIdentificacao.textContent = "As senhas precisam ser iguais.";
+  } else if (aceitarTermos.checked === false) {
+    mensagemIdentificacao.textContent = "Aceite os termos para continuar.";
+  } else {
+    // avança quando todos os dados estão corretos
+    mostrarEtapa(2);
+
+    // encerra a função sem exibir erros
+    return;
+  }
+
+  // aplica a aparência de mensagem de erro
+  mensagemIdentificacao.classList.add("mensagem-erro");
+
+  // exibe a mensagem
+  mensagemIdentificacao.hidden = false;
+}
+
+// =================================================================
+// VALIDAÇÃO DO VÍNCULO PROFISSIONAL
+// =================================================================
+
+// função que verifica os dados da segunda etapa
+function validarVinculo() {
+  // esconde mensagens anteriores
+  mensagemVinculo.hidden = true;
+
+  // verifica se uma instituição foi selecionada
+  if (orgaoCadastro.value === "") {
+    mensagemVinculo.textContent = "Selecione uma instituição.";
+  } else if (funcaoCadastro.value === "") {
+    mensagemVinculo.textContent = "Selecione sua função.";
+  } else {
+    // avança para a revisão
+    mostrarEtapa(3);
+
+    // encerra a função
+    return;
+  }
+
+  // aplica a aparência da mensagem de erro
+  mensagemVinculo.classList.add("mensagem-erro");
+
+  // exibe a mensagem
+  mensagemVinculo.hidden = false;
+}
+
+// =================================================================
+// BOTÕES DE NAVEGAÇÃO
+// =================================================================
+
+// verifica se estamos na página de cadastro
+if (etapaIdentificacao && etapaVinculo && etapaRevisao) {
+  // inicia o cadastro na primeira etapa
+  mostrarEtapa(1);
+
+  // valida a identificação ao clicar em continuar
+  avancarIdentificacao.addEventListener("click", validarIdentificacao);
+
+  // valida o vínculo ao clicar em continuar
+  avancarVinculo.addEventListener("click", validarVinculo);
+
+  // retorna à primeira etapa
+  voltarIdentificacao.addEventListener("click", function () {
+    mostrarEtapa(1);
+  });
+
+  // retorna à segunda etapa
+  voltarVinculo.addEventListener("click", function () {
+    mostrarEtapa(2);
+  });
+
+  // retorna à identificação para editar os dados
+  editarIdentificacao.addEventListener("click", function () {
+    mostrarEtapa(1);
+  });
+
+  // retorna ao vínculo para editar os dados
+  editarVinculo.addEventListener("click", function () {
+    mostrarEtapa(2);
+  });
+}
