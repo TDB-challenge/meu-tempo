@@ -137,6 +137,32 @@
             <p class="cadastro-subtitulo">
               Precisamos de poucas informações para solicitar seu acesso.
             </p>
+
+            <!-- o javascript atualiza a etapa ativa conforme o avanço do cadastro -->
+            <ol
+              class="etapas-cadastro"
+              id="etapas-cadastro"
+              aria-label="Etapas do cadastro administrativo"
+            >
+              <li
+                class="etapa-cadastro etapa-ativa"
+                data-etapa="1"
+                aria-current="step"
+              >
+                <span class="barra-etapa" aria-hidden="true"></span>
+                <span>1. Identificação</span>
+              </li>
+
+              <li class="etapa-cadastro" data-etapa="2">
+                <span class="barra-etapa" aria-hidden="true"></span>
+                <span>2. Vínculo</span>
+              </li>
+
+              <li class="etapa-cadastro" data-etapa="3">
+                <span class="barra-etapa" aria-hidden="true"></span>
+                <span>3. Revisão</span>
+              </li>
+            </ol>
           </div>
         </div>
       </section>
