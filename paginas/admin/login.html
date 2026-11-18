@@ -3,239 +3,880 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login | Meu Tempo</title>
-    <link rel="stylesheet" href="../css/style.css" />
-    <script src="../js/script.js" defer></script>
+
+    <title>Cadastro administrativo | Meu Tempo</title>
+
+    <!-- importa os estilos gerais do site -->
+    <link rel="stylesheet" href="../../css/style.css" />
+
+    <!-- importa os estilos específicos da área administrativa -->
+    <link rel="stylesheet" href="../../css/admin.css" />
   </head>
-  <body>
-    <!-- Barra superior -->
-    <div class="barra-util">
+
+  <!-- identifica a página para aplicar somente os estilos do cadastro administrativo -->
+  <body class="cadastro-administrativo">
+    <!-- barra-util reaproveita os estilos da barra superior do site -->
+    <div class="barra-acessibilidade barra-util">
       <div class="container">
         <span>Uma cidade para todas as pessoas. Um caminho de cada vez.</span>
-        <button type="button" id="btn-abrir-acess" class="btn-acess-topo">
+
+        <!-- o id permite localizar o botão pelo javascript.
+                 aria-controls identifica qual painel será aberto.
+                 aria-expanded informa se o painel está aberto ou fechado -->
+        <button
+          type="button"
+          id="abrir-painel-acessibilidade"
+          class="botao-acessibilidade btn-acess-topo"
+          aria-controls="painel-acessibilidade"
+          aria-expanded="false"
+        >
           Recursos de acessibilidade &rsaquo;
         </button>
       </div>
     </div>
 
-    <!-- Barra de ajustes rápidos -->
-    <div id="painel-acess-rapido" class="painel-acess-rapido">
+    <!-- painel-acess-rapido reaproveita a aparência do painel de acessibilidade.
+         o javascript será responsável por abrir e fechar esse painel -->
+    <div
+      id="painel-acessibilidade"
+      class="painel-acessibilidade painel-acess-rapido"
+    >
       <div class="container">
         <strong>Ajustes rápidos de leitura:</strong>
-        <div class="botoes-acess">
-          <button type="button" class="acao-aumentar">A+ Aumentar texto</button>
-          <button type="button" class="acao-diminuir">A- Texto normal</button>
-          <button type="button" class="acao-contraste">Alto contraste</button>
-          <button type="button" class="acao-tema">Tema escuro</button>
+
+        <!-- botoes-acess organiza os botões de acessibilidade -->
+        <div class="botoes-acessibilidade botoes-acess">
+          <!-- cada classe identifica uma ação diferente no javascript -->
+          <button type="button" class="aumentar-texto">
+            A+ Aumentar texto
+          </button>
+
+          <button type="button" class="restaurar-texto">A- Texto normal</button>
+
+          <button type="button" class="alternar-contraste">
+            Alto contraste
+          </button>
+
+          <button type="button" class="alternar-tema">Tema escuro</button>
         </div>
       </div>
     </div>
 
-    <!-- Cabeçalho -->
     <header class="cabecalho">
       <div class="container">
-        <a href="index.html" class="logo">
-          <span class="logo-circulo">
-            <img src="../assets/icones/clock-three.png" alt="" class="icone" />
-          </span>
+        <a href="../index.html" class="logo">
           <div>
             <span class="logo-titulo">meu tempo</span>
             <span class="logo-sub">A cidade no seu ritmo.</span>
           </div>
         </a>
 
-        <button type="button" id="btn-menu" class="btn-menu">Menu</button>
+        <!-- btn-menu reaproveita a aparência do botão de menu.
+                 o id abrir-menu será utilizado para abrir a navegação no celular -->
+        <button
+          type="button"
+          id="abrir-menu"
+          class="botao-menu btn-menu"
+          aria-controls="menu-navegacao"
+          aria-expanded="false"
+        >
+          Menu
+        </button>
 
-        <nav id="menu-navegacao" class="menu">
-          <a href="index.html">Início</a>
-          <a href="sobre.html" class="ativo">Sobre</a>
-          <a href="solucao.html">Nossa solução</a>
-          <a href="acessibilidade.html">Acessibilidade</a>
-          <a href="integrantes.html">Equipe</a>
-          <a href="faq.html">FAQ</a>
-          <a href="contato.html">Contato</a>
+        <nav id="menu-navegacao" class="menu" aria-label="Navegação principal">
+          <a href="../index.html">Início</a>
+          <a href="../sobre.html">Sobre</a>
+          <a href="../solucao.html">Nossa solução</a>
+          <a href="../acessibilidade.html">Acessibilidade</a>
+          <a href="../integrantes.html">Equipe</a>
+          <a href="../faq.html">FAQ</a>
+          <a href="../contato.html">Contato</a>
         </nav>
 
-        <a href="cadastro.html" class="btn btn-pequeno header-cta"
-          >Acessar plataforma &rarr;</a
+        <!-- btn define a aparência padrão do botão.
+                 btn-pequeno reduz seu tamanho.
+                 header-cta identifica o botão principal do cabeçalho -->
+        <a
+          href="login.html"
+          class="botao-acesso-plataforma btn btn-pequeno header-cta"
         >
+          Acessar plataforma &rarr;
+        </a>
       </div>
     </header>
 
-    <main>
+    <main id="conteudo-principal">
+      <!-- container limita a largura do conteúdo.
+             cadastro-secao define os espaçamentos da seção -->
       <section class="container cadastro-secao">
+        <!-- cadastro-layout organiza a página em duas colunas:
+                 apresentação à esquerda e formulário à direita.
+                 em telas menores, o css transforma as duas colunas em uma -->
         <div class="cadastro-layout">
-          <!-- Coluna Esquerda: Boas-vindas e foto em arco -->
+          <!-- cadastro-apresentacao agrupa os textos e a fotografia -->
           <div class="cadastro-apresentacao">
-            <div class="etiqueta">SEJA BEM-VINDO AO MEU TEMPO</div>
-            <h1>Seu próximo caminho começa por aqui.</h1>
+            <div class="etiqueta">ACESSO PROFISSIONAL</div>
+
+            <h1>Juntos, construímos uma cidade mais acessível.</h1>
+
             <p class="cadastro-lead">
-              Mais autonomia para seguir no seu ritmo. Escolha como você quer
-              começar.
+              Faça parte de uma rede de profissionais que trabalha para tornar a
+              mobilidade urbana mais inclusiva, segura e acessível para todas as
+              pessoas.
             </p>
 
+            <!-- cadastro-foto-arco controla o formato arredondado da imagem -->
             <div class="cadastro-foto-arco">
               <img
-                src="../assets/imagens/deficiencia-visual.jpg"
-                alt="deficiência visual: pessoa com bengala caminhando pela rua"
+                src="../../assets/imagens/homem_acessib.jpg"
+                alt="Homem utilizando muletas"
               />
             </div>
+
+            <p class="cadastro-legenda-ficticia">
+              <span class="asterisco">*</span>
+              Ambiente administrativo desenvolvido para demonstração acadêmica.
+            </p>
           </div>
 
-          <!-- Coluna Direita: Cartão branco de login -->
+          <!-- card-branco reaproveita a aparência dos cartões do site.
+                     cadastro-card define os espaçamentos e a aparência do formulário -->
           <div class="card-branco cadastro-card">
+            <!-- identifica visualmente que esta é uma área profissional -->
             <div class="cadastro-area-tag">
-              <img src="../assets/icones/user.png" alt="" class="icone" />
-              <span>Área do cidadão</span>
+              <img
+                src="../../assets/icones/shield-check.png"
+                alt=""
+                class="icone"
+              />
+              <span>Acesso profissional</span>
             </div>
 
-            <h2>Que bom ter você aqui.</h2>
+            <h2>Vamos começar?</h2>
+
             <p class="cadastro-subtitulo">
-              Entre para acompanhar seus pedidos.
+              Precisamos de poucas informações para solicitar seu acesso.
             </p>
 
-            <form id="form-login" class="form-contato" novalidate>
-              <div class="campo-grupo">
-                <label for="login-email"
-                  >E-mail <span class="asterisco">*</span></label
-                >
-                <input
-                  type="email"
-                  id="login-email"
-                  name="email"
-                  autocomplete="email"
-                  required
-                />
-              </div>
+            <!-- etapas-cadastro organiza os indicadores lado a lado.
+                         etapa-cadastro define a aparência padrão de cada etapa.
+                         etapa-ativa destaca a etapa atual.
+                         data-etapa identifica o número da etapa para o javascript.
+                         aria-current informa a etapa atual aos leitores de tela -->
+            <ol
+              class="etapas-cadastro"
+              id="etapas-cadastro"
+              aria-label="Etapas do cadastro"
+            >
+              <li
+                class="etapa-cadastro etapa-ativa"
+                data-etapa="1"
+                aria-current="step"
+              >
+                <!-- barra-etapa representa visualmente o progresso -->
+                <span class="barra-etapa" aria-hidden="true"></span>
+                <span>1. Identificação</span>
+              </li>
 
-              <div class="campo-grupo">
-                <label for="login-senha"
-                  >Senha <span class="asterisco">*</span></label
-                >
-                <div class="campo-senha-wrap">
+              <li class="etapa-cadastro" data-etapa="2">
+                <span class="barra-etapa" aria-hidden="true"></span>
+                <span>2. Vínculo</span>
+              </li>
+
+              <li class="etapa-cadastro" data-etapa="3">
+                <span class="barra-etapa" aria-hidden="true"></span>
+                <span>3. Revisão</span>
+              </li>
+            </ol>
+
+            <!-- formulario-cadastro-admin recebe os estilos gerais do formulário.
+                         o id identifica o formulário que será controlado pelo javascript.
+                         method post evita colocar os dados do formulário na url
+                         em um envio tradicional.
+                         o javascript deverá impedir esse envio no protótipo -->
+            <form
+              id="formulario-cadastro-admin"
+              class="formulario-cadastro-admin"
+              method="post"
+            >
+              <!-- etapa 01 - identificação profissional -->
+
+              <!-- fieldset agrupa os campos de uma mesma etapa.
+                             campos-etapa-cadastro remove a aparência padrão do fieldset.
+                             data-etapa-formulario identifica a etapa para o javascript -->
+              <fieldset
+                id="etapa-identificacao"
+                class="campos-etapa-cadastro"
+                data-etapa-formulario="1"
+              >
+                <!-- legend identifica o assunto do grupo de campos -->
+                <legend>Identificação profissional</legend>
+
+                <p class="orientacao-etapa">
+                  Informe seus dados para iniciarmos a solicitação de acesso.
+                </p>
+
+                <p class="campos-obrigatorios">
+                  Os campos sinalizados com * são obrigatórios.
+                </p>
+
+                <!-- campo-cadastro organiza o rótulo, o campo e os espaçamentos -->
+                <div class="campo-cadastro">
+                  <label for="nome-completo">
+                    Nome completo <span class="asterisco">*</span>
+                  </label>
+
+                  <!-- o for do label corresponde ao id do input.
+                                     required torna o preenchimento obrigatório.
+                                     maxlength limita a quantidade de caracteres.
+                                     autocomplete indica o tipo de dado ao navegador -->
                   <input
-                    type="password"
-                    id="login-senha"
-                    name="senha"
-                    autocomplete="current-password"
+                    type="text"
+                    id="nome-completo"
+                    name="nome-completo"
+                    placeholder="Como consta no seu documento"
+                    autocomplete="name"
+                    maxlength="100"
                     required
                   />
+                </div>
+
+                <div class="campo-cadastro">
+                  <label for="matricula-funcional">
+                    Matrícula funcional <span class="asterisco">*</span>
+                  </label>
+
+                  <!-- usamos text porque uma matrícula pode conter
+                                     letras, números e zeros no início -->
+                  <input
+                    type="text"
+                    id="matricula-funcional"
+                    name="matricula-funcional"
+                    placeholder="Informe sua matrícula"
+                    maxlength="30"
+                    required
+                  />
+                </div>
+
+                <div class="campo-cadastro">
+                  <label for="email-institucional">
+                    E-mail institucional <span class="asterisco">*</span>
+                  </label>
+
+                  <!-- type email permite verificar o formato básico do e-mail.
+                                     aria-describedby associa o campo ao texto de orientação -->
+                  <input
+                    type="email"
+                    id="email-institucional"
+                    name="email-institucional"
+                    placeholder="nome@instituicao.example"
+                    autocomplete="email"
+                    maxlength="254"
+                    aria-describedby="orientacao-email-institucional"
+                    required
+                  />
+
+                  <!-- orientacao-campo apresenta um texto menor abaixo do input -->
+                  <small
+                    id="orientacao-email-institucional"
+                    class="orientacao-campo"
+                  >
+                    Informe o e-mail vinculado à instituição em que você
+                    trabalha.
+                  </small>
+                </div>
+
+                <div class="campo-cadastro">
+                  <label for="senha">
+                    Crie uma senha <span class="asterisco">*</span>
+                  </label>
+
+                  <!-- campo-senha utiliza flexbox para posicionar
+                                     o input e o botão de visualização lado a lado -->
+                  <div class="campo-senha">
+                    <!-- password oculta os caracteres digitados.
+                                         minlength define o tamanho mínimo da senha.
+                                         new-password indica a criação de uma nova senha -->
+                    <input
+                      type="password"
+                      id="senha"
+                      name="senha"
+                      placeholder="Digite sua senha"
+                      autocomplete="new-password"
+                      minlength="8"
+                      maxlength="128"
+                      aria-describedby="requisitos-senha"
+                      required
+                    />
+
+                    <!-- botao-visualizar-senha define a aparência do botão.
+                                         data-campo-senha identifica qual input será alterado.
+                                         aria-pressed informa se a visualização está ativada.
+                                         type button impede o envio do formulário ao clicar -->
+                    <button
+                      type="button"
+                      class="botao-visualizar-senha"
+                      data-campo-senha="senha"
+                      aria-controls="senha"
+                      aria-label="Mostrar senha"
+                      aria-pressed="false"
+                    >
+                      <img src="../../assets/icones/eye.png" alt="" />
+                    </button>
+                  </div>
+                </div>
+
+                <!-- requisitos-senha organiza a lista de regras da senha.
+                                 cada data-requisito identifica uma regra diferente.
+                                 o javascript adicionará a classe requisito-atendido
+                                 quando a regra correspondente for cumprida -->
+                <ul id="requisitos-senha" class="requisitos-senha">
+                  <li data-requisito="comprimento">Pelo menos 8 caracteres</li>
+
+                  <li data-requisito="maiuscula">Uma letra maiúscula</li>
+
+                  <li data-requisito="minuscula">Uma letra minúscula</li>
+
+                  <li data-requisito="numero">Um número</li>
+
+                  <li data-requisito="especial">Um caractere especial</li>
+                </ul>
+
+                <div class="campo-cadastro">
+                  <label for="confirmar-senha">
+                    Confirme sua senha <span class="asterisco">*</span>
+                  </label>
+
+                  <div class="campo-senha">
+                    <!-- o javascript comparará este valor
+                                         com o valor do primeiro campo de senha -->
+                    <input
+                      type="password"
+                      id="confirmar-senha"
+                      name="confirmar-senha"
+                      placeholder="Digite sua senha novamente"
+                      autocomplete="new-password"
+                      minlength="8"
+                      maxlength="128"
+                      aria-describedby="mensagem-confirmacao-senha"
+                      required
+                    />
+
+                    <!-- reaproveita a mesma classe do botão anterior,
+                                         mas controla o campo confirmar-senha -->
+                    <button
+                      type="button"
+                      class="botao-visualizar-senha"
+                      data-campo-senha="confirmar-senha"
+                      aria-controls="confirmar-senha"
+                      aria-label="Mostrar confirmação da senha"
+                      aria-pressed="false"
+                    >
+                      <img src="../../assets/icones/eye.png" alt="" />
+                    </button>
+                  </div>
+
+                  <!-- mensagem-campo define a aparência do texto de validação.
+                                     o javascript preencherá esse elemento com o resultado.
+                                     aria-live permite anunciar a mensagem ao leitor de tela -->
+                  <small
+                    id="mensagem-confirmacao-senha"
+                    class="mensagem-campo"
+                    aria-live="polite"
+                  ></small>
+                </div>
+
+                <!-- aceite-termos posiciona o checkbox e o texto lado a lado -->
+                <div class="aceite-termos">
+                  <!-- o javascript verificará se a caixa está marcada -->
+                  <input
+                    type="checkbox"
+                    id="aceitar-termos"
+                    name="aceitar-termos"
+                    required
+                  />
+
+                  <label for="aceitar-termos">
+                    Declaro que as informações fornecidas são verdadeiras e
+                    estou de acordo com os
+                    <a
+                      href="../privacidade.html"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      termos de privacidade </a
+                    >.
+                  </label>
+                </div>
+
+                <!-- mensagem-formulario define a aparência dos avisos.
+                                 hidden mantém a mensagem escondida inicialmente.
+                                 o javascript exibirá esse elemento caso exista algum erro.
+                                 role alert permite anunciar mensagens importantes -->
+                <p
+                  id="mensagem-identificacao"
+                  class="mensagem-formulario"
+                  role="alert"
+                  hidden
+                ></p>
+
+                <!-- acoes-etapa-cadastro organiza os botões de navegação -->
+                <div class="acoes-etapa-cadastro">
+                  <!-- botao-avancar-etapa aplica a aparência verde do botão.
+                                     o javascript validará os dados antes de avançar -->
                   <button
                     type="button"
-                    id="btn-toggle-senha"
-                    class="btn-toggle-senha"
-                    aria-label="Mostrar senha"
-                    aria-pressed="false"
+                    id="avancar-identificacao"
+                    class="botao-avancar-etapa"
                   >
-                    <img src="../assets/icones/eye.png" alt="" class="icone" />
+                    Continuar &rarr;
                   </button>
                 </div>
-              </div>
+              </fieldset>
 
-              <div class="login-esqueci-linha">
-                <a href="recuperar-senha.html" class="login-link-esqueci"
-                  >Esqueci minha senha</a
+              <!-- etapa 02 - vínculo profissional -->
+
+              <!-- hidden mantém a segunda etapa escondida.
+                             disabled desativa os campos desse agrupamento.
+                             o javascript removerá esses atributos
+                             quando a primeira etapa for validada -->
+              <fieldset
+                id="etapa-vinculo"
+                class="campos-etapa-cadastro"
+                data-etapa-formulario="2"
+                hidden
+                disabled
+              >
+                <legend>Vínculo profissional</legend>
+
+                <p class="orientacao-etapa">
+                  Informe onde você atua para que possamos direcionar seu acesso
+                  aos serviços correspondentes.
+                </p>
+
+                <div class="campo-cadastro">
+                  <label for="orgao">
+                    Órgão ou operadora <span class="asterisco">*</span>
+                  </label>
+
+                  <!-- select permite escolher uma instituição.
+                                     value representa o valor utilizado pelo javascript.
+                                     o texto da option representa o nome exibido na tela -->
+                  <select id="orgao" name="orgao" required>
+                    <!-- selected define a opção inicial.
+                                         disabled impede que ela seja escolhida novamente -->
+                    <option value="" selected disabled>
+                      Selecione a instituição
+                    </option>
+
+                    <option value="metro">Metrô de São Paulo</option>
+                    <option value="cptm">CPTM</option>
+                    <option value="viaquatro">ViaQuatro</option>
+                    <option value="viamobilidade">ViaMobilidade</option>
+                    <option value="cet">CET-SP</option>
+                  </select>
+                </div>
+
+                <div class="campo-cadastro">
+                  <label for="funcao">
+                    Função <span class="asterisco">*</span>
+                  </label>
+
+                  <!-- permanece desabilitado até a escolha da instituição.
+                                     o javascript adicionará as funções correspondentes -->
+                  <select id="funcao" name="funcao" required disabled>
+                    <option value="">Selecione primeiro a instituição</option>
+                  </select>
+                </div>
+
+                <!-- campos-transporte agrupa os campos de linha e estação.
+                                 o grupo será exibido para as funções ferroviárias
+                                 que precisam informar esses dados -->
+                <div id="campos-transporte" class="campos-transporte" hidden>
+                  <div class="campo-cadastro">
+                    <label for="linha">
+                      Linha de atuação <span class="asterisco">*</span>
+                    </label>
+
+                    <!-- as opções serão adicionadas pelo javascript
+                                         conforme a operadora selecionada -->
+                    <select id="linha" name="linha" disabled>
+                      <option value="">Selecione a instituição</option>
+                    </select>
+                  </div>
+
+                  <div class="campo-cadastro">
+                    <label for="estacao">
+                      Estação de atuação <span class="asterisco">*</span>
+                    </label>
+
+                    <!-- as estações dependem da linha selecionada.
+                                         ao trocar de linha, o javascript limpará
+                                         as opções anteriores e carregará as novas -->
+                    <select id="estacao" name="estacao" disabled>
+                      <option value="">Selecione primeiro a linha</option>
+                    </select>
+                  </div>
+
+                  <small class="orientacao-campo">
+                    As informações do seu painel serão direcionadas conforme sua
+                    linha e estação de atuação.
+                  </small>
+                </div>
+
+                <!-- campo-regiao será exibido para funções
+                                 que precisam informar uma região ou unidade.
+                                 o javascript ativará somente os campos necessários -->
+                <div id="campo-regiao" class="campo-cadastro" hidden>
+                  <label for="regiao">
+                    Região ou unidade de atuação
+                    <span class="asterisco">*</span>
+                  </label>
+
+                  <input
+                    type="text"
+                    id="regiao"
+                    name="regiao"
+                    placeholder="Informe sua região de atuação"
+                    maxlength="100"
+                    disabled
+                  />
+                </div>
+
+                <!-- aviso-vinculo aplica um fundo verde claro
+                                 e posiciona o ícone ao lado da orientação -->
+                <div class="aviso-vinculo">
+                  <img
+                    src="../../assets/icones/shield-check.png"
+                    alt=""
+                    class="icone"
+                  />
+
+                  <p>
+                    Seu vínculo profissional será analisado antes da liberação
+                    do acesso administrativo. As permissões serão definidas pela
+                    função e pela instituição autorizada.
+                  </p>
+                </div>
+
+                <!-- mensagem de erro específica da segunda etapa -->
+                <p
+                  id="mensagem-vinculo"
+                  class="mensagem-formulario"
+                  role="alert"
+                  hidden
+                ></p>
+
+                <div class="acoes-etapa-cadastro">
+                  <!-- botao-voltar-etapa aplica a aparência secundária.
+                                     o javascript retornará à etapa de identificação -->
+                  <button
+                    type="button"
+                    id="voltar-identificacao"
+                    class="botao-voltar-etapa"
+                  >
+                    &larr; Voltar
+                  </button>
+
+                  <!-- valida o vínculo antes de mostrar a revisão -->
+                  <button
+                    type="button"
+                    id="avancar-vinculo"
+                    class="botao-avancar-etapa"
+                  >
+                    Continuar &rarr;
+                  </button>
+                </div>
+              </fieldset>
+
+              <!-- etapa 03 - revisão dos dados -->
+
+              <!-- a revisão será exibida somente após a validação
+                             dos dados de identificação e vínculo profissional -->
+              <fieldset
+                id="etapa-revisao"
+                class="campos-etapa-cadastro"
+                data-etapa-formulario="3"
+                hidden
+                disabled
+              >
+                <legend>Revise suas informações</legend>
+
+                <p class="orientacao-etapa">
+                  Confira seus dados antes de enviar a solicitação de acesso.
+                </p>
+
+                <!-- resumo-cadastro cria um cartão para apresentar os dados.
+                                 aria-labelledby associa a seção ao seu título -->
+                <section
+                  class="resumo-cadastro"
+                  aria-labelledby="titulo-resumo-identificacao"
                 >
-              </div>
+                  <h3 id="titulo-resumo-identificacao">
+                    Identificação profissional
+                  </h3>
 
-              <button type="submit" class="btn login-btn-full">
-                Entrar &rarr;
-              </button>
+                  <!-- dl representa uma lista de informações.
+                                     dt identifica o nome da informação.
+                                     dd apresenta o valor correspondente.
+                                     os ids permitem preencher os valores pelo javascript -->
+                  <dl class="lista-resumo-cadastro">
+                    <!-- item-resumo define o espaço entre as informações -->
+                    <div class="item-resumo">
+                      <dt>Nome completo</dt>
+                      <dd id="resumo-nome">Não informado</dd>
+                    </div>
 
-              <div
-                id="aviso-login"
-                class="aviso-contato"
-                role="status"
-                aria-live="polite"
-              ></div>
+                    <div class="item-resumo">
+                      <dt>Matrícula funcional</dt>
+                      <dd id="resumo-matricula">Não informada</dd>
+                    </div>
+
+                    <div class="item-resumo">
+                      <dt>E-mail institucional</dt>
+                      <dd id="resumo-email">Não informado</dd>
+                    </div>
+                  </dl>
+
+                  <!-- permite corrigir os dados sem perder
+                                     as informações já preenchidas -->
+                  <button
+                    type="button"
+                    id="editar-identificacao"
+                    class="botao-editar-dados"
+                  >
+                    Editar identificação
+                  </button>
+                </section>
+
+                <section
+                  class="resumo-cadastro"
+                  aria-labelledby="titulo-resumo-vinculo"
+                >
+                  <h3 id="titulo-resumo-vinculo">Vínculo profissional</h3>
+
+                  <dl class="lista-resumo-cadastro">
+                    <div class="item-resumo">
+                      <dt>Órgão ou operadora</dt>
+                      <dd id="resumo-orgao">Não informado</dd>
+                    </div>
+
+                    <div class="item-resumo">
+                      <dt>Função</dt>
+                      <dd id="resumo-funcao">Não informada</dd>
+                    </div>
+
+                    <!-- linha, estação e região ficam escondidas inicialmente.
+                                         o javascript mostrará somente os dados
+                                         correspondentes ao vínculo escolhido -->
+                    <div class="item-resumo" id="item-resumo-linha" hidden>
+                      <dt>Linha de atuação</dt>
+                      <dd id="resumo-linha">Não informada</dd>
+                    </div>
+
+                    <div class="item-resumo" id="item-resumo-estacao" hidden>
+                      <dt>Estação de atuação</dt>
+                      <dd id="resumo-estacao">Não informada</dd>
+                    </div>
+
+                    <div class="item-resumo" id="item-resumo-regiao" hidden>
+                      <dt>Região ou unidade</dt>
+                      <dd id="resumo-regiao">Não informada</dd>
+                    </div>
+                  </dl>
+
+                  <button
+                    type="button"
+                    id="editar-vinculo"
+                    class="botao-editar-dados"
+                  >
+                    Editar vínculo
+                  </button>
+                </section>
+
+                <!-- aviso-aprovacao informa que o cadastro
+                                 ainda precisa ser autorizado pela coordenação -->
+                <div class="aviso-aprovacao">
+                  <img
+                    src="../../assets/icones/shield-check.png"
+                    alt=""
+                    class="icone"
+                  />
+
+                  <div>
+                    <strong>Seu acesso precisa ser autorizado</strong>
+
+                    <p>
+                      Após a análise e aprovação do seu vínculo profissional,
+                      será disponibilizada uma credencial administrativa com o
+                      domínio @meutempo.org.br.
+                    </p>
+
+                    <p>
+                      A solicitação de cadastro não garante a liberação imediata
+                      do acesso.
+                    </p>
+                  </div>
+                </div>
+
+                <p
+                  id="mensagem-revisao"
+                  class="mensagem-formulario"
+                  role="alert"
+                  hidden
+                ></p>
+
+                <div class="acoes-etapa-cadastro">
+                  <button
+                    type="button"
+                    id="voltar-vinculo"
+                    class="botao-voltar-etapa"
+                  >
+                    &larr; Voltar
+                  </button>
+
+                  <!-- type submit permite enviar o formulário.
+                                     o botão começa desabilitado para impedir o envio
+                                     antes da implementação do javascript.
+                                     futuramente, a função de envio registrará
+                                     a solicitação demonstrativa com status pendente -->
+                  <button
+                    type="submit"
+                    id="enviar-solicitacao"
+                    class="botao-avancar-etapa"
+                    disabled
+                  >
+                    Solicitar acesso &rarr;
+                  </button>
+                </div>
+              </fieldset>
             </form>
 
-            <!-- Divisor "ou" -->
-            <div class="login-divisor" aria-hidden="true">
-              <span>ou</span>
-            </div>
+            <!-- confirmação da solicitação -->
 
-            <!-- Botão secundário -->
-            <a href="solucao.html" class="btn btn-contorno login-btn-full">
-              Continuar sem cadastro
-            </a>
-
-            <!-- Link para criar conta -->
-            <div class="login-criar-conta-linha">
-              <span>Ainda não tem acesso?</span>
-              <a href="cadastro.html" class="login-link-criar"
-                >Criar uma conta</a
-              >
-            </div>
-
-            <!-- Rodapé interno do card -->
-            <div class="cadastro-card-rodape">
-              <div class="cadastro-seguranca">
-                <img
-                  src="../assets/icones/shield-check.png"
-                  alt=""
-                  class="icone"
-                />
-                <span
-                  >Seus dados e suas preferências ficam sob seu controle.</span
-                >
+            <!-- confirmacao-cadastro organiza a tela final do cadastro.
+                         permanece escondida até a solicitação ser registrada.
+                         o javascript ocultará o formulário e mostrará esta seção -->
+            <section
+              id="confirmacao-cadastro"
+              class="confirmacao-cadastro"
+              aria-labelledby="titulo-confirmacao"
+              hidden
+            >
+              <!-- cria um círculo verde claro ao redor do ícone -->
+              <div class="icone-confirmacao-cadastro">
+                <img src="../../assets/icones/confirmacao.svg" alt="" />
               </div>
 
-              <div class="cadastro-links-rodape">
-                <a href="admin/login.html" class="cadastro-link-admin"
-                  >Acesso administrativo</a
-                >
+              <!-- tabindex -1 permite direcionar o foco ao título pelo javascript
+                             sem inserir o título na navegação normal da tecla tab -->
+              <h2 id="titulo-confirmacao" tabindex="-1">
+                Solicitação recebida!
+              </h2>
+
+              <p>
+                Seu cadastro foi registrado e está aguardando a análise do
+                vínculo profissional.
+              </p>
+
+              <!-- dados-solicitacao-cadastro cria um cartão
+                             para apresentar o protocolo e a situação do cadastro -->
+              <div class="dados-solicitacao-cadastro">
+                <dl class="lista-resumo-cadastro">
+                  <div class="item-resumo">
+                    <dt>Protocolo da solicitação</dt>
+
+                    <!-- o protocolo será gerado pelo javascript
+                                         e inserido neste elemento -->
+                    <dd id="protocolo-cadastro"></dd>
+                  </div>
+
+                  <div class="item-resumo">
+                    <dt>Situação do cadastro</dt>
+
+                    <!-- situacao-pendente destaca visualmente
+                                         que o cadastro ainda não foi aprovado -->
+                    <dd id="situacao-cadastro" class="situacao-pendente">
+                      Aguardando aprovação
+                    </dd>
+                  </div>
+                </dl>
               </div>
-            </div>
+
+              <!-- organiza as orientações sobre o processo de aprovação -->
+              <div class="proximas-etapas-cadastro">
+                <h3>O que acontece agora?</h3>
+
+                <ol>
+                  <li>
+                    Seu vínculo profissional será analisado pela coordenação.
+                  </li>
+
+                  <li>
+                    As permissões serão definidas conforme sua função e área de
+                    atuação.
+                  </li>
+
+                  <li>
+                    Após a aprovação, será disponibilizada sua credencial
+                    administrativa.
+                  </li>
+                </ol>
+              </div>
+
+              <p class="orientacao-credencial">
+                A credencial seguirá o domínio @meutempo.org.br e será
+                necessária para acessar o painel administrativo.
+              </p>
+
+              <!-- aplica um fundo de atenção para informar
+                             que o ambiente é apenas uma demonstração acadêmica -->
+              <p class="aviso-cadastro-demonstrativo">
+                Este ambiente é demonstrativo. Nenhum e-mail real será enviado
+                automaticamente.
+              </p>
+
+              <!-- organiza os dois links da confirmação verticalmente.
+                             as classes dos botões são reaproveitadas
+                             para manter a mesma aparência do formulário -->
+              <div class="acoes-confirmacao-cadastro">
+                <a href="login.html" class="botao-avancar-etapa">
+                  Ir para o login administrativo &rarr;
+                </a>
+
+                <a href="../index.html" class="botao-voltar-etapa">
+                  Voltar ao site
+                </a>
+              </div>
+            </section>
+
+            <!-- cadastro-login centraliza o texto e o link.
+                         o id permitirá esconder esta orientação
+                         quando a confirmação do cadastro for exibida -->
+            <p class="cadastro-login" id="cadastro-login">
+              Já possui acesso profissional?
+              <a href="login.html">Entrar no painel</a>
+            </p>
           </div>
         </div>
       </section>
     </main>
 
-    <!-- Rodapé -->
-    <footer class="rodape">
-      <div class="container">
-        <div class="rodape-grid">
-          <div>
-            <h3>meu tempo</h3>
-            <p>Tecnologia que acolhe.<br />Uma cidade que respeita você.</p>
-            <p>Um projeto acadêmico · FIAP 2026</p>
-          </div>
-          <div>
-            <h3>Conheça o Meu Tempo</h3>
-            <a href="sobre.html">Sobre o projeto</a>
-            <a href="solucao.html">Nossa solução</a>
-            <a href="integrantes.html">Nossa equipe</a>
-          </div>
-          <div>
-            <h3>Estamos com você</h3>
-            <a href="acessibilidade.html">Acessibilidade</a>
-            <a href="faq.html">Perguntas frequentes</a>
-            <a href="contato.html">Fale com a gente</a>
-          </div>
-          <div>
-            <h3>Outros caminhos</h3>
-            <a href="solucao01.html">Plataforma do cidadão</a>
-            <a href="admin/login.html">Acesso administrativo</a>
-            <a href="privacidade.html">Privacidade e termos</a>
-          </div>
-        </div>
-
-        <div class="rodape-base">
-          <span>© 2026 Meu Tempo. A cidade no seu ritmo.</span>
-          <span>Acolhimento, autonomia e acessibilidade.</span>
-        </div>
-      </div>
-    </footer>
-
-    <!-- Integração oficial do VLibras -->
+    <!-- estrutura exigida pelo vlibras para exibir
+         o botão de acessibilidade e a janela de tradução.
+         esses atributos pertencem ao próprio plugin -->
     <div vw class="enabled">
       <div vw-access-button class="active"></div>
+
       <div vw-plugin-wrapper>
         <div class="vw-plugin-top-wrapper"></div>
       </div>
     </div>
+
+    <!-- carrega o javascript oficial do vlibras -->
     <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+
+    <!-- inicializa o recurso de tradução em libras -->
     <script>
       new window.VLibras.Widget("https://vlibras.gov.br/app");
     </script>
