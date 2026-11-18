@@ -252,3 +252,44 @@ if (botaoMenu && menuNavegacao) {
   // executa a função ao clicar no botão
   botaoMenu.addEventListener("click", alternarMenu);
 }
+
+// =================================================================
+// VISUALIZAÇÃO DAS SENHAS
+// =================================================================
+
+// seleciona todos os botões de visualizar senha
+const botoesSenha = document.querySelectorAll(".botao-visualizar-senha");
+
+// função que mostra ou esconde a senha
+function alternarSenha(event) {
+  // identifica o botão que foi clicado
+  const botao = event.currentTarget;
+
+  // recupera o id do campo de senha
+  const idCampo = botao.getAttribute("data-campo-senha");
+
+  // seleciona o campo correspondente
+  const campoSenha = document.getElementById(idCampo);
+
+  // verifica se o campo existe
+  if (campoSenha) {
+    // verifica se a senha está escondida
+    if (campoSenha.type === "password") {
+      campoSenha.type = "text"; // mostra a senha
+
+      // informa que a visualização está ativa
+      botao.setAttribute("aria-pressed", "true");
+    } else {
+      campoSenha.type = "password"; // esconde a senha
+
+      // informa que a visualização está desativada
+      botao.setAttribute("aria-pressed", "false");
+    }
+  }
+}
+
+// percorre os botões de senha encontrados
+for (let i = 0; i < botoesSenha.length; i++) {
+  // executa a função quando um botão for clicado
+  botoesSenha[i].addEventListener("click", alternarSenha);
+}
