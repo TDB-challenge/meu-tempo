@@ -221,3 +221,34 @@ function carregarPreferencias() {
 
 // executa a função quando o javascript é carregado
 carregarPreferencias();
+
+// =================================================================
+// MENU RESPONSIVO
+// =================================================================
+
+// seleciona o botão do menu
+const botaoMenu = document.getElementById("abrir-menu");
+
+// seleciona o menu que contém os links
+const menuNavegacao = document.getElementById("menu-navegacao");
+
+// função que abre e fecha o menu
+function alternarMenu() {
+  // adiciona ou remove a classe que mostra o menu
+  menuNavegacao.classList.toggle("menu-aberto");
+
+  // verifica se o menu está aberto
+  if (menuNavegacao.classList.contains("menu-aberto")) {
+    // informa que o menu está aberto
+    botaoMenu.setAttribute("aria-expanded", "true");
+  } else {
+    // informa que o menu está fechado
+    botaoMenu.setAttribute("aria-expanded", "false");
+  }
+}
+
+// verifica se os elementos existem
+if (botaoMenu && menuNavegacao) {
+  // executa a função ao clicar no botão
+  botaoMenu.addEventListener("click", alternarMenu);
+}

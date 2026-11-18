@@ -1413,466 +1413,445 @@ body.tema-escuro .coord-estacao-icone img.icone {
   }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* CADASTRO E LOGIN ADMINISTRATIVO ================================= */
 
 /* aparência geral das páginas */
 .cadastro-administrativo,
 .login-administrativo {
-    background-color: #f4f1e8; /* fundo bege */
-    color: #203d2e; /* cor do texto */
-    min-height: 100vh; /* altura da tela */
+  background-color: #f4f1e8; /* fundo bege */
+  color: #203d2e; /* cor do texto */
+  min-height: 100vh; /* altura da tela */
 }
 
 /* esconde os elementos que possuem o atributo hidden */
 .cadastro-administrativo [hidden],
 .login-administrativo [hidden] {
-    display: none !important; /* mantém o elemento escondido */
+  display: none !important; /* mantém o elemento escondido */
 }
 
 /* organiza a apresentação e o formulário em duas colunas */
 .cadastro-administrativo .cadastro-layout,
 .login-administrativo .cadastro-layout {
-    display: grid; /* organiza as colunas */
-    grid-template-columns: 1fr 1fr; /* cria duas colunas iguais */
-    gap: 30px; /* espaço entre as colunas */
-    align-items: start; /* alinha pelo início */
+  display: grid; /* organiza as colunas */
+  grid-template-columns: 1fr 1fr; /* cria duas colunas iguais */
+  gap: 30px; /* espaço entre as colunas */
+  align-items: start; /* alinha pelo início */
 }
 
 /* cartão do formulário */
 .cadastro-administrativo .cadastro-card,
 .login-administrativo .cadastro-card {
-    background-color: white; /* fundo branco */
-    border: 1px solid #d5ddd1; /* borda */
-    border-radius: 16px; /* cantos arredondados */
-    padding: 30px; /* espaço interno */
-    min-width: 0; /* evita que o cartão ultrapasse a coluna */
+  background-color: white; /* fundo branco */
+  border: 1px solid #d5ddd1; /* borda */
+  border-radius: 16px; /* cantos arredondados */
+  padding: 30px; /* espaço interno */
+  min-width: 0; /* evita que o cartão ultrapasse a coluna */
 }
 
 /* ícone de acesso profissional */
 .cadastro-area-tag .icone {
-    width: 18px; /* largura */
-    height: 18px; /* altura */
+  width: 18px; /* largura */
+  height: 18px; /* altura */
 }
 
 /* formulários administrativos */
 .formulario-cadastro-admin,
 .formulario-login-admin {
-    width: 100%; /* largura do formulário */
-    margin-top: 20px; /* espaço superior */
+  width: 100%; /* largura do formulário */
+  margin-top: 20px; /* espaço superior */
 }
 
 /* agrupamento dos campos do cadastro */
 .campos-etapa-cadastro {
-    border: none; /* remove a borda */
-    padding: 0; /* remove o espaço interno */
-    margin: 0; /* remove a margem */
-    min-width: 0; /* evita problemas de largura */
+  border: none; /* remove a borda */
+  padding: 0; /* remove o espaço interno */
+  margin: 0; /* remove a margem */
+  min-width: 0; /* evita problemas de largura */
 }
 
 /* título das etapas */
 .campos-etapa-cadastro legend {
-    font-size: 1.25rem; /* tamanho do título */
-    font-weight: bold; /* texto em negrito */
-    color: #203d2e; /* cor verde escura */
-    margin-bottom: 12px; /* espaço inferior */
+  font-size: 1.25rem; /* tamanho do título */
+  font-weight: bold; /* texto em negrito */
+  color: #203d2e; /* cor verde escura */
+  margin-bottom: 12px; /* espaço inferior */
 }
 
 /* orientações das etapas */
 .orientacao-etapa,
 .campos-obrigatorios {
-    font-size: 0.9rem; /* tamanho do texto */
-    color: #59645b; /* cor secundária */
-    line-height: 1.5; /* espaço entre as linhas */
-    margin-bottom: 16px; /* espaço inferior */
+  font-size: 0.9rem; /* tamanho do texto */
+  color: #59645b; /* cor secundária */
+  line-height: 1.5; /* espaço entre as linhas */
+  margin-bottom: 16px; /* espaço inferior */
 }
-
 
 /* INDICADOR DE ETAPAS ============================================= */
 
 /* lista das etapas */
 .etapas-cadastro {
-    display: flex; /* posiciona as etapas lado a lado */
-    gap: 12px; /* espaço entre as etapas */
-    list-style: none; /* remove os marcadores */
-    padding: 0; /* remove o espaço interno */
-    margin: 24px 0; /* espaço superior e inferior */
+  display: flex; /* posiciona as etapas lado a lado */
+  gap: 12px; /* espaço entre as etapas */
+  list-style: none; /* remove os marcadores */
+  padding: 0; /* remove o espaço interno */
+  margin: 24px 0; /* espaço superior e inferior */
 }
 
 /* cada etapa do cadastro */
 .etapa-cadastro {
-    flex: 1; /* divide o espaço igualmente */
-    min-width: 0; /* permite diminuir a largura */
-    font-size: 0.8rem; /* tamanho do texto */
-    color: #59645b; /* cor da etapa pendente */
-    overflow-wrap: anywhere; /* quebra textos longos */
+  flex: 1; /* divide o espaço igualmente */
+  min-width: 0; /* permite diminuir a largura */
+  font-size: 0.8rem; /* tamanho do texto */
+  color: #59645b; /* cor da etapa pendente */
+  overflow-wrap: anywhere; /* quebra textos longos */
 }
 
 /* barra de progresso */
 .barra-etapa {
-    display: block; /* permite definir a altura */
-    height: 4px; /* altura da barra */
-    background-color: #d5ddd1; /* cor da barra pendente */
-    border-radius: 4px; /* cantos arredondados */
-    margin-bottom: 8px; /* espaço abaixo da barra */
+  display: block; /* permite definir a altura */
+  height: 4px; /* altura da barra */
+  background-color: #d5ddd1; /* cor da barra pendente */
+  border-radius: 4px; /* cantos arredondados */
+  margin-bottom: 8px; /* espaço abaixo da barra */
 }
 
 /* texto da etapa atual */
 .etapa-ativa {
-    color: #203d2e; /* cor verde escura */
-    font-weight: bold; /* destaca o texto */
+  color: #203d2e; /* cor verde escura */
+  font-weight: bold; /* destaca o texto */
 }
 
 /* barra da etapa atual */
 .etapa-ativa .barra-etapa {
-    background-color: #203d2e; /* indica a etapa atual */
+  background-color: #203d2e; /* indica a etapa atual */
 }
 
 /* texto da etapa concluída */
 .etapa-concluida {
-    color: #456b50; /* cor verde */
+  color: #456b50; /* cor verde */
 }
 
 /* barra da etapa concluída */
 .etapa-concluida .barra-etapa {
-    background-color: #8aa787; /* cor verde clara */
+  background-color: #8aa787; /* cor verde clara */
 }
-
 
 /* CAMPOS DOS FORMULÁRIOS ========================================== */
 
 /* organiza cada campo */
 .campo-cadastro {
-    margin-bottom: 18px; /* espaço entre os campos */
+  margin-bottom: 18px; /* espaço entre os campos */
 }
 
 /* nome dos campos */
 .campo-cadastro label {
-    display: block; /* posiciona o texto acima do campo */
-    font-size: 0.9rem; /* tamanho do texto */
-    font-weight: bold; /* texto em negrito */
-    margin-bottom: 7px; /* espaço abaixo do texto */
+  display: block; /* posiciona o texto acima do campo */
+  font-size: 0.9rem; /* tamanho do texto */
+  font-weight: bold; /* texto em negrito */
+  margin-bottom: 7px; /* espaço abaixo do texto */
 }
 
 /* identificação dos campos obrigatórios */
 .cadastro-administrativo .asterisco,
 .login-administrativo .asterisco {
-    color: #a64235; /* cor vermelha */
+  color: #a64235; /* cor vermelha */
 }
 
 /* campos de texto e seleção */
 .campo-cadastro input,
 .campo-cadastro select {
-    width: 100%; /* ocupa toda a largura */
-    min-height: 48px; /* altura mínima */
-    padding: 12px; /* espaço interno */
-    border: 1px solid #bfc9be; /* borda */
-    border-radius: 8px; /* cantos arredondados */
-    background-color: white; /* fundo branco */
-    color: #203d2e; /* cor do texto */
-    font-family: inherit; /* mantém a fonte da página */
-    font-size: 1rem; /* tamanho do texto */
-    box-sizing: border-box; /* mantém o campo dentro da largura */
+  width: 100%; /* ocupa toda a largura */
+  min-height: 48px; /* altura mínima */
+  padding: 12px; /* espaço interno */
+  border: 1px solid #bfc9be; /* borda */
+  border-radius: 8px; /* cantos arredondados */
+  background-color: white; /* fundo branco */
+  color: #203d2e; /* cor do texto */
+  font-family: inherit; /* mantém a fonte da página */
+  font-size: 1rem; /* tamanho do texto */
+  box-sizing: border-box; /* mantém o campo dentro da largura */
 }
 
 /* texto de exemplo dos campos */
 .campo-cadastro input::placeholder {
-    color: #59645b; /* cor do texto de exemplo */
+  color: #59645b; /* cor do texto de exemplo */
 }
 
 /* campo selecionado */
 .campo-cadastro input:focus,
 .campo-cadastro select:focus {
-    outline: 2px solid #456b50; /* contorno de foco */
-    border-color: #456b50; /* cor da borda */
+  outline: 2px solid #456b50; /* contorno de foco */
+  border-color: #456b50; /* cor da borda */
 }
 
 /* campos desabilitados */
 .campo-cadastro input:disabled,
 .campo-cadastro select:disabled {
-    background-color: #e8eee4; /* fundo verde claro */
-    cursor: not-allowed; /* indica que não pode ser usado */
+  background-color: #e8eee4; /* fundo verde claro */
+  cursor: not-allowed; /* indica que não pode ser usado */
 }
 
 /* orientações abaixo dos campos */
 .orientacao-campo {
-    display: block; /* posiciona em uma nova linha */
-    font-size: 0.8rem; /* tamanho do texto */
-    color: #59645b; /* cor secundária */
-    line-height: 1.5; /* espaço entre as linhas */
-    margin-top: 6px; /* espaço superior */
+  display: block; /* posiciona em uma nova linha */
+  font-size: 0.8rem; /* tamanho do texto */
+  color: #59645b; /* cor secundária */
+  line-height: 1.5; /* espaço entre as linhas */
+  margin-top: 6px; /* espaço superior */
 }
 
 /* campos de linha e estação */
 .campos-transporte {
-    margin-bottom: 18px; /* espaço inferior */
+  margin-bottom: 18px; /* espaço inferior */
 }
 
 /* campo com erro de preenchimento */
 .campo-cadastro [aria-invalid="true"] {
-    border-color: #a64235; /* borda vermelha */
+  border-color: #a64235; /* borda vermelha */
 }
 
 /* campo com erro selecionado */
 .campo-cadastro [aria-invalid="true"]:focus {
-    outline-color: #a64235; /* contorno vermelho */
+  outline-color: #a64235; /* contorno vermelho */
 }
-
 
 /* CAMPOS DE SENHA ================================================= */
 
 /* organiza a senha e o botão */
 .campo-senha {
-    display: flex; /* posiciona os elementos lado a lado */
-    align-items: center; /* centraliza verticalmente */
-    gap: 8px; /* espaço entre os elementos */
+  display: flex; /* posiciona os elementos lado a lado */
+  align-items: center; /* centraliza verticalmente */
+  gap: 8px; /* espaço entre os elementos */
 }
 
 /* campo de preenchimento da senha */
 .campo-senha input {
-    flex: 1; /* ocupa o espaço disponível */
-    min-width: 0; /* permite diminuir a largura */
+  flex: 1; /* ocupa o espaço disponível */
+  min-width: 0; /* permite diminuir a largura */
 }
 
 /* botão para visualizar a senha */
 .botao-visualizar-senha {
-    width: 44px; /* largura do botão */
-    height: 48px; /* altura do botão */
-    background-color: white; /* fundo branco */
-    border: 1px solid #bfc9be; /* borda */
-    border-radius: 8px; /* cantos arredondados */
-    cursor: pointer; /* indica que pode ser clicado */
-    flex-shrink: 0; /* mantém a largura do botão */
-    display: flex; /* organiza o ícone */
-    align-items: center; /* centraliza verticalmente */
-    justify-content: center; /* centraliza horizontalmente */
+  width: 44px; /* largura do botão */
+  height: 48px; /* altura do botão */
+  background-color: white; /* fundo branco */
+  border: 1px solid #bfc9be; /* borda */
+  border-radius: 8px; /* cantos arredondados */
+  cursor: pointer; /* indica que pode ser clicado */
+  flex-shrink: 0; /* mantém a largura do botão */
+  display: flex; /* organiza o ícone */
+  align-items: center; /* centraliza verticalmente */
+  justify-content: center; /* centraliza horizontalmente */
 }
 
 /* botão ao passar o mouse */
 .botao-visualizar-senha:hover {
-    background-color: #e8eee4; /* fundo verde claro */
+  background-color: #e8eee4; /* fundo verde claro */
 }
 
 /* botão selecionado pelo teclado */
 .botao-visualizar-senha:focus {
-    outline: 2px solid #456b50; /* contorno de foco */
+  outline: 2px solid #456b50; /* contorno de foco */
 }
 
 /* botão quando a senha estiver visível */
 .botao-visualizar-senha[aria-pressed="true"] {
-    background-color: #e8eee4; /* indica que está ativo */
+  background-color: #e8eee4; /* indica que está ativo */
 }
 
 /* imagem do botão */
 .botao-visualizar-senha img {
-    width: 20px; /* largura do ícone */
-    height: 20px; /* altura do ícone */
+  width: 20px; /* largura do ícone */
+  height: 20px; /* altura do ícone */
 }
-
 
 /* REQUISITOS DE SEGURANÇA ========================================= */
 
 /* lista dos requisitos */
 .requisitos-senha {
-    padding-left: 20px; /* espaço para os marcadores */
-    margin-bottom: 20px; /* espaço inferior */
-    list-style: circle; /* marcadores circulares */
+  padding-left: 20px; /* espaço para os marcadores */
+  margin-bottom: 20px; /* espaço inferior */
+  list-style: circle; /* marcadores circulares */
 }
 
 /* cada requisito */
 .requisitos-senha li {
-    color: #59645b; /* cor inicial do texto */
-    font-size: 0.8rem; /* tamanho do texto */
-    line-height: 1.5; /* espaço entre as linhas */
-    margin-bottom: 5px; /* espaço entre os requisitos */
+  color: #59645b; /* cor inicial do texto */
+  font-size: 0.8rem; /* tamanho do texto */
+  line-height: 1.5; /* espaço entre as linhas */
+  margin-bottom: 5px; /* espaço entre os requisitos */
 }
 
 /* requisito preenchido corretamente */
 .requisitos-senha .requisito-atendido {
-    color: #456b50; /* cor verde */
-    font-weight: bold; /* destaca o requisito */
-    list-style: disc; /* preenche o marcador */
+  color: #456b50; /* cor verde */
+  font-weight: bold; /* destaca o requisito */
+  list-style: disc; /* preenche o marcador */
 }
 
 /* mensagem de confirmação da senha */
 .mensagem-campo {
-    font-size: 0.8rem; /* tamanho do texto */
-    margin-top: 5px; /* espaço superior */
+  font-size: 0.8rem; /* tamanho do texto */
+  margin-top: 5px; /* espaço superior */
 }
 
 /* confirmação correta */
 .mensagem-campo.mensagem-sucesso {
-    color: #456b50; /* cor verde */
+  color: #456b50; /* cor verde */
 }
 
 /* confirmação incorreta */
 .mensagem-campo.mensagem-erro {
-    color: #a64235; /* cor vermelha */
+  color: #a64235; /* cor vermelha */
 }
-
 
 /* ACEITE DOS TERMOS =============================================== */
 
 /* organiza a caixa de seleção e o texto */
 .aceite-termos {
-    display: flex; /* coloca os elementos lado a lado */
-    align-items: flex-start; /* alinha pelo início */
-    gap: 10px; /* espaço entre os elementos */
-    margin: 20px 0; /* espaço externo */
+  display: flex; /* coloca os elementos lado a lado */
+  align-items: flex-start; /* alinha pelo início */
+  gap: 10px; /* espaço entre os elementos */
+  margin: 20px 0; /* espaço externo */
 }
 
 /* caixa de seleção */
 .aceite-termos input {
-    width: 20px; /* largura */
-    height: 20px; /* altura */
-    margin-top: 2px; /* espaço superior */
-    accent-color: #203d2e; /* cor da seleção */
-    flex-shrink: 0; /* mantém o tamanho da caixa */
-    cursor: pointer; /* indica que pode ser clicada */
+  width: 20px; /* largura */
+  height: 20px; /* altura */
+  margin-top: 2px; /* espaço superior */
+  accent-color: #203d2e; /* cor da seleção */
+  flex-shrink: 0; /* mantém o tamanho da caixa */
+  cursor: pointer; /* indica que pode ser clicada */
 }
 
 /* foco da caixa de seleção */
 .aceite-termos input:focus {
-    outline: 2px solid #456b50; /* contorno de foco */
+  outline: 2px solid #456b50; /* contorno de foco */
 }
 
 /* texto dos termos */
 .aceite-termos label {
-    font-size: 0.85rem; /* tamanho do texto */
-    color: #59645b; /* cor do texto */
-    line-height: 1.5; /* espaço entre as linhas */
+  font-size: 0.85rem; /* tamanho do texto */
+  color: #59645b; /* cor do texto */
+  line-height: 1.5; /* espaço entre as linhas */
 }
 
 /* link dos termos */
 .aceite-termos a {
-    color: #203d2e; /* cor verde escura */
-    font-weight: bold; /* texto em negrito */
-    text-decoration: underline; /* adiciona sublinhado */
+  color: #203d2e; /* cor verde escura */
+  font-weight: bold; /* texto em negrito */
+  text-decoration: underline; /* adiciona sublinhado */
 }
-
 
 /* BOTÕES DOS FORMULÁRIOS ========================================== */
 
 /* organiza os botões */
 .acoes-etapa-cadastro {
-    display: flex; /* posiciona os botões lado a lado */
-    flex-wrap: wrap; /* permite quebrar a linha */
-    gap: 12px; /* espaço entre os botões */
-    margin-top: 24px; /* espaço superior */
+  display: flex; /* posiciona os botões lado a lado */
+  flex-wrap: wrap; /* permite quebrar a linha */
+  gap: 12px; /* espaço entre os botões */
+  margin-top: 24px; /* espaço superior */
 }
 
 /* propriedades compartilhadas dos botões */
 .botao-avancar-etapa,
 .botao-voltar-etapa {
-    padding: 12px 20px; /* espaço interno */
-    border: 1px solid #203d2e; /* borda */
-    border-radius: 25px; /* cantos arredondados */
-    font-family: inherit; /* mantém a fonte da página */
-    font-size: 1rem; /* tamanho do texto */
-    font-weight: bold; /* texto em negrito */
-    text-align: center; /* centraliza o texto */
-    text-decoration: none; /* remove o sublinhado */
-    cursor: pointer; /* indica que pode ser clicado */
-    min-height: 48px; /* altura mínima */
-    box-sizing: border-box; /* mantém o tamanho do botão */
-    flex: 1; /* divide o espaço entre os botões */
+  padding: 12px 20px; /* espaço interno */
+  border: 1px solid #203d2e; /* borda */
+  border-radius: 25px; /* cantos arredondados */
+  font-family: inherit; /* mantém a fonte da página */
+  font-size: 1rem; /* tamanho do texto */
+  font-weight: bold; /* texto em negrito */
+  text-align: center; /* centraliza o texto */
+  text-decoration: none; /* remove o sublinhado */
+  cursor: pointer; /* indica que pode ser clicado */
+  min-height: 48px; /* altura mínima */
+  box-sizing: border-box; /* mantém o tamanho do botão */
+  flex: 1; /* divide o espaço entre os botões */
 }
 
 /* botão principal */
 .botao-avancar-etapa {
-    background-color: #203d2e; /* fundo verde */
-    color: white; /* texto branco */
+  background-color: #203d2e; /* fundo verde */
+  color: white; /* texto branco */
 }
 
 /* botão secundário */
 .botao-voltar-etapa {
-    background-color: transparent; /* fundo transparente */
-    color: #203d2e; /* texto verde */
+  background-color: transparent; /* fundo transparente */
+  color: #203d2e; /* texto verde */
 }
 
 /* botão principal ao passar o mouse */
 .botao-avancar-etapa:hover {
-    background-color: #34533f; /* altera a cor do fundo */
+  background-color: #34533f; /* altera a cor do fundo */
 }
 
 /* botão secundário ao passar o mouse */
 .botao-voltar-etapa:hover {
-    background-color: #e8eee4; /* fundo verde claro */
+  background-color: #e8eee4; /* fundo verde claro */
 }
 
 /* foco dos botões */
 .botao-avancar-etapa:focus,
 .botao-voltar-etapa:focus {
-    outline: 2px solid #456b50; /* contorno de foco */
-    outline-offset: 3px; /* distância do contorno */
+  outline: 2px solid #456b50; /* contorno de foco */
+  outline-offset: 3px; /* distância do contorno */
 }
 
 /* botões desabilitados */
 .botao-avancar-etapa:disabled,
 .botao-voltar-etapa:disabled {
-    opacity: 0.5; /* diminui a opacidade */
-    cursor: not-allowed; /* indica que não pode ser clicado */
+  opacity: 0.5; /* diminui a opacidade */
+  cursor: not-allowed; /* indica que não pode ser clicado */
 }
 
 /* botão de login */
 .botao-entrar {
-    width: 100%; /* ocupa toda a largura */
-    margin-bottom: 12px; /* espaço inferior */
+  width: 100%; /* ocupa toda a largura */
+  margin-bottom: 12px; /* espaço inferior */
 }
-
 
 /* MENSAGENS DE VALIDAÇÃO ========================================== */
 
 /* aparência geral das mensagens */
 .mensagem-formulario {
-    padding: 12px; /* espaço interno */
-    margin: 12px 0; /* espaço externo */
-    border-radius: 8px; /* cantos arredondados */
-    font-size: 0.9rem; /* tamanho do texto */
-    line-height: 1.5; /* espaço entre as linhas */
+  padding: 12px; /* espaço interno */
+  margin: 12px 0; /* espaço externo */
+  border-radius: 8px; /* cantos arredondados */
+  font-size: 0.9rem; /* tamanho do texto */
+  line-height: 1.5; /* espaço entre as linhas */
 }
 
 /* mensagem de erro */
 .mensagem-formulario.mensagem-erro {
-    background-color: #fbeae7; /* fundo vermelho claro */
-    color: #812c25; /* texto vermelho escuro */
-    border: 1px solid #d6a19a; /* borda */
+  background-color: #fbeae7; /* fundo vermelho claro */
+  color: #812c25; /* texto vermelho escuro */
+  border: 1px solid #d6a19a; /* borda */
 }
 
 /* mensagem de sucesso */
 .mensagem-formulario.mensagem-sucesso {
-    background-color: #e6efe2; /* fundo verde claro */
-    color: #294c32; /* texto verde escuro */
-    border: 1px solid #9eb89a; /* borda */
+  background-color: #e6efe2; /* fundo verde claro */
+  color: #294c32; /* texto verde escuro */
+  border: 1px solid #9eb89a; /* borda */
 }
 
 /* mensagem de alerta */
 .mensagem-formulario.mensagem-alerta {
-    background-color: #faf1db; /* fundo amarelo claro */
-    color: #71501b; /* texto marrom */
-    border: 1px solid #d7bc79; /* borda */
+  background-color: #faf1db; /* fundo amarelo claro */
+  color: #71501b; /* texto marrom */
+  border: 1px solid #d7bc79; /* borda */
 }
 
 /* mensagem de autenticação */
 .estado-autenticacao {
-    font-size: 0.85rem; /* tamanho do texto */
-    color: #59645b; /* cor do texto */
-    text-align: center; /* centraliza o texto */
-    margin-top: 8px; /* espaço superior */
+  font-size: 0.85rem; /* tamanho do texto */
+  color: #59645b; /* cor do texto */
+  text-align: center; /* centraliza o texto */
+  margin-top: 8px; /* espaço superior */
 }
-
 
 /* AVISOS ADMINISTRATIVOS ========================================== */
 
@@ -1880,513 +1859,496 @@ body.tema-escuro .coord-estacao-icone img.icone {
 .aviso-vinculo,
 .aviso-aprovacao,
 .aviso-acesso-restrito {
-    display: flex; /* coloca o ícone ao lado do texto */
-    align-items: flex-start; /* alinha pelo início */
-    gap: 12px; /* espaço entre os elementos */
-    padding: 16px; /* espaço interno */
-    margin: 20px 0; /* espaço externo */
-    background-color: #e8eee4; /* fundo verde claro */
-    color: #203d2e; /* texto verde escuro */
-    border: 1px solid #d5ddd1; /* borda */
-    border-radius: 12px; /* cantos arredondados */
+  display: flex; /* coloca o ícone ao lado do texto */
+  align-items: flex-start; /* alinha pelo início */
+  gap: 12px; /* espaço entre os elementos */
+  padding: 16px; /* espaço interno */
+  margin: 20px 0; /* espaço externo */
+  background-color: #e8eee4; /* fundo verde claro */
+  color: #203d2e; /* texto verde escuro */
+  border: 1px solid #d5ddd1; /* borda */
+  border-radius: 12px; /* cantos arredondados */
 }
 
 /* ícones dos avisos */
 .aviso-vinculo img,
 .aviso-aprovacao img,
 .aviso-acesso-restrito img {
-    width: 24px; /* largura */
-    height: 24px; /* altura */
-    flex-shrink: 0; /* mantém o tamanho do ícone */
+  width: 24px; /* largura */
+  height: 24px; /* altura */
+  flex-shrink: 0; /* mantém o tamanho do ícone */
 }
 
 /* títulos dos avisos */
 .aviso-vinculo strong,
 .aviso-aprovacao strong,
 .aviso-acesso-restrito strong {
-    display: block; /* posiciona em uma nova linha */
-    font-size: 0.95rem; /* tamanho do texto */
-    margin-bottom: 5px; /* espaço inferior */
+  display: block; /* posiciona em uma nova linha */
+  font-size: 0.95rem; /* tamanho do texto */
+  margin-bottom: 5px; /* espaço inferior */
 }
 
 /* textos dos avisos */
 .aviso-vinculo p,
 .aviso-aprovacao p,
 .aviso-acesso-restrito p {
-    font-size: 0.85rem; /* tamanho do texto */
-    line-height: 1.6; /* espaço entre as linhas */
-    margin: 0; /* remove as margens */
+  font-size: 0.85rem; /* tamanho do texto */
+  line-height: 1.6; /* espaço entre as linhas */
+  margin: 0; /* remove as margens */
 }
-
 
 /* REVISÃO DOS DADOS =============================================== */
 
 /* cartão com os dados do cadastro */
 .resumo-cadastro {
-    background-color: #f7f8f4; /* fundo claro */
-    border: 1px solid #d5ddd1; /* borda */
-    border-radius: 12px; /* cantos arredondados */
-    padding: 16px; /* espaço interno */
-    margin-bottom: 16px; /* espaço inferior */
+  background-color: #f7f8f4; /* fundo claro */
+  border: 1px solid #d5ddd1; /* borda */
+  border-radius: 12px; /* cantos arredondados */
+  padding: 16px; /* espaço interno */
+  margin-bottom: 16px; /* espaço inferior */
 }
 
 /* título do cartão */
 .resumo-cadastro h3 {
-    color: #203d2e; /* cor do título */
-    font-size: 1rem; /* tamanho do título */
-    margin-bottom: 16px; /* espaço inferior */
+  color: #203d2e; /* cor do título */
+  font-size: 1rem; /* tamanho do título */
+  margin-bottom: 16px; /* espaço inferior */
 }
 
 /* lista dos dados */
 .lista-resumo-cadastro {
-    margin: 0; /* remove as margens */
-    padding: 0; /* remove o espaço interno */
+  margin: 0; /* remove as margens */
+  padding: 0; /* remove o espaço interno */
 }
 
 /* cada informação */
 .item-resumo {
-    margin-bottom: 14px; /* espaço entre as informações */
+  margin-bottom: 14px; /* espaço entre as informações */
 }
 
 /* nome da informação */
 .item-resumo dt {
-    font-size: 0.85rem; /* tamanho do texto */
-    color: #59645b; /* cor secundária */
-    margin-bottom: 4px; /* espaço inferior */
+  font-size: 0.85rem; /* tamanho do texto */
+  color: #59645b; /* cor secundária */
+  margin-bottom: 4px; /* espaço inferior */
 }
 
 /* valor da informação */
 .item-resumo dd {
-    font-size: 0.95rem; /* tamanho do texto */
-    color: #203d2e; /* cor principal */
-    font-weight: bold; /* texto em negrito */
-    margin: 0; /* remove as margens */
-    overflow-wrap: anywhere; /* quebra textos longos */
+  font-size: 0.95rem; /* tamanho do texto */
+  color: #203d2e; /* cor principal */
+  font-weight: bold; /* texto em negrito */
+  margin: 0; /* remove as margens */
+  overflow-wrap: anywhere; /* quebra textos longos */
 }
 
 /* botão para editar os dados */
 .botao-editar-dados {
-    background-color: transparent; /* fundo transparente */
-    border: none; /* remove a borda */
-    color: #456b50; /* cor verde */
-    font-size: 0.9rem; /* tamanho do texto */
-    font-weight: bold; /* texto em negrito */
-    text-decoration: underline; /* adiciona sublinhado */
-    padding: 10px 0; /* espaço interno */
-    cursor: pointer; /* indica que pode ser clicado */
+  background-color: transparent; /* fundo transparente */
+  border: none; /* remove a borda */
+  color: #456b50; /* cor verde */
+  font-size: 0.9rem; /* tamanho do texto */
+  font-weight: bold; /* texto em negrito */
+  text-decoration: underline; /* adiciona sublinhado */
+  padding: 10px 0; /* espaço interno */
+  cursor: pointer; /* indica que pode ser clicado */
 }
 
 /* foco do botão de edição */
 .botao-editar-dados:focus {
-    outline: 2px solid #456b50; /* contorno de foco */
+  outline: 2px solid #456b50; /* contorno de foco */
 }
-
 
 /* CONFIRMAÇÃO DO CADASTRO ========================================= */
 
 /* conteúdo da confirmação */
 .confirmacao-cadastro {
-    text-align: center; /* centraliza o conteúdo */
-    padding: 20px 0; /* espaço interno */
+  text-align: center; /* centraliza o conteúdo */
+  padding: 20px 0; /* espaço interno */
 }
 
 /* círculo da confirmação */
 .icone-confirmacao-cadastro {
-    width: 80px; /* largura do círculo */
-    height: 80px; /* altura do círculo */
-    background-color: #e8eee4; /* fundo verde claro */
-    border-radius: 50%; /* formato circular */
-    display: flex; /* organiza a imagem */
-    align-items: center; /* centraliza verticalmente */
-    justify-content: center; /* centraliza horizontalmente */
-    margin: 0 auto 20px; /* centraliza o círculo */
+  width: 80px; /* largura do círculo */
+  height: 80px; /* altura do círculo */
+  background-color: #e8eee4; /* fundo verde claro */
+  border-radius: 50%; /* formato circular */
+  display: flex; /* organiza a imagem */
+  align-items: center; /* centraliza verticalmente */
+  justify-content: center; /* centraliza horizontalmente */
+  margin: 0 auto 20px; /* centraliza o círculo */
 }
 
 /* imagem da confirmação */
 .icone-confirmacao-cadastro img {
-    width: 40px; /* largura da imagem */
-    height: 40px; /* altura da imagem */
+  width: 40px; /* largura da imagem */
+  height: 40px; /* altura da imagem */
 }
 
 /* título da confirmação */
 .confirmacao-cadastro h2 {
-    color: #203d2e; /* cor do título */
-    margin-bottom: 12px; /* espaço inferior */
+  color: #203d2e; /* cor do título */
+  margin-bottom: 12px; /* espaço inferior */
 }
 
 /* textos da confirmação */
 .confirmacao-cadastro p {
-    font-size: 0.95rem; /* tamanho do texto */
-    line-height: 1.6; /* espaço entre as linhas */
-    margin-bottom: 16px; /* espaço inferior */
+  font-size: 0.95rem; /* tamanho do texto */
+  line-height: 1.6; /* espaço entre as linhas */
+  margin-bottom: 16px; /* espaço inferior */
 }
 
 /* cartão do protocolo */
 .dados-solicitacao-cadastro {
-    background-color: #f7f8f4; /* fundo claro */
-    border: 1px solid #d5ddd1; /* borda */
-    border-radius: 12px; /* cantos arredondados */
-    padding: 20px; /* espaço interno */
-    margin: 20px 0; /* espaço externo */
-    text-align: left; /* alinha à esquerda */
+  background-color: #f7f8f4; /* fundo claro */
+  border: 1px solid #d5ddd1; /* borda */
+  border-radius: 12px; /* cantos arredondados */
+  padding: 20px; /* espaço interno */
+  margin: 20px 0; /* espaço externo */
+  text-align: left; /* alinha à esquerda */
 }
 
 /* situação pendente */
 .item-resumo .situacao-pendente {
-    color: #71501b; /* cor de atenção */
+  color: #71501b; /* cor de atenção */
 }
 
 /* orientações após o cadastro */
 .proximas-etapas-cadastro {
-    text-align: left; /* alinha à esquerda */
-    margin: 20px 0; /* espaço externo */
+  text-align: left; /* alinha à esquerda */
+  margin: 20px 0; /* espaço externo */
 }
 
 /* título das orientações */
 .proximas-etapas-cadastro h3 {
-    font-size: 1rem; /* tamanho do título */
-    margin-bottom: 12px; /* espaço inferior */
+  font-size: 1rem; /* tamanho do título */
+  margin-bottom: 12px; /* espaço inferior */
 }
 
 /* lista das orientações */
 .proximas-etapas-cadastro ol {
-    padding-left: 20px; /* espaço para a numeração */
+  padding-left: 20px; /* espaço para a numeração */
 }
 
 /* cada orientação */
 .proximas-etapas-cadastro li {
-    font-size: 0.9rem; /* tamanho do texto */
-    line-height: 1.6; /* espaço entre as linhas */
-    margin-bottom: 10px; /* espaço inferior */
+  font-size: 0.9rem; /* tamanho do texto */
+  line-height: 1.6; /* espaço entre as linhas */
+  margin-bottom: 10px; /* espaço inferior */
 }
 
 /* aviso do ambiente demonstrativo */
 .aviso-cadastro-demonstrativo {
-    background-color: #faf1db; /* fundo amarelo claro */
-    color: #71501b; /* cor do texto */
-    padding: 12px; /* espaço interno */
-    border-radius: 8px; /* cantos arredondados */
+  background-color: #faf1db; /* fundo amarelo claro */
+  color: #71501b; /* cor do texto */
+  padding: 12px; /* espaço interno */
+  border-radius: 8px; /* cantos arredondados */
 }
 
 /* botões após a confirmação */
 .acoes-confirmacao-cadastro {
-    display: flex; /* organiza os botões */
-    flex-direction: column; /* posiciona um abaixo do outro */
-    gap: 12px; /* espaço entre os botões */
-    margin-top: 24px; /* espaço superior */
+  display: flex; /* organiza os botões */
+  flex-direction: column; /* posiciona um abaixo do outro */
+  gap: 12px; /* espaço entre os botões */
+  margin-top: 24px; /* espaço superior */
 }
-
 
 /* LOGIN ADMINISTRATIVO ============================================ */
 
 /* opções do login */
 .opcoes-login {
-    text-align: right; /* alinha à direita */
-    margin-bottom: 20px; /* espaço inferior */
+  text-align: right; /* alinha à direita */
+  margin-bottom: 20px; /* espaço inferior */
 }
 
 /* botão de recuperação de senha */
 .botao-recuperar-senha {
-    background-color: transparent; /* fundo transparente */
-    border: none; /* remove a borda */
-    color: #456b50; /* cor verde */
-    font-size: 0.85rem; /* tamanho do texto */
-    font-weight: bold; /* texto em negrito */
-    text-decoration: underline; /* adiciona sublinhado */
-    padding: 8px 0; /* espaço interno */
-    cursor: pointer; /* indica que pode ser clicado */
+  background-color: transparent; /* fundo transparente */
+  border: none; /* remove a borda */
+  color: #456b50; /* cor verde */
+  font-size: 0.85rem; /* tamanho do texto */
+  font-weight: bold; /* texto em negrito */
+  text-decoration: underline; /* adiciona sublinhado */
+  padding: 8px 0; /* espaço interno */
+  cursor: pointer; /* indica que pode ser clicado */
 }
 
 /* foco do botão de recuperação */
 .botao-recuperar-senha:focus {
-    outline: 2px solid #456b50; /* contorno de foco */
+  outline: 2px solid #456b50; /* contorno de foco */
 }
-
 
 /* AMBIENTES PROFISSIONAIS ========================================= */
 
 /* seção dos ambientes */
 .areas-administrativas {
-    margin: 24px 0; /* espaço superior e inferior */
+  margin: 24px 0; /* espaço superior e inferior */
 }
 
 /* título da seção */
 .areas-administrativas h3 {
-    color: #203d2e; /* cor do título */
-    font-size: 1rem; /* tamanho do título */
-    margin-bottom: 14px; /* espaço inferior */
+  color: #203d2e; /* cor do título */
+  font-size: 1rem; /* tamanho do título */
+  margin-bottom: 14px; /* espaço inferior */
 }
 
 /* lista dos ambientes */
 .lista-areas-administrativas {
-    list-style: none; /* remove os marcadores */
-    padding: 0; /* remove o espaço interno */
-    margin: 0; /* remove as margens */
+  list-style: none; /* remove os marcadores */
+  padding: 0; /* remove o espaço interno */
+  margin: 0; /* remove as margens */
 }
 
 /* cartão de cada ambiente */
 .area-administrativa {
-    display: flex; /* coloca o ícone ao lado do texto */
-    align-items: center; /* centraliza verticalmente */
-    gap: 12px; /* espaço entre os elementos */
-    padding: 14px; /* espaço interno */
-    margin-bottom: 10px; /* espaço entre os cartões */
-    background-color: #f7f8f4; /* fundo claro */
-    border: 1px solid #d5ddd1; /* borda */
-    border-radius: 10px; /* cantos arredondados */
+  display: flex; /* coloca o ícone ao lado do texto */
+  align-items: center; /* centraliza verticalmente */
+  gap: 12px; /* espaço entre os elementos */
+  padding: 14px; /* espaço interno */
+  margin-bottom: 10px; /* espaço entre os cartões */
+  background-color: #f7f8f4; /* fundo claro */
+  border: 1px solid #d5ddd1; /* borda */
+  border-radius: 10px; /* cantos arredondados */
 }
 
 /* imagens dos ambientes */
 .area-administrativa img {
-    width: 28px; /* largura */
-    height: 28px; /* altura */
-    flex-shrink: 0; /* mantém o tamanho da imagem */
+  width: 28px; /* largura */
+  height: 28px; /* altura */
+  flex-shrink: 0; /* mantém o tamanho da imagem */
 }
 
 /* nome do ambiente */
 .area-administrativa strong {
-    font-size: 0.9rem; /* tamanho do texto */
-    color: #203d2e; /* cor do texto */
+  font-size: 0.9rem; /* tamanho do texto */
+  color: #203d2e; /* cor do texto */
 }
 
 /* descrição do ambiente */
 .area-administrativa p {
-    font-size: 0.85rem; /* tamanho do texto */
-    color: #59645b; /* cor secundária */
-    line-height: 1.5; /* espaço entre as linhas */
-    margin: 4px 0 0; /* espaço superior */
+  font-size: 0.85rem; /* tamanho do texto */
+  color: #59645b; /* cor secundária */
+  line-height: 1.5; /* espaço entre as linhas */
+  margin: 4px 0 0; /* espaço superior */
 }
-
 
 /* LINKS DE NAVEGAÇÃO ============================================== */
 
 /* área dos links inferiores */
 .links-login-admin {
-    border-top: 1px solid #d5ddd1; /* linha divisória */
-    padding-top: 20px; /* espaço interno superior */
-    text-align: center; /* centraliza o texto */
+  border-top: 1px solid #d5ddd1; /* linha divisória */
+  padding-top: 20px; /* espaço interno superior */
+  text-align: center; /* centraliza o texto */
 }
 
 /* texto sobre cadastro e login */
 .cadastro-login {
-    text-align: center; /* centraliza o texto */
-    font-size: 0.9rem; /* tamanho do texto */
-    color: #59645b; /* cor secundária */
-    margin-top: 20px; /* espaço superior */
+  text-align: center; /* centraliza o texto */
+  font-size: 0.9rem; /* tamanho do texto */
+  color: #59645b; /* cor secundária */
+  margin-top: 20px; /* espaço superior */
 }
 
 /* link de cadastro e login */
 .cadastro-login a {
-    color: #456b50; /* cor verde */
-    font-weight: bold; /* texto em negrito */
-    text-decoration: underline; /* adiciona sublinhado */
+  color: #456b50; /* cor verde */
+  font-weight: bold; /* texto em negrito */
+  text-decoration: underline; /* adiciona sublinhado */
 }
 
 /* link para voltar ao cidadão */
 .voltar-login-cidadao {
-    display: block; /* posiciona em outra linha */
-    color: #59645b; /* cor do texto */
-    font-size: 0.85rem; /* tamanho do texto */
-    text-decoration: underline; /* adiciona sublinhado */
-    margin-top: 16px; /* espaço superior */
-    padding: 8px; /* espaço interno */
+  display: block; /* posiciona em outra linha */
+  color: #59645b; /* cor do texto */
+  font-size: 0.85rem; /* tamanho do texto */
+  text-decoration: underline; /* adiciona sublinhado */
+  margin-top: 16px; /* espaço superior */
+  padding: 8px; /* espaço interno */
 }
-
 
 /* RESPONSIVIDADE INICIAL ========================================== */
 
 /* estilos para tablets e celulares */
 @media (max-width: 860px) {
-
-    /* transforma as duas colunas em uma */
-    .cadastro-administrativo .cadastro-layout,
-    .login-administrativo .cadastro-layout {
-        grid-template-columns: 1fr; /* cria uma coluna */
-    }
-
+  /* transforma as duas colunas em uma */
+  .cadastro-administrativo .cadastro-layout,
+  .login-administrativo .cadastro-layout {
+    grid-template-columns: 1fr; /* cria uma coluna */
+  }
 }
 
 /* estilos para celulares menores */
 @media (max-width: 480px) {
+  /* diminui o espaço interno do cartão */
+  .cadastro-administrativo .cadastro-card,
+  .login-administrativo .cadastro-card {
+    padding: 20px; /* espaço interno */
+  }
 
-    /* diminui o espaço interno do cartão */
-    .cadastro-administrativo .cadastro-card,
-    .login-administrativo .cadastro-card {
-        padding: 20px; /* espaço interno */
-    }
+  /* diminui o espaço entre as etapas */
+  .etapas-cadastro {
+    gap: 8px; /* espaço entre as etapas */
+  }
 
-    /* diminui o espaço entre as etapas */
-    .etapas-cadastro {
-        gap: 8px; /* espaço entre as etapas */
-    }
-
-    /* posiciona os botões verticalmente */
-    .acoes-etapa-cadastro {
-        flex-direction: column; /* um botão abaixo do outro */
-    }
-
+  /* posiciona os botões verticalmente */
+  .acoes-etapa-cadastro {
+    flex-direction: column; /* um botão abaixo do outro */
+  }
 }
-
-
 
 /* MODAL DE RECUPERAÇÃO DE SENHA ================================== */
 
 /* janela de recuperação de acesso */
 .modal-recuperacao {
-    width: 90%; /* largura da janela */
-    max-width: 450px; /* largura máxima */
-    background-color: white; /* fundo branco */
-    color: #203d2e; /* cor do texto */
-    border: 1px solid #d5ddd1; /* borda */
-    border-radius: 16px; /* cantos arredondados */
-    padding: 24px; /* espaço interno */
-    margin: auto; /* centraliza a janela */
-    box-sizing: border-box; /* mantém a largura definida */
+  width: 90%; /* largura da janela */
+  max-width: 450px; /* largura máxima */
+  background-color: white; /* fundo branco */
+  color: #203d2e; /* cor do texto */
+  border: 1px solid #d5ddd1; /* borda */
+  border-radius: 16px; /* cantos arredondados */
+  padding: 24px; /* espaço interno */
+  margin: auto; /* centraliza a janela */
+  box-sizing: border-box; /* mantém a largura definida */
 }
 
 /* fundo atrás da janela */
 .modal-recuperacao::backdrop {
-    background-color: rgba(0, 0, 0, 0.5); /* escurece o fundo */
+  background-color: rgba(0, 0, 0, 0.5); /* escurece o fundo */
 }
 
 /* cabeçalho do modal */
 .cabecalho-modal-recuperacao {
-    display: flex; /* coloca o título e o botão lado a lado */
-    align-items: center; /* centraliza verticalmente */
-    justify-content: space-between; /* separa os elementos */
-    margin-bottom: 16px; /* espaço inferior */
+  display: flex; /* coloca o título e o botão lado a lado */
+  align-items: center; /* centraliza verticalmente */
+  justify-content: space-between; /* separa os elementos */
+  margin-bottom: 16px; /* espaço inferior */
 }
 
 /* título do modal */
 .cabecalho-modal-recuperacao h2 {
-    font-size: 1.5rem; /* tamanho do título */
-    color: #203d2e; /* cor verde escura */
-    margin: 0; /* remove a margem */
+  font-size: 1.5rem; /* tamanho do título */
+  color: #203d2e; /* cor verde escura */
+  margin: 0; /* remove a margem */
 }
 
 /* botão de fechar */
 .fechar-modal-recuperacao {
-    width: 44px; /* largura do botão */
-    height: 44px; /* altura do botão */
-    background-color: #f4f1e8; /* fundo bege */
-    border: none; /* remove a borda */
-    border-radius: 8px; /* cantos arredondados */
-    font-size: 1.5rem; /* tamanho do símbolo */
-    color: #203d2e; /* cor do símbolo */
-    cursor: pointer; /* indica que pode ser clicado */
+  width: 44px; /* largura do botão */
+  height: 44px; /* altura do botão */
+  background-color: #f4f1e8; /* fundo bege */
+  border: none; /* remove a borda */
+  border-radius: 8px; /* cantos arredondados */
+  font-size: 1.5rem; /* tamanho do símbolo */
+  color: #203d2e; /* cor do símbolo */
+  cursor: pointer; /* indica que pode ser clicado */
 }
 
 /* botão de fechar ao passar o mouse */
 .fechar-modal-recuperacao:hover {
-    background-color: #e8eee4; /* fundo verde claro */
+  background-color: #e8eee4; /* fundo verde claro */
 }
 
 /* texto de orientação */
 #descricao-recuperacao {
-    font-size: 0.9rem; /* tamanho do texto */
-    line-height: 1.5; /* espaço entre as linhas */
-    margin-bottom: 20px; /* espaço inferior */
+  font-size: 0.9rem; /* tamanho do texto */
+  line-height: 1.5; /* espaço entre as linhas */
+  margin-bottom: 20px; /* espaço inferior */
 }
 
 /* formulário de recuperação */
 .formulario-recuperacao {
-    margin-bottom: 12px; /* espaço inferior */
+  margin-bottom: 12px; /* espaço inferior */
 }
 
 /* aviso sobre a recuperação demonstrativa */
 .aviso-recuperacao {
-    background-color: #faf1db; /* fundo amarelo claro */
-    color: #71501b; /* cor do texto */
-    padding: 12px; /* espaço interno */
-    border-radius: 8px; /* cantos arredondados */
-    font-size: 0.85rem; /* tamanho do texto */
-    line-height: 1.5; /* espaço entre as linhas */
-    margin-bottom: 16px; /* espaço inferior */
+  background-color: #faf1db; /* fundo amarelo claro */
+  color: #71501b; /* cor do texto */
+  padding: 12px; /* espaço interno */
+  border-radius: 8px; /* cantos arredondados */
+  font-size: 0.85rem; /* tamanho do texto */
+  line-height: 1.5; /* espaço entre as linhas */
+  margin-bottom: 16px; /* espaço inferior */
 }
 
 /* tamanho dos botões do modal */
 .modal-recuperacao .botao-avancar-etapa,
 .modal-recuperacao .botao-voltar-etapa {
-    width: 100%; /* ocupa toda a largura */
+  width: 100%; /* ocupa toda a largura */
 }
 
 /* foco do botão de fechar */
 .fechar-modal-recuperacao:focus {
-    outline: 2px solid #456b50; /* contorno de foco */
+  outline: 2px solid #456b50; /* contorno de foco */
 }
-
 
 /* RESPONSIVIDADE DOS FORMULÁRIOS ================================= */
 
 /* ajustes para celulares */
 @media (max-width: 600px) {
+  /* cartão dos formulários administrativos */
+  .cadastro-administrativo .cadastro-card,
+  .login-administrativo .cadastro-card {
+    padding: 20px; /* diminui o espaço interno */
+  }
 
-    /* cartão dos formulários administrativos */
-    .cadastro-administrativo .cadastro-card,
-    .login-administrativo .cadastro-card {
-        padding: 20px; /* diminui o espaço interno */
-    }
+  /* título das páginas */
+  .cadastro-administrativo .cadastro-apresentacao h1,
+  .login-administrativo .cadastro-apresentacao h1 {
+    font-size: 2rem; /* diminui o tamanho do título */
+  }
 
-    /* título das páginas */
-    .cadastro-administrativo .cadastro-apresentacao h1,
-    .login-administrativo .cadastro-apresentacao h1 {
-        font-size: 2rem; /* diminui o tamanho do título */
-    }
+  /* fotografia de apresentação */
+  .cadastro-administrativo .cadastro-foto-arco img,
+  .login-administrativo .cadastro-foto-arco img {
+    width: 100%; /* adapta a imagem à largura */
+    height: auto; /* mantém a proporção da imagem */
+  }
 
-    /* fotografia de apresentação */
-    .cadastro-administrativo .cadastro-foto-arco img,
-    .login-administrativo .cadastro-foto-arco img {
-        width: 100%; /* adapta a imagem à largura */
-        height: auto; /* mantém a proporção da imagem */
-    }
+  /* botões das etapas */
+  .acoes-etapa-cadastro {
+    flex-direction: column; /* coloca um botão abaixo do outro */
+  }
 
-    /* botões das etapas */
-    .acoes-etapa-cadastro {
-        flex-direction: column; /* coloca um botão abaixo do outro */
-    }
+  /* largura dos botões */
+  .acoes-etapa-cadastro button {
+    width: 100%; /* ocupa toda a largura */
+  }
 
-    /* largura dos botões */
-    .acoes-etapa-cadastro button {
-        width: 100%; /* ocupa toda a largura */
-    }
+  /* ajustes do modal */
+  .modal-recuperacao {
+    padding: 20px; /* diminui o espaço interno */
+  }
 
-    /* ajustes do modal */
-    .modal-recuperacao {
-        padding: 20px; /* diminui o espaço interno */
-    }
-
-    /* título do modal */
-    .cabecalho-modal-recuperacao h2 {
-        font-size: 1.25rem; /* diminui o tamanho do título */
-    }
-
+  /* título do modal */
+  .cabecalho-modal-recuperacao h2 {
+    font-size: 1.25rem; /* diminui o tamanho do título */
+  }
 }
-
-
 
 /* TEMA ESCURO ==================================================== */
 
 /* fundo e texto da página */
 .tema-escuro {
-    background-color: #15251e; /* fundo escuro */
-    color: #ffffff; /* texto branco */
+  background-color: #15251e; /* fundo escuro */
+  color: #ffffff; /* texto branco */
 }
 
 /* cartões e modal */
 .tema-escuro .cadastro-card,
 .tema-escuro .modal-recuperacao {
-    background-color: #24382e; /* fundo do cartão */
-    color: #ffffff; /* texto branco */
-    border-color: #78917f; /* cor da borda */
+  background-color: #24382e; /* fundo do cartão */
+  color: #ffffff; /* texto branco */
+  border-color: #78917f; /* cor da borda */
 }
 
 /* campos dos formulários */
 .tema-escuro input,
 .tema-escuro select,
 .tema-escuro .botao-visualizar-senha {
-    background-color: #15251e; /* fundo escuro */
-    color: #ffffff; /* texto branco */
-    border-color: #a3b5a6; /* borda clara */
+  background-color: #15251e; /* fundo escuro */
+  color: #ffffff; /* texto branco */
+  border-color: #a3b5a6; /* borda clara */
 }
 
 /* títulos */
@@ -2395,7 +2357,7 @@ body.tema-escuro .coord-estacao-icone img.icone {
 .tema-escuro h3,
 .tema-escuro legend,
 .tema-escuro .campo-cadastro label {
-    color: #ffffff; /* texto branco */
+  color: #ffffff; /* texto branco */
 }
 
 /* textos de orientação */
@@ -2407,7 +2369,7 @@ body.tema-escuro .coord-estacao-icone img.icone {
 .tema-escuro .cadastro-login,
 .tema-escuro .requisitos-senha li,
 .tema-escuro .aceite-termos label {
-    color: #d5ddd1; /* texto cinza claro */
+  color: #d5ddd1; /* texto cinza claro */
 }
 
 /* cartões internos e avisos */
@@ -2417,8 +2379,8 @@ body.tema-escuro .coord-estacao-icone img.icone {
 .tema-escuro .aviso-vinculo,
 .tema-escuro .aviso-aprovacao,
 .tema-escuro .aviso-acesso-restrito {
-    background-color: #30483b; /* fundo verde escuro */
-    color: #ffffff; /* texto branco */
+  background-color: #30483b; /* fundo verde escuro */
+  color: #ffffff; /* texto branco */
 }
 
 /* textos dos cartões internos */
@@ -2426,7 +2388,7 @@ body.tema-escuro .coord-estacao-icone img.icone {
 .tema-escuro .item-resumo dd,
 .tema-escuro .area-administrativa strong,
 .tema-escuro .area-administrativa p {
-    color: #ffffff; /* texto branco */
+  color: #ffffff; /* texto branco */
 }
 
 /* links e botões de texto */
@@ -2435,33 +2397,32 @@ body.tema-escuro .coord-estacao-icone img.icone {
 .tema-escuro .botao-editar-dados,
 .tema-escuro .botao-recuperar-senha,
 .tema-escuro .voltar-login-cidadao {
-    color: #b9dbad; /* verde claro */
+  color: #b9dbad; /* verde claro */
 }
 
 /* botão secundário */
 .tema-escuro .botao-voltar-etapa {
-    color: #ffffff; /* texto branco */
-    border-color: #ffffff; /* borda branca */
+  color: #ffffff; /* texto branco */
+  border-color: #ffffff; /* borda branca */
 }
 
 /* botão principal */
 .tema-escuro .botao-avancar-etapa {
-    background-color: #b9dbad; /* fundo verde claro */
-    color: #15251e; /* texto escuro */
+  background-color: #b9dbad; /* fundo verde claro */
+  color: #15251e; /* texto escuro */
 }
 
 /* imagem do botão de senha */
 .tema-escuro .botao-visualizar-senha img {
-    filter: invert(1); /* transforma o ícone escuro em claro */
+  filter: invert(1); /* transforma o ícone escuro em claro */
 }
-
 
 /* ALTO CONTRASTE ================================================= */
 
 /* fundo e texto da página */
 .alto-contraste {
-    background-color: black; /* fundo preto */
-    color: white; /* texto branco */
+  background-color: black; /* fundo preto */
+  color: white; /* texto branco */
 }
 
 /* cartões e avisos */
@@ -2473,9 +2434,9 @@ body.tema-escuro .coord-estacao-icone img.icone {
 .alto-contraste .aviso-vinculo,
 .alto-contraste .aviso-aprovacao,
 .alto-contraste .aviso-acesso-restrito {
-    background-color: black; /* fundo preto */
-    color: white; /* texto branco */
-    border: 2px solid white; /* borda branca */
+  background-color: black; /* fundo preto */
+  color: white; /* texto branco */
+  border: 2px solid white; /* borda branca */
 }
 
 /* títulos e textos */
@@ -2491,16 +2452,16 @@ body.tema-escuro .coord-estacao-icone img.icone {
 .alto-contraste dd,
 .alto-contraste strong,
 .alto-contraste span {
-    color: white; /* texto branco */
+  color: white; /* texto branco */
 }
 
 /* campos dos formulários */
 .alto-contraste input,
 .alto-contraste select,
 .alto-contraste .botao-visualizar-senha {
-    background-color: black; /* fundo preto */
-    color: white; /* texto branco */
-    border: 2px solid white; /* borda branca */
+  background-color: black; /* fundo preto */
+  color: white; /* texto branco */
+  border: 2px solid white; /* borda branca */
 }
 
 /* links e botões de texto */
@@ -2509,39 +2470,39 @@ body.tema-escuro .coord-estacao-icone img.icone {
 .alto-contraste .aceite-termos a,
 .alto-contraste .botao-recuperar-senha,
 .alto-contraste .botao-editar-dados {
-    color: yellow; /* texto amarelo */
-    text-decoration: underline; /* destaca o link */
+  color: yellow; /* texto amarelo */
+  text-decoration: underline; /* destaca o link */
 }
 
 /* botões dos formulários */
 .alto-contraste .botao-avancar-etapa,
 .alto-contraste .botao-voltar-etapa {
-    background-color: black; /* fundo preto */
-    color: yellow; /* texto amarelo */
-    border: 2px solid yellow; /* borda amarela */
+  background-color: black; /* fundo preto */
+  color: yellow; /* texto amarelo */
+  border: 2px solid yellow; /* borda amarela */
 }
 
 /* indicador de etapa atual */
 .alto-contraste .etapa-ativa .barra-etapa {
-    background-color: yellow; /* barra amarela */
+  background-color: yellow; /* barra amarela */
 }
 
 /* requisitos de senha atendidos */
 .alto-contraste .requisitos-senha .requisito-atendido {
-    color: yellow; /* texto amarelo */
-    font-weight: bold; /* destaca o requisito */
+  color: yellow; /* texto amarelo */
+  font-weight: bold; /* destaca o requisito */
 }
 
 /* mensagens dos formulários */
 .alto-contraste .mensagem-formulario {
-    background-color: black; /* fundo preto */
-    color: white; /* texto branco */
-    border: 2px solid yellow; /* borda amarela */
+  background-color: black; /* fundo preto */
+  color: white; /* texto branco */
+  border: 2px solid yellow; /* borda amarela */
 }
 
 /* imagem do botão de senha */
 .alto-contraste .botao-visualizar-senha img {
-    filter: invert(1); /* deixa o ícone claro */
+  filter: invert(1); /* deixa o ícone claro */
 }
 
 /* destaca os elementos selecionados pelo teclado */
@@ -2549,11 +2510,11 @@ body.tema-escuro .coord-estacao-icone img.icone {
 .alto-contraste input:focus,
 .alto-contraste select:focus,
 .alto-contraste a:focus {
-    outline: 3px solid yellow; /* contorno amarelo */
+  outline: 3px solid yellow; /* contorno amarelo */
 }
 
 /* exibe o painel quando ele é aberto pelo javascript */
 .cadastro-administrativo .painel-acessibilidade,
 .login-administrativo .painel-acessibilidade {
-    display: block; /* mostra o painel */
+  display: block; /* mostra o painel */
 }

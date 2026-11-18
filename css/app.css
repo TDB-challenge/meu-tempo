@@ -5865,3 +5865,33 @@ button {
     outline: 3px solid #ffff00; /* destaca o campo com contorno amarelo */
     outline-offset: 3px; /* distancia o contorno do elemento */
 }
+
+
+/* MENU RESPONSIVO ADMINISTRATIVO ================================= */
+
+/* ajustes do menu para telas menores */
+@media (max-width: 860px) {
+
+    /* esconde os links do menu */
+    .cadastro-administrativo .menu,
+    .login-administrativo .menu {
+        display: none; /* esconde o menu */
+    }
+
+    /* mostra o menu quando recebe a classe menu-aberto */
+    .cadastro-administrativo .menu-aberto,
+    .login-administrativo .menu-aberto {
+        display: flex; /* mostra o menu */
+        flex-direction: column; /* organiza os links verticalmente */
+        gap: 12px; /* espaço entre os links */
+        width: 100%; /* largura do menu */
+    }
+
+    /* exibe o botão do menu */
+    .cadastro-administrativo .btn-menu,
+    .login-administrativo .btn-menu {
+        display: block; /* mostra o botão */
+        cursor: pointer; /* indica que pode ser clicado */
+    }
+
+}
