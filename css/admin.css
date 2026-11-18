@@ -1412,3 +1412,170 @@ body.tema-escuro .coord-estacao-icone img.icone {
     grid-template-columns: 1fr;
   }
 }
+
+
+
+
+
+/* CADASTRO E LOGIN ADMINISTRATIVO ================================================ */
+
+/* define a aparência geral das páginas de acesso profissional */
+:is(.cadastro-administrativo, .login-administrativo) {
+    background-color: var(--creme); /* reutiliza a cor de fundo institucional */
+    color: var(--texto-principal); /* utiliza a cor principal dos textos */
+    font-family: var(--fonte-principal); /* mantém a tipografia do projeto */
+    min-height: 100vh; /* garante que a página ocupe a altura da tela */
+}
+
+/* garante que os elementos ocultados pelo javascript não sejam exibidos */
+:is(.cadastro-administrativo, .login-administrativo) [hidden] {
+    display: none !important; /* prioriza a ocultação dos elementos */
+}
+
+/* organiza as colunas de apresentação e formulário */
+:is(.cadastro-administrativo, .login-administrativo) .cadastro-layout {
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr); /* distribui proporcionalmente o espaço entre as colunas */
+    align-items: start; /* alinha as colunas pelo início */
+}
+
+/* permite que os elementos internos diminuam conforme o espaço disponível */
+:is(.cadastro-administrativo, .login-administrativo) .cadastro-apresentacao,
+:is(.cadastro-administrativo, .login-administrativo) .cadastro-card {
+    min-width: 0; /* evita que elementos internos ultrapassem a largura da coluna */
+}
+
+/* personaliza o cartão que contém os formulários administrativos */
+:is(.cadastro-administrativo, .login-administrativo) .cadastro-card {
+    background-color: var(--branco); /* utiliza a cor de superfície do projeto */
+    border: 1px solid var(--borda); /* adiciona uma borda suave ao cartão */
+    border-radius: var(--radius-grande); /* arredonda os cantos do cartão */
+    box-shadow: 0 8px 28px rgba(12, 32, 26, 0.04); /* cria uma sombra discreta ao redor do cartão */
+}
+
+/* define a aparência dos ícones de identificação profissional */
+:is(.cadastro-administrativo, .login-administrativo) .cadastro-area-tag .icone {
+    width: 18px; /* define a largura do ícone */
+    height: 18px; /* define a altura do ícone */
+    object-fit: contain; /* preserva as proporções da imagem */
+    flex-shrink: 0; /* impede que o ícone seja comprimido */
+}
+
+/* organiza o espaçamento entre os elementos dos formulários */
+.formulario-cadastro-admin,
+.formulario-login-admin {
+    display: flex; /* permite organizar os elementos com flexbox */
+    flex-direction: column; /* posiciona os elementos verticalmente */
+    gap: 20px; /* estabelece o espaçamento entre os elementos */
+    width: 100%; /* ocupa toda a largura disponível */
+}
+
+/* remove a aparência padrão dos agrupamentos de campos */
+.formulario-cadastro-admin .campos-etapa-cadastro {
+    border: none; /* remove a borda padrão do fieldset */
+    padding: 0; /* remove o espaçamento interno padrão */
+    margin: 0; /* remove o espaçamento externo padrão */
+    min-width: 0; /* permite que o agrupamento diminua em telas menores */
+    width: 100%; /* ocupa toda a largura do formulário */
+}
+
+/* estiliza o título de cada etapa do cadastro */
+.formulario-cadastro-admin .campos-etapa-cadastro legend {
+    font-family: var(--fonte-titulo); /* utiliza a fonte destinada aos títulos */
+    font-size: 1.25rem; /* estabelece o tamanho do título */
+    font-weight: 600; /* destaca o título da etapa */
+    color: var(--verde-floresta); /* utiliza a cor institucional */
+    margin-bottom: 12px; /* separa o título dos demais elementos */
+}
+
+/* apresenta as orientações de preenchimento */
+.cadastro-administrativo .orientacao-etapa {
+    font-size: 0.9rem; /* define um tamanho adequado para o texto auxiliar */
+    color: var(--texto-secundario); /* diferencia a orientação do título */
+    line-height: 1.6; /* melhora a leitura do texto */
+    margin-bottom: 16px; /* separa a orientação dos campos seguintes */
+}
+
+/* apresenta a indicação dos campos obrigatórios */
+.cadastro-administrativo .campos-obrigatorios {
+    font-size: 0.8rem; /* mantém a informação em tamanho secundário */
+    color: var(--texto-secundario); /* utiliza a cor dos textos auxiliares */
+    margin-bottom: 16px; /* separa a indicação dos campos do formulário */
+}
+
+/* mantém a estrutura de uma coluna em telas menores */
+@media (max-width: 860px) {
+
+    /* reorganiza o layout do cadastro e login */
+    :is(.cadastro-administrativo, .login-administrativo) .cadastro-layout {
+        grid-template-columns: minmax(0, 1fr); /* posiciona a apresentação acima do formulário */
+    }
+
+}
+
+
+
+
+
+/* INDICADOR DE ETAPAS DO CADASTRO ================================================ */
+
+/* organiza as três etapas do cadastro profissional */
+.cadastro-administrativo .etapas-cadastro {
+    display: grid; /* utiliza o grid para distribuir as etapas */
+    grid-template-columns: repeat(3, minmax(0, 1fr)); /* cria três colunas de mesma largura */
+    gap: 12px; /* define o espaço entre as etapas */
+    list-style: none; /* remove a numeração padrão da lista */
+    padding: 0; /* remove o espaçamento interno padrão */
+    margin: 24px 0 28px; /* separa o indicador dos elementos superiores e inferiores */
+}
+
+/* organiza individualmente cada etapa */
+.cadastro-administrativo .etapa-cadastro {
+    display: flex; /* organiza a barra e o texto */
+    flex-direction: column; /* posiciona o texto abaixo da barra */
+    gap: 8px; /* separa a barra do nome da etapa */
+    min-width: 0; /* permite que a etapa se adapte à largura disponível */
+    font-size: 0.8rem; /* define o tamanho do nome da etapa */
+    font-weight: 600; /* destaca levemente o nome da etapa */
+    color: var(--texto-secundario); /* representa uma etapa ainda não iniciada */
+    overflow-wrap: anywhere; /* permite quebrar textos em espaços reduzidos */
+}
+
+/* define a aparência padrão da barra de progresso */
+.cadastro-administrativo .barra-etapa {
+    display: block; /* permite controlar as dimensões da barra */
+    width: 100%; /* ocupa toda a largura da etapa */
+    height: 4px; /* define a espessura da barra */
+    border-radius: 4px; /* arredonda as extremidades da barra */
+    background-color: var(--borda); /* representa uma etapa pendente */
+}
+
+/* destaca o texto da etapa atual */
+.cadastro-administrativo .etapa-cadastro.etapa-ativa {
+    color: var(--verde-floresta); /* identifica a etapa atual com a cor institucional */
+    font-weight: 800; /* reforça visualmente a identificação da etapa atual */
+}
+
+/* destaca a barra correspondente à etapa atual */
+.cadastro-administrativo .etapa-ativa .barra-etapa {
+    background-color: var(--verde-floresta); /* aplica a cor principal à barra ativa */
+}
+
+/* diferencia o texto das etapas já concluídas */
+.cadastro-administrativo .etapa-cadastro.etapa-concluida {
+    color: var(--verde-natural); /* representa visualmente uma etapa concluída */
+}
+
+/* diferencia a barra das etapas já concluídas */
+.cadastro-administrativo .etapa-concluida .barra-etapa {
+    background-color: var(--verde-salvia); /* utiliza uma tonalidade mais suave para indicar conclusão */
+}
+
+/* mantém o indicador legível em telas pequenas */
+@media (max-width: 480px) {
+
+    /* reduz o espaçamento entre as três etapas */
+    .cadastro-administrativo .etapas-cadastro {
+        gap: 8px; /* aproveita melhor a largura disponível */
+    }
+
+}
