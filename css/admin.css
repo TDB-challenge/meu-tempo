@@ -1682,3 +1682,175 @@ body.tema-escuro .coord-estacao-icone img.icone {
 :is(.cadastro-administrativo, .login-administrativo) .campo-cadastro [aria-invalid="true"]:focus {
     outline-color: var(--terracota); /* mantém a identificação do erro durante o preenchimento */
 }
+
+
+
+/* CAMPOS DE SENHA =============================================================== */
+
+/* organiza o campo de senha e o botão de visualização */
+:is(.cadastro-administrativo, .login-administrativo) .campo-senha {
+    position: relative; /* permite posicionar o botão dentro do campo */
+    display: flex; /* organiza os elementos internos */
+    align-items: center; /* centraliza verticalmente os elementos */
+    width: 100%; /* ocupa toda a largura disponível */
+}
+
+/* reserva espaço para o botão de visualização */
+:is(.cadastro-administrativo, .login-administrativo) .campo-senha input {
+    padding-right: 58px; /* impede que o texto fique atrás do botão */
+}
+
+/* define a aparência do botão de visualização da senha */
+:is(.cadastro-administrativo, .login-administrativo) .botao-visualizar-senha {
+    position: absolute; /* posiciona o botão dentro do campo */
+    right: 4px; /* estabelece a distância da borda direita */
+    top: 50%; /* posiciona o botão no centro vertical */
+    transform: translateY(-50%); /* corrige o alinhamento vertical */
+    display: flex; /* permite centralizar o ícone */
+    align-items: center; /* centraliza verticalmente o ícone */
+    justify-content: center; /* centraliza horizontalmente o ícone */
+    width: 44px; /* estabelece uma área confortável para interação */
+    height: 44px; /* define a altura da área clicável */
+    padding: 8px; /* cria espaço interno ao redor do ícone */
+    background-color: transparent; /* preserva o fundo do campo */
+    border: none; /* remove a borda padrão do botão */
+    border-radius: 8px; /* arredonda os cantos do botão */
+    cursor: pointer; /* indica que o elemento é interativo */
+    transition: background-color 0.2s ease; /* suaviza a alteração do fundo */
+}
+
+/* destaca o botão quando recebe o cursor */
+:is(.cadastro-administrativo, .login-administrativo) .botao-visualizar-senha:hover {
+    background-color: var(--verde-claro, #e8eee4); /* destaca suavemente a área clicável */
+}
+
+/* destaca o botão durante a navegação por teclado */
+:is(.cadastro-administrativo, .login-administrativo) .botao-visualizar-senha:focus-visible {
+    outline: 2px solid var(--verde-natural, #456b50); /* adiciona um indicador de foco visível */
+    outline-offset: 2px; /* separa o indicador do botão */
+}
+
+/* define as dimensões do ícone de visualização */
+:is(.cadastro-administrativo, .login-administrativo) .botao-visualizar-senha img {
+    width: 20px; /* estabelece a largura do ícone */
+    height: 20px; /* estabelece a altura do ícone */
+    object-fit: contain; /* mantém as proporções originais da imagem */
+}
+
+/* diferencia o botão quando a senha está visível */
+:is(.cadastro-administrativo, .login-administrativo) .botao-visualizar-senha[aria-pressed="true"] {
+    background-color: var(--verde-claro, #e8eee4); /* identifica visualmente o estado ativo */
+}
+
+
+/* REQUISITOS DE SEGURANÇA ========================================================= */
+
+/* organiza a lista de requisitos da senha */
+.cadastro-administrativo .requisitos-senha {
+    display: flex; /* permite organizar os requisitos verticalmente */
+    flex-direction: column; /* posiciona um requisito abaixo do outro */
+    gap: 7px; /* estabelece o espaçamento entre os requisitos */
+    list-style: none; /* remove os marcadores padrão da lista */
+    margin: -6px 0 20px; /* aproxima os requisitos do campo de senha */
+    padding: 0; /* remove o espaçamento interno padrão */
+}
+
+/* define a aparência individual de cada requisito */
+.cadastro-administrativo .requisitos-senha li {
+    display: flex; /* organiza o marcador e o texto */
+    align-items: center; /* centraliza verticalmente os elementos */
+    gap: 8px; /* separa o marcador do texto */
+    font-size: 0.8rem; /* define o tamanho do texto auxiliar */
+    line-height: 1.5; /* melhora a leitura dos requisitos */
+    color: var(--texto-secundario, #59645b); /* identifica o estado inicial */
+}
+
+/* cria o marcador visual de um requisito pendente */
+.cadastro-administrativo .requisitos-senha li::before {
+    content: ""; /* cria um elemento visual vazio */
+    display: inline-block; /* permite definir as dimensões do marcador */
+    width: 10px; /* estabelece a largura do marcador */
+    height: 10px; /* estabelece a altura do marcador */
+    border: 1px solid currentColor; /* acompanha a cor do requisito */
+    border-radius: 50%; /* transforma o marcador em um círculo */
+    flex-shrink: 0; /* impede a deformação do marcador */
+}
+
+/* identifica um requisito atendido */
+.cadastro-administrativo .requisitos-senha li.requisito-atendido {
+    color: var(--verde-natural, #456b50); /* aplica a cor de validação */
+    font-weight: 600; /* destaca o requisito concluído */
+}
+
+/* substitui o círculo pelo símbolo de confirmação */
+.cadastro-administrativo .requisitos-senha li.requisito-atendido::before {
+    content: "\2713"; /* apresenta o símbolo de confirmação */
+    display: inline-flex; /* permite centralizar o símbolo */
+    align-items: center; /* centraliza verticalmente o símbolo */
+    justify-content: center; /* centraliza horizontalmente o símbolo */
+    width: 12px; /* amplia a largura para acomodar o símbolo */
+    height: 12px; /* amplia a altura para acomodar o símbolo */
+    border: none; /* remove a borda do círculo */
+    font-size: 0.85rem; /* define o tamanho do símbolo */
+    font-weight: 700; /* reforça visualmente a confirmação */
+}
+
+/* apresenta mensagens relacionadas à confirmação da senha */
+.cadastro-administrativo .mensagem-campo {
+    font-size: 0.8rem; /* define o tamanho do texto auxiliar */
+    line-height: 1.5; /* melhora a leitura da mensagem */
+    overflow-wrap: anywhere; /* evita que mensagens extensas ultrapassem o campo */
+}
+
+/* identifica uma confirmação válida */
+.cadastro-administrativo .mensagem-campo.mensagem-sucesso {
+    color: var(--verde-natural, #456b50); /* utiliza a cor de confirmação */
+}
+
+/* identifica uma confirmação inválida */
+.cadastro-administrativo .mensagem-campo.mensagem-erro {
+    color: var(--terracota, #a64235); /* utiliza a cor de erro */
+}
+
+
+/* ACEITE DOS TERMOS =============================================================== */
+
+/* organiza o checkbox e o texto dos termos */
+.cadastro-administrativo .aceite-termos {
+    display: flex; /* posiciona os elementos lado a lado */
+    align-items: flex-start; /* alinha os elementos pelo início */
+    gap: 10px; /* separa o checkbox do texto */
+    margin: 20px 0; /* estabelece o afastamento dos demais campos */
+}
+
+/* define a aparência do checkbox */
+.cadastro-administrativo .aceite-termos input {
+    width: 20px; /* estabelece a largura do checkbox */
+    height: 20px; /* estabelece a altura do checkbox */
+    margin: 2px 0 0; /* ajusta o alinhamento com o texto */
+    flex-shrink: 0; /* impede que o checkbox seja comprimido */
+    accent-color: var(--verde-floresta, #203d2e); /* personaliza a cor da seleção */
+    cursor: pointer; /* indica que o elemento é interativo */
+}
+
+/* destaca o checkbox durante a navegação por teclado */
+.cadastro-administrativo .aceite-termos input:focus-visible {
+    outline: 2px solid var(--verde-natural, #456b50); /* adiciona um indicador de foco */
+    outline-offset: 3px; /* separa o indicador da caixa de seleção */
+}
+
+/* define a aparência do texto dos termos */
+.cadastro-administrativo .aceite-termos label {
+    font-size: 0.85rem; /* estabelece o tamanho do texto */
+    line-height: 1.6; /* melhora a leitura de textos extensos */
+    color: var(--texto-secundario, #59645b); /* utiliza a cor secundária do projeto */
+    cursor: pointer; /* permite identificar o texto como área de seleção */
+}
+
+/* destaca os links de privacidade */
+.cadastro-administrativo .aceite-termos a {
+    color: var(--verde-floresta, #203d2e); /* utiliza a cor institucional */
+    font-weight: 700; /* destaca o link em relação ao texto */
+    text-decoration: underline; /* identifica visualmente o conteúdo clicável */
+    text-underline-offset: 3px; /* distancia o sublinhado do texto */
+}
