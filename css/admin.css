@@ -2551,3 +2551,9 @@ body.tema-escuro .coord-estacao-icone img.icone {
 .alto-contraste a:focus {
     outline: 3px solid yellow; /* contorno amarelo */
 }
+
+/* exibe o painel quando ele é aberto pelo javascript */
+.cadastro-administrativo .painel-acessibilidade,
+.login-administrativo .painel-acessibilidade {
+    display: block; /* mostra o painel */
+}
