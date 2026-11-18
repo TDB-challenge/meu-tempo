@@ -577,23 +577,41 @@ function validarVinculo() {
   // esconde mensagens anteriores
   mensagemVinculo.hidden = true;
 
-  // verifica se uma instituição foi selecionada
+  // verifica a instituição
   if (orgaoCadastro.value === "") {
     mensagemVinculo.textContent = "Selecione uma instituição.";
+
+    // verifica a função
   } else if (funcaoCadastro.value === "") {
     mensagemVinculo.textContent = "Selecione sua função.";
-  } else {
-    // avança para a revisão
-    mostrarEtapa(3);
 
-    // encerra a função
-    return;
+    // verifica a linha caso os campos de transporte estejam visíveis
+  } else if (camposTransporte.hidden === false && linhaCadastro.value === "") {
+    mensagemVinculo.textContent = "Selecione sua linha de atuação.";
+
+    // verifica a estação
+  } else if (
+    camposTransporte.hidden === false &&
+    estacaoCadastro.value === ""
+  ) {
+    mensagemVinculo.textContent = "Selecione sua estação de atuação.";
+
+    // verifica a região caso o campo esteja visível
+  } else if (
+    campoRegiao.hidden === false &&
+    regiaoCadastro.value.trim() === ""
+  ) {
+    mensagemVinculo.textContent = "Informe sua região de atuação.";
+  } else {
+    mostrarEtapa(3); // avança para a revisão
+
+    return; // encerra a função
   }
 
   // aplica a aparência da mensagem de erro
   mensagemVinculo.classList.add("mensagem-erro");
 
-  // exibe a mensagem
+  // mostra a mensagem
   mensagemVinculo.hidden = false;
 }
 
@@ -631,4 +649,172 @@ if (etapaIdentificacao && etapaVinculo && etapaRevisao) {
   editarVinculo.addEventListener("click", function () {
     mostrarEtapa(2);
   });
+}
+
+// =================================================================
+// VÍNCULO PROFISSIONAL
+// =================================================================
+
+// seleciona os campos de linha e estação
+const linhaCadastro = document.getElementById("linha");
+const estacaoCadastro = document.getElementById("estacao");
+
+// seleciona o grupo de campos de transporte
+const camposTransporte = document.getElementById("campos-transporte");
+
+// seleciona o grupo que contém o campo de região
+const campoRegiao = document.getElementById("campo-regiao");
+
+// seleciona o input de região
+const regiaoCadastro = document.getElementById("regiao");
+
+// função que adiciona opções a um select
+// campo representa o select que receberá as opções
+// lista representa os valores que serão adicionados
+// texto representa a primeira opção do select
+function preencherOpcoes(campo, lista, texto) {
+  // limpa as opções anteriores
+  campo.innerHTML = "";
+
+  // cria a primeira opção
+  const primeiraOpcao = document.createElement("option");
+
+  primeiraOpcao.value = ""; // valor vazio
+  primeiraOpcao.textContent = texto; // texto exibido
+
+  // adiciona a primeira opção ao select
+  campo.appendChild(primeiraOpcao);
+
+  // percorre os valores da lista
+  for (let i = 0; i < lista.length; i++) {
+    // cria uma nova opção
+    const opcao = document.createElement("option");
+
+    opcao.value = lista[i]; // valor da opção
+    opcao.textContent = lista[i]; // texto exibido
+
+    // adiciona a opção ao select
+    campo.appendChild(opcao);
+  }
+}
+
+// função que esconde e limpa os campos de atuação
+function limparCamposVinculo() {
+  camposTransporte.hidden = true; // esconde linhas e estações
+  campoRegiao.hidden = true; // esconde a região
+
+  linhaCadastro.disabled = true; // desativa a linha
+  estacaoCadastro.disabled = true; // desativa a estação
+  regiaoCadastro.disabled = true; // desativa a região
+
+  linhaCadastro.required = false; // deixa de ser obrigatório
+  estacaoCadastro.required = false; // deixa de ser obrigatório
+  regiaoCadastro.required = false; // deixa de ser obrigatório
+
+  // limpa os valores anteriores
+  preencherOpcoes(linhaCadastro, [], "Selecione a linha");
+  preencherOpcoes(estacaoCadastro, [], "Selecione a estação");
+
+  regiaoCadastro.value = "";
+}
+
+// função que carrega as funções da instituição escolhida
+function carregarFuncoes() {
+  // recupera a instituição selecionada
+  const instituicao = orgaoCadastro.value;
+
+  // limpa os campos relacionados ao vínculo
+  limparCamposVinculo();
+
+  // verifica se a instituição possui funções cadastradas
+  if (funcoesInstituicoes[instituicao]) {
+    // carrega as funções da instituição
+    preencherOpcoes(
+      funcaoCadastro,
+      funcoesInstituicoes[instituicao],
+      "Selecione sua função",
+    );
+
+    funcaoCadastro.disabled = false; // ativa o campo
+  } else {
+    // limpa as funções anteriores
+    preencherOpcoes(funcaoCadastro, [], "Selecione a instituição");
+
+    funcaoCadastro.disabled = true; // desativa o campo
+  }
+}
+
+// função que mostra os campos necessários para cada profissional
+function carregarCamposVinculo() {
+  // recupera a instituição e a função escolhidas
+  const instituicao = orgaoCadastro.value;
+  const funcao = funcaoCadastro.value;
+
+  // limpa os campos anteriores
+  limparCamposVinculo();
+
+  // verifica se alguma função foi selecionada
+  if (funcao === "") {
+    return; // encerra a função
+  }
+
+  // verifica se o profissional precisa informar uma região
+  if (instituicao === "cet" || funcao === "Coordenador") {
+    campoRegiao.hidden = false; // mostra a região
+    regiaoCadastro.disabled = false; // ativa o campo
+    regiaoCadastro.required = true; // torna obrigatório
+  } else if (linhasInstituicoes[instituicao]) {
+    // mostra os campos de transporte
+    camposTransporte.hidden = false;
+
+    // carrega as linhas da operadora
+    preencherOpcoes(
+      linhaCadastro,
+      linhasInstituicoes[instituicao],
+      "Selecione a linha",
+    );
+
+    linhaCadastro.disabled = false; // ativa o campo
+    linhaCadastro.required = true; // torna obrigatório
+  }
+}
+
+// função que carrega as estações da linha selecionada
+function carregarEstacoes() {
+  // recupera a linha escolhida
+  const linha = linhaCadastro.value;
+
+  // verifica se existem estações cadastradas para a linha
+  if (estacoesLinhas[linha]) {
+    // carrega as estações correspondentes
+    preencherOpcoes(
+      estacaoCadastro,
+      estacoesLinhas[linha],
+      "Selecione a estação",
+    );
+
+    estacaoCadastro.disabled = false; // ativa o campo
+    estacaoCadastro.required = true; // torna obrigatório
+  } else {
+    // limpa as estações anteriores
+    preencherOpcoes(estacaoCadastro, [], "Selecione a linha");
+
+    estacaoCadastro.disabled = true; // desativa o campo
+    estacaoCadastro.required = false; // deixa de ser obrigatório
+  }
+}
+
+// verifica se estamos na página de cadastro
+if (orgaoCadastro && funcaoCadastro && linhaCadastro) {
+  // carrega as funções quando a instituição muda
+  orgaoCadastro.addEventListener("change", carregarFuncoes);
+
+  // mostra os campos quando a função muda
+  funcaoCadastro.addEventListener("change", carregarCamposVinculo);
+
+  // carrega as estações quando a linha muda
+  linhaCadastro.addEventListener("change", carregarEstacoes);
+
+  // prepara os campos ao carregar a página
+  carregarFuncoes();
 }
