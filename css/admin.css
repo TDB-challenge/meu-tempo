@@ -1417,470 +1417,377 @@ body.tema-escuro .coord-estacao-icone img.icone {
 
 
 
-/* CADASTRO E LOGIN ADMINISTRATIVO ================================================ */
 
-/* define a aparência geral das páginas de acesso profissional */
-:is(.cadastro-administrativo, .login-administrativo) {
-    background-color: var(--creme); /* reutiliza a cor de fundo institucional */
-    color: var(--texto-principal); /* utiliza a cor principal dos textos */
-    font-family: var(--fonte-principal); /* mantém a tipografia do projeto */
-    min-height: 100vh; /* garante que a página ocupe a altura da tela */
+
+
+
+
+
+
+
+
+/* CADASTRO E LOGIN ADMINISTRATIVO ================================= */
+
+/* aparência geral das páginas */
+.cadastro-administrativo,
+.login-administrativo {
+    background-color: #f4f1e8; /* fundo bege */
+    color: #203d2e; /* cor do texto */
+    min-height: 100vh; /* altura da tela */
 }
 
-/* garante que os elementos ocultados pelo javascript não sejam exibidos */
-:is(.cadastro-administrativo, .login-administrativo) [hidden] {
-    display: none !important; /* prioriza a ocultação dos elementos */
+/* esconde os elementos que possuem o atributo hidden */
+.cadastro-administrativo [hidden],
+.login-administrativo [hidden] {
+    display: none !important; /* mantém o elemento escondido */
 }
 
-/* organiza as colunas de apresentação e formulário */
-:is(.cadastro-administrativo, .login-administrativo) .cadastro-layout {
-    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr); /* distribui proporcionalmente o espaço entre as colunas */
-    align-items: start; /* alinha as colunas pelo início */
+/* organiza a apresentação e o formulário em duas colunas */
+.cadastro-administrativo .cadastro-layout,
+.login-administrativo .cadastro-layout {
+    display: grid; /* organiza as colunas */
+    grid-template-columns: 1fr 1fr; /* cria duas colunas iguais */
+    gap: 30px; /* espaço entre as colunas */
+    align-items: start; /* alinha pelo início */
 }
 
-/* permite que os elementos internos diminuam conforme o espaço disponível */
-:is(.cadastro-administrativo, .login-administrativo) .cadastro-apresentacao,
-:is(.cadastro-administrativo, .login-administrativo) .cadastro-card {
-    min-width: 0; /* evita que elementos internos ultrapassem a largura da coluna */
+/* cartão do formulário */
+.cadastro-administrativo .cadastro-card,
+.login-administrativo .cadastro-card {
+    background-color: white; /* fundo branco */
+    border: 1px solid #d5ddd1; /* borda */
+    border-radius: 16px; /* cantos arredondados */
+    padding: 30px; /* espaço interno */
+    min-width: 0; /* evita que o cartão ultrapasse a coluna */
 }
 
-/* personaliza o cartão que contém os formulários administrativos */
-:is(.cadastro-administrativo, .login-administrativo) .cadastro-card {
-    background-color: var(--branco); /* utiliza a cor de superfície do projeto */
-    border: 1px solid var(--borda); /* adiciona uma borda suave ao cartão */
-    border-radius: var(--radius-grande); /* arredonda os cantos do cartão */
-    box-shadow: 0 8px 28px rgba(12, 32, 26, 0.04); /* cria uma sombra discreta ao redor do cartão */
+/* ícone de acesso profissional */
+.cadastro-area-tag .icone {
+    width: 18px; /* largura */
+    height: 18px; /* altura */
 }
 
-/* define a aparência dos ícones de identificação profissional */
-:is(.cadastro-administrativo, .login-administrativo) .cadastro-area-tag .icone {
-    width: 18px; /* define a largura do ícone */
-    height: 18px; /* define a altura do ícone */
-    object-fit: contain; /* preserva as proporções da imagem */
-    flex-shrink: 0; /* impede que o ícone seja comprimido */
-}
-
-/* organiza o espaçamento entre os elementos dos formulários */
+/* formulários administrativos */
 .formulario-cadastro-admin,
 .formulario-login-admin {
-    display: flex; /* permite organizar os elementos com flexbox */
-    flex-direction: column; /* posiciona os elementos verticalmente */
-    gap: 20px; /* estabelece o espaçamento entre os elementos */
-    width: 100%; /* ocupa toda a largura disponível */
+    width: 100%; /* largura do formulário */
+    margin-top: 20px; /* espaço superior */
 }
 
-/* remove a aparência padrão dos agrupamentos de campos */
-.formulario-cadastro-admin .campos-etapa-cadastro {
-    border: none; /* remove a borda padrão do fieldset */
-    padding: 0; /* remove o espaçamento interno padrão */
-    margin: 0; /* remove o espaçamento externo padrão */
-    min-width: 0; /* permite que o agrupamento diminua em telas menores */
-    width: 100%; /* ocupa toda a largura do formulário */
+/* agrupamento dos campos do cadastro */
+.campos-etapa-cadastro {
+    border: none; /* remove a borda */
+    padding: 0; /* remove o espaço interno */
+    margin: 0; /* remove a margem */
+    min-width: 0; /* evita problemas de largura */
 }
 
-/* estiliza o título de cada etapa do cadastro */
-.formulario-cadastro-admin .campos-etapa-cadastro legend {
-    font-family: var(--fonte-titulo); /* utiliza a fonte destinada aos títulos */
-    font-size: 1.25rem; /* estabelece o tamanho do título */
-    font-weight: 600; /* destaca o título da etapa */
-    color: var(--verde-floresta); /* utiliza a cor institucional */
-    margin-bottom: 12px; /* separa o título dos demais elementos */
+/* título das etapas */
+.campos-etapa-cadastro legend {
+    font-size: 1.25rem; /* tamanho do título */
+    font-weight: bold; /* texto em negrito */
+    color: #203d2e; /* cor verde escura */
+    margin-bottom: 12px; /* espaço inferior */
 }
 
-/* apresenta as orientações de preenchimento */
-.cadastro-administrativo .orientacao-etapa {
-    font-size: 0.9rem; /* define um tamanho adequado para o texto auxiliar */
-    color: var(--texto-secundario); /* diferencia a orientação do título */
-    line-height: 1.6; /* melhora a leitura do texto */
-    margin-bottom: 16px; /* separa a orientação dos campos seguintes */
-}
-
-/* apresenta a indicação dos campos obrigatórios */
-.cadastro-administrativo .campos-obrigatorios {
-    font-size: 0.8rem; /* mantém a informação em tamanho secundário */
-    color: var(--texto-secundario); /* utiliza a cor dos textos auxiliares */
-    margin-bottom: 16px; /* separa a indicação dos campos do formulário */
-}
-
-/* mantém a estrutura de uma coluna em telas menores */
-@media (max-width: 860px) {
-
-    /* reorganiza o layout do cadastro e login */
-    :is(.cadastro-administrativo, .login-administrativo) .cadastro-layout {
-        grid-template-columns: minmax(0, 1fr); /* posiciona a apresentação acima do formulário */
-    }
-
+/* orientações das etapas */
+.orientacao-etapa,
+.campos-obrigatorios {
+    font-size: 0.9rem; /* tamanho do texto */
+    color: #59645b; /* cor secundária */
+    line-height: 1.5; /* espaço entre as linhas */
+    margin-bottom: 16px; /* espaço inferior */
 }
 
 
+/* INDICADOR DE ETAPAS ============================================= */
 
-
-
-/* INDICADOR DE ETAPAS DO CADASTRO ================================================ */
-
-/* organiza as três etapas do cadastro profissional */
-.cadastro-administrativo .etapas-cadastro {
-    display: grid; /* utiliza o grid para distribuir as etapas */
-    grid-template-columns: repeat(3, minmax(0, 1fr)); /* cria três colunas de mesma largura */
-    gap: 12px; /* define o espaço entre as etapas */
-    list-style: none; /* remove a numeração padrão da lista */
-    padding: 0; /* remove o espaçamento interno padrão */
-    margin: 24px 0 28px; /* separa o indicador dos elementos superiores e inferiores */
+/* lista das etapas */
+.etapas-cadastro {
+    display: flex; /* posiciona as etapas lado a lado */
+    gap: 12px; /* espaço entre as etapas */
+    list-style: none; /* remove os marcadores */
+    padding: 0; /* remove o espaço interno */
+    margin: 24px 0; /* espaço superior e inferior */
 }
 
-/* organiza individualmente cada etapa */
-.cadastro-administrativo .etapa-cadastro {
-    display: flex; /* organiza a barra e o texto */
-    flex-direction: column; /* posiciona o texto abaixo da barra */
-    gap: 8px; /* separa a barra do nome da etapa */
-    min-width: 0; /* permite que a etapa se adapte à largura disponível */
-    font-size: 0.8rem; /* define o tamanho do nome da etapa */
-    font-weight: 600; /* destaca levemente o nome da etapa */
-    color: var(--texto-secundario); /* representa uma etapa ainda não iniciada */
-    overflow-wrap: anywhere; /* permite quebrar textos em espaços reduzidos */
+/* cada etapa do cadastro */
+.etapa-cadastro {
+    flex: 1; /* divide o espaço igualmente */
+    min-width: 0; /* permite diminuir a largura */
+    font-size: 0.8rem; /* tamanho do texto */
+    color: #59645b; /* cor da etapa pendente */
+    overflow-wrap: anywhere; /* quebra textos longos */
 }
 
-/* define a aparência padrão da barra de progresso */
-.cadastro-administrativo .barra-etapa {
-    display: block; /* permite controlar as dimensões da barra */
-    width: 100%; /* ocupa toda a largura da etapa */
-    height: 4px; /* define a espessura da barra */
-    border-radius: 4px; /* arredonda as extremidades da barra */
-    background-color: var(--borda); /* representa uma etapa pendente */
+/* barra de progresso */
+.barra-etapa {
+    display: block; /* permite definir a altura */
+    height: 4px; /* altura da barra */
+    background-color: #d5ddd1; /* cor da barra pendente */
+    border-radius: 4px; /* cantos arredondados */
+    margin-bottom: 8px; /* espaço abaixo da barra */
 }
 
-/* destaca o texto da etapa atual */
-.cadastro-administrativo .etapa-cadastro.etapa-ativa {
-    color: var(--verde-floresta); /* identifica a etapa atual com a cor institucional */
-    font-weight: 800; /* reforça visualmente a identificação da etapa atual */
+/* texto da etapa atual */
+.etapa-ativa {
+    color: #203d2e; /* cor verde escura */
+    font-weight: bold; /* destaca o texto */
 }
 
-/* destaca a barra correspondente à etapa atual */
-.cadastro-administrativo .etapa-ativa .barra-etapa {
-    background-color: var(--verde-floresta); /* aplica a cor principal à barra ativa */
+/* barra da etapa atual */
+.etapa-ativa .barra-etapa {
+    background-color: #203d2e; /* indica a etapa atual */
 }
 
-/* diferencia o texto das etapas já concluídas */
-.cadastro-administrativo .etapa-cadastro.etapa-concluida {
-    color: var(--verde-natural); /* representa visualmente uma etapa concluída */
+/* texto da etapa concluída */
+.etapa-concluida {
+    color: #456b50; /* cor verde */
 }
 
-/* diferencia a barra das etapas já concluídas */
-.cadastro-administrativo .etapa-concluida .barra-etapa {
-    background-color: var(--verde-salvia); /* utiliza uma tonalidade mais suave para indicar conclusão */
-}
-
-/* mantém o indicador legível em telas pequenas */
-@media (max-width: 480px) {
-
-    /* reduz o espaçamento entre as três etapas */
-    .cadastro-administrativo .etapas-cadastro {
-        gap: 8px; /* aproveita melhor a largura disponível */
-    }
-
+/* barra da etapa concluída */
+.etapa-concluida .barra-etapa {
+    background-color: #8aa787; /* cor verde clara */
 }
 
 
+/* CAMPOS DOS FORMULÁRIOS ========================================== */
 
-
-/* CAMPOS DOS FORMULÁRIOS ADMINISTRATIVOS ========================================= */
-
-/* organiza cada conjunto de rótulo, campo e orientação */
-:is(.cadastro-administrativo, .login-administrativo) .campo-cadastro {
-    display: flex; /* permite organizar os elementos verticalmente */
-    flex-direction: column; /* posiciona o rótulo acima do campo */
-    gap: 7px; /* define o espaçamento interno entre os elementos */
-    margin-bottom: 18px; /* separa um campo do próximo */
-    min-width: 0; /* evita que o campo ultrapasse o espaço disponível */
+/* organiza cada campo */
+.campo-cadastro {
+    margin-bottom: 18px; /* espaço entre os campos */
 }
 
-/* define a aparência dos rótulos dos campos */
-:is(.cadastro-administrativo, .login-administrativo) .campo-cadastro label {
-    font-size: 0.9rem; /* define o tamanho do rótulo */
-    font-weight: 700; /* destaca a identificação do campo */
-    color: var(--texto-principal); /* utiliza a cor principal dos textos */
-    line-height: 1.5; /* estabelece um espaçamento confortável entre linhas */
+/* nome dos campos */
+.campo-cadastro label {
+    display: block; /* posiciona o texto acima do campo */
+    font-size: 0.9rem; /* tamanho do texto */
+    font-weight: bold; /* texto em negrito */
+    margin-bottom: 7px; /* espaço abaixo do texto */
 }
 
-/* destaca a identificação dos campos obrigatórios */
-:is(.cadastro-administrativo, .login-administrativo) .asterisco {
-    color: var(--terracota); /* utiliza a cor complementar da identidade visual */
-    font-weight: 700; /* reforça a identificação visual */
+/* identificação dos campos obrigatórios */
+.cadastro-administrativo .asterisco,
+.login-administrativo .asterisco {
+    color: #a64235; /* cor vermelha */
 }
 
-/* define a aparência compartilhada dos campos de preenchimento */
-:is(.cadastro-administrativo, .login-administrativo) .campo-cadastro input,
-:is(.cadastro-administrativo, .login-administrativo) .campo-cadastro select {
-    width: 100%; /* ocupa toda a largura disponível */
-    min-width: 0; /* permite a adaptação em espaços menores */
-    min-height: 48px; /* estabelece uma altura confortável para interação */
-    padding: 12px 14px; /* cria espaço interno para os textos */
-    background-color: var(--branco); /* utiliza a cor de superfície do projeto */
-    border: 1px solid var(--borda-input); /* delimita visualmente o campo */
-    border-radius: var(--radius-medio); /* arredonda os cantos do campo */
-    font-family: inherit; /* mantém a fonte utilizada na página */
-    font-size: 1rem; /* define um tamanho legível para o preenchimento */
-    line-height: 1.5; /* melhora o espaçamento vertical do texto */
-    color: var(--texto-principal); /* utiliza a cor principal dos textos */
+/* campos de texto e seleção */
+.campo-cadastro input,
+.campo-cadastro select {
+    width: 100%; /* ocupa toda a largura */
+    min-height: 48px; /* altura mínima */
+    padding: 12px; /* espaço interno */
+    border: 1px solid #bfc9be; /* borda */
+    border-radius: 8px; /* cantos arredondados */
+    background-color: white; /* fundo branco */
+    color: #203d2e; /* cor do texto */
+    font-family: inherit; /* mantém a fonte da página */
+    font-size: 1rem; /* tamanho do texto */
+    box-sizing: border-box; /* mantém o campo dentro da largura */
 }
 
-/* estiliza as sugestões apresentadas nos campos vazios */
-:is(.cadastro-administrativo, .login-administrativo) .campo-cadastro input::placeholder {
-    color: var(--texto-secundario); /* utiliza uma cor secundária para as sugestões */
-    opacity: 1; /* mantém a legibilidade das sugestões */
+/* texto de exemplo dos campos */
+.campo-cadastro input::placeholder {
+    color: #59645b; /* cor do texto de exemplo */
 }
 
-/* destaca os campos durante a navegação por teclado ou preenchimento */
-:is(.cadastro-administrativo, .login-administrativo) .campo-cadastro input:focus,
-:is(.cadastro-administrativo, .login-administrativo) .campo-cadastro select:focus {
-    border-color: var(--verde-natural); /* altera a borda do campo selecionado */
-    outline: 2px solid var(--verde-natural); /* adiciona um indicador de foco visível */
-    outline-offset: 2px; /* separa o indicador de foco da borda */
+/* campo selecionado */
+.campo-cadastro input:focus,
+.campo-cadastro select:focus {
+    outline: 2px solid #456b50; /* contorno de foco */
+    border-color: #456b50; /* cor da borda */
 }
 
-/* identifica os campos temporariamente indisponíveis */
-:is(.cadastro-administrativo, .login-administrativo) .campo-cadastro input:disabled,
-:is(.cadastro-administrativo, .login-administrativo) .campo-cadastro select:disabled {
-    background-color: var(--verde-claro); /* diferencia os campos desabilitados */
-    color: var(--texto-secundario); /* mantém a informação legível */
-    cursor: not-allowed; /* indica que a interação não está disponível */
-    opacity: 0.8; /* diferencia visualmente o campo dos demais */
+/* campos desabilitados */
+.campo-cadastro input:disabled,
+.campo-cadastro select:disabled {
+    background-color: #e8eee4; /* fundo verde claro */
+    cursor: not-allowed; /* indica que não pode ser usado */
 }
 
-/* indica a possibilidade de seleção em campos de opções */
-:is(.cadastro-administrativo, .login-administrativo) .campo-cadastro select {
-    cursor: pointer; /* indica que o campo possui opções selecionáveis */
+/* orientações abaixo dos campos */
+.orientacao-campo {
+    display: block; /* posiciona em uma nova linha */
+    font-size: 0.8rem; /* tamanho do texto */
+    color: #59645b; /* cor secundária */
+    line-height: 1.5; /* espaço entre as linhas */
+    margin-top: 6px; /* espaço superior */
 }
 
-/* mantém a indicação correta nos seletores desabilitados */
-:is(.cadastro-administrativo, .login-administrativo) .campo-cadastro select:disabled {
-    cursor: not-allowed; /* indica que a seleção está temporariamente indisponível */
+/* campos de linha e estação */
+.campos-transporte {
+    margin-bottom: 18px; /* espaço inferior */
 }
 
-/* apresenta informações complementares abaixo dos campos */
-:is(.cadastro-administrativo, .login-administrativo) .orientacao-campo {
-    display: block; /* posiciona a orientação em uma linha própria */
-    font-size: 0.8rem; /* define o tamanho do texto auxiliar */
-    color: var(--texto-secundario); /* diferencia a orientação do conteúdo principal */
-    line-height: 1.5; /* melhora a leitura das orientações */
-    overflow-wrap: anywhere; /* evita que textos extensos ultrapassem o cartão */
+/* campo com erro de preenchimento */
+.campo-cadastro [aria-invalid="true"] {
+    border-color: #a64235; /* borda vermelha */
 }
 
-/* organiza os campos relacionados ao transporte ferroviário */
-.cadastro-administrativo .campos-transporte {
-    display: flex; /* agrupa os campos de transporte */
-    flex-direction: column; /* posiciona linha e estação verticalmente */
-    margin-bottom: 18px; /* separa o grupo dos elementos seguintes */
-}
-
-/* destaca os campos considerados inválidos pelo javascript */
-:is(.cadastro-administrativo, .login-administrativo) .campo-cadastro [aria-invalid="true"] {
-    border-color: var(--terracota); /* sinaliza a existência de uma informação inválida */
-}
-
-/* preserva o indicador de foco nos campos inválidos */
-:is(.cadastro-administrativo, .login-administrativo) .campo-cadastro [aria-invalid="true"]:focus {
-    outline-color: var(--terracota); /* mantém a identificação do erro durante o preenchimento */
+/* campo com erro selecionado */
+.campo-cadastro [aria-invalid="true"]:focus {
+    outline-color: #a64235; /* contorno vermelho */
 }
 
 
+/* CAMPOS DE SENHA ================================================= */
 
-/* CAMPOS DE SENHA =============================================================== */
-
-/* organiza o campo de senha e o botão de visualização */
-:is(.cadastro-administrativo, .login-administrativo) .campo-senha {
-    position: relative; /* permite posicionar o botão dentro do campo */
-    display: flex; /* organiza os elementos internos */
-    align-items: center; /* centraliza verticalmente os elementos */
-    width: 100%; /* ocupa toda a largura disponível */
-}
-
-/* reserva espaço para o botão de visualização */
-:is(.cadastro-administrativo, .login-administrativo) .campo-senha input {
-    padding-right: 58px; /* impede que o texto fique atrás do botão */
-}
-
-/* define a aparência do botão de visualização da senha */
-:is(.cadastro-administrativo, .login-administrativo) .botao-visualizar-senha {
-    position: absolute; /* posiciona o botão dentro do campo */
-    right: 4px; /* estabelece a distância da borda direita */
-    top: 50%; /* posiciona o botão no centro vertical */
-    transform: translateY(-50%); /* corrige o alinhamento vertical */
-    display: flex; /* permite centralizar o ícone */
-    align-items: center; /* centraliza verticalmente o ícone */
-    justify-content: center; /* centraliza horizontalmente o ícone */
-    width: 44px; /* estabelece uma área confortável para interação */
-    height: 44px; /* define a altura da área clicável */
-    padding: 8px; /* cria espaço interno ao redor do ícone */
-    background-color: transparent; /* preserva o fundo do campo */
-    border: none; /* remove a borda padrão do botão */
-    border-radius: 8px; /* arredonda os cantos do botão */
-    cursor: pointer; /* indica que o elemento é interativo */
-    transition: background-color 0.2s ease; /* suaviza a alteração do fundo */
-}
-
-/* destaca o botão quando recebe o cursor */
-:is(.cadastro-administrativo, .login-administrativo) .botao-visualizar-senha:hover {
-    background-color: var(--verde-claro, #e8eee4); /* destaca suavemente a área clicável */
-}
-
-/* destaca o botão durante a navegação por teclado */
-:is(.cadastro-administrativo, .login-administrativo) .botao-visualizar-senha:focus-visible {
-    outline: 2px solid var(--verde-natural, #456b50); /* adiciona um indicador de foco visível */
-    outline-offset: 2px; /* separa o indicador do botão */
-}
-
-/* define as dimensões do ícone de visualização */
-:is(.cadastro-administrativo, .login-administrativo) .botao-visualizar-senha img {
-    width: 20px; /* estabelece a largura do ícone */
-    height: 20px; /* estabelece a altura do ícone */
-    object-fit: contain; /* mantém as proporções originais da imagem */
-}
-
-/* diferencia o botão quando a senha está visível */
-:is(.cadastro-administrativo, .login-administrativo) .botao-visualizar-senha[aria-pressed="true"] {
-    background-color: var(--verde-claro, #e8eee4); /* identifica visualmente o estado ativo */
-}
-
-
-/* REQUISITOS DE SEGURANÇA ========================================================= */
-
-/* organiza a lista de requisitos da senha */
-.cadastro-administrativo .requisitos-senha {
-    display: flex; /* permite organizar os requisitos verticalmente */
-    flex-direction: column; /* posiciona um requisito abaixo do outro */
-    gap: 7px; /* estabelece o espaçamento entre os requisitos */
-    list-style: none; /* remove os marcadores padrão da lista */
-    margin: -6px 0 20px; /* aproxima os requisitos do campo de senha */
-    padding: 0; /* remove o espaçamento interno padrão */
-}
-
-/* define a aparência individual de cada requisito */
-.cadastro-administrativo .requisitos-senha li {
-    display: flex; /* organiza o marcador e o texto */
-    align-items: center; /* centraliza verticalmente os elementos */
-    gap: 8px; /* separa o marcador do texto */
-    font-size: 0.8rem; /* define o tamanho do texto auxiliar */
-    line-height: 1.5; /* melhora a leitura dos requisitos */
-    color: var(--texto-secundario, #59645b); /* identifica o estado inicial */
-}
-
-/* cria o marcador visual de um requisito pendente */
-.cadastro-administrativo .requisitos-senha li::before {
-    content: ""; /* cria um elemento visual vazio */
-    display: inline-block; /* permite definir as dimensões do marcador */
-    width: 10px; /* estabelece a largura do marcador */
-    height: 10px; /* estabelece a altura do marcador */
-    border: 1px solid currentColor; /* acompanha a cor do requisito */
-    border-radius: 50%; /* transforma o marcador em um círculo */
-    flex-shrink: 0; /* impede a deformação do marcador */
-}
-
-/* identifica um requisito atendido */
-.cadastro-administrativo .requisitos-senha li.requisito-atendido {
-    color: var(--verde-natural, #456b50); /* aplica a cor de validação */
-    font-weight: 600; /* destaca o requisito concluído */
-}
-
-/* substitui o círculo pelo símbolo de confirmação */
-.cadastro-administrativo .requisitos-senha li.requisito-atendido::before {
-    content: "\2713"; /* apresenta o símbolo de confirmação */
-    display: inline-flex; /* permite centralizar o símbolo */
-    align-items: center; /* centraliza verticalmente o símbolo */
-    justify-content: center; /* centraliza horizontalmente o símbolo */
-    width: 12px; /* amplia a largura para acomodar o símbolo */
-    height: 12px; /* amplia a altura para acomodar o símbolo */
-    border: none; /* remove a borda do círculo */
-    font-size: 0.85rem; /* define o tamanho do símbolo */
-    font-weight: 700; /* reforça visualmente a confirmação */
-}
-
-/* apresenta mensagens relacionadas à confirmação da senha */
-.cadastro-administrativo .mensagem-campo {
-    font-size: 0.8rem; /* define o tamanho do texto auxiliar */
-    line-height: 1.5; /* melhora a leitura da mensagem */
-    overflow-wrap: anywhere; /* evita que mensagens extensas ultrapassem o campo */
-}
-
-/* identifica uma confirmação válida */
-.cadastro-administrativo .mensagem-campo.mensagem-sucesso {
-    color: var(--verde-natural, #456b50); /* utiliza a cor de confirmação */
-}
-
-/* identifica uma confirmação inválida */
-.cadastro-administrativo .mensagem-campo.mensagem-erro {
-    color: var(--terracota, #a64235); /* utiliza a cor de erro */
-}
-
-
-/* ACEITE DOS TERMOS =============================================================== */
-
-/* organiza o checkbox e o texto dos termos */
-.cadastro-administrativo .aceite-termos {
+/* organiza a senha e o botão */
+.campo-senha {
     display: flex; /* posiciona os elementos lado a lado */
-    align-items: flex-start; /* alinha os elementos pelo início */
-    gap: 10px; /* separa o checkbox do texto */
-    margin: 20px 0; /* estabelece o afastamento dos demais campos */
+    align-items: center; /* centraliza verticalmente */
+    gap: 8px; /* espaço entre os elementos */
 }
 
-/* define a aparência do checkbox */
-.cadastro-administrativo .aceite-termos input {
-    width: 20px; /* estabelece a largura do checkbox */
-    height: 20px; /* estabelece a altura do checkbox */
-    margin: 2px 0 0; /* ajusta o alinhamento com o texto */
-    flex-shrink: 0; /* impede que o checkbox seja comprimido */
-    accent-color: var(--verde-floresta, #203d2e); /* personaliza a cor da seleção */
-    cursor: pointer; /* indica que o elemento é interativo */
+/* campo de preenchimento da senha */
+.campo-senha input {
+    flex: 1; /* ocupa o espaço disponível */
+    min-width: 0; /* permite diminuir a largura */
 }
 
-/* destaca o checkbox durante a navegação por teclado */
-.cadastro-administrativo .aceite-termos input:focus-visible {
-    outline: 2px solid var(--verde-natural, #456b50); /* adiciona um indicador de foco */
-    outline-offset: 3px; /* separa o indicador da caixa de seleção */
+/* botão para visualizar a senha */
+.botao-visualizar-senha {
+    width: 44px; /* largura do botão */
+    height: 48px; /* altura do botão */
+    background-color: white; /* fundo branco */
+    border: 1px solid #bfc9be; /* borda */
+    border-radius: 8px; /* cantos arredondados */
+    cursor: pointer; /* indica que pode ser clicado */
+    flex-shrink: 0; /* mantém a largura do botão */
+    display: flex; /* organiza o ícone */
+    align-items: center; /* centraliza verticalmente */
+    justify-content: center; /* centraliza horizontalmente */
 }
 
-/* define a aparência do texto dos termos */
-.cadastro-administrativo .aceite-termos label {
-    font-size: 0.85rem; /* estabelece o tamanho do texto */
-    line-height: 1.6; /* melhora a leitura de textos extensos */
-    color: var(--texto-secundario, #59645b); /* utiliza a cor secundária do projeto */
-    cursor: pointer; /* permite identificar o texto como área de seleção */
+/* botão ao passar o mouse */
+.botao-visualizar-senha:hover {
+    background-color: #e8eee4; /* fundo verde claro */
 }
 
-/* destaca os links de privacidade */
-.cadastro-administrativo .aceite-termos a {
-    color: var(--verde-floresta, #203d2e); /* utiliza a cor institucional */
-    font-weight: 700; /* destaca o link em relação ao texto */
-    text-decoration: underline; /* identifica visualmente o conteúdo clicável */
-    text-underline-offset: 3px; /* distancia o sublinhado do texto */
+/* botão selecionado pelo teclado */
+.botao-visualizar-senha:focus {
+    outline: 2px solid #456b50; /* contorno de foco */
+}
+
+/* botão quando a senha estiver visível */
+.botao-visualizar-senha[aria-pressed="true"] {
+    background-color: #e8eee4; /* indica que está ativo */
+}
+
+/* imagem do botão */
+.botao-visualizar-senha img {
+    width: 20px; /* largura do ícone */
+    height: 20px; /* altura do ícone */
 }
 
 
+/* REQUISITOS DE SEGURANÇA ========================================= */
 
-/* BOTÕES DOS FORMULÁRIOS ================================================== */
+/* lista dos requisitos */
+.requisitos-senha {
+    padding-left: 20px; /* espaço para os marcadores */
+    margin-bottom: 20px; /* espaço inferior */
+    list-style: circle; /* marcadores circulares */
+}
 
-/* organiza os botões de navegação */
+/* cada requisito */
+.requisitos-senha li {
+    color: #59645b; /* cor inicial do texto */
+    font-size: 0.8rem; /* tamanho do texto */
+    line-height: 1.5; /* espaço entre as linhas */
+    margin-bottom: 5px; /* espaço entre os requisitos */
+}
+
+/* requisito preenchido corretamente */
+.requisitos-senha .requisito-atendido {
+    color: #456b50; /* cor verde */
+    font-weight: bold; /* destaca o requisito */
+    list-style: disc; /* preenche o marcador */
+}
+
+/* mensagem de confirmação da senha */
+.mensagem-campo {
+    font-size: 0.8rem; /* tamanho do texto */
+    margin-top: 5px; /* espaço superior */
+}
+
+/* confirmação correta */
+.mensagem-campo.mensagem-sucesso {
+    color: #456b50; /* cor verde */
+}
+
+/* confirmação incorreta */
+.mensagem-campo.mensagem-erro {
+    color: #a64235; /* cor vermelha */
+}
+
+
+/* ACEITE DOS TERMOS =============================================== */
+
+/* organiza a caixa de seleção e o texto */
+.aceite-termos {
+    display: flex; /* coloca os elementos lado a lado */
+    align-items: flex-start; /* alinha pelo início */
+    gap: 10px; /* espaço entre os elementos */
+    margin: 20px 0; /* espaço externo */
+}
+
+/* caixa de seleção */
+.aceite-termos input {
+    width: 20px; /* largura */
+    height: 20px; /* altura */
+    margin-top: 2px; /* espaço superior */
+    accent-color: #203d2e; /* cor da seleção */
+    flex-shrink: 0; /* mantém o tamanho da caixa */
+    cursor: pointer; /* indica que pode ser clicada */
+}
+
+/* foco da caixa de seleção */
+.aceite-termos input:focus {
+    outline: 2px solid #456b50; /* contorno de foco */
+}
+
+/* texto dos termos */
+.aceite-termos label {
+    font-size: 0.85rem; /* tamanho do texto */
+    color: #59645b; /* cor do texto */
+    line-height: 1.5; /* espaço entre as linhas */
+}
+
+/* link dos termos */
+.aceite-termos a {
+    color: #203d2e; /* cor verde escura */
+    font-weight: bold; /* texto em negrito */
+    text-decoration: underline; /* adiciona sublinhado */
+}
+
+
+/* BOTÕES DOS FORMULÁRIOS ========================================== */
+
+/* organiza os botões */
 .acoes-etapa-cadastro {
     display: flex; /* posiciona os botões lado a lado */
+    flex-wrap: wrap; /* permite quebrar a linha */
     gap: 12px; /* espaço entre os botões */
     margin-top: 24px; /* espaço superior */
-    flex-wrap: wrap; /* permite a quebra de linha */
 }
 
-/* propriedades dos botões */
+/* propriedades compartilhadas dos botões */
 .botao-avancar-etapa,
 .botao-voltar-etapa {
     padding: 12px 20px; /* espaço interno */
     border: 1px solid #203d2e; /* borda */
     border-radius: 25px; /* cantos arredondados */
     font-family: inherit; /* mantém a fonte da página */
-    font-size: 16px; /* tamanho do texto */
+    font-size: 1rem; /* tamanho do texto */
     font-weight: bold; /* texto em negrito */
     text-align: center; /* centraliza o texto */
     text-decoration: none; /* remove o sublinhado */
     cursor: pointer; /* indica que pode ser clicado */
     min-height: 48px; /* altura mínima */
-    flex: 1; /* distribui o espaço entre os botões */
+    box-sizing: border-box; /* mantém o tamanho do botão */
+    flex: 1; /* divide o espaço entre os botões */
 }
 
 /* botão principal */
@@ -1895,20 +1802,20 @@ body.tema-escuro .coord-estacao-icone img.icone {
     color: #203d2e; /* texto verde */
 }
 
-/* altera a cor ao passar o mouse */
+/* botão principal ao passar o mouse */
 .botao-avancar-etapa:hover {
-    background-color: #34533f; /* verde mais claro */
+    background-color: #34533f; /* altera a cor do fundo */
 }
 
-/* altera o fundo do botão secundário */
+/* botão secundário ao passar o mouse */
 .botao-voltar-etapa:hover {
     background-color: #e8eee4; /* fundo verde claro */
 }
 
-/* destaca os botões durante a navegação por teclado */
+/* foco dos botões */
 .botao-avancar-etapa:focus,
 .botao-voltar-etapa:focus {
-    outline: 2px solid #456b50; /* contorno do botão */
+    outline: 2px solid #456b50; /* contorno de foco */
     outline-offset: 3px; /* distância do contorno */
 }
 
@@ -1922,17 +1829,18 @@ body.tema-escuro .coord-estacao-icone img.icone {
 /* botão de login */
 .botao-entrar {
     width: 100%; /* ocupa toda a largura */
+    margin-bottom: 12px; /* espaço inferior */
 }
 
 
-/* MENSAGENS DE VALIDAÇÃO ================================================== */
+/* MENSAGENS DE VALIDAÇÃO ========================================== */
 
 /* aparência geral das mensagens */
 .mensagem-formulario {
     padding: 12px; /* espaço interno */
     margin: 12px 0; /* espaço externo */
     border-radius: 8px; /* cantos arredondados */
-    font-size: 14px; /* tamanho do texto */
+    font-size: 0.9rem; /* tamanho do texto */
     line-height: 1.5; /* espaço entre as linhas */
 }
 
@@ -1959,21 +1867,21 @@ body.tema-escuro .coord-estacao-icone img.icone {
 
 /* mensagem de autenticação */
 .estado-autenticacao {
-    font-size: 14px; /* tamanho do texto */
+    font-size: 0.85rem; /* tamanho do texto */
     color: #59645b; /* cor do texto */
     text-align: center; /* centraliza o texto */
     margin-top: 8px; /* espaço superior */
 }
 
 
-/* AVISOS ADMINISTRATIVOS ================================================== */
+/* AVISOS ADMINISTRATIVOS ========================================== */
 
 /* aparência dos avisos */
 .aviso-vinculo,
 .aviso-aprovacao,
 .aviso-acesso-restrito {
-    display: flex; /* posiciona o ícone ao lado do texto */
-    align-items: flex-start; /* alinha os elementos pelo início */
+    display: flex; /* coloca o ícone ao lado do texto */
+    align-items: flex-start; /* alinha pelo início */
     gap: 12px; /* espaço entre os elementos */
     padding: 16px; /* espaço interno */
     margin: 20px 0; /* espaço externo */
@@ -1987,8 +1895,8 @@ body.tema-escuro .coord-estacao-icone img.icone {
 .aviso-vinculo img,
 .aviso-aprovacao img,
 .aviso-acesso-restrito img {
-    width: 24px; /* largura do ícone */
-    height: 24px; /* altura do ícone */
+    width: 24px; /* largura */
+    height: 24px; /* altura */
     flex-shrink: 0; /* mantém o tamanho do ícone */
 }
 
@@ -1996,8 +1904,8 @@ body.tema-escuro .coord-estacao-icone img.icone {
 .aviso-vinculo strong,
 .aviso-aprovacao strong,
 .aviso-acesso-restrito strong {
-    display: block; /* posiciona o título em outra linha */
-    font-size: 15px; /* tamanho do título */
+    display: block; /* posiciona em uma nova linha */
+    font-size: 0.95rem; /* tamanho do texto */
     margin-bottom: 5px; /* espaço inferior */
 }
 
@@ -2005,16 +1913,15 @@ body.tema-escuro .coord-estacao-icone img.icone {
 .aviso-vinculo p,
 .aviso-aprovacao p,
 .aviso-acesso-restrito p {
-    font-size: 14px; /* tamanho do texto */
+    font-size: 0.85rem; /* tamanho do texto */
     line-height: 1.6; /* espaço entre as linhas */
     margin: 0; /* remove as margens */
 }
 
 
+/* REVISÃO DOS DADOS =============================================== */
 
-/* REVISÃO DOS DADOS ================================================== */
-
-/* cartão com o resumo das informações */
+/* cartão com os dados do cadastro */
 .resumo-cadastro {
     background-color: #f7f8f4; /* fundo claro */
     border: 1px solid #d5ddd1; /* borda */
@@ -2023,20 +1930,20 @@ body.tema-escuro .coord-estacao-icone img.icone {
     margin-bottom: 16px; /* espaço inferior */
 }
 
-/* título do resumo */
+/* título do cartão */
 .resumo-cadastro h3 {
+    color: #203d2e; /* cor do título */
     font-size: 1rem; /* tamanho do título */
-    color: #203d2e; /* cor verde escura */
     margin-bottom: 16px; /* espaço inferior */
 }
 
-/* lista de informações */
+/* lista dos dados */
 .lista-resumo-cadastro {
-    margin: 0; /* remove a margem padrão */
+    margin: 0; /* remove as margens */
     padding: 0; /* remove o espaço interno */
 }
 
-/* cada informação do resumo */
+/* cada informação */
 .item-resumo {
     margin-bottom: 14px; /* espaço entre as informações */
 }
@@ -2053,8 +1960,8 @@ body.tema-escuro .coord-estacao-icone img.icone {
     font-size: 0.95rem; /* tamanho do texto */
     color: #203d2e; /* cor principal */
     font-weight: bold; /* texto em negrito */
-    margin: 0; /* remove a margem padrão */
-    overflow-wrap: anywhere; /* quebra textos muito longos */
+    margin: 0; /* remove as margens */
+    overflow-wrap: anywhere; /* quebra textos longos */
 }
 
 /* botão para editar os dados */
@@ -2069,33 +1976,33 @@ body.tema-escuro .coord-estacao-icone img.icone {
     cursor: pointer; /* indica que pode ser clicado */
 }
 
-/* destaca o botão ao receber foco */
+/* foco do botão de edição */
 .botao-editar-dados:focus {
     outline: 2px solid #456b50; /* contorno de foco */
 }
 
 
-/* CONFIRMAÇÃO DO CADASTRO ============================================= */
+/* CONFIRMAÇÃO DO CADASTRO ========================================= */
 
-/* organiza a confirmação */
+/* conteúdo da confirmação */
 .confirmacao-cadastro {
     text-align: center; /* centraliza o conteúdo */
     padding: 20px 0; /* espaço interno */
 }
 
-/* círculo do ícone de confirmação */
+/* círculo da confirmação */
 .icone-confirmacao-cadastro {
-    background-color: #e8eee4; /* fundo verde claro */
     width: 80px; /* largura do círculo */
     height: 80px; /* altura do círculo */
+    background-color: #e8eee4; /* fundo verde claro */
     border-radius: 50%; /* formato circular */
-    display: flex; /* organiza o ícone */
+    display: flex; /* organiza a imagem */
     align-items: center; /* centraliza verticalmente */
     justify-content: center; /* centraliza horizontalmente */
     margin: 0 auto 20px; /* centraliza o círculo */
 }
 
-/* imagem de confirmação */
+/* imagem da confirmação */
 .icone-confirmacao-cadastro img {
     width: 40px; /* largura da imagem */
     height: 40px; /* altura da imagem */
@@ -2114,57 +2021,54 @@ body.tema-escuro .coord-estacao-icone img.icone {
     margin-bottom: 16px; /* espaço inferior */
 }
 
-/* cartão com protocolo e situação */
+/* cartão do protocolo */
 .dados-solicitacao-cadastro {
     background-color: #f7f8f4; /* fundo claro */
     border: 1px solid #d5ddd1; /* borda */
     border-radius: 12px; /* cantos arredondados */
     padding: 20px; /* espaço interno */
     margin: 20px 0; /* espaço externo */
-    text-align: left; /* alinha os dados à esquerda */
+    text-align: left; /* alinha à esquerda */
 }
 
-/* situação de aprovação pendente */
+/* situação pendente */
 .item-resumo .situacao-pendente {
     color: #71501b; /* cor de atenção */
-    font-weight: bold; /* destaca a situação */
 }
 
-/* orientações sobre as próximas etapas */
+/* orientações após o cadastro */
 .proximas-etapas-cadastro {
-    text-align: left; /* alinha o texto à esquerda */
+    text-align: left; /* alinha à esquerda */
     margin: 20px 0; /* espaço externo */
 }
 
-/* título das próximas etapas */
+/* título das orientações */
 .proximas-etapas-cadastro h3 {
     font-size: 1rem; /* tamanho do título */
-    color: #203d2e; /* cor do título */
     margin-bottom: 12px; /* espaço inferior */
 }
 
-/* lista das próximas etapas */
+/* lista das orientações */
 .proximas-etapas-cadastro ol {
     padding-left: 20px; /* espaço para a numeração */
 }
 
-/* cada etapa da aprovação */
+/* cada orientação */
 .proximas-etapas-cadastro li {
     font-size: 0.9rem; /* tamanho do texto */
     line-height: 1.6; /* espaço entre as linhas */
-    margin-bottom: 10px; /* espaço entre os itens */
+    margin-bottom: 10px; /* espaço inferior */
 }
 
-/* aviso sobre o ambiente demonstrativo */
-.confirmacao-cadastro .aviso-cadastro-demonstrativo {
+/* aviso do ambiente demonstrativo */
+.aviso-cadastro-demonstrativo {
     background-color: #faf1db; /* fundo amarelo claro */
     color: #71501b; /* cor do texto */
     padding: 12px; /* espaço interno */
     border-radius: 8px; /* cantos arredondados */
-    font-size: 0.85rem; /* tamanho do texto */
 }
 
-/* botões da confirmação */
+/* botões após a confirmação */
 .acoes-confirmacao-cadastro {
     display: flex; /* organiza os botões */
     flex-direction: column; /* posiciona um abaixo do outro */
@@ -2173,18 +2077,11 @@ body.tema-escuro .coord-estacao-icone img.icone {
 }
 
 
+/* LOGIN ADMINISTRATIVO ============================================ */
 
-/* LOGIN ADMINISTRATIVO =============================================== */
-
-/* espaçamento do formulário */
-.formulario-login-admin {
-    margin-top: 24px; /* espaço superior */
-    gap: 0; /* remove espaços extras entre os campos */
-}
-
-/* organiza a recuperação de senha */
+/* opções do login */
 .opcoes-login {
-    text-align: right; /* posiciona o link à direita */
+    text-align: right; /* alinha à direita */
     margin-bottom: 20px; /* espaço inferior */
 }
 
@@ -2200,84 +2097,77 @@ body.tema-escuro .coord-estacao-icone img.icone {
     cursor: pointer; /* indica que pode ser clicado */
 }
 
-/* destaca o botão durante a navegação */
+/* foco do botão de recuperação */
 .botao-recuperar-senha:focus {
     outline: 2px solid #456b50; /* contorno de foco */
 }
 
-/* botão para entrar no painel */
-.login-administrativo .botao-entrar {
-    width: 100%; /* ocupa toda a largura */
-    margin-bottom: 12px; /* espaço inferior */
-}
 
+/* AMBIENTES PROFISSIONAIS ========================================= */
 
-/* AMBIENTES PROFISSIONAIS ============================================= */
-
-/* seção dos ambientes de trabalho */
+/* seção dos ambientes */
 .areas-administrativas {
-    margin-top: 24px; /* espaço superior */
-    margin-bottom: 24px; /* espaço inferior */
+    margin: 24px 0; /* espaço superior e inferior */
 }
 
 /* título da seção */
 .areas-administrativas h3 {
     color: #203d2e; /* cor do título */
-    font-size: 1rem; /* tamanho do texto */
+    font-size: 1rem; /* tamanho do título */
     margin-bottom: 14px; /* espaço inferior */
 }
 
-/* lista dos ambientes profissionais */
+/* lista dos ambientes */
 .lista-areas-administrativas {
     list-style: none; /* remove os marcadores */
     padding: 0; /* remove o espaço interno */
-    margin: 0; /* remove a margem */
+    margin: 0; /* remove as margens */
 }
 
 /* cartão de cada ambiente */
 .area-administrativa {
-    display: flex; /* posiciona o ícone ao lado do texto */
-    align-items: center; /* centraliza os elementos */
+    display: flex; /* coloca o ícone ao lado do texto */
+    align-items: center; /* centraliza verticalmente */
     gap: 12px; /* espaço entre os elementos */
     padding: 14px; /* espaço interno */
     margin-bottom: 10px; /* espaço entre os cartões */
+    background-color: #f7f8f4; /* fundo claro */
     border: 1px solid #d5ddd1; /* borda */
     border-radius: 10px; /* cantos arredondados */
-    background-color: #f7f8f4; /* fundo claro */
 }
 
-/* ícones dos ambientes */
+/* imagens dos ambientes */
 .area-administrativa img {
-    width: 28px; /* largura do ícone */
-    height: 28px; /* altura do ícone */
-    flex-shrink: 0; /* mantém o tamanho do ícone */
+    width: 28px; /* largura */
+    height: 28px; /* altura */
+    flex-shrink: 0; /* mantém o tamanho da imagem */
 }
 
-/* nome do ambiente profissional */
+/* nome do ambiente */
 .area-administrativa strong {
-    color: #203d2e; /* cor do texto */
     font-size: 0.9rem; /* tamanho do texto */
+    color: #203d2e; /* cor do texto */
 }
 
 /* descrição do ambiente */
 .area-administrativa p {
-    color: #59645b; /* cor secundária */
     font-size: 0.85rem; /* tamanho do texto */
+    color: #59645b; /* cor secundária */
     line-height: 1.5; /* espaço entre as linhas */
     margin: 4px 0 0; /* espaço superior */
 }
 
 
-/* LINKS DE NAVEGAÇÃO ================================================= */
+/* LINKS DE NAVEGAÇÃO ============================================== */
 
-/* seção dos links inferiores */
+/* área dos links inferiores */
 .links-login-admin {
     border-top: 1px solid #d5ddd1; /* linha divisória */
     padding-top: 20px; /* espaço interno superior */
-    text-align: center; /* centraliza o conteúdo */
+    text-align: center; /* centraliza o texto */
 }
 
-/* orientação sobre cadastro e login */
+/* texto sobre cadastro e login */
 .cadastro-login {
     text-align: center; /* centraliza o texto */
     font-size: 0.9rem; /* tamanho do texto */
@@ -2285,7 +2175,7 @@ body.tema-escuro .coord-estacao-icone img.icone {
     margin-top: 20px; /* espaço superior */
 }
 
-/* link de cadastro ou login */
+/* link de cadastro e login */
 .cadastro-login a {
     color: #456b50; /* cor verde */
     font-weight: bold; /* texto em negrito */
@@ -2294,10 +2184,45 @@ body.tema-escuro .coord-estacao-icone img.icone {
 
 /* link para voltar ao cidadão */
 .voltar-login-cidadao {
-    display: block; /* posiciona em uma nova linha */
+    display: block; /* posiciona em outra linha */
     color: #59645b; /* cor do texto */
     font-size: 0.85rem; /* tamanho do texto */
     text-decoration: underline; /* adiciona sublinhado */
     margin-top: 16px; /* espaço superior */
     padding: 8px; /* espaço interno */
+}
+
+
+/* RESPONSIVIDADE INICIAL ========================================== */
+
+/* estilos para tablets e celulares */
+@media (max-width: 860px) {
+
+    /* transforma as duas colunas em uma */
+    .cadastro-administrativo .cadastro-layout,
+    .login-administrativo .cadastro-layout {
+        grid-template-columns: 1fr; /* cria uma coluna */
+    }
+
+}
+
+/* estilos para celulares menores */
+@media (max-width: 480px) {
+
+    /* diminui o espaço interno do cartão */
+    .cadastro-administrativo .cadastro-card,
+    .login-administrativo .cadastro-card {
+        padding: 20px; /* espaço interno */
+    }
+
+    /* diminui o espaço entre as etapas */
+    .etapas-cadastro {
+        gap: 8px; /* espaço entre as etapas */
+    }
+
+    /* posiciona os botões verticalmente */
+    .acoes-etapa-cadastro {
+        flex-direction: column; /* um botão abaixo do outro */
+    }
+
 }
