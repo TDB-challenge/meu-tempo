@@ -1579,3 +1579,106 @@ body.tema-escuro .coord-estacao-icone img.icone {
     }
 
 }
+
+
+
+
+/* CAMPOS DOS FORMULÁRIOS ADMINISTRATIVOS ========================================= */
+
+/* organiza cada conjunto de rótulo, campo e orientação */
+:is(.cadastro-administrativo, .login-administrativo) .campo-cadastro {
+    display: flex; /* permite organizar os elementos verticalmente */
+    flex-direction: column; /* posiciona o rótulo acima do campo */
+    gap: 7px; /* define o espaçamento interno entre os elementos */
+    margin-bottom: 18px; /* separa um campo do próximo */
+    min-width: 0; /* evita que o campo ultrapasse o espaço disponível */
+}
+
+/* define a aparência dos rótulos dos campos */
+:is(.cadastro-administrativo, .login-administrativo) .campo-cadastro label {
+    font-size: 0.9rem; /* define o tamanho do rótulo */
+    font-weight: 700; /* destaca a identificação do campo */
+    color: var(--texto-principal); /* utiliza a cor principal dos textos */
+    line-height: 1.5; /* estabelece um espaçamento confortável entre linhas */
+}
+
+/* destaca a identificação dos campos obrigatórios */
+:is(.cadastro-administrativo, .login-administrativo) .asterisco {
+    color: var(--terracota); /* utiliza a cor complementar da identidade visual */
+    font-weight: 700; /* reforça a identificação visual */
+}
+
+/* define a aparência compartilhada dos campos de preenchimento */
+:is(.cadastro-administrativo, .login-administrativo) .campo-cadastro input,
+:is(.cadastro-administrativo, .login-administrativo) .campo-cadastro select {
+    width: 100%; /* ocupa toda a largura disponível */
+    min-width: 0; /* permite a adaptação em espaços menores */
+    min-height: 48px; /* estabelece uma altura confortável para interação */
+    padding: 12px 14px; /* cria espaço interno para os textos */
+    background-color: var(--branco); /* utiliza a cor de superfície do projeto */
+    border: 1px solid var(--borda-input); /* delimita visualmente o campo */
+    border-radius: var(--radius-medio); /* arredonda os cantos do campo */
+    font-family: inherit; /* mantém a fonte utilizada na página */
+    font-size: 1rem; /* define um tamanho legível para o preenchimento */
+    line-height: 1.5; /* melhora o espaçamento vertical do texto */
+    color: var(--texto-principal); /* utiliza a cor principal dos textos */
+}
+
+/* estiliza as sugestões apresentadas nos campos vazios */
+:is(.cadastro-administrativo, .login-administrativo) .campo-cadastro input::placeholder {
+    color: var(--texto-secundario); /* utiliza uma cor secundária para as sugestões */
+    opacity: 1; /* mantém a legibilidade das sugestões */
+}
+
+/* destaca os campos durante a navegação por teclado ou preenchimento */
+:is(.cadastro-administrativo, .login-administrativo) .campo-cadastro input:focus,
+:is(.cadastro-administrativo, .login-administrativo) .campo-cadastro select:focus {
+    border-color: var(--verde-natural); /* altera a borda do campo selecionado */
+    outline: 2px solid var(--verde-natural); /* adiciona um indicador de foco visível */
+    outline-offset: 2px; /* separa o indicador de foco da borda */
+}
+
+/* identifica os campos temporariamente indisponíveis */
+:is(.cadastro-administrativo, .login-administrativo) .campo-cadastro input:disabled,
+:is(.cadastro-administrativo, .login-administrativo) .campo-cadastro select:disabled {
+    background-color: var(--verde-claro); /* diferencia os campos desabilitados */
+    color: var(--texto-secundario); /* mantém a informação legível */
+    cursor: not-allowed; /* indica que a interação não está disponível */
+    opacity: 0.8; /* diferencia visualmente o campo dos demais */
+}
+
+/* indica a possibilidade de seleção em campos de opções */
+:is(.cadastro-administrativo, .login-administrativo) .campo-cadastro select {
+    cursor: pointer; /* indica que o campo possui opções selecionáveis */
+}
+
+/* mantém a indicação correta nos seletores desabilitados */
+:is(.cadastro-administrativo, .login-administrativo) .campo-cadastro select:disabled {
+    cursor: not-allowed; /* indica que a seleção está temporariamente indisponível */
+}
+
+/* apresenta informações complementares abaixo dos campos */
+:is(.cadastro-administrativo, .login-administrativo) .orientacao-campo {
+    display: block; /* posiciona a orientação em uma linha própria */
+    font-size: 0.8rem; /* define o tamanho do texto auxiliar */
+    color: var(--texto-secundario); /* diferencia a orientação do conteúdo principal */
+    line-height: 1.5; /* melhora a leitura das orientações */
+    overflow-wrap: anywhere; /* evita que textos extensos ultrapassem o cartão */
+}
+
+/* organiza os campos relacionados ao transporte ferroviário */
+.cadastro-administrativo .campos-transporte {
+    display: flex; /* agrupa os campos de transporte */
+    flex-direction: column; /* posiciona linha e estação verticalmente */
+    margin-bottom: 18px; /* separa o grupo dos elementos seguintes */
+}
+
+/* destaca os campos considerados inválidos pelo javascript */
+:is(.cadastro-administrativo, .login-administrativo) .campo-cadastro [aria-invalid="true"] {
+    border-color: var(--terracota); /* sinaliza a existência de uma informação inválida */
+}
+
+/* preserva o indicador de foco nos campos inválidos */
+:is(.cadastro-administrativo, .login-administrativo) .campo-cadastro [aria-invalid="true"]:focus {
+    outline-color: var(--terracota); /* mantém a identificação do erro durante o preenchimento */
+}
