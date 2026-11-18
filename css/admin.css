@@ -2315,3 +2315,49 @@ body.tema-escuro .coord-estacao-icone img.icone {
     outline: 2px solid #456b50; /* contorno de foco */
 }
 
+
+/* RESPONSIVIDADE DOS FORMULÁRIOS ================================= */
+
+/* ajustes para celulares */
+@media (max-width: 600px) {
+
+    /* cartão dos formulários administrativos */
+    .cadastro-administrativo .cadastro-card,
+    .login-administrativo .cadastro-card {
+        padding: 20px; /* diminui o espaço interno */
+    }
+
+    /* título das páginas */
+    .cadastro-administrativo .cadastro-apresentacao h1,
+    .login-administrativo .cadastro-apresentacao h1 {
+        font-size: 2rem; /* diminui o tamanho do título */
+    }
+
+    /* fotografia de apresentação */
+    .cadastro-administrativo .cadastro-foto-arco img,
+    .login-administrativo .cadastro-foto-arco img {
+        width: 100%; /* adapta a imagem à largura */
+        height: auto; /* mantém a proporção da imagem */
+    }
+
+    /* botões das etapas */
+    .acoes-etapa-cadastro {
+        flex-direction: column; /* coloca um botão abaixo do outro */
+    }
+
+    /* largura dos botões */
+    .acoes-etapa-cadastro button {
+        width: 100%; /* ocupa toda a largura */
+    }
+
+    /* ajustes do modal */
+    .modal-recuperacao {
+        padding: 20px; /* diminui o espaço interno */
+    }
+
+    /* título do modal */
+    .cabecalho-modal-recuperacao h2 {
+        font-size: 1.25rem; /* diminui o tamanho do título */
+    }
+
+}
