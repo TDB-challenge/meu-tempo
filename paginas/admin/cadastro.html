@@ -184,8 +184,316 @@
                 <p class="campos-obrigatorios">
                   Os campos sinalizados com * são obrigatórios.
                 </p>
+
+                <div class="campo-cadastro">
+                  <label for="nome-completo">
+                    Nome completo <span class="asterisco">*</span>
+                  </label>
+
+                  <input
+                    type="text"
+                    id="nome-completo"
+                    name="nome-completo"
+                    placeholder="Como consta no seu documento"
+                    autocomplete="name"
+                    maxlength="100"
+                    required
+                  />
+                </div>
+
+                <div class="campo-cadastro">
+                  <label for="matricula-funcional">
+                    Matrícula funcional <span class="asterisco">*</span>
+                  </label>
+
+                  <input
+                    type="text"
+                    id="matricula-funcional"
+                    name="matricula-funcional"
+                    placeholder="Informe sua matrícula"
+                    maxlength="30"
+                    required
+                  />
+                </div>
+
+                <div class="campo-cadastro">
+                  <label for="email-institucional">
+                    E-mail institucional <span class="asterisco">*</span>
+                  </label>
+
+                  <input
+                    type="email"
+                    id="email-institucional"
+                    name="email-institucional"
+                    placeholder="nome@instituicao.example"
+                    autocomplete="email"
+                    maxlength="254"
+                    aria-describedby="orientacao-email-institucional"
+                    required
+                  />
+
+                  <small
+                    id="orientacao-email-institucional"
+                    class="orientacao-campo"
+                  >
+                    Informe o e-mail vinculado à instituição em que você
+                    trabalha.
+                  </small>
+                </div>
+
+                <div class="campo-cadastro">
+                  <label for="senha">
+                    Crie uma senha <span class="asterisco">*</span>
+                  </label>
+
+                  <div class="campo-senha">
+                    <input
+                      type="password"
+                      id="senha"
+                      name="senha"
+                      placeholder="Digite sua senha"
+                      autocomplete="new-password"
+                      minlength="8"
+                      maxlength="128"
+                      aria-describedby="requisitos-senha"
+                      required
+                    />
+
+                    <!-- identifica o campo cuja visibilidade será alternada pelo javascript -->
+                    <button
+                      type="button"
+                      class="botao-visualizar-senha"
+                      data-campo-senha="senha"
+                      aria-controls="senha"
+                      aria-label="Mostrar senha"
+                      aria-pressed="false"
+                    >
+                      <img src="../../assets/icones/eye.png" alt="" />
+                    </button>
+                  </div>
+                </div>
+
+                <!-- os requisitos serão atualizados durante a digitação da senha -->
+                <ul id="requisitos-senha" class="requisitos-senha">
+                  <li data-requisito="comprimento">Pelo menos 8 caracteres</li>
+                  <li data-requisito="maiuscula">Uma letra maiúscula</li>
+                  <li data-requisito="minuscula">Uma letra minúscula</li>
+                  <li data-requisito="numero">Um número</li>
+                  <li data-requisito="especial">Um caractere especial</li>
+                </ul>
+
+                <div class="campo-cadastro">
+                  <label for="confirmar-senha">
+                    Confirme sua senha <span class="asterisco">*</span>
+                  </label>
+
+                  <div class="campo-senha">
+                    <input
+                      type="password"
+                      id="confirmar-senha"
+                      name="confirmar-senha"
+                      placeholder="Digite sua senha novamente"
+                      autocomplete="new-password"
+                      minlength="8"
+                      maxlength="128"
+                      aria-describedby="mensagem-confirmacao-senha"
+                      required
+                    />
+
+                    <button
+                      type="button"
+                      class="botao-visualizar-senha"
+                      data-campo-senha="confirmar-senha"
+                      aria-controls="confirmar-senha"
+                      aria-label="Mostrar confirmação da senha"
+                      aria-pressed="false"
+                    >
+                      <img src="../../assets/icones/eye.png" alt="" />
+                    </button>
+                  </div>
+
+                  <small
+                    id="mensagem-confirmacao-senha"
+                    class="mensagem-campo"
+                    aria-live="polite"
+                  ></small>
+                </div>
+
+                <div class="aceite-termos">
+                  <input
+                    type="checkbox"
+                    id="aceitar-termos"
+                    name="aceitar-termos"
+                    required
+                  />
+
+                  <label for="aceitar-termos">
+                    Declaro que as informações fornecidas são verdadeiras e
+                    estou de acordo com os
+                    <a
+                      href="../privacidade.html"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      >termos de privacidade</a
+                    >.
+                  </label>
+                </div>
+
+                <p
+                  id="mensagem-identificacao"
+                  class="mensagem-formulario"
+                  role="alert"
+                  hidden
+                ></p>
+
+                <div class="acoes-etapa-cadastro">
+                  <button
+                    type="button"
+                    id="avancar-identificacao"
+                    class="botao-avancar-etapa"
+                  >
+                    Continuar &rarr;
+                  </button>
+                </div>
+              </fieldset>
+
+              <!-- a segunda etapa permanece oculta até a validação da identificação -->
+              <fieldset
+                id="etapa-vinculo"
+                class="campos-etapa-cadastro"
+                data-etapa-formulario="2"
+                hidden
+                disabled
+              >
+                <legend>Vínculo profissional</legend>
+
+                <p class="orientacao-etapa">
+                  Informe onde você atua para que possamos direcionar seu acesso
+                  aos serviços correspondentes.
+                </p>
+
+                <div class="campo-cadastro">
+                  <label for="orgao">
+                    Órgão ou operadora <span class="asterisco">*</span>
+                  </label>
+
+                  <select id="orgao" name="orgao" required>
+                    <option value="" selected disabled>
+                      Selecione a instituição
+                    </option>
+                    <option value="metro">Metrô de São Paulo</option>
+                    <option value="cptm">CPTM</option>
+                    <option value="viaquatro">ViaQuatro</option>
+                    <option value="viamobilidade">ViaMobilidade</option>
+                    <option value="cet">CET-SP</option>
+                  </select>
+                </div>
+
+                <!-- as funções disponíveis serão definidas de acordo com a instituição selecionada -->
+                <div class="campo-cadastro">
+                  <label for="funcao">
+                    Função <span class="asterisco">*</span>
+                  </label>
+
+                  <select id="funcao" name="funcao" required disabled>
+                    <option value="" selected>
+                      Selecione primeiro a instituição
+                    </option>
+                  </select>
+                </div>
+
+                <!-- os campos de transporte serão exibidos conforme o vínculo profissional -->
+                <div id="campos-transporte" class="campos-transporte" hidden>
+                  <div class="campo-cadastro">
+                    <label for="linha">
+                      Linha de atuação <span class="asterisco">*</span>
+                    </label>
+
+                    <select id="linha" name="linha" disabled>
+                      <option value="" selected>Selecione a instituição</option>
+                    </select>
+                  </div>
+
+                  <div class="campo-cadastro">
+                    <label for="estacao">
+                      Estação de atuação <span class="asterisco">*</span>
+                    </label>
+
+                    <select id="estacao" name="estacao" disabled>
+                      <option value="" selected>
+                        Selecione primeiro a linha
+                      </option>
+                    </select>
+                  </div>
+
+                  <small class="orientacao-campo">
+                    As informações do seu painel serão direcionadas conforme sua
+                    linha e estação de atuação.
+                  </small>
+                </div>
+
+                <!-- campo utilizado para os profissionais que atuam por região ou unidade -->
+                <div id="campo-regiao" class="campo-cadastro" hidden>
+                  <label for="regiao">
+                    Região ou unidade de atuação
+                    <span class="asterisco">*</span>
+                  </label>
+
+                  <input
+                    type="text"
+                    id="regiao"
+                    name="regiao"
+                    placeholder="Informe sua região de atuação"
+                    maxlength="100"
+                    disabled
+                  />
+                </div>
+
+                <div class="aviso-vinculo">
+                  <img
+                    src="../../assets/icones/shield-check.png"
+                    alt=""
+                    class="icone"
+                  />
+
+                  <p>
+                    Seu vínculo profissional será analisado antes da liberação
+                    do acesso administrativo. As permissões serão definidas pela
+                    função e pela instituição autorizada.
+                  </p>
+                </div>
+
+                <p
+                  id="mensagem-vinculo"
+                  class="mensagem-formulario"
+                  role="alert"
+                  hidden
+                ></p>
+
+                <div class="acoes-etapa-cadastro">
+                  <button
+                    type="button"
+                    id="voltar-identificacao"
+                    class="botao-voltar-etapa"
+                  >
+                    &larr; Voltar
+                  </button>
+
+                  <button
+                    type="button"
+                    id="avancar-vinculo"
+                    class="botao-avancar-etapa"
+                  >
+                    Continuar &rarr;
+                  </button>
+                </div>
               </fieldset>
             </form>
+
+            <p class="cadastro-login">
+              Já possui acesso profissional?
+              <a href="login.html">Entrar no painel</a>
+            </p>
           </div>
         </div>
       </section>
