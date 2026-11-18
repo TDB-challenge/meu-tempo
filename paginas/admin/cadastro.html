@@ -122,9 +122,39 @@
             </p>
           </div>
 
-          <div class="card-branco cadastro-card"></div>
+          <div class="card-branco cadastro-card">
+            <div class="cadastro-area-tag">
+              <img
+                src="../../assets/icones/shield-check.png"
+                alt=""
+                class="icone"
+              />
+              <span>Acesso profissional</span>
+            </div>
+
+            <h2>Vamos começar?</h2>
+
+            <p class="cadastro-subtitulo">
+              Precisamos de poucas informações para solicitar seu acesso.
+            </p>
+          </div>
         </div>
       </section>
     </main>
+
+    <!-- integração do vlibras para tradução dos conteúdos em libras -->
+    <div vw class="enabled">
+      <div vw-access-button class="active"></div>
+
+      <div vw-plugin-wrapper>
+        <div class="vw-plugin-top-wrapper"></div>
+      </div>
+    </div>
+
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+
+    <script>
+      new window.VLibras.Widget("https://vlibras.gov.br/app");
+    </script>
   </body>
 </html>
