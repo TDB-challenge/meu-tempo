@@ -2361,3 +2361,193 @@ body.tema-escuro .coord-estacao-icone img.icone {
     }
 
 }
+
+
+
+/* TEMA ESCURO ==================================================== */
+
+/* fundo e texto da página */
+.tema-escuro {
+    background-color: #15251e; /* fundo escuro */
+    color: #ffffff; /* texto branco */
+}
+
+/* cartões e modal */
+.tema-escuro .cadastro-card,
+.tema-escuro .modal-recuperacao {
+    background-color: #24382e; /* fundo do cartão */
+    color: #ffffff; /* texto branco */
+    border-color: #78917f; /* cor da borda */
+}
+
+/* campos dos formulários */
+.tema-escuro input,
+.tema-escuro select,
+.tema-escuro .botao-visualizar-senha {
+    background-color: #15251e; /* fundo escuro */
+    color: #ffffff; /* texto branco */
+    border-color: #a3b5a6; /* borda clara */
+}
+
+/* títulos */
+.tema-escuro h1,
+.tema-escuro h2,
+.tema-escuro h3,
+.tema-escuro legend,
+.tema-escuro .campo-cadastro label {
+    color: #ffffff; /* texto branco */
+}
+
+/* textos de orientação */
+.tema-escuro .orientacao-campo,
+.tema-escuro .orientacao-etapa,
+.tema-escuro .campos-obrigatorios,
+.tema-escuro .cadastro-subtitulo,
+.tema-escuro .cadastro-lead,
+.tema-escuro .cadastro-login,
+.tema-escuro .requisitos-senha li,
+.tema-escuro .aceite-termos label {
+    color: #d5ddd1; /* texto cinza claro */
+}
+
+/* cartões internos e avisos */
+.tema-escuro .resumo-cadastro,
+.tema-escuro .area-administrativa,
+.tema-escuro .dados-solicitacao-cadastro,
+.tema-escuro .aviso-vinculo,
+.tema-escuro .aviso-aprovacao,
+.tema-escuro .aviso-acesso-restrito {
+    background-color: #30483b; /* fundo verde escuro */
+    color: #ffffff; /* texto branco */
+}
+
+/* textos dos cartões internos */
+.tema-escuro .item-resumo dt,
+.tema-escuro .item-resumo dd,
+.tema-escuro .area-administrativa strong,
+.tema-escuro .area-administrativa p {
+    color: #ffffff; /* texto branco */
+}
+
+/* links e botões de texto */
+.tema-escuro .cadastro-login a,
+.tema-escuro .aceite-termos a,
+.tema-escuro .botao-editar-dados,
+.tema-escuro .botao-recuperar-senha,
+.tema-escuro .voltar-login-cidadao {
+    color: #b9dbad; /* verde claro */
+}
+
+/* botão secundário */
+.tema-escuro .botao-voltar-etapa {
+    color: #ffffff; /* texto branco */
+    border-color: #ffffff; /* borda branca */
+}
+
+/* botão principal */
+.tema-escuro .botao-avancar-etapa {
+    background-color: #b9dbad; /* fundo verde claro */
+    color: #15251e; /* texto escuro */
+}
+
+/* imagem do botão de senha */
+.tema-escuro .botao-visualizar-senha img {
+    filter: invert(1); /* transforma o ícone escuro em claro */
+}
+
+
+/* ALTO CONTRASTE ================================================= */
+
+/* fundo e texto da página */
+.alto-contraste {
+    background-color: black; /* fundo preto */
+    color: white; /* texto branco */
+}
+
+/* cartões e avisos */
+.alto-contraste .cadastro-card,
+.alto-contraste .modal-recuperacao,
+.alto-contraste .resumo-cadastro,
+.alto-contraste .area-administrativa,
+.alto-contraste .dados-solicitacao-cadastro,
+.alto-contraste .aviso-vinculo,
+.alto-contraste .aviso-aprovacao,
+.alto-contraste .aviso-acesso-restrito {
+    background-color: black; /* fundo preto */
+    color: white; /* texto branco */
+    border: 2px solid white; /* borda branca */
+}
+
+/* títulos e textos */
+.alto-contraste h1,
+.alto-contraste h2,
+.alto-contraste h3,
+.alto-contraste p,
+.alto-contraste label,
+.alto-contraste legend,
+.alto-contraste small,
+.alto-contraste li,
+.alto-contraste dt,
+.alto-contraste dd,
+.alto-contraste strong,
+.alto-contraste span {
+    color: white; /* texto branco */
+}
+
+/* campos dos formulários */
+.alto-contraste input,
+.alto-contraste select,
+.alto-contraste .botao-visualizar-senha {
+    background-color: black; /* fundo preto */
+    color: white; /* texto branco */
+    border: 2px solid white; /* borda branca */
+}
+
+/* links e botões de texto */
+.alto-contraste a,
+.alto-contraste .cadastro-login a,
+.alto-contraste .aceite-termos a,
+.alto-contraste .botao-recuperar-senha,
+.alto-contraste .botao-editar-dados {
+    color: yellow; /* texto amarelo */
+    text-decoration: underline; /* destaca o link */
+}
+
+/* botões dos formulários */
+.alto-contraste .botao-avancar-etapa,
+.alto-contraste .botao-voltar-etapa {
+    background-color: black; /* fundo preto */
+    color: yellow; /* texto amarelo */
+    border: 2px solid yellow; /* borda amarela */
+}
+
+/* indicador de etapa atual */
+.alto-contraste .etapa-ativa .barra-etapa {
+    background-color: yellow; /* barra amarela */
+}
+
+/* requisitos de senha atendidos */
+.alto-contraste .requisitos-senha .requisito-atendido {
+    color: yellow; /* texto amarelo */
+    font-weight: bold; /* destaca o requisito */
+}
+
+/* mensagens dos formulários */
+.alto-contraste .mensagem-formulario {
+    background-color: black; /* fundo preto */
+    color: white; /* texto branco */
+    border: 2px solid yellow; /* borda amarela */
+}
+
+/* imagem do botão de senha */
+.alto-contraste .botao-visualizar-senha img {
+    filter: invert(1); /* deixa o ícone claro */
+}
+
+/* destaca os elementos selecionados pelo teclado */
+.alto-contraste button:focus,
+.alto-contraste input:focus,
+.alto-contraste select:focus,
+.alto-contraste a:focus {
+    outline: 3px solid yellow; /* contorno amarelo */
+}
