@@ -293,3 +293,137 @@ for (let i = 0; i < botoesSenha.length; i++) {
   // executa a função quando um botão for clicado
   botoesSenha[i].addEventListener("click", alternarSenha);
 }
+
+// =================================================================
+// VALIDAÇÃO DOS REQUISITOS DA SENHA
+// =================================================================
+
+// seleciona o campo de criação da senha
+const senhaCadastro = document.getElementById("senha");
+
+// seleciona o campo de confirmação da senha
+const confirmarSenha = document.getElementById("confirmar-senha");
+
+// seleciona cada requisito da lista pelo atributo data-requisito
+const requisitoComprimento = document.querySelector(
+  '[data-requisito="comprimento"]',
+);
+const requisitoMaiuscula = document.querySelector(
+  '[data-requisito="maiuscula"]',
+);
+const requisitoMinuscula = document.querySelector(
+  '[data-requisito="minuscula"]',
+);
+const requisitoNumero = document.querySelector('[data-requisito="numero"]');
+const requisitoEspecial = document.querySelector('[data-requisito="especial"]');
+
+// guarda o resultado da validação da senha
+let senhaValida = false;
+
+// função que altera a aparência de um requisito
+// requisito representa o elemento da lista
+// atendido representa o resultado da condição
+function marcarRequisito(requisito, atendido) {
+  // verifica se a regra foi cumprida
+  if (atendido) {
+    // adiciona a classe que deixa o requisito verde
+    requisito.classList.add("requisito-atendido");
+  } else {
+    // remove a classe quando a regra não é cumprida
+    requisito.classList.remove("requisito-atendido");
+  }
+}
+
+// função que verifica os requisitos da senha
+function validarSenha() {
+  // recupera a senha digitada
+  const senha = senhaCadastro.value;
+
+  // verifica se possui pelo menos 8 caracteres
+  const comprimento = senha.length >= 8;
+
+  // verifica se possui uma letra maiúscula
+  const maiuscula = /[A-Z]/.test(senha);
+
+  // verifica se possui uma letra minúscula
+  const minuscula = /[a-z]/.test(senha);
+
+  // verifica se possui um número
+  const numero = /[0-9]/.test(senha);
+
+  // verifica se possui um símbolo especial
+  const especial = /[!@#$%&*()+?_=.,:;/-]/.test(senha);
+
+  // atualiza a aparência de cada requisito
+  marcarRequisito(requisitoComprimento, comprimento);
+  marcarRequisito(requisitoMaiuscula, maiuscula);
+  marcarRequisito(requisitoMinuscula, minuscula);
+  marcarRequisito(requisitoNumero, numero);
+  marcarRequisito(requisitoEspecial, especial);
+
+  // verifica se todos os requisitos foram cumpridos
+  if (comprimento && maiuscula && minuscula && numero && especial) {
+    senhaValida = true;
+  } else {
+    senhaValida = false;
+  }
+}
+
+// =================================================================
+// CONFIRMAÇÃO DA SENHA
+// =================================================================
+
+// seleciona o elemento que apresenta a mensagem de confirmação
+const mensagemConfirmacao = document.getElementById(
+  "mensagem-confirmacao-senha",
+);
+
+// guarda o resultado da comparação entre as senhas
+let senhasIguais = false;
+
+// função que compara as duas senhas
+function validarConfirmacao() {
+  // remove as classes das mensagens anteriores
+  mensagemConfirmacao.classList.remove("mensagem-sucesso");
+  mensagemConfirmacao.classList.remove("mensagem-erro");
+
+  // verifica se o campo de confirmação está vazio
+  if (confirmarSenha.value === "") {
+    // mantém a mensagem vazia
+    mensagemConfirmacao.textContent = "";
+
+    senhasIguais = false;
+  } else if (senhaCadastro.value === confirmarSenha.value) {
+    // apresenta a mensagem de sucesso
+    mensagemConfirmacao.textContent = "As senhas coincidem.";
+
+    // adiciona a classe que deixa a mensagem verde
+    mensagemConfirmacao.classList.add("mensagem-sucesso");
+
+    senhasIguais = true;
+  } else {
+    // apresenta a mensagem de erro
+    mensagemConfirmacao.textContent = "As senhas não coincidem.";
+
+    // adiciona a classe que deixa a mensagem vermelha
+    mensagemConfirmacao.classList.add("mensagem-erro");
+
+    senhasIguais = false;
+  }
+}
+
+// verifica se os elementos do cadastro existem na página
+if (senhaCadastro && confirmarSenha && mensagemConfirmacao) {
+  // verifica os requisitos enquanto o usuário digita a senha
+  senhaCadastro.addEventListener("input", validarSenha);
+
+  // compara novamente as senhas quando a primeira for modificada
+  senhaCadastro.addEventListener("input", validarConfirmacao);
+
+  // compara as senhas enquanto o usuário digita a confirmação
+  confirmarSenha.addEventListener("input", validarConfirmacao);
+
+  // verifica os valores iniciais dos campos
+  validarSenha();
+  validarConfirmacao();
+}
