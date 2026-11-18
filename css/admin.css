@@ -2226,3 +2226,92 @@ body.tema-escuro .coord-estacao-icone img.icone {
     }
 
 }
+
+
+
+/* MODAL DE RECUPERAÇÃO DE SENHA ================================== */
+
+/* janela de recuperação de acesso */
+.modal-recuperacao {
+    width: 90%; /* largura da janela */
+    max-width: 450px; /* largura máxima */
+    background-color: white; /* fundo branco */
+    color: #203d2e; /* cor do texto */
+    border: 1px solid #d5ddd1; /* borda */
+    border-radius: 16px; /* cantos arredondados */
+    padding: 24px; /* espaço interno */
+    margin: auto; /* centraliza a janela */
+    box-sizing: border-box; /* mantém a largura definida */
+}
+
+/* fundo atrás da janela */
+.modal-recuperacao::backdrop {
+    background-color: rgba(0, 0, 0, 0.5); /* escurece o fundo */
+}
+
+/* cabeçalho do modal */
+.cabecalho-modal-recuperacao {
+    display: flex; /* coloca o título e o botão lado a lado */
+    align-items: center; /* centraliza verticalmente */
+    justify-content: space-between; /* separa os elementos */
+    margin-bottom: 16px; /* espaço inferior */
+}
+
+/* título do modal */
+.cabecalho-modal-recuperacao h2 {
+    font-size: 1.5rem; /* tamanho do título */
+    color: #203d2e; /* cor verde escura */
+    margin: 0; /* remove a margem */
+}
+
+/* botão de fechar */
+.fechar-modal-recuperacao {
+    width: 44px; /* largura do botão */
+    height: 44px; /* altura do botão */
+    background-color: #f4f1e8; /* fundo bege */
+    border: none; /* remove a borda */
+    border-radius: 8px; /* cantos arredondados */
+    font-size: 1.5rem; /* tamanho do símbolo */
+    color: #203d2e; /* cor do símbolo */
+    cursor: pointer; /* indica que pode ser clicado */
+}
+
+/* botão de fechar ao passar o mouse */
+.fechar-modal-recuperacao:hover {
+    background-color: #e8eee4; /* fundo verde claro */
+}
+
+/* texto de orientação */
+#descricao-recuperacao {
+    font-size: 0.9rem; /* tamanho do texto */
+    line-height: 1.5; /* espaço entre as linhas */
+    margin-bottom: 20px; /* espaço inferior */
+}
+
+/* formulário de recuperação */
+.formulario-recuperacao {
+    margin-bottom: 12px; /* espaço inferior */
+}
+
+/* aviso sobre a recuperação demonstrativa */
+.aviso-recuperacao {
+    background-color: #faf1db; /* fundo amarelo claro */
+    color: #71501b; /* cor do texto */
+    padding: 12px; /* espaço interno */
+    border-radius: 8px; /* cantos arredondados */
+    font-size: 0.85rem; /* tamanho do texto */
+    line-height: 1.5; /* espaço entre as linhas */
+    margin-bottom: 16px; /* espaço inferior */
+}
+
+/* tamanho dos botões do modal */
+.modal-recuperacao .botao-avancar-etapa,
+.modal-recuperacao .botao-voltar-etapa {
+    width: 100%; /* ocupa toda a largura */
+}
+
+/* foco do botão de fechar */
+.fechar-modal-recuperacao:focus {
+    outline: 2px solid #456b50; /* contorno de foco */
+}
+
