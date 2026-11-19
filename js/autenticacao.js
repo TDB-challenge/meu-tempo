@@ -1,80 +1,67 @@
+/*
+  cadastro e entrada dos usuários do protótipo:
+  este arquivo conecta os formulários administrativos e os formulários do cidadão.
+  as etapas, validações e credenciais demonstrativas utilizam os dados compartilhados de dados.js.
+
+  formulario-cadastro-admin e formulario-login-admin identificam o acesso dos profissionais.
+  form-cadastro e form-login identificam os formulários da área cidadã.
+  os nomes dos campos são procurados por id; os botões de senha reutilizam suas classes existentes.
+  hidden alterna as etapas sem criar outras páginas ou duplicar formulários.
+  os eventos de envio impedem a navegação padrão antes de validar e salvar as informações.
+  a sessão do cidadão e a sessão administrativa permanecem separadas no navegador.
+*/
+
 // a acessibilidade compartilhada é inicializada por script.js
 
 // =================================================================
-// MENU RESPONSIVO
+// menu responsivo
 // =================================================================
 
-// seleciona o botão do menu
 const botaoMenu = document.getElementById("abrir-menu");
 
-// seleciona o menu que contém os links
 const menuNavegacao = document.getElementById("menu-navegacao");
 
-// função que abre e fecha o menu
 function alternarMenu() {
   // adiciona ou remove a classe que mostra o menu
   menuNavegacao.classList.toggle("ativo");
 
-  // verifica se o menu está aberto
-  if (menuNavegacao.classList.contains("ativo")) {
-    // informa que o menu está aberto
-    botaoMenu.setAttribute("aria-expanded", "true");
-  } else {
-    // informa que o menu está fechado
-    botaoMenu.setAttribute("aria-expanded", "false");
-  }
+  // o estado acessível acompanha a mesma classe que exibe o menu
+  botaoMenu.setAttribute("aria-expanded", String(menuNavegacao.classList.contains("ativo")));
 }
 
-// verifica se os elementos existem
 if (botaoMenu && menuNavegacao) {
-  // executa a função ao clicar no botão
   botaoMenu.addEventListener("click", alternarMenu);
 }
 
 // =================================================================
-// VISUALIZAÇÃO DAS SENHAS
+// visualização das senhas
 // =================================================================
 
 // seleciona todos os botões de visualizar senha
 // a classe botao-visualizar-senha reúne os controles que alternam a exibição do campo associado
 const botoesSenha = document.querySelectorAll(".botao-visualizar-senha");
 
-// função que mostra ou esconde a senha
 function alternarSenha(event) {
-  // identifica o botão que foi clicado
   const botao = event.currentTarget;
 
-  // recupera o id do campo de senha
   const idCampo = botao.getAttribute("data-campo-senha");
 
-  // seleciona o campo correspondente
   const campoSenha = document.getElementById(idCampo);
 
-  // verifica se o campo existe
   if (campoSenha) {
-    // verifica se a senha está escondida
-    if (campoSenha.type === "password") {
-      campoSenha.type = "text"; // mostra a senha
-
-      // informa que a visualização está ativa
-      botao.setAttribute("aria-pressed", "true");
-    } else {
-      campoSenha.type = "password"; // esconde a senha
-
-      // informa que a visualização está desativada
-      botao.setAttribute("aria-pressed", "false");
-    }
+    const oculta = campoSenha.type === "password";
+    if (oculta) campoSenha.type = "text";
+    else campoSenha.type = "password";
+    botao.setAttribute("aria-pressed", String(oculta));
   }
 }
 
-// percorre os botões de senha encontrados
 for (let i = 0; i < botoesSenha.length; i++) {
-  // executa a função quando um botão for clicado
   botoesSenha[i].addEventListener("click", alternarSenha);
 }
 
 // =================================================================
-// VALIDAÇÃO DOS REQUISITOS DA SENHA
+// validação dos requisitos da senha
 // =================================================================
 
 // seleciona o campo de criação da senha
@@ -100,13 +87,9 @@ const requisitoEspecial = document.querySelector('[data-requisito="especial"]');
 let senhaValida = false;
 
 // função que altera a aparência de um requisito
-// requisito representa o elemento da lista
-// atendido representa o resultado da condição
 // requisito é o elemento do indicador e atendido é o resultado booleano usado para aplicar ou remover seu destaque
 function marcarRequisito(requisito, atendido) {
-  // verifica se a regra foi cumprida
   if (atendido) {
-    // adiciona a classe que deixa o requisito verde
     requisito.classList.add("requisito-atendido");
   } else {
     // remove a classe quando a regra não é cumprida
@@ -150,7 +133,7 @@ function validarSenha() {
 }
 
 // =================================================================
-// CONFIRMAÇÃO DA SENHA
+// confirmação da senha
 // =================================================================
 
 // seleciona o elemento que apresenta a mensagem de confirmação
@@ -209,7 +192,7 @@ if (senhaCadastro && confirmarSenha && mensagemConfirmacao) {
 }
 
 // =================================================================
-// NAVEGAÇÃO ENTRE AS ETAPAS DO CADASTRO
+// navegação entre as etapas do cadastro
 // =================================================================
 
 // seleciona as três etapas do formulário
@@ -245,32 +228,17 @@ const mensagemIdentificacao = document.getElementById("mensagem-identificacao");
 const mensagemVinculo = document.getElementById("mensagem-vinculo");
 
 // =================================================================
-// EXIBIÇÃO DAS ETAPAS
+// exibição das etapas
 // =================================================================
 
-// numero representa a etapa que será exibida
 // numero identifica a etapa do cadastro administrativo que deve ficar visível após a navegação
 function mostrarEtapa(numero) {
-  // esconde todas as etapas
-  etapaIdentificacao.hidden = true;
-  etapaVinculo.hidden = true;
-  etapaRevisao.hidden = true;
-
-  // desativa os campos das etapas escondidas
-  etapaIdentificacao.disabled = true;
-  etapaVinculo.disabled = true;
-  etapaRevisao.disabled = true;
-
-  // mostra e ativa a etapa escolhida
-  if (numero === 1) {
-    etapaIdentificacao.hidden = false;
-    etapaIdentificacao.disabled = false;
-  } else if (numero === 2) {
-    etapaVinculo.hidden = false;
-    etapaVinculo.disabled = false;
-  } else if (numero === 3) {
-    etapaRevisao.hidden = false;
-    etapaRevisao.disabled = false;
+  const etapas = [etapaIdentificacao, etapaVinculo, etapaRevisao];
+  // campos de etapas ocultas ficam desativados para não bloquear a validação da etapa atual
+  for (let i = 0; i < etapas.length; i++) {
+    const ativa = i + 1 === numero;
+    etapas[i].hidden = !ativa;
+    etapas[i].disabled = !ativa;
   }
 
   // atualiza o indicador de progresso
@@ -278,7 +246,7 @@ function mostrarEtapa(numero) {
 }
 
 // =================================================================
-// INDICADOR DE PROGRESSO
+// indicador de progresso
 // =================================================================
 
 // função que atualiza a aparência das etapas
@@ -307,7 +275,7 @@ function atualizarIndicadores(numero) {
 }
 
 // =================================================================
-// VALIDAÇÃO DA IDENTIFICAÇÃO
+// validação da identificação
 // =================================================================
 
 // função que verifica os dados da primeira etapa
@@ -350,7 +318,7 @@ function validarIdentificacao() {
 }
 
 // =================================================================
-// VALIDAÇÃO DO VÍNCULO PROFISSIONAL
+// validação do vínculo profissional
 // =================================================================
 
 // função que verifica os dados da segunda etapa
@@ -401,7 +369,7 @@ function validarVinculo() {
 }
 
 // =================================================================
-// BOTÕES DE NAVEGAÇÃO
+// botões de navegação
 // =================================================================
 
 // verifica se estamos na página de cadastro
@@ -437,7 +405,7 @@ if (etapaIdentificacao && etapaVinculo && etapaRevisao) {
 }
 
 // =================================================================
-// VÍNCULO PROFISSIONAL
+// vínculo profissional
 // =================================================================
 
 // seleciona os campos de linha e estação
@@ -606,7 +574,7 @@ if (orgaoCadastro && funcaoCadastro && linhaCadastro) {
 }
 
 // =================================================================
-// REVISÃO DOS DADOS DO CADASTRO
+// revisão dos dados do cadastro
 // =================================================================
 
 // seleciona os elementos que receberão os dados de identificação
@@ -673,7 +641,7 @@ function preencherResumo() {
 }
 
 // =================================================================
-// GERAÇÃO DO PROTOCOLO
+// geração do protocolo
 // =================================================================
 
 // função que gera o protocolo da solicitação
@@ -707,7 +675,7 @@ function gerarProtocolo(instituicao, quantidade) {
 }
 
 // =================================================================
-// REGISTRO DA SOLICITAÇÃO DE CADASTRO
+// registro da solicitação de cadastro
 // =================================================================
 
 // seleciona o formulário de cadastro
@@ -800,7 +768,7 @@ function registrarSolicitacao(event) {
 }
 
 // =================================================================
-// CONFIRMAÇÃO DO CADASTRO
+// confirmação do cadastro
 // =================================================================
 
 // seleciona a seção de confirmação
@@ -860,7 +828,7 @@ if (formularioCadastroAdmin && enviarSolicitacao) {
 }
 
 // =================================================================
-// VALIDAÇÃO DO LOGIN ADMINISTRATIVO
+// validação do login administrativo
 // =================================================================
 
 // seleciona o formulário de login
@@ -954,7 +922,7 @@ if (formularioLoginAdmin) {
 }
 
 // =================================================================
-// REDIRECIONAMENTO ADMINISTRATIVO
+// redirecionamento administrativo
 // =================================================================
 
 // função que direciona o profissional conforme sua função
@@ -974,7 +942,7 @@ function direcionarPainel(usuario) {
 }
 
 // =================================================================
-// RECUPERAÇÃO DE ACESSO
+// recuperação de acesso
 // =================================================================
 
 // seleciona o botão esqueci minha senha
@@ -1052,7 +1020,7 @@ if (abrirRecuperacao && modalRecuperacao && formularioRecuperacao) {
 }
 
 // =================================================================
-// SESSÃO ADMINISTRATIVA
+// sessão administrativa
 // =================================================================
 
 // função que registra o profissional conectado
@@ -1076,7 +1044,7 @@ function salvarSessao(usuario) {
 }
 
 // =================================================================
-// CADASTRO DEMONSTRATIVO DO CIDADÃO
+// cadastro demonstrativo do cidadão
 // =================================================================
 
 // seleciona formulários e mensagens sem usar as contas administrativas
@@ -1345,12 +1313,7 @@ function revisarCadastroCidadao() {
   if (cadastro.tipoDocumento === "rg") {
     documento = documento + " · RG: " + cadastro.rg;
   }
-  // distingue a leitura automática da conferência obrigatória de formato
-  let leitura = "";
-  if (cadastro.documentos.leitura === "Dados extraídos por OCR") {
-    leitura = " · Dados extraídos por OCR, sujeitos à revisão";
-  }
-  acrescentarResumoCidadao("Identificação", cadastro.nome + " · Nascimento: " + nascimento + " · " + tipo + " · " + documento + " · " + document.getElementById("cad-categoria").selectedOptions[0].textContent + " · Identificação: formato validado" + leitura);
+  acrescentarResumoCidadao("Identificação", cadastro.nome + " · Nascimento: " + nascimento + " · " + tipo + " · " + documento + " · " + document.getElementById("cad-categoria").selectedOptions[0].textContent + " · Identificação: formato validado");
   // omite contatos opcionais vazios em vez de deixar separadores sem informação
   let contato = cadastro.municipio + "/" + cadastro.estado;
   if (cadastro.bairro !== "") contato = contato + " · " + cadastro.bairro;
@@ -1500,7 +1463,7 @@ if (formularioCidadao) {
 }
 
 // =================================================================
-// LOGIN E SESSÃO SEPARADA DO CIDADÃO
+// login e sessão separada do cidadão
 // =================================================================
 
 // compara credenciais fictícias sem solicitar novamente a leitura do documento

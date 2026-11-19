@@ -1,12 +1,28 @@
+/*
+  controles comuns e operações dos painéis administrativos:
+  navegação por abas, janelas de perfil, chamados, equipamentos, ocorrências e gestão de acessos.
+  dados.js fornece as listas compartilhadas; este arquivo apresenta e atualiza os registros autorizados.
+
+  data-admin-aba relaciona cada item do menu ao painel de mesmo nome, precedido por aba-.
+  admin-aba-painel identifica as áreas alternadas; hidden mantém somente a aba escolhida visível.
+  data-protocolo identifica o registro das ações e data-acao-chamado informa a decisão solicitada.
+  data-nome-profissional e os demais atributos do perfil recebem a conta da sessão administrativa.
+  data-sair identifica os links que removem essa sessão, preservando a sessão do cidadão.
+  as tabelas recebem textos por elementos criados no navegador, reutilizando as classes de admin.css.
+*/
+
 // =====================================================
-// NAVEGAÇÃO E ABAS DO AMBIENTE ADMINISTRATIVO (admin.js)
+// navegação e abas do ambiente administrativo (admin.js)
 // =====================================================
 const btnAdminMenuMobile = document.getElementById("btn-admin-menu-mobile");
 const adminSidebar = document.getElementById("admin-sidebar");
 
 if (btnAdminMenuMobile && adminSidebar) {
+  btnAdminMenuMobile.setAttribute("aria-controls", adminSidebar.id);
+  btnAdminMenuMobile.setAttribute("aria-expanded", String(adminSidebar.classList.contains("aberto")));
   btnAdminMenuMobile.addEventListener("click", function () {
     adminSidebar.classList.toggle("aberto");
+    btnAdminMenuMobile.setAttribute("aria-expanded", String(adminSidebar.classList.contains("aberto")));
   });
 }
 
@@ -34,6 +50,7 @@ if (botoesAbaAdmin.length > 0) {
       abrirAbaAdmin(this.getAttribute("data-admin-aba"));
       if (adminSidebar) {
         adminSidebar.classList.remove("aberto");
+        if (btnAdminMenuMobile) btnAdminMenuMobile.setAttribute("aria-expanded", "false");
       }
     });
   }
@@ -47,7 +64,7 @@ for (let i = 0; i < botoesVoltarVisao.length; i++) {
 }
 
 // =====================================================
-// POP-UPS DO TOPBAR (ACESSIBILIDADE, NOTIFICAÇÕES, PERFIL)
+// pop-ups do topbar (acessibilidade, notificações, perfil)
 // =====================================================
 function abrirModalAdmin(idModal) {
   const modal = document.getElementById(idModal);
@@ -101,7 +118,7 @@ document.addEventListener("keydown", function (evento) {
 // os ajustes visuais utilizam o modal compartilhado de script.js
 
 // =================================================================
-// FILA E ATENDIMENTOS DO TRANSPORTE
+// fila e atendimentos do transporte
 // =================================================================
 
 // guarda a lista compartilhada entre fila, tabela, histórico e acompanhamento
@@ -121,7 +138,6 @@ const formularioRecusaMetro = document.getElementById("formulario-recusa-metro")
 const motivoRecusaMetro = document.getElementById("motivo-recusa-metro");
 
 // cria conteúdo seguro utilizando somente texto
-// destino recebe o elemento, tag define a estrutura, texto define o conteúdo e classe define o estilo existente
 // destino recebe o novo elemento, tag define sua marcação e classe aplica o estilo; o conteúdo é inserido como texto
 function adicionarTextoOperacional(destino, tag, texto, classe) {
   // cria o elemento que será apresentado
@@ -512,7 +528,7 @@ function atualizarFilaMetro() {
 }
 
 // =====================================================
-// PAINEL CET · GESTÃO VIÁRIA (admin/cet.html)
+// painel cet · gestão viária (admin/cet.html)
 // =====================================================
 const listaDecisoesCet = document.getElementById("lista-decisoes-cet");
 
@@ -562,7 +578,7 @@ if (listaDecisoesCet) {
         hora +
         " · Origem: IARA</span>" +
         '<span class="admin-status-pill cet-pill-aprovado">' +
-        '<img src="../../assets/icones/check.png" alt="" class="icone" /> APROVADO' +
+        '<img src="../../assets/icones/confirmacao.png" alt="" class="icone" /> APROVADO' +
         "</span>" +
         "</div>" +
         "<h3>Av. Paulista &times; Av. Brigadeiro Luís Antônio</h3>" +
@@ -589,7 +605,7 @@ if (listaDecisoesCet) {
         hora +
         " · Origem: IARA</span>" +
         '<span class="admin-status-pill cet-pill-recusado">' +
-        '<img src="../../assets/icones/clock.png" alt="" class="icone" /> RECUSADO' +
+        '<img src="../../assets/icones/relogio.png" alt="" class="icone" /> RECUSADO' +
         "</span>" +
         "</div>" +
         "<h3>Av. Paulista &times; Rua Augusta</h3>" +
@@ -626,7 +642,7 @@ if (listaDecisoesCet) {
     });
   }
 
-  // Pesquisa ao vivo na aba Cruzamentos
+  // pesquisa ao vivo na aba cruzamentos
   const inputBuscaCruzamento = document.getElementById("busca-cruzamento");
   const listaCruzamentos = document.getElementById("lista-cruzamentos-cet");
 
@@ -642,7 +658,7 @@ if (listaDecisoesCet) {
     });
   }
 
-  // Atualização de status na aba Zeladoria viária
+  // atualização de status na aba zeladoria viária
   const statusZeladoria = document.getElementById("status-zeladoria-mt1041");
   const avisoZeladoria = document.getElementById("aviso-zeladoria");
   const btnZeladoriaAnalise = document.getElementById("btn-zeladoria-analise");
@@ -674,7 +690,7 @@ if (listaDecisoesCet) {
 }
 
 // =====================================================
-// PAINEL COORDENAÇÃO OPERACIONAL (admin/coordenacao.html)
+// painel coordenação operacional (admin/coordenacao.html)
 // =====================================================
 // mensagem é o aviso temporário mostrado ao usuário; o temporizador evita manter o aviso aberto indefinidamente
 function mostrarToastAdmin(mensagem) {
@@ -690,7 +706,7 @@ function mostrarToastAdmin(mensagem) {
   }, 3500);
 }
 
-// Filtros dinâmicos da Central de acompanhamento
+// filtros dinâmicos da central de acompanhamento
 const filtroCoordOrgao = document.getElementById("filtro-coord-orgao");
 const filtroCoordLocal = document.getElementById("filtro-coord-local");
 const filtroCoordSituacao = document.getElementById("filtro-coord-situacao");
@@ -700,9 +716,13 @@ const tbodyCoordPedidos = document.getElementById("tbody-coord-pedidos");
 function filtrarPedidosCoordenacao() {
   if (!tbodyCoordPedidos) return;
 
-  const orgao = filtroCoordOrgao ? filtroCoordOrgao.value : "todos";
-  const local = filtroCoordLocal ? filtroCoordLocal.value : "todos";
-  const situacao = filtroCoordSituacao ? filtroCoordSituacao.value : "todos";
+  // sem um controle de filtro, mantém todos os registros desse grupo
+  let orgao = "todos";
+  let local = "todos";
+  let situacao = "todos";
+  if (filtroCoordOrgao) orgao = filtroCoordOrgao.value;
+  if (filtroCoordLocal) local = filtroCoordLocal.value;
+  if (filtroCoordSituacao) situacao = filtroCoordSituacao.value;
 
   const linhas = tbodyCoordPedidos.querySelectorAll("tr");
   let visiveis = 0;
@@ -735,8 +755,8 @@ function filtrarPedidosCoordenacao() {
   const estadoVazio = document.getElementById("vazio-coord-pedidos");
 
   if (contagemTexto) {
-    const plural =
-      visiveis === 1 ? "solicitação encontrada" : "solicitações encontradas";
+    let plural = "solicitações encontradas";
+    if (visiveis === 1) plural = "solicitação encontrada";
     contagemTexto.textContent =
       visiveis + " " + plural + " · Período selecionado";
   }
@@ -761,7 +781,7 @@ if (tbodyCoordPedidos) {
   }
 }
 
-// Botão "Ver solicitações ->" na aba Estações
+// botão "ver solicitações ->" na aba estações
 const botoesVerEstacao = document.querySelectorAll("[data-filtrar-estacao]");
 for (let i = 0; i < botoesVerEstacao.length; i++) {
   botoesVerEstacao[i].addEventListener("click", function () {
@@ -774,7 +794,7 @@ for (let i = 0; i < botoesVerEstacao.length; i++) {
   });
 }
 
-// Exportar CSV real + Imprimir relatório na aba Relatórios
+// exportar csv real + imprimir relatório na aba relatórios
 const btnExportarCsv = document.getElementById("btn-exportar-csv");
 if (btnExportarCsv) {
   btnExportarCsv.addEventListener("click", function () {
@@ -825,7 +845,7 @@ if (btnImprimirRelatorio) {
   });
 }
 
-// Gestão de acessos (Aprovar / Recusar cadastro CAD-2048)
+// gestão de acessos (aprovar / recusar cadastro cad-2048)
 // recupera o modelo e a lista de cadastros da coordenacao
 var listaSolicitacoesCadastro = document.getElementById(
   "lista-solicitacoes-cadastro",
@@ -922,7 +942,7 @@ if (listaSolicitacoesCadastro && modeloSolicitacaoCadastro) {
   exibirSolicitacoesCadastro();
 }
 
-// Abre a aba correta ao chegar em coordenacao.html via âncora (#estacoes, #solicitacoes, etc.)
+// abre a aba correta ao chegar em coordenacao.html via âncora (#estacoes, #solicitacoes, etc.)
 if (window.location.hash && botoesAbaAdmin.length > 0) {
   const abaHash = window.location.hash.replace("#", "");
   if (document.getElementById("aba-" + abaHash)) {
@@ -930,7 +950,7 @@ if (window.location.hash && botoesAbaAdmin.length > 0) {
   }
 }
 
-// Faz o botão "Ver relatórios ->" de coordenacao.html abrir diretamente relatorios.html
+// faz o botão "ver relatórios ->" de coordenacao.html abrir diretamente relatorios.html
 const botoesIrRelatorios = document.querySelectorAll(
   '[data-admin-aba="relatorios"]',
 );
@@ -941,7 +961,7 @@ for (let i = 0; i < botoesIrRelatorios.length; i++) {
 }
 
 // =================================================================
-// VERIFICAÇÃO DA SESSÃO ADMINISTRATIVA
+// verificação da sessão administrativa
 // =================================================================
 
 // recupera a sessão armazenada durante o login
@@ -1003,7 +1023,7 @@ if (
 }
 
 // =================================================================
-// ENCERRAMENTO DA SESSÃO ADMINISTRATIVA
+// encerramento da sessão administrativa
 // =================================================================
 
 // seleciona todos os links que possuem o atributo data-sair
@@ -1028,7 +1048,7 @@ for (let i = 0; i < botoesSairAdmin.length; i++) {
 }
 
 // =================================================================
-// IDENTIFICAÇÃO DO PROFISSIONAL
+// identificação do profissional
 // =================================================================
 
 // função que apresenta os dados do profissional conectado
@@ -1088,7 +1108,7 @@ if (profissionalAdmin !== null) {
 }
 
 // =================================================================
-// EQUIPAMENTOS VINCULADOS À ESTAÇÃO
+// equipamentos vinculados à estação
 // =================================================================
 
 // guarda os equipamentos existentes e seu vínculo fixo
@@ -1252,9 +1272,8 @@ function registrarOcorrenciaMetro(event) {
   avisoOcorrenciaMetro.textContent = "Ocorrência registrada com sucesso!";
 }
 
-
 // =================================================================
-// CONSOLIDAÇÃO DO TRANSPORTE NA COORDENAÇÃO
+// consolidação do transporte na coordenação
 // =================================================================
 
 // relaciona a estação aos valores já utilizados pelos filtros
@@ -1454,7 +1473,7 @@ function sincronizarEtapasTransporte(pedidos) {
 }
 
 // =================================================================
-// RECUPERAÇÃO E INICIALIZAÇÃO DO PAINEL DO METRÔ
+// recuperação e inicialização do painel do metrô
 // =================================================================
 
 // inicia somente depois de verificar a sessão e a função do profissional
@@ -1489,7 +1508,7 @@ if (paginaAdmin.endsWith("/cet.html") && profissionalAdmin !== null && profissio
 }
 
 // =================================================================
-// ATUALIZAÇÃO DOS DADOS COMPARTILHADOS ENTRE ABAS
+// atualização dos dados compartilhados entre abas
 // =================================================================
 
 // acompanha alterações feitas em outra aba do mesmo navegador
@@ -1523,7 +1542,7 @@ function receberAtualizacaoAdministrativa(event) {
 window.addEventListener("storage", receberAtualizacaoAdministrativa);
 
 // =================================================================
-// SOLICITAÇÕES DO APLICATIVO NA CET
+// solicitações do aplicativo na cet
 // =================================================================
 
 // verifica a abertura efetivamente registrada na demonstração
@@ -1644,7 +1663,7 @@ if (paginaAdmin.endsWith("/cet.html") && profissionalAdmin !== null && profissio
 }
 
 // =================================================================
-// ATUALIZAÇÃO DOS CICLOS NOS PAINÉIS DE ACOMPANHAMENTO
+// atualização dos ciclos nos painéis de acompanhamento
 // =================================================================
 
 // guarda a única consulta periódica das etapas automáticas

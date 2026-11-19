@@ -20,7 +20,7 @@
       <!-- Menu lateral do aplicativo -->
       <aside class="menu-lateral">
         <a href="inicio.html" class="logo">
-          <img src="../../assets/icones/clock.png" class="marca-icone" alt="" />
+          <img src="../../assets/icones/relogio.png" class="marca-icone" alt="" />
           <div class="texto-logo">
             <strong>meu tempo</strong>
             <small class="slogan">A cidade no seu ritmo.</small>
@@ -67,7 +67,7 @@
 
             <li>
               <a href="perfil.html" aria-current="page">
-                <img src="../../assets/icones/user.png" class="icone" alt="" />
+                <img src="../../assets/icones/usuario.png" class="icone" alt="" />
                 <span>Perfil</span>
               </a>
             </li>
@@ -102,7 +102,7 @@
 
           <!-- Logo exibida em telas menores -->
           <a href="inicio.html" class="logo-mobile">
-          <img src="../../assets/icones/clock.png" class="marca-icone" alt="" />
+          <img src="../../assets/icones/relogio.png" class="marca-icone" alt="" />
             <strong>meu tempo</strong>
           </a>
 
@@ -125,14 +125,14 @@
 
             <div class="opcoes-usuario">
               <!-- encerra somente a sessão do cidadão -->
-              <a href="../login.html" id="sair-app"><img src="../../assets/icones/logout-2.png" class="icone" alt="" />Sair</a>
+              <a href="../login.html" id="sair-app"><img src="../../assets/icones/sair.png" class="icone" alt="" />Sair</a>
               <a href="perfil.html">
                 Meu perfil
               </a>
 
               <a href="#abrir-leitor-documentos" id="identificar-documento">
                 <img
-                  src="../../assets/icones/scan-traces.svg"
+                  src="../../assets/icones/escanear-documento.svg"
                   class="icone"
                   alt=""
                 />
@@ -332,7 +332,7 @@
           <!-- Identificação por documento, com revisão dos dados pelo usuário -->
           <section class="card-documento" aria-labelledby="titulo-identificacao-documento">
             <span class="icone-documento">
-              <img src="../../assets/icones/scan-traces.svg" class="icone" alt="" />
+              <img src="../../assets/icones/escanear-documento.svg" class="icone" alt="" />
             </span>
 
             <div class="dados-documento">
@@ -353,7 +353,7 @@
               aria-haspopup="dialog"
               aria-controls="modal-documento"
             >
-              <img src="../../assets/icones/scan-traces.svg" class="icone" alt="" />
+              <img src="../../assets/icones/escanear-documento.svg" class="icone" alt="" />
               <span id="texto-botao-documento">Revisar meus documentos</span>
             </button>
           </section>
@@ -507,17 +507,16 @@
 
           <li>
             <a href="perfil.html" aria-current="page">
-              <img src="../../assets/icones/user.png" class="icone" alt="" />
+              <img src="../../assets/icones/usuario.png" class="icone" alt="" />
               <span>Perfil</span>
             </a>
           </li>
         </ul>
       </nav>
 
-      <!-- Botão flutuante de ajuda -->
     </div>
 
-    <!-- Estrutura para a futura identificação por documento e revisão dos dados -->
+    <!-- revisão manual dos dados já registrados no cadastro -->
     <dialog
       class="modal-documento"
       id="modal-documento"
@@ -539,142 +538,13 @@
         Não há OCR, envio de arquivos nem validação documental. Atualizar nome ou nascimento por documento ainda não está disponível.
       </p>
 
-      <!-- Estes campos apenas selecionam a imagem; nenhum arquivo é enviado -->
-      <fieldset class="opcoes-leitura-documento" hidden>
-        <legend>Imagem do documento</legend>
 
-        <label class="botao-camera" for="foto-documento">
-          <img src="../../assets/icones/scan-traces.svg" class="icone" alt="" />
-          <span>Fotografar documento</span>
-        </label>
-        <input
-          type="file"
-          id="foto-documento" disabled
-          name="foto-documento"
-          accept="image/*"
-          capture="environment"
-          aria-describedby="orientacao-imagem-documento"
-        />
 
-        <label class="enviar-imagem" for="imagem-documento">
-          <img src="../../assets/icones/imagem.svg" class="icone" alt="" />
-          <span>Selecionar imagem da galeria</span>
-        </label>
-        <input
-          type="file"
-          id="imagem-documento" disabled
-          name="imagem-documento"
-          accept="image/*"
-          aria-describedby="orientacao-imagem-documento"
-        />
-
-        <p id="orientacao-imagem-documento">
-          Enquadre todo o documento e evite reflexos. Selecione apenas uma imagem.
-        </p>
-
-        <label for="tipo-documento">Tipo de documento</label>
-        <select id="tipo-documento" name="tipo-documento" required>
-          <option value="">Selecione o tipo de documento</option>
-          <option value="cin">Carteira de Identidade Nacional (CIN)</option>
-          <option value="rg">Registro Geral (RG)</option>
-          <option value="cnh">Carteira Nacional de Habilitação (CNH)</option>
-          <option value="outro">Outro documento</option>
-        </select>
-      </fieldset>
-
-      <!-- O JavaScript preencherá a prévia local sem enviar a imagem -->
-      <figure class="previa-documento" id="previa-documento" hidden>
-        <img id="fotografia-documento" alt="Prévia do documento selecionado" />
-        <figcaption id="nome-imagem-documento"></figcaption>
-        <button type="button" class="remover-imagem" id="remover-imagem-documento" disabled>
-          Remover imagem
-        </button>
-      </figure>
-
-      <!-- o processamento externo não está configurado e estes controles ficam indisponíveis -->
-      <fieldset class="autorizacao-documento" hidden>
-        <legend>Processamento externo indisponível</legend>
-        <p id="aviso-processamento-externo">Não existe processamento externo configurado. Nenhuma imagem será enviada ou armazenada.</p>
-
-        <label for="autorizar-processamento-documento">
-          <input
-            type="checkbox"
-            id="autorizar-processamento-documento" disabled
-            name="autorizar-processamento-documento"
-            aria-describedby="aviso-processamento-externo"
-            required
-          />
-          Envio de imagens indisponível nesta versão.
-        </label>
-
-        <!-- O envio ficará desativado até a integração segura e a validação da autorização -->
-        <button
-          type="button"
-          class="botao-identificar-dados"
-          id="identificar-dados-documento"
-          aria-describedby="mensagem-leitura-documento"
-          disabled
-        >
-          Leitura automática indisponível
-        </button>
-      </fieldset>
 
       <p class="mensagem-leitura" id="mensagem-leitura-documento" role="status" aria-live="polite">Digite o nome e o nascimento para comparar com o cadastro. A revisão não altera a identidade nem a situação documental e não comprova autenticidade.</p>
 
-      <!-- Os campos encontrados serão editáveis antes da confirmação -->
-      <section
-        class="resultado-documento"
-        id="resultado-documento"
-        aria-labelledby="titulo-resultado-documento"
-        hidden
-      >
-        <span class="icone-resultado-documento">
-          <img src="../../assets/icones/confirmacao.svg" class="icone" alt="" />
-        </span>
-        <h3 id="titulo-resultado-documento">Confira os dados encontrados</h3>
-        <p>A leitura pode conter erros. Corrija os campos antes de usar os dados no perfil.</p>
 
-        <label for="documento-nome-completo">Nome completo</label>
-        <input
-          type="text"
-          id="documento-nome-completo"
-          name="documento-nome-completo"
-          autocomplete="name"
-          maxlength="100"
-          required
-        />
-
-        <label for="documento-data-nascimento">Data de nascimento</label>
-        <input
-          type="date"
-          id="documento-data-nascimento"
-          name="documento-data-nascimento"
-          autocomplete="bday"
-          required
-        />
-
-        <label for="documento-tipo-documento">Tipo de documento</label>
-        <select id="documento-tipo-documento" name="documento-tipo-documento" required>
-          <option value="">Selecione o tipo de documento</option>
-          <option value="cin">Carteira de Identidade Nacional (CIN)</option>
-          <option value="rg">Registro Geral (RG)</option>
-          <option value="cnh">Carteira Nacional de Habilitação (CNH)</option>
-          <option value="outro">Outro documento</option>
-        </select>
-
-        <!-- A confirmação preencherá o perfil quando essa funcionalidade existir -->
-        <button
-          type="button"
-          class="botao-confirmar-documento"
-          id="confirmar-dados-documento"
-          disabled
-        >
-          <span>Confirmar e preencher meu perfil</span>
-          <img src="../../assets/icones/seta-direita.svg" class="icone" alt="" />
-        </button>
-      </section>
-
-      <!-- O preenchimento manual dispensa imagem e autorização para processamento externo -->
+      <!-- compara os dados digitados com o cadastro, sem enviar arquivos -->
       <details class="leitura-manual" id="preenchimento-manual-documento">
         <summary>Revisar dados do cadastro manualmente</summary>
         <div class="conteudo-leitura-manual">

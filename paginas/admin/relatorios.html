@@ -16,7 +16,7 @@
       <div class="admin-sidebar-topo">
         <a href="../index.html" class="admin-logo">
           <span class="admin-logo-circulo">
-            <img src="../../assets/icones/clock-three.png" alt="" class="icone" />
+            <img src="../../assets/icones/relogio-contorno.png" alt="" class="icone" />
           </span>
           <div>
             <span class="admin-logo-titulo">meu tempo</span>
@@ -38,12 +38,12 @@
           </a>
 
           <a href="coordenacao.html#estacoes" class="admin-nav-item">
-            <img src="../../assets/icones/subway.png" alt="" class="icone" />
+            <img src="../../assets/icones/metro.png" alt="" class="icone" />
             <span>Estações</span>
           </a>
 
           <a href="coordenacao.html#cruzamentos" class="admin-nav-item">
-            <img src="../../assets/icones/marker.png" alt="" class="icone" />
+            <img src="../../assets/icones/marcador.png" alt="" class="icone" />
             <span>Cruzamentos</span>
           </a>
 
@@ -53,22 +53,22 @@
           </a>
 
           <a href="coordenacao.html#indicadores" class="admin-nav-item">
-            <img src="../../assets/icones/gráfico.png" alt="" class="icone" />
+            <img src="../../assets/icones/grafico.png" alt="" class="icone" />
             <span>Indicadores</span>
           </a>
 
           <a href="relatorios.html" class="admin-nav-item ativo" aria-current="page">
-            <img src="../../assets/icones/relatório.png" alt="" class="icone" />
+            <img src="../../assets/icones/relatorio.png" alt="" class="icone" />
             <span>Relatórios</span>
           </a>
 
           <a href="coordenacao.html#gestao-acessos" class="admin-nav-item">
-            <img src="../../assets/icones/shield-check.png" alt="" class="icone" />
+            <img src="../../assets/icones/seguranca.png" alt="" class="icone" />
             <span>Gestão de acessos</span>
           </a>
 
           <a href="coordenacao.html#historico" class="admin-nav-item">
-            <img src="../../assets/icones/watch-smart.png" alt="" class="icone" />
+            <img src="../../assets/icones/relogio-inteligente.png" alt="" class="icone" />
             <span>Histórico</span>
           </a>
 
@@ -78,7 +78,7 @@
           </a>
 
           <a href="coordenacao.html#perfil" class="admin-nav-item">
-            <img src="../../assets/icones/user.png" alt="" class="icone" />
+            <img src="../../assets/icones/usuario.png" alt="" class="icone" />
             <span>Perfil do operador</span>
           </a>
         </nav>
@@ -89,7 +89,7 @@
         <a href="../index.html" class="admin-link-secundario">Voltar ao site</a>
         <!-- direciona ao login e identifica a saída para encerrar a sessão administrativa -->
         <a href="login.html" class="admin-link-sair" data-sair>
-          <img src="../../assets/icones/logout-2.png" alt="" class="icone" />
+          <img src="../../assets/icones/sair.png" alt="" class="icone" />
           <span>Sair</span>
         </a>
       </div>
@@ -100,7 +100,7 @@
       <!-- Topbar -->
       <header class="admin-topbar">
         <div class="admin-topbar-esquerda">
-          <button type="button" id="btn-admin-menu-mobile" class="btn-menu">Menu</button>
+          <button type="button" id="btn-admin-menu-mobile" aria-controls="admin-sidebar" aria-expanded="false" class="btn-menu">Menu</button>
           <div>
             <span class="admin-breadcrumb">MEU TEMPO / COORDENAÇÃO</span>
             <strong class="admin-estacao-titulo">Visão consolidada</strong>
@@ -127,7 +127,7 @@
             aria-label="Abrir perfil do operador"
           >
             <span class="admin-operador-avatar">
-              <img src="../../assets/icones/user.png" alt="" class="icone" />
+              <img src="../../assets/icones/usuario.png" alt="" class="icone" />
             </span>
             <div>
               <!-- identifica o profissional conectado -->
@@ -255,7 +255,7 @@
 
         <!-- Rodapé -->
         <footer class="admin-rodape">
-          <img src="../../assets/icones/shield-check.png" alt="" class="icone" />
+          <img src="../../assets/icones/seguranca.png" alt="" class="icone" />
           <span>Relatórios consolidados · Área de coordenação operacional · Meu Tempo.</span>
           <span>Projeto acadêmico · FIAP · Sem integração com operadoras.</span>
         </footer>
@@ -284,14 +284,14 @@
 
 
           <li>
-            <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
+            <span class="cet-timeline-icone"><img src="../../assets/icones/confirmacao.png" alt="" class="icone" /></span>
             <div>
               <strong>ZEL-1041 · Concluído</strong>
               <p>11:40 · Passagem desobstruída.</p>
             </div>
           </li>
           <li>
-            <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
+            <span class="cet-timeline-icone"><img src="../../assets/icones/confirmacao.png" alt="" class="icone" /></span>
             <div>
               <strong>ZEL-1041 · Em análise</strong>
               <p>09:22</p>
@@ -313,7 +313,7 @@
       <div class="card-branco admin-modal-card-interno">
         <div class="cet-perfil-topo">
           <span class="cet-perfil-avatar">
-            <img src="../../assets/icones/user.png" alt="" class="icone" />
+            <img src="../../assets/icones/usuario.png" alt="" class="icone" />
           </span>
           <div>
             <!-- identifica os dados do profissional conectado -->
@@ -338,17 +338,6 @@
     </div>
   </div>
 
-  <!-- Integração oficial do VLibras -->
-  <div vw class="enabled">
-    <div vw-access-button class="active"></div>
-    <div vw-plugin-wrapper>
-      <div class="vw-plugin-top-wrapper"></div>
-    </div>
-  </div>
-  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
-  <script>
-    new window.VLibras.Widget('https://vlibras.gov.br/app');
-  </script>
 </body>
 </html>
 

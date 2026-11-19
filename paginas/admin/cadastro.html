@@ -19,17 +19,14 @@
 
   <!-- identifica a página para aplicar somente os estilos do cadastro administrativo -->
   <body class="cadastro-administrativo">
-    <!-- barra-util reaproveita os estilos da barra superior do site -->
 
 
-    <!-- painel-acess-rapido reaproveita a aparência do painel de acessibilidade.
-         o javascript será responsável por abrir e fechar esse painel -->
 
 
     <header class="cabecalho">
       <div class="container">
         <a href="../index.html" class="logo">
-          <img src="../../assets/icones/clock-three.png" class="marca-icone" alt="" />
+          <img src="../../assets/icones/relogio-contorno.png" class="marca-icone" alt="" />
           <div>
             <span class="logo-titulo">meu tempo</span>
             <span class="logo-sub">A cidade no seu ritmo.</span>
@@ -92,8 +89,8 @@
 
             <!-- cadastro-foto-arco controla o formato arredondado da imagem -->
             <div class="cadastro-foto-arco">
-              <img
-                src="../../assets/imagens/homem_acessib.jpg"
+              <img loading="lazy" decoding="async"
+                src="../../assets/imagens/homem-com-muletas.jpg"
                 alt="Homem utilizando muletas"
               />
             </div>
@@ -110,7 +107,7 @@
             <!-- identifica visualmente que esta é uma área profissional -->
             <div class="cadastro-area-tag">
               <img
-                src="../../assets/icones/shield-check.png"
+                src="../../assets/icones/seguranca.png"
                 alt=""
                 class="icone"
               />
@@ -286,7 +283,7 @@
                       aria-label="Mostrar senha"
                       aria-pressed="false"
                     >
-                      <img src="../../assets/icones/eye.png" alt="" />
+                      <img src="../../assets/icones/olho.png" alt="" />
                     </button>
                   </div>
                 </div>
@@ -337,7 +334,7 @@
                       aria-label="Mostrar confirmação da senha"
                       aria-pressed="false"
                     >
-                      <img src="../../assets/icones/eye.png" alt="" />
+                      <img src="../../assets/icones/olho.png" alt="" />
                     </button>
                   </div>
 
@@ -512,7 +509,7 @@
                                  e posiciona o ícone ao lado da orientação -->
                 <div class="aviso-vinculo">
                   <img
-                    src="../../assets/icones/shield-check.png"
+                    src="../../assets/icones/seguranca.png"
                     alt=""
                     class="icone"
                   />
@@ -663,7 +660,7 @@
                                  ainda precisa ser autorizado pela coordenação -->
                 <div class="aviso-aprovacao">
                   <img
-                    src="../../assets/icones/shield-check.png"
+                    src="../../assets/icones/seguranca.png"
                     alt=""
                     class="icone"
                   />
@@ -862,23 +859,5 @@
     </div>
   </footer>
 
-    <!-- estrutura exigida pelo vlibras para exibir
-         o botão de acessibilidade e a janela de tradução.
-         esses atributos pertencem ao próprio plugin -->
-    <div vw class="enabled">
-      <div vw-access-button class="active"></div>
-
-      <div vw-plugin-wrapper>
-        <div class="vw-plugin-top-wrapper"></div>
-      </div>
-    </div>
-
-    <!-- carrega o javascript oficial do vlibras -->
-    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
-
-    <!-- inicializa o recurso de tradução em libras -->
-    <script>
-      new window.VLibras.Widget("https://vlibras.gov.br/app");
-    </script>
   </body>
 </html>

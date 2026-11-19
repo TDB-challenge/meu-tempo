@@ -1,5 +1,21 @@
+/*
+  dados compartilhados do protótipo:
+  este arquivo mantém o catálogo de instituições, os exemplos e as funções de armazenamento.
+  cadastro, login, aplicativo e painéis consultam estas mesmas funções para evitar listas duplicadas.
+
+  armazenamento utilizado:
+  localstorage conserva cadastros, preferências e pedidos neste navegador entre visitas.
+  sessionstorage relaciona a aba à conta conectada, separando cidadão e profissional.
+  json converte as listas em texto ao salvar e recupera os objetos ao consultar.
+
+  solicitações administrativas são aprovadas pela coordenação antes de entrar na lista de contas.
+  pedidos de transporte usam metro-chamados; travessia e zeladoria usam meu-tempo-pedidos.
+  os ciclos da travessia usam horários salvos, permitindo recuperar a contagem sem reiniciá-la.
+  nenhum desses dados representa uma conexão com sistemas reais de transporte ou autenticação.
+*/
+
 // =================================================================
-// FUNÇÕES PROFISSIONAIS
+// funções profissionais
 // =================================================================
 
 // guarda as funções disponíveis em cada instituição
@@ -16,7 +32,7 @@ const funcoesInstituicoes = {
 };
 
 // =================================================================
-// LINHAS DAS OPERADORAS
+// linhas das operadoras
 // =================================================================
 
 // guarda as linhas atendidas por cada operadora no projeto
@@ -35,7 +51,7 @@ const linhasInstituicoes = {
 };
 
 // =================================================================
-// ESTAÇÕES DAS LINHAS
+// estações das linhas
 // =================================================================
 
 // guarda uma lista de estações para cada linha
@@ -207,7 +223,7 @@ const estacoesLinhas = {
 };
 
 // =================================================================
-// CONTAS ADMINISTRATIVAS DEMONSTRATIVAS
+// contas administrativas demonstrativas
 // =================================================================
 
 // lista de profissionais fictícios autorizados para testes
@@ -248,7 +264,7 @@ const usuariosAdministrativos = [
 ];
 
 // =================================================================
-// SOLICITAÇÕES ADMINISTRATIVAS
+// solicitações administrativas
 // =================================================================
 
 // função que recupera as solicitações cadastradas
@@ -275,7 +291,7 @@ function salvarSolicitacoes(solicitacoes) {
 }
 
 // =================================================================
-// APROVAÇÃO DE CADASTROS
+// aprovação de cadastros
 // =================================================================
 
 // função que altera a situação de uma solicitação
@@ -310,7 +326,7 @@ function alterarSituacaoCadastro(protocolo, situacao) {
 }
 
 // =================================================================
-// USUÁRIOS AUTORIZADOS
+// usuários autorizados
 // =================================================================
 
 // função que reúne as contas autorizadas
@@ -354,7 +370,7 @@ function buscarUsuariosAutorizados() {
 }
 
 // =================================================================
-// DADOS COMPARTILHADOS DO TRANSPORTE
+// dados compartilhados do transporte
 // =================================================================
 
 // recupera uma lista local e mantém o painel utilizável se o texto estiver inválido
@@ -525,7 +541,7 @@ function buscarChamadosMetro() {
 }
 
 // =================================================================
-// CIDADÃOS E SOLICITAÇÕES COMPARTILHADAS
+// cidadãos e solicitações compartilhadas
 // =================================================================
 
 // recupera somente os cadastros demonstrativos, sem imagens de documentos
@@ -610,11 +626,11 @@ function salvarPedidoCidadao(pedido) {
 }
 
 // =================================================================
-// PROTOCOLOS DOS SERVIÇOS
+// protocolos dos serviços
 // =================================================================
 
 // gera um número anual por serviço sem modificar protocolos já registrados
-// tipoServico identifica travessia, metro ou zeladoria
+// tiposervico identifica travessia, metro ou zeladoria
 // o contador é local e não possui uma reserva atômica entre abas; seus números servem à demonstração
 function gerarProtocoloPedido(tipoServico) {
   // relaciona o serviço à sigla apresentada ao cidadão
@@ -648,7 +664,7 @@ function gerarProtocoloPedido(tipoServico) {
 }
 
 // =================================================================
-// CONTROLADOR COMPARTILHADO DA TRAVESSIA SIMULADA
+// controlador compartilhado da travessia simulada
 // =================================================================
 
 // consulta um ciclo que existe independentemente de qualquer solicitação
@@ -805,7 +821,7 @@ function registrarPedidoCidadao(pedido) {
   return pedido;
 }
 
-// RECUPERAÇÃO DA SIMULAÇÃO AO CONSULTAR OS PEDIDOS
+// recuperação da simulação ao consultar os pedidos
 
 // recupera os pedidos e concilia somente os horários da demonstração local
 function buscarPedidosOperacionais() {

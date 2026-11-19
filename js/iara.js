@@ -1,5 +1,16 @@
+/*
+  ponto de preparação da futura integração com o chatbot web da iara:
+  a tela atual apresenta a disponibilidade do serviço e oferece atalhos locais.
+  não há endpoint, chave, envio de mensagens ou resposta automática de um serviço externo.
+
+  aviso-chat apresenta a situação da conversa; campo-mensagem e formulario-chat aguardam a integração.
+  os botões de sugestão guardam seu destino em data-destino e abrem as páginas de serviços existentes.
+  ouvir-mensagem mantém a preferência de voz da iara separada das orientações gerais e dos sons da travessia.
+  a integração futura deve conectar a conversa nesta página, preservando os serviços e as preferências comuns.
+*/
+
 // =================================================================
-// DISPONIBILIDADE DA IARA WEB
+// disponibilidade da iara web
 // =================================================================
 
 // apresenta a limitação real sem inventar respostas de um serviço externo

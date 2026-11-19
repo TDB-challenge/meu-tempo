@@ -8,7 +8,6 @@
   <link rel="stylesheet" href="../css/style.css" />
   <script src="../js/dados.js" defer></script>
   <script src="../js/script.js" defer></script>
-  <script src="../js/api.js" defer></script>
   <script src="../js/leitor-documentos.js" defer></script>
   <script src="../js/autenticacao.js" defer></script>
 </head>
@@ -24,7 +23,7 @@
     <div class="container">
       <a href="index.html" class="logo">
         <span class="logo-circulo">
-          <img src="../assets/icones/clock-three.png" alt="" class="icone" />
+          <img src="../assets/icones/relogio-contorno.png" alt="" class="icone" />
         </span>
         <div>
           <span class="logo-titulo">meu tempo</span>
@@ -61,8 +60,8 @@
           </p>
 
           <div class="cadastro-foto-arco">
-            <img
-              src="../assets/imagens/homem_acessib.jpg"
+            <img loading="lazy" decoding="async"
+              src="../assets/imagens/homem-com-muletas.jpg"
               alt="Homem com perna amputada usando muletas"
             />
           </div>
@@ -74,7 +73,7 @@
         <!-- Coluna Direita: Cartão branco com formulário em 3 etapas -->
         <div class="card-branco cadastro-card">
           <div class="cadastro-area-tag">
-            <img src="../assets/icones/user.png" alt="" class="icone" />
+            <img src="../assets/icones/usuario.png" alt="" class="icone" />
             <span>Área do cidadão</span>
           </div>
 
@@ -107,7 +106,7 @@
               <!-- arquivos fictícios ficam apenas na memória desta página -->
               <div id="box-qrcode-cadastro" class="cadastro-qrcode-box">
                 <div class="qrcode-box-topo">
-                  <img src="../assets/icones/scan-traces.svg" alt="" class="icone" />
+                  <img src="../assets/icones/escanear-documento.svg" alt="" class="icone" />
                   <strong>Escaneamento de documentos fictício</strong>
                 </div>
                 <div class="campo-grupo">
@@ -240,7 +239,7 @@
                       aria-label="Mostrar PIN"
                       aria-pressed="false"
                     >
-                      <img src="../assets/icones/eye.png" alt="" class="icone" />
+                      <img src="../assets/icones/olho.png" alt="" class="icone" />
                     </button>
                   </div>
                 </div>
@@ -255,7 +254,7 @@
                       aria-label="Mostrar confirmação do PIN"
                       aria-pressed="false"
                     >
-                      <img src="../assets/icones/eye.png" alt="" class="icone" />
+                      <img src="../assets/icones/olho.png" alt="" class="icone" />
                     </button>
                   </div>
                   <small class="campo-dica">Informe quatro números. Use somente um PIN fictício nesta demonstração.</small>
@@ -389,7 +388,7 @@
           <!-- Rodapé interno do card -->
           <div class="cadastro-card-rodape">
             <div class="cadastro-seguranca">
-              <img src="../assets/icones/shield-check.png" alt="" class="icone" />
+              <img src="../assets/icones/seguranca.png" alt="" class="icone" />
               <span>Seus dados e suas preferências ficam sob seu controle.</span>
             </div>
 
@@ -441,16 +440,5 @@
     </div>
   </footer>
 
-  <!-- Integração oficial do VLibras -->
-  <div vw class="enabled">
-    <div vw-access-button class="active"></div>
-    <div vw-plugin-wrapper>
-      <div class="vw-plugin-top-wrapper"></div>
-    </div>
-  </div>
-  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
-  <script>
-    new window.VLibras.Widget('https://vlibras.gov.br/app');
-  </script>
 </body>
 </html>

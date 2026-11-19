@@ -1,5 +1,18 @@
+/*
+  seleção dos locais e consulta pública de percurso:
+  a travessia usa um diagrama em html, criado a partir do catálogo de dados.js.
+  a zeladoria mantém a consulta pública em iframe; nenhum cálculo de rota é realizado neste arquivo.
+
+  mapa-base-travessia recebe a avenida, as ruas e os botões de semáforo do diagrama.
+  marcador-semaforo fornece o visual do botão; com-suporte e sem-suporte distinguem a disponibilidade.
+  data-marcador-cruzamento relaciona cada botão ao rádio da lista textual equivalente.
+  aria-pressed acompanha a seleção, permitindo identificar o ponto escolhido também sem depender da cor.
+  partida-percurso e destino-percurso montam o link do maps com os endereços informados.
+  a localização do dispositivo só é solicitada depois de uma ação explícita do cidadão.
+*/
+
 // =================================================================
-// CONSULTA PÚBLICA DE ENDEREÇOS
+// consulta pública de endereços
 // =================================================================
 
 // atualiza mapa e informações usando a opção escolhida na lista
@@ -147,7 +160,7 @@ function prepararMarcadoresTravessia() {
     botao.setAttribute('data-marcador-cruzamento', cruzamentosMeuTempo[i].id);
     botao.setAttribute('aria-pressed', 'false');
     const icone = document.createElement('img');
-    icone.src = '../../assets/icones/traffic-lights.svg';
+    icone.src = '../../assets/icones/semaforo.svg';
     icone.className = 'icone';
     icone.alt = '';
     botao.appendChild(icone);

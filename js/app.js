@@ -6,8 +6,8 @@
   assim, o mesmo arquivo pode ser importado em várias páginas sem exigir todos os ids.
 
   leitura dos seletores utilizados:
-  getelementbyid procura um id único, como formulario-perfil ou formulario-travessia.
-  queryselector encontra a primeira opção; queryselectorall reúne todas as opções.
+  a busca por id procura um elemento único, como formulario-perfil ou formulario-travessia.
+  a consulta por seletor encontra a primeira opção ou reúne todas as opções, conforme o método utilizado.
   seletores com :checked procuram apenas os campos marcados pelo cidadão.
   atributos data-* guardam identificadores nos elementos, sem apresentar esses valores na tela.
 
@@ -17,7 +17,7 @@
 */
 
 // =================================================================
-// SESSÃO E PERFIL
+// sessão e perfil
 // =================================================================
 
 // recupera o cadastro associado à sessão cidadã
@@ -26,6 +26,8 @@ const cidadaoApp = buscarCidadaoConectado();
 let temporizadorTravessia = null;
 // guarda a simulação atualmente ativa
 let pedidoTravessia = null;
+// compara o histórico já mostrado para não reconstruir as mesmas etapas a cada segundo
+let etapasApresentadasTravessia = '';
 
 // altera texto somente quando o elemento existe
 // id indica o elemento e texto indica o conteúdo apresentado
@@ -118,10 +120,6 @@ function prepararPerfil() {
   if (cidadaoApp.documentos) {
     // não apresenta complemento quando ele não foi enviado ou não se aplica
     let situacao = 'Identificação: ' + estadoDocumento(cidadaoApp.documentos.identificacao) + '.';
-    // informa separadamente quando os dados vieram de leitura automática
-    if (cidadaoApp.documentos.leitura === 'Dados extraídos por OCR') {
-      situacao = situacao + ' Dados extraídos por OCR e revisados no cadastro.';
-    }
     // diferencia registro complementar de conferência de identificação
     if (cidadaoApp.categoria === 'pcd' && cidadaoApp.documentos.complementar && cidadaoApp.documentos.complementar !== 'Não informado') {
       situacao = situacao + ' Complementar: ' + estadoDocumento(cidadaoApp.documentos.complementar) + '.';
@@ -244,7 +242,7 @@ function salvarPerfilApp(evento) {
 }
 
 // =================================================================
-// APOIO FERROVIÁRIO
+// apoio ferroviário
 // =================================================================
 
 // conecta os catálogos de operadora, linha, estação e equipamentos
@@ -346,7 +344,7 @@ function registrarMetroApp(evento) {
 }
 
 // =================================================================
-// ZELADORIA E ANEXOS LOCAIS
+// zeladoria e anexos locais
 // =================================================================
 
 // prepara o formulário textual e as prévias locais
@@ -431,7 +429,7 @@ function registrarZeladoriaApp(evento) {
 }
 
 // =================================================================
-// SIMULAÇÃO DE TRAVESSIA
+// simulação de travessia
 // =================================================================
 
 // guarda os dois áudios compartilhados na main
@@ -452,11 +450,11 @@ function prepararTravessia() {
   // relaciona cada fase ao arquivo de áudio compartilhado pelo grupo
   const nomes = ['travessia', 'encerramento'];
   // conserva os nomes originais dos dois arquivos recebidos da main
-  const arquivos = ['travessia_semaforo.mp3', 'sinalizacao_semaforo.mp3'];
+  const arquivos = ['semaforo-travessia.mp3', 'semaforo-encerramento.mp3'];
   for (let i = 0; i < nomes.length; i++) {
     sonsTravessia[nomes[i]] = new Audio('../../assets/audios/' + arquivos[i]);
     sonsTravessia[nomes[i]].volume = 0.3;
-    sonsTravessia[nomes[i]].preload = 'auto';
+    sonsTravessia[nomes[i]].preload = 'metadata';
     // aguarda a duração real do mp3 antes de ajustar sua velocidade
     sonsTravessia[nomes[i]].addEventListener('loadedmetadata', atualizarAvisosTravessia);
   }
@@ -496,9 +494,8 @@ function prepararTravessia() {
   }
   alterarTempoAdicional(0);
   bloquearSelecaoTravessia(pedidoTravessia !== null);
-  // mantém uma única atualização do controlador, inclusive antes de qualquer pedido
-  atualizarContagemApp();
-  temporizadorTravessia = setInterval(atualizarContagemApp, 1000);
+  // consulta uma vez ao abrir e mantém o intervalo somente enquanto houver pedido ativo
+  ativarContagemTravessia();
   // interrompe sons e vibração imediatamente após mudar as preferências
   document.addEventListener('change', atualizarAvisosTravessia);
   document.addEventListener('click', atualizarAvisosTravessia);
@@ -512,10 +509,17 @@ function prepararTravessia() {
   // retoma uma página restaurada do histórico sem duplicar seu temporizador
   window.addEventListener('pageshow', function (evento) {
     if (evento.persisted && temporizadorTravessia === null) {
-      atualizarContagemApp();
-      temporizadorTravessia = setInterval(atualizarContagemApp, 1000);
+      ativarContagemTravessia();
     }
   });
+}
+
+// mantém no máximo um intervalo, sem consultar pedidos quando a tela está apenas na escolha
+function ativarContagemTravessia() {
+  clearInterval(temporizadorTravessia);
+  temporizadorTravessia = null;
+  atualizarContagemApp();
+  if (pedidoTravessia) temporizadorTravessia = setInterval(atualizarContagemApp, 1000);
 }
 
 // altera somente a extensão solicitada, nunca o horário atual do ciclo
@@ -571,7 +575,7 @@ function iniciarTravessiaApp(evento) {
   estadoAnunciadoTravessia = '';
   textoApp('aviso-travessia', '');
   bloquearSelecaoTravessia(true);
-  atualizarContagemApp();
+  ativarContagemTravessia();
 }
 
 // alterna entre a escolha do local e a contagem sem recarregar a página
@@ -673,6 +677,9 @@ function atualizarContagemApp() {
   // libera a próxima solicitação sem fechar a tela de conclusão automaticamente
   if (pedidoTravessia.simulacaoEncerrada) {
     pedidoTravessia = null;
+    // o prazo foi encerrado; não há mais motivo para consultar o pedido a cada segundo
+    clearInterval(temporizadorTravessia);
+    temporizadorTravessia = null;
     bloquearSelecaoTravessia(false);
     document.getElementById('solicitar-travessia').disabled = ciclo === null;
   }
@@ -682,6 +689,10 @@ function atualizarContagemApp() {
 function apresentarEtapasTravessia() {
   // recupera a lista dentro do painel existente
   const lista = document.getElementById('etapas-travessia');
+  // o protocolo distingue solicitações com etapas iguais; json permite comparar a lista completa
+  const atual = pedidoTravessia.protocolo + JSON.stringify(pedidoTravessia.etapas);
+  if (atual === etapasApresentadasTravessia) return;
+  etapasApresentadasTravessia = atual;
   lista.textContent = '';
   for (let i = 0; i < pedidoTravessia.etapas.length; i++) {
     // cria cada etapa com texto seguro e a estrutura visual já usada nos pedidos
@@ -839,7 +850,7 @@ function atualizarAvisosTravessia() {
 
 // =================================================================
 
-// PEDIDOS DO CIDADÃO
+// pedidos do cidadão
 // =================================================================
 
 // guarda o único temporizador de consulta na página de pedidos
@@ -929,7 +940,7 @@ function apresentarPedidosApp(filtro) {
         caminhoIcone = 'metro.svg';
       } else if (pedido.servico === 'travessia') {
         nomeServico = 'Travessia acessível';
-        caminhoIcone = 'traffic-lights.svg';
+        caminhoIcone = 'semaforo.svg';
       }
       // reutiliza a mesma estrutura de cartão expansível que já possui estilos
       const cartao = document.createElement('details');

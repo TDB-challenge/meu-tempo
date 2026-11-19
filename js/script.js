@@ -1,5 +1,17 @@
+/*
+  recursos compartilhados do site e dos dois ambientes:
+  menu institucional, acessibilidade, simuladores, perguntas frequentes e atalhos locais.
+  cada bloco verifica os controles que existem na página antes de conectar seus eventos.
+
+  data-preferencia relaciona um campo à configuração salva; interruptor fornece o visual do controle.
+  alto-contraste, tema-escuro e fonte-legivel são classes aplicadas ao body pelo mesmo conjunto de preferências.
+  modal-acessibilidade-global identifica a janela comum, criada uma única vez em cada página.
+  os nomes acessíveis dos controles alimentam a orientação por voz, sem ler os valores digitados.
+  o widget oficial do vlibras também é carregado aqui, evitando cópias nos htmls.
+*/
+
 // =====================================================
-// 1. MENU MOBILE (HAMBÚRGUER)
+// 1. menu mobile (hambúrguer)
 // =====================================================
 const btnMenu = document.getElementById("btn-menu");
 const menu = document.getElementById("menu-navegacao");
@@ -11,7 +23,7 @@ if (btnMenu && menu) {
 }
 
 // =================================================================
-// PREFERÊNCIAS GLOBAIS DE ACESSIBILIDADE
+// preferências globais de acessibilidade
 // =================================================================
 
 // fornece os valores iniciais sem ativar preferências por uma condição presumida
@@ -90,7 +102,6 @@ function aplicarPreferenciasAcessibilidade() {
 }
 
 // armazena somente as preferências visuais e de interação
-// preferencias representa as escolhas do modal, cadastro ou perfil
 // preferencias reúne as escolhas de exibição e avisos; o armazenamento local permite recuperá-las em visitas futuras nesta origem
 function salvarPreferenciasAcessibilidade(preferencias) {
   localStorage.setItem("meu-tempo-acessibilidade", JSON.stringify(preferencias));
@@ -182,7 +193,6 @@ function conectarControlesAcessibilidade() {
 }
 
 // cria um campo básico para o mesmo modal utilizado em todas as páginas
-// destino recebe o campo, titulo apresenta a escolha e chave identifica a preferência
 // destino é o contêiner do novo controle, titulo é seu rótulo e chave relaciona o campo à preferência salva
 function criarCampoAcessibilidade(destino, titulo, chave) {
   const rotulo = document.createElement("label");
@@ -190,7 +200,7 @@ function criarCampoAcessibilidade(destino, titulo, chave) {
   const nome = document.createElement("span");
   nome.textContent = titulo;
   rotulo.appendChild(nome);
-  let campo = document.createElement("input");
+  let campo;
   // a escala utiliza as opções já presentes nos protótipos
   if (chave === "fonte") {
     campo = document.createElement("select");
@@ -201,7 +211,10 @@ function criarCampoAcessibilidade(destino, titulo, chave) {
       opcao.textContent = escalas[i] + "%";
       campo.appendChild(opcao);
     }
-  } else campo.type = "checkbox";
+  } else {
+    campo = document.createElement("input");
+    campo.type = "checkbox";
+  }
   campo.setAttribute("data-preferencia", chave);
   // guarda a preferência mesmo quando o dispositivo não oferece o recurso
   if (chave !== "fonte") campo.className = "interruptor";
@@ -209,15 +222,8 @@ function criarCampoAcessibilidade(destino, titulo, chave) {
   destino.appendChild(rotulo);
 }
 
-// substitui os controles redundantes sem manter dois sistemas de acessibilidade
+// monta a janela compartilhada e conecta as preferências de cada página
 function iniciarAcessibilidadeGlobal() {
-  // remove somente as barras e a antiga janela de recursos
-  const antigos = document.querySelectorAll(".barra-acessibilidade, .barra-util, .painel-acess-rapido");
-  for (let i = 0; i < antigos.length; i++) antigos[i].remove();
-  const modalAntigo = document.getElementById("modal-admin-acessibilidade");
-  if (modalAntigo) modalAntigo.remove();
-  const botaoAntigo = document.getElementById("btn-admin-acessibilidade");
-  if (botaoAntigo) botaoAntigo.remove();
   // cria o botão flutuante com nome acessível e o ícone local
   const botao = document.createElement("button");
   botao.type = "button";
@@ -226,8 +232,8 @@ function iniciarAcessibilidadeGlobal() {
   botao.setAttribute("aria-label", "Abrir recursos de acessibilidade");
   botao.setAttribute("aria-controls", "modal-acessibilidade-global");
   const icone = document.createElement("img");
-  let caminho = "../assets/icones/disabled-2.svg";
-  if (document.body.classList.contains("app") || location.pathname.indexOf("/admin/") !== -1) caminho = "../../assets/icones/disabled-2.svg";
+  let caminho = "../assets/icones/acessibilidade.svg";
+  if (document.body.classList.contains("app") || location.pathname.indexOf("/admin/") !== -1) caminho = "../../assets/icones/acessibilidade.svg";
   icone.src = caminho;
   icone.alt = "";
   botao.appendChild(icone);
@@ -280,7 +286,7 @@ function iniciarAcessibilidadeGlobal() {
       if (camposPerfil[i][1] === "vozIara") campo.disabled = false;
     }
   }
-  // migra as preferências antes que os outros scripts antigos sejam executados
+  // salva o formato compartilhado antes de conectar os controles
   salvarPreferenciasAcessibilidade(buscarPreferenciasAcessibilidade());
   conectarControlesAcessibilidade();
   prepararVLibrasGlobal();
@@ -352,9 +358,8 @@ for (let i = 0; i < controlesInstitucionais.length; i++) controlesInstitucionais
 // o evento de armazenamento sincroniza mudanças de acessibilidade realizadas em outras abas da mesma origem
 window.addEventListener("storage", function (event) { if (event.key === "meu-tempo-acessibilidade") aplicarPreferenciasAcessibilidade(); });
 
-
 // =====================================================
-// 3. CHAT INTERATIVO DA IARA (index.html)
+// 3. chat interativo da iara (index.html)
 // =====================================================
 const formIara = document.getElementById("form-iara");
 const inputIara = document.getElementById("input-iara");
@@ -401,7 +406,7 @@ if (formIara) {
 }
 
 // =====================================================
-// 4. SIMULADORES DA PÁGINA NOSSA SOLUÇÃO
+// 4. simuladores da página nossa solução
 // =====================================================
 const botoesSimulador = document.querySelectorAll(".btn-abrir-simulador");
 
@@ -519,8 +524,7 @@ if (btnIaraNao && demoIaraMensagens) {
   });
 }
 
-
-// 5. FILTRO DE ASSUNTOS, BUSCA E ACORDEÃO NO FAQ (faq.html)
+// 5. filtro de assuntos, busca e acordeão no faq (faq.html)
 // =====================================================
 const campoBuscaFaq = document.getElementById("busca-faq");
 const btnLimparFaq = document.getElementById("btn-limpar-faq");
@@ -537,7 +541,8 @@ function filtrarFaq() {
     return;
   }
 
-  const termo = campoBuscaFaq ? campoBuscaFaq.value.toLowerCase().trim() : "";
+  let termo = "";
+  if (campoBuscaFaq) termo = campoBuscaFaq.value.toLowerCase().trim();
   let encontrados = 0;
 
   if (btnLimparFaq) {
@@ -561,12 +566,13 @@ function filtrarFaq() {
   }
 
   if (contadorFaq) {
-    contadorFaq.textContent =
-      encontrados === 1 ? "1 pergunta encontrada" : encontrados + " perguntas encontradas";
+    contadorFaq.textContent = encontrados + " perguntas encontradas";
+    if (encontrados === 1) contadorFaq.textContent = "1 pergunta encontrada";
   }
 
   if (avisoFaq) {
-    avisoFaq.style.display = encontrados === 0 ? "block" : "none";
+    avisoFaq.style.display = "none";
+    if (encontrados === 0) avisoFaq.style.display = "block";
   }
 }
 
@@ -593,7 +599,7 @@ for (let i = 0; i < botoesCategoriaFaq.length; i++) {
   });
 }
 
-// Abrir e fechar respostas ao clicar nas perguntas
+// abrir e fechar respostas ao clicar nas perguntas
 // faq-pergunta identifica os botões que expandem ou recolhem cada resposta e atualizam seu estado acessível
 const perguntasFaq = document.querySelectorAll(".faq-pergunta");
 
@@ -608,13 +614,14 @@ for (let i = 0; i < perguntasFaq.length; i++) {
       resposta.hidden = aberta;
     }
     if (sinal) {
-      sinal.textContent = aberta ? "+" : "−";
+      sinal.textContent = "−";
+      if (aberta) sinal.textContent = "+";
     }
   });
 }
 
 // =====================================================
-// 6. VALIDAÇÃO DO FORMULÁRIO DE CONTATO (contato.html)
+// 6. validação do formulário de contato (contato.html)
 // =====================================================
 const formContato = document.getElementById("form-contato");
 const avisoContato = document.getElementById("aviso-contato");
@@ -646,7 +653,7 @@ if (formContato) {
 }
 
 // =====================================================
-// APAGAR PREFERÊNCIAS LOCAIS (privacidade.html)
+// apagar preferências locais (privacidade.html)
 // =====================================================
 const btnApagarPreferencias = document.getElementById("btn-apagar-preferencias");
 const avisoPrivacidade = document.getElementById("aviso-privacidade");
@@ -656,16 +663,6 @@ if (btnApagarPreferencias) {
     // restaura somente os ajustes, preservando contas e solicitações
     salvarPreferenciasAcessibilidade(preferenciasIniciaisAcessibilidade());
 
-    document.body.classList.remove(
-      "alto-contraste",
-      "fonte-legivel",
-      "tema-escuro",
-      "voz-iara-ativa",
-      "vibracao-ativa",
-      "musical-ativo"
-    );
-    document.documentElement.style.fontSize = "";
-
     if (avisoPrivacidade) {
       avisoPrivacidade.textContent =
         "Preferências restauradas neste navegador.";
@@ -674,7 +671,7 @@ if (btnApagarPreferencias) {
 }
 
 // =====================================================
-// FLUXO DE CADASTRO REALISTA COM PERFIL DO CARLOS (cadastro.html)
+// fluxo de cadastro realista com perfil do carlos (cadastro.html)
 // =====================================================
 // os formulários do cidadão são controlados por autenticacao.js
 
@@ -687,12 +684,14 @@ for (let i = 0; i < botoesToggleSenha.length; i++) {
     if (!inputAlvo) return;
 
     const estaOculta = inputAlvo.type === "password";
-    inputAlvo.type = estaOculta ? "text" : "password";
-    this.setAttribute("aria-pressed", estaOculta ? "true" : "false");
-    this.setAttribute(
-      "aria-label",
-      estaOculta ? "Ocultar senha" : "Mostrar senha"
-    );
+    if (estaOculta) {
+      inputAlvo.type = "text";
+      this.setAttribute("aria-label", "Ocultar senha");
+    } else {
+      inputAlvo.type = "password";
+      this.setAttribute("aria-label", "Mostrar senha");
+    }
+    this.setAttribute("aria-pressed", String(estaOculta));
     // identifica o pin do cidadão sem alterar os controles administrativos
     if (inputAlvo.id === "cad-senha" || inputAlvo.id === "cad-confirma-senha" || inputAlvo.id === "login-senha") {
       // acompanha o estado de visibilidade usando o nome correto da credencial
@@ -704,7 +703,7 @@ for (let i = 0; i < botoesToggleSenha.length; i++) {
 }
 
 // =====================================================
-// RECUPERAÇÃO DE SENHA (recuperar-senha.html)
+// recuperação de senha (recuperar-senha.html)
 // =====================================================
 const formRecuperarSenha = document.getElementById("form-recuperar-senha");
 
@@ -715,7 +714,8 @@ if (formRecuperarSenha) {
   formRecuperarSenha.addEventListener("submit", function (evento) {
     evento.preventDefault();
 
-    const email = inputEmailRec ? inputEmailRec.value.trim() : "";
+    let email = "";
+    if (inputEmailRec) email = inputEmailRec.value.trim();
 
     if (!email || !email.includes("@")) {
       avisoRecuperar.textContent = "Informe um endereço de e-mail válido para continuar.";

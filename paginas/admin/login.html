@@ -32,7 +32,7 @@
       <!-- container limita a largura do conteúdo do cabeçalho -->
       <div class="container">
         <a href="../index.html" class="logo">
-          <img src="../../assets/icones/clock-three.png" class="marca-icone" alt="" />
+          <img src="../../assets/icones/relogio-contorno.png" class="marca-icone" alt="" />
           <div>
             <span class="logo-titulo">meu tempo</span>
             <span class="logo-sub">A cidade no seu ritmo.</span>
@@ -95,8 +95,8 @@
 
             <!-- cadastro-foto-arco controla o formato da fotografia -->
             <div class="cadastro-foto-arco">
-              <img
-                src="../../assets/imagens/homem_acessib.jpg"
+              <img loading="lazy" decoding="async"
+                src="../../assets/imagens/homem-com-muletas.jpg"
                 alt="Homem utilizando muletas"
               />
             </div>
@@ -114,7 +114,7 @@
             <!-- identificação visual da área profissional -->
             <div class="cadastro-area-tag">
               <img
-                src="../../assets/icones/shield-check.png"
+                src="../../assets/icones/seguranca.png"
                 alt=""
                 class="icone"
               />
@@ -208,7 +208,7 @@
                     aria-label="Mostrar senha"
                     aria-pressed="false"
                   >
-                    <img src="../../assets/icones/eye.png" alt="" />
+                    <img src="../../assets/icones/olho.png" alt="" />
                   </button>
                 </div>
               </div>
@@ -277,7 +277,7 @@
                          para explicar as condições de acesso ao sistema -->
             <div class="aviso-acesso-restrito">
               <img
-                src="../../assets/icones/shield-check.png"
+                src="../../assets/icones/seguranca.png"
                 alt=""
                 class="icone"
               />
@@ -328,7 +328,7 @@
                                  o painel correspondente será cet.html -->
                 <li class="area-administrativa">
                   <img
-                    src="../../assets/icones/marker.png"
+                    src="../../assets/icones/marcador.png"
                     alt=""
                     class="icone"
                   />
@@ -344,7 +344,7 @@
                                  o painel correspondente será coordenacao.html -->
                 <li class="area-administrativa">
                   <img
-                    src="../../assets/icones/user.png"
+                    src="../../assets/icones/usuario.png"
                     alt=""
                     class="icone"
                   />
@@ -520,20 +520,5 @@
     <!-- estrutura utilizada pelo plugin oficial do vlibras.
          os atributos vw identificam os elementos
          responsáveis pelo botão e pela janela de tradução -->
-    <div vw class="enabled">
-      <div vw-access-button class="active"></div>
-
-      <div vw-plugin-wrapper>
-        <div class="vw-plugin-top-wrapper"></div>
-      </div>
-    </div>
-
-    <!-- importa o javascript oficial do vlibras -->
-    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
-
-    <!-- inicializa o recurso de tradução em libras -->
-    <script>
-      new window.VLibras.Widget("https://vlibras.gov.br/app");
-    </script>
   </body>
 </html>

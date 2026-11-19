@@ -1,18 +1,28 @@
+/*
+  documentos fictícios do cadastro e do perfil:
+  câmera e seletor de arquivo fornecem uma prévia local, sem envio a um servidor.
+  a conferência de formato não extrai texto nem comprova identidade, idade ou deficiência.
+
+  documento-identificacao e camera-identificacao representam duas formas de escolher o mesmo anexo.
+  os campos terminados em complementar mantêm um documento opcional separado para a categoria pcd.
+  previa-identificacao e previa-complementar exibem imagens temporárias; pdfs são identificados pelo nome.
+  remover-identificacao e remover-complementar descartam as prévias sem alterar os dados digitados.
+  os endereços temporários são liberados ao substituir, remover ou deixar a página.
+  o perfil reutiliza uma janela nativa de diálogo para revisar os documentos locais.
+*/
+
 // =================================================================
-// PRÉVIA LOCAL DOS DOCUMENTOS
+// prévia local dos documentos
 // =================================================================
 
 // guarda somente endereços temporários na memória, nunca no armazenamento
 let previaIdentificacaoLocal = "";
 // guarda separadamente o endereço temporário do complemento
 let previaComplementarLocal = "";
-// guarda o resultado demonstrativo, sem afirmar autenticidade ou diagnóstico
-let identificacaoCidadao = "Não conferida";
+// a prévia local não confere a identidade do documento
+const identificacaoCidadao = "Não conferida";
 // mantém a documentação complementar sem diagnóstico automático
 let complementarCidadao = "Não informado";
-// identifica os arquivos atuais para ignorar respostas de anexos removidos
-let arquivoIdentificacaoAtual = null;
-let arquivoComplementarAtual = null;
 // seleciona o arquivo de identificação fictício
 const arquivoIdentificacao = document.getElementById("documento-identificacao");
 // seleciona o arquivo complementar fictício
@@ -30,13 +40,10 @@ function removerPreviaDocumento(tipo) {
     // revogar invalida o endereço temporário da prévia; isso não apaga o arquivo original do dispositivo
     URL.revokeObjectURL(previaIdentificacaoLocal);
     previaIdentificacaoLocal = "";
-    arquivoIdentificacaoAtual = null;
-    identificacaoCidadao = "Não conferida";
   } else {
     // libera a referência temporária do complemento
     URL.revokeObjectURL(previaComplementarLocal);
     previaComplementarLocal = "";
-    arquivoComplementarAtual = null;
     complementarCidadao = "Não informado";
   }
   previa.removeAttribute("src");
@@ -83,12 +90,8 @@ function apresentarPreviaDocumento(evento) {
   for (let i = 0; i < campos.length; i++) {
     if (campos[i] !== campo && campos[i].id.indexOf(tipo) !== -1) campos[i].value = "";
   }
-  // guarda somente a referência atual, sem persistir o arquivo
-  if (tipo === "identificacao") arquivoIdentificacaoAtual = arquivo;
-  else {
-    arquivoComplementarAtual = arquivo;
-    complementarCidadao = "Selecionado, sem comprovação automática";
-  }
+  // selecionado não significa que o comprovante foi conferido
+  if (tipo === "complementar") complementarCidadao = "Selecionado, sem comprovação automática";
   document.getElementById("nome-" + tipo).textContent = arquivo.name;
   document.getElementById("nome-" + tipo).hidden = false;
   document.getElementById("remover-" + tipo).hidden = false;
@@ -102,53 +105,8 @@ function apresentarPreviaDocumento(evento) {
     if (tipo === "identificacao") previaIdentificacaoLocal = endereco;
     else previaComplementarLocal = endereco;
   }
-  // utiliza o serviço real apenas quando houver configuração
-  if (endpointDocumentos !== "") lerDadosCadastro(arquivo, tipo);
-  else statusDocumentos.textContent = "Preencha os dados abaixo.";
-}
-
-// aproveita somente os dados retornados pelo serviço configurado
-// arquivo identifica o anexo escolhido e tipo diferencia identificação e complemento
-async function lerDadosCadastro(arquivo, tipo) {
-  statusDocumentos.textContent = "Lendo documento...";
-  try {
-    // a escolha explícita do arquivo inicia a leitura, quando o serviço estiver configurado
-    const dados = await solicitarLeituraDocumento(arquivo, true);
-    // ignora respostas de arquivos removidos ou substituídos
-    let atual = arquivoIdentificacaoAtual;
-    if (tipo === "complementar") atual = arquivoComplementarAtual;
-    // a comparação usa a referência do objeto arquivo para descartar uma resposta antiga que terminou após outra seleção
-    if (atual !== arquivo) return;
-    // não interpreta textos de comprovantes como diagnóstico ou validação médica
-    if (tipo === "complementar") {
-      complementarCidadao = "Comprovante recebido, aguardando análise";
-      statusDocumentos.textContent = "Comprovante recebido.";
-      return;
-    }
-    // relaciona apenas os dados de identificação aos campos normais do cadastro
-    const propriedades = ["nome", "cpf", "rg", "nascimento"];
-    const campos = ["cad-nome", "cad-cpf", "cad-rg", "cad-nascimento"];
-    let preencheu = false;
-    for (let i = 0; i < propriedades.length; i++) {
-      // conserva os dados digitados quando a leitura não identificar esse campo
-      if (typeof dados[propriedades[i]] === "string" && dados[propriedades[i]].trim() !== "") {
-        document.getElementById(campos[i]).value = dados[propriedades[i]];
-        preencheu = true;
-      }
-    }
-    // mantém coerente a seleção de cin ou rg quando o serviço informar o tipo
-    if (dados.tipoDocumento === "cin" || dados.tipoDocumento === "rg") {
-      document.getElementById("cad-tipo-documento").value = dados.tipoDocumento;
-      atualizarTipoCadastro();
-    }
-    if (preencheu) {
-      identificacaoCidadao = "Dados extraídos por OCR";
-      statusDocumentos.textContent = "Revise os dados preenchidos abaixo.";
-    } else statusDocumentos.textContent = "Preencha os dados abaixo.";
-  } catch (erro) {
-    // mantém o preenchimento manual e ignora falhas de anexos já descartados
-    if ((tipo === "identificacao" && arquivoIdentificacaoAtual === arquivo) || (tipo === "complementar" && arquivoComplementarAtual === arquivo)) statusDocumentos.textContent = "Não foi possível ler. Preencha os dados abaixo.";
-  }
+  // a prévia é local; os dados de identificação continuam sendo preenchidos manualmente
+  statusDocumentos.textContent = "Preencha os dados abaixo.";
 }
 
 // descarta um arquivo cujo conteúdo o navegador não consegue exibir como imagem
@@ -233,7 +191,7 @@ if (arquivoIdentificacao) {
 }
 
 // =================================================================
-// REVISÃO LOCAL DOS DADOS NO PERFIL
+// revisão local dos dados no perfil
 // =================================================================
 
 // abre a revisão manual sem oferecer alteração livre de identidade
@@ -292,7 +250,7 @@ const abrirDocumentoPerfil = document.getElementById("abrir-leitor-documentos");
 // conecta a janela existente sem modificar o fluxo de cadastro
 if (abrirDocumentoPerfil) {
   abrirDocumentoPerfil.addEventListener("click", abrirRevisaoDocumentoPerfil);
-  // permite comparar os dados sem OCR, upload ou persistência de imagens
+  // permite comparar os dados sem ocr, upload ou persistência de imagens
   document.getElementById("confirmar-dados-manuais").disabled = false;
   document.getElementById("confirmar-dados-manuais").addEventListener("click", conferirDadosDocumentoPerfil);
   // recupera o foco no controle que abriu a revisão
