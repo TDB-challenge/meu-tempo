@@ -201,94 +201,211 @@ if (btnRestaurarAcess) {
   });
 }
 
-// =====================================================
-// PAINEL METRÔ / CPTM (admin/metro.html)
-// =====================================================
-const listaChamadosMetro = document.getElementById("lista-chamados-metro");
-const btnAtualizarFila = document.getElementById("btn-atualizar-fila");
-const avisoFilaMetro = document.getElementById("aviso-fila-metro");
+// =================================================================
+// CHAMADOS DE APOIO DO METRÔ
+// =================================================================
 
-function atualizarKpisMetro() {
-  const kpiPendentes = document.getElementById("kpi-pendentes");
-  const kpiAndamento = document.getElementById("kpi-andamento");
-  const kpiConcluidos = document.getElementById("kpi-concluidos");
-  if (!listaChamadosMetro || !kpiPendentes) return;
+// seleciona os botões de atendimento
+const botoesChamadosMetro = document.querySelectorAll("[data-acao-chamado]");
 
-  const pendentes = listaChamadosMetro.querySelectorAll('[data-estado="pendente"]').length;
-  const andamento = listaChamadosMetro.querySelectorAll('[data-estado="andamento"]').length;
-  const concluidos = listaChamadosMetro.querySelectorAll('[data-estado="concluido"]').length;
+// seleciona os indicadores da visão geral
+const indicadorPendentes = document.getElementById("indicador-pendentes");
+const indicadorAndamento = document.getElementById("indicador-andamento");
+const indicadorConcluidos = document.getElementById("indicador-concluidos");
 
-  kpiPendentes.textContent = pendentes;
-  kpiAndamento.textContent = andamento;
-  kpiConcluidos.textContent = concluidos;
+// guarda os chamados fictícios da estação
+const chamadosMetro = [
+
+    {
+        protocolo: "MT-1042",
+        situacao: "Aguardando agente"
+    },
+
+    {
+        protocolo: "MT-1041",
+        situacao: "Em atendimento"
+    }
+
+];
+
+
+// =================================================================
+// INDICADORES DA VISÃO GERAL
+// =================================================================
+
+// função que atualiza os números dos atendimentos
+function atualizarIndicadoresMetro() {
+
+    // guarda a quantidade de chamados pendentes
+    let pendentes = 0;
+
+    // guarda a quantidade de chamados em atendimento
+    let andamento = 0;
+
+    // começa com um atendimento fictício já concluído
+    let concluidos = 1;
+
+    // percorre a lista de chamados
+    for (let i = 0; i < chamadosMetro.length; i++) {
+
+        // verifica a situação de cada chamado
+        if (chamadosMetro[i].situacao === "Aguardando agente") {
+
+            pendentes = pendentes + 1;
+
+        } else if (chamadosMetro[i].situacao === "Em atendimento") {
+
+            andamento = andamento + 1;
+
+        } else if (chamadosMetro[i].situacao === "Concluído") {
+
+            concluidos = concluidos + 1;
+
+        }
+
+    }
+
+    // apresenta os números atualizados na visão geral
+    indicadorPendentes.textContent = pendentes;
+    indicadorAndamento.textContent = andamento;
+    indicadorConcluidos.textContent = concluidos;
+
 }
 
-if (listaChamadosMetro) {
-  listaChamadosMetro.addEventListener("click", function (evento) {
-    const botaoAcao = evento.target.closest(".btn-acao-chamado");
-    if (!botaoAcao) return;
 
-    const itemChamado = botaoAcao.closest(".admin-chamado-item");
-    const pillStatus = itemChamado.querySelector("[data-pill-status]");
-    const estadoAtual = itemChamado.getAttribute("data-estado");
+// =================================================================
+// ATUALIZAÇÃO DOS CHAMADOS
+// =================================================================
 
-    if (estadoAtual === "pendente") {
-      itemChamado.setAttribute("data-estado", "andamento");
-      pillStatus.textContent = "Funcionário a caminho";
-      botaoAcao.innerHTML = "Iniciar atendimento &rarr;";
-    } else if (estadoAtual === "andamento") {
-      itemChamado.setAttribute("data-estado", "concluido");
-      pillStatus.textContent = "Atendimento em curso";
-      botaoAcao.innerHTML = "Concluir embarque &rarr;";
-    } else if (estadoAtual === "concluido") {
-      pillStatus.textContent = "Concluído";
-      botaoAcao.textContent = "Atendimento finalizado";
-      botaoAcao.disabled = true;
+// função que atualiza a aparência de cada chamado
+// chamado representa o objeto que será atualizado
+function atualizarChamadoMetro(chamado) {
+
+    // transforma o protocolo no formato utilizado pelos ids
+    const identificador = chamado.protocolo.toLowerCase().replace("-", "");
+
+    // seleciona o elemento que apresenta a situação
+    const situacao = document.getElementById("situacao-" + identificador);
+
+    // seleciona os três botões do chamado
+    const aceitar = document.getElementById("aceitar-" + identificador);
+    const recusar = document.getElementById("recusar-" + identificador);
+    const concluir = document.getElementById("concluir-" + identificador);
+
+    // apresenta a situação atualizada na tabela
+    situacao.textContent = chamado.situacao;
+
+    // desabilita inicialmente todos os botões
+    aceitar.disabled = true;
+    recusar.disabled = true;
+    concluir.disabled = true;
+
+    // verifica se o chamado ainda está pendente
+    if (chamado.situacao === "Aguardando agente") {
+
+        aceitar.disabled = false;
+        recusar.disabled = false;
+
+    } else if (chamado.situacao === "Em atendimento") {
+
+        concluir.disabled = false;
+
     }
 
-    atualizarKpisMetro();
-  });
+    // seleciona o chamado exibido na visão geral
+    const chamadoRecente = document.querySelector(
+        '#lista-chamados-recentes [data-protocolo="' +
+        chamado.protocolo + '"]'
+    );
+
+    // verifica se o chamado aparece na visão geral
+    if (chamadoRecente) {
+
+        // seleciona o texto da situação
+        const situacaoRecente = chamadoRecente.querySelector(".admin-status-pill");
+
+        // atualiza a situação na visão geral
+        situacaoRecente.textContent = chamado.situacao;
+
+    }
+
 }
 
-if (btnAtualizarFila && listaChamadosMetro) {
-  let chamadoExtraAdicionado = false;
 
-  btnAtualizarFila.addEventListener("click", function () {
-    if (chamadoExtraAdicionado) {
-      if (avisoFilaMetro) {
-        avisoFilaMetro.textContent =
-          "Fila sincronizada. Todos os chamados da Estação Consolação estão exibidos acima.";
-      }
-      return;
+// =================================================================
+// AÇÕES DE ATENDIMENTO
+// =================================================================
+
+// função que executa a ação escolhida pelo profissional
+function alterarChamadoMetro(event) {
+
+    // recupera o botão clicado
+    const botao = event.currentTarget;
+
+    // recupera o protocolo do chamado
+    const protocolo = botao.getAttribute("data-protocolo");
+
+    // recupera a ação escolhida
+    const acao = botao.getAttribute("data-acao-chamado");
+
+    // percorre a lista de chamados
+    for (let i = 0; i < chamadosMetro.length; i++) {
+
+        // verifica se encontrou o chamado correspondente
+        if (chamadosMetro[i].protocolo === protocolo) {
+
+            // guarda o chamado encontrado
+            const chamado = chamadosMetro[i];
+
+            // verifica se o profissional aceitou o chamado
+            if (acao === "aceitar" && chamado.situacao === "Aguardando agente") {
+
+                chamado.situacao = "Em atendimento";
+
+            } else if (acao === "recusar" && chamado.situacao === "Aguardando agente") {
+
+                chamado.situacao = "Recusado";
+
+            } else if (acao === "concluir" && chamado.situacao === "Em atendimento") {
+
+                chamado.situacao = "Concluído";
+
+            }
+
+            // atualiza o chamado na página
+            atualizarChamadoMetro(chamado);
+
+            // atualiza os indicadores da visão geral
+            atualizarIndicadoresMetro();
+
+            // encerra a função
+            return;
+
+        }
+
     }
 
-    chamadoExtraAdicionado = true;
-    const novoChamado = document.createElement("article");
-    novoChamado.className = "admin-chamado-item";
-    novoChamado.setAttribute("data-chamado-id", "MT-1043");
-    novoChamado.setAttribute("data-estado", "pendente");
+}
 
-    novoChamado.innerHTML =
-      '<div class="admin-chamado-meta">' +
-      "<span>MT-1043 · Agora · Origem: Voz (IARA)</span>" +
-      '<span class="admin-status-pill" data-pill-status>Aguardando agente</span>' +
-      "</div>" +
-      "<h3>Carlos Eduardo Mendes · Apoio com elevador e embarque</h3>" +
-      '<p class="admin-chamado-local">Consolação · Linha 2 — Verde · Bloqueio Sul</p>' +
-      '<p class="admin-chamado-credencial">Credencial validada · CIPCD · Mobilidade reduzida (QR Code)</p>' +
-      '<div class="admin-chamado-acoes">' +
-      '<button type="button" class="btn btn-acao-chamado">Aceitar chamado &rarr;</button>' +
-      '<a href="../solucao01.html" class="link-seta">Ver acompanhamento do cidadão &rarr;</a>' +
-      "</div>";
 
-    listaChamadosMetro.prepend(novoChamado);
-    atualizarKpisMetro();
+// =================================================================
+// INICIALIZAÇÃO DOS CHAMADOS
+// =================================================================
 
-    if (avisoFilaMetro) {
-      avisoFilaMetro.textContent =
-        "Novo chamado recebido: Carlos Eduardo Mendes (MT-1043) entrou na fila da Estação Consolação.";
+// verifica se estamos no painel do metrô
+if (document.body.classList.contains("pagina-metro")) {
+
+    // percorre os botões de atendimento
+    for (let i = 0; i < botoesChamadosMetro.length; i++) {
+
+        // executa a ação quando o botão é clicado
+        botoesChamadosMetro[i].addEventListener("click", alterarChamadoMetro);
+
     }
-  });
+
+    // apresenta os indicadores iniciais
+    atualizarIndicadoresMetro();
+
 }
 
 // =====================================================
