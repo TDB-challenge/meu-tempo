@@ -438,6 +438,13 @@ function prepararTravessia() {
   formulario.addEventListener('submit', iniciarTravessiaApp);
   // permite encerrar a simulação
   document.getElementById('encerrar-travessia').addEventListener('click', encerrarTravessiaApp);
+  // retorna à escolha somente depois de encerrar a solicitação atual
+  document.getElementById('nova-travessia').addEventListener('click', function () {
+    if (pedidoTravessia === null) {
+      mostrarTelaTravessia(false);
+      textoApp('aviso-travessia', '');
+    }
+  });
   // altera um segundo por clique sem permitir valores negativos ou superiores a quinze
   document.getElementById('diminuir-tempo').addEventListener('click', function () { alterarTempoAdicional(-1); });
   document.getElementById('aumentar-tempo').addEventListener('click', function () { alterarTempoAdicional(1); });
@@ -493,6 +500,12 @@ function alterarTempoAdicional(variacao) {
   campo.value = Math.max(0, Math.min(15, Number(campo.value) + variacao));
   document.getElementById('diminuir-tempo').disabled = Number(campo.value) === 0 || pedidoTravessia !== null;
   document.getElementById('aumentar-tempo').disabled = Number(campo.value) === 15 || pedidoTravessia !== null;
+  // identifica a ação com o valor escolhido sem repetir instruções
+  let texto = 'Pedir +' + campo.value + ' segundos';
+  if (Number(campo.value) === 0) texto = 'Pedir tempo';
+  const local = document.querySelector('input[name="cruzamento"]:checked');
+  if (local && local.parentElement.getAttribute('data-suporte') !== 'true') texto = 'Indisponível neste local';
+  textoApp('texto-solicitar-travessia', texto);
 }
 
 // bloqueia a troca de cruzamento enquanto o pedido salvo estiver em andamento
@@ -530,72 +543,107 @@ function iniciarTravessiaApp(evento) {
     return;
   }
   estadoAnunciadoTravessia = '';
+  textoApp('aviso-travessia', '');
   bloquearSelecaoTravessia(true);
   atualizarContagemApp();
 }
 
-// apresenta os segundos no formato de minutos e segundos
+// alterna entre a escolha do local e a contagem sem recarregar a página
+// contagem indica se o pedido deve ocupar a tela principal
+function mostrarTelaTravessia(contagem) {
+  // reaproveita as duas áreas e o mesmo conjunto de preferências
+  const formulario = document.getElementById('formulario-travessia');
+  const resultado = document.getElementById('resultado-travessia');
+  const primeiraAbertura = contagem && !formulario.hidden;
+  formulario.hidden = contagem;
+  document.getElementById('apresentacao-travessia').hidden = contagem;
+  resultado.hidden = !contagem;
+  // move os controles existentes em vez de duplicar configurações
+  let destino = document.getElementById('ajustes-iniciais');
+  if (contagem) destino = document.getElementById('ajustes-contagem');
+  const ajustes = document.getElementById('ajustes-travessia');
+  if (ajustes.parentElement !== destino) destino.appendChild(ajustes);
+  // direciona o foco uma única vez, sem interromper a navegação a cada segundo
+  if (primeiraAbertura) {
+    ajustes.open = false;
+    document.getElementById('titulo-resultado-travessia').focus();
+    resultado.scrollIntoView({block: 'start'});
+  }
+  // recupera a escolha do tempo quando o cidadão inicia outra travessia
+  if (!contagem) document.getElementById('tempo-adicional').focus();
+}
+
+// apresenta os segundos com destaque na tela de acompanhamento
 // segundos representa o tempo restante calculado pelo controlador
 function formatarTempoTravessia(segundos) {
   // mantém a contagem inteira e não negativa
   const tempo = Math.max(0, Math.ceil(segundos));
-  return String(Math.floor(tempo / 60)).padStart(2, '0') + ':' + String(tempo % 60).padStart(2, '0');
+  return String(tempo);
 }
 
 // calcula o tempo pelo instante final salvo
 function atualizarContagemApp() {
-  // consulta o ciclo automático do cruzamento mesmo sem uma solicitação
+  // consulta o ciclo automático mesmo enquanto a tela mostra a escolha do local
   const selecionado = document.querySelector('input[name="cruzamento"]:checked');
   if (!selecionado) return;
   const ciclo = consultarCicloTravessia(selecionado.value);
-  // informa ausência de suporte sem criar um controlador para esse local
-  if (ciclo === null) {
-    textoApp('cenario-ciclo', 'Suporte não confirmado no catálogo da simulação.');
-    textoApp('estado-ciclo', 'Selecione outro cruzamento com suporte.');
-    textoApp('contagem-ciclo', '00:00');
-    return;
-  }
-  textoApp('cenario-ciclo', 'Cenário demonstrativo: trânsito ' + ciclo.cenario.toLowerCase() + '. Tempo-base: ' + ciclo.tempoBase + ' segundos.');
-  textoApp('estado-ciclo', 'Ciclo automático: ' + ciclo.estado + '.');
-  // identifica a próxima mudança prevista sem anunciar cada segundo
-  let proximo = ciclo.transicao;
-  if (Date.now() >= ciclo.fim) proximo = ciclo.fimCiclo;
-  else if (Date.now() >= ciclo.abertura) proximo = ciclo.fim;
-  else if (Date.now() >= ciclo.transicao) proximo = ciclo.abertura;
-  textoApp('contagem-ciclo', formatarTempoTravessia((proximo - Date.now()) / 1000));
-  // mantém o botão disponível apenas em locais contemplados e sem pedido ativo
-  document.getElementById('solicitar-travessia').disabled = pedidoTravessia !== null;
+  document.getElementById('solicitar-travessia').disabled = ciclo === null || pedidoTravessia !== null;
   if (!pedidoTravessia) return;
-  // recupera o mesmo protocolo com as etapas conciliadas, inclusive após trocar de página
+  // recupera o mesmo protocolo com as etapas conciliadas, inclusive após recarregar
   const pedidos = buscarPedidosOperacionais();
   for (let i = 0; i < pedidos.length; i++) {
     if (pedidos[i].protocolo === pedidoTravessia.protocolo) pedidoTravessia = pedidos[i];
   }
-  document.getElementById('resultado-travessia').hidden = false;
-  textoApp('titulo-confirmacao-travessia', 'Acompanhe sua solicitação');
-  textoApp('descricao-confirmacao-travessia', 'A reserva é analisada pelo controlador da simulação.');
-  textoApp('titulo-resultado-travessia', pedidoTravessia.situacao);
-  textoApp('dados-travessia', pedidoTravessia.protocolo + ' · ' + pedidoTravessia.local + ' · Adicional solicitado: ' + (pedidoTravessia.tempoAdicionalSolicitado || 0) + ' s. Concedido: ' + (pedidoTravessia.tempoAdicionalConcedido || 0) + ' s.');
-  textoApp('estado-pedido-travessia', 'Tempo total programado neste ciclo: ' + (pedidoTravessia.tempoTotalSimulado || 28) + ' segundos.');
-  // utiliza a abertura na espera e o encerramento durante a fase de pedestres
-  let fim = pedidoTravessia.fimSimulacao;
-  if (Date.now() < pedidoTravessia.aberturaSimulacao) fim = pedidoTravessia.aberturaSimulacao;
+  mostrarTelaTravessia(true);
+  textoApp('local-contagem', pedidoTravessia.local);
+  // diferencia a espera da fase de contagem sem exibir dados técnicos do controlador
+  let titulo = 'Aguarde o início';
+  let orientacao = 'Seu tempo extra está reservado.';
+  let fase = 'espera';
+  let fim = pedidoTravessia.aberturaSimulacao;
+  if (Date.now() >= pedidoTravessia.aberturaSimulacao) {
+    titulo = 'Contagem em andamento';
+    orientacao = 'Adicional concedido: +' + (pedidoTravessia.tempoAdicionalConcedido || 0) + ' segundos.';
+    fase = 'travessia';
+    fim = pedidoTravessia.fimSimulacao;
+  }
+  // destaca o fim próximo sem depender somente da mudança de cor
+  if (pedidoTravessia.situacao === 'Tempo próximo do fim') {
+    titulo = 'Tempo acabando';
+    orientacao = 'A contagem está nos últimos segundos.';
+    fase = 'atencao';
+  }
+  // encerra também a apresentação do contador quando o cidadão cancela antes do prazo
+  if (pedidoTravessia.simulacaoEncerrada) {
+    titulo = 'Tempo encerrado';
+    if (pedidoTravessia.situacao === 'Simulação encerrada pelo cidadão') titulo = 'Solicitação encerrada';
+    orientacao = 'Você pode escolher outra travessia.';
+    fase = 'encerrada';
+    fim = Date.now();
+  }
+  // evita anunciar o mesmo título novamente a cada atualização da contagem
+  if (document.getElementById('titulo-resultado-travessia').textContent !== titulo) textoApp('titulo-resultado-travessia', titulo);
+  textoApp('orientacao-contagem', orientacao);
   textoApp('contagem-travessia', formatarTempoTravessia((fim - Date.now()) / 1000));
+  document.getElementById('resultado-travessia').setAttribute('data-fase', fase);
+  // mantém protocolo, valores e etapas nos detalhes recolhidos do pedido
+  textoApp('dados-travessia', pedidoTravessia.protocolo + ' · Adicional solicitado: ' + (pedidoTravessia.tempoAdicionalSolicitado || 0) + ' s.');
+  textoApp('estado-pedido-travessia', 'Tempo total: ' + (pedidoTravessia.tempoTotalSimulado || 28) + ' s. Adicional concedido: ' + (pedidoTravessia.tempoAdicionalConcedido || 0) + ' s.');
   apresentarEtapasTravessia();
-  // comunica apenas mudanças importantes, respeitando as preferências independentes
+  // comunica apenas mudanças importantes e mantém os dois áudios integrados
   if (estadoAnunciadoTravessia !== pedidoTravessia.situacao) {
     estadoAnunciadoTravessia = pedidoTravessia.situacao;
     alertarTravessiaApp(pedidoTravessia.situacao);
   }
   atualizarAvisosTravessia();
-  // libera a seleção ao encerrar o pedido sem manter avisos antigos
+  document.getElementById('encerrar-travessia').hidden = pedidoTravessia.simulacaoEncerrada;
+  document.getElementById('nova-travessia').hidden = !pedidoTravessia.simulacaoEncerrada;
+  // libera a próxima solicitação sem fechar a tela de conclusão automaticamente
   if (pedidoTravessia.simulacaoEncerrada) {
-    textoApp('descricao-confirmacao-travessia', 'Solicitação encerrada. Você pode fazer um novo pedido.');
-    document.getElementById('encerrar-travessia').hidden = true;
     pedidoTravessia = null;
     bloquearSelecaoTravessia(false);
-    document.getElementById('solicitar-travessia').disabled = false;
-  } else document.getElementById('encerrar-travessia').hidden = false;
+    document.getElementById('solicitar-travessia').disabled = ciclo === null;
+  }
 }
 
 // monta somente as etapas efetivamente registradas no histórico
@@ -664,6 +712,7 @@ function pararSonsTravessia() {
 // nome identifica o áudio; repetir indica se a fase exige repetição
 function tocarSomTravessia(nome, repetir) {
   pararSonsTravessia();
+  textoApp('aviso-travessia', '');
   // inicia a reprodução somente depois da escolha ou do teste explícito do cidadão
   const som = sonsTravessia[nome];
   ritmoTravessia = nome;
@@ -677,7 +726,8 @@ function tocarSomTravessia(nome, repetir) {
 // respeita preferências de som e vibração separadas da voz da iara
 // mensagem indica o aviso de início ou término
 function alertarTravessiaApp(mensagem) {
-  textoApp('aviso-travessia', mensagem + '. Aviso exclusivo da simulação acadêmica.');
+  // o título da tela anuncia a fase; esta função controla apenas os avisos
+
   // interrompe os sons anteriores e apresenta um único aviso de encerramento
   if (mensagem === 'Simulação concluída' || mensagem === 'Simulação encerrada pelo cidadão') {
     pararAvisosTravessia();

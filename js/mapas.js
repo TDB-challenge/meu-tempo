@@ -25,10 +25,10 @@ function atualizarCruzamentoMapa() {
   document.getElementById('nome-cruzamento-' + tipo).textContent = nome;
   document.getElementById('cruzamento-' + tipo).setAttribute('data-suporte', rotulo.getAttribute('data-suporte'));
   // prepara a descrição de cobertura sem afirmar integração com órgão público
-  let descricao = 'Sem suporte no catálogo demonstrativo.';
+  let descricao = 'Indisponível na simulação.';
   // informa quando o catálogo permite simular o pedido
   if (suporte) {
-    descricao = 'Com suporte no catálogo demonstrativo.';
+    descricao = 'Disponível na simulação.';
   }
   document.getElementById('suporte-cruzamento-' + tipo).textContent = descricao;
   // seleciona o iframe público sem inventar coordenadas
@@ -43,6 +43,11 @@ function atualizarCruzamentoMapa() {
   // atualiza confirmação e elegibilidade somente na travessia
   if (tipo === 'travessia') {
     document.getElementById('endereco-confirmacao').textContent = nome;
+    // informa a disponibilidade por texto e cor, sem alterar a regra de suporte
+    const situacao = document.getElementById('situacao-local');
+    situacao.textContent = descricao;
+    situacao.setAttribute('data-suporte', String(suporte));
+    alterarTempoAdicional(0);
     document.getElementById('aviso-sem-suporte').hidden = suporte;
     document.getElementById('relatar-local').hidden = suporte;
     document.getElementById('relatar-local').href = 'zeladoria.html?local=' + encodeURIComponent(nome);
@@ -121,6 +126,8 @@ function prepararMarcadoresTravessia() {
     const rua = document.createElement('div');
     rua.className = 'rua-mapa';
     rua.setAttribute('data-cruzamento', cruzamentosMeuTempo[i].id);
+    // permite diferenciar visualmente os pontos disponíveis e indisponíveis
+    rua.setAttribute('data-suporte', String(cruzamentosMeuTempo[i].suporte));
     // apresenta o nome da rua ao lado do seu semáforo
     const nomeRua = document.createElement('span');
     nomeRua.className = 'nome-rua';
@@ -140,8 +147,8 @@ function prepararMarcadoresTravessia() {
     icone.alt = '';
     botao.appendChild(icone);
     const nome = document.createElement('span');
-    let suporte = ' — sem suporte confirmado';
-    if (cruzamentosMeuTempo[i].suporte) suporte = ' — com suporte na simulação';
+    let suporte = ' — indisponível na simulação';
+    if (cruzamentosMeuTempo[i].suporte) suporte = ' — disponível na simulação';
     nome.textContent = cruzamentosMeuTempo[i].nome + suporte;
     // mantém no marcador o ícone e oferece o nome completo ao foco e ao ponteiro
     nome.hidden = true;

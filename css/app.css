@@ -3967,7 +3967,7 @@ button {
 
 /* titulo-confirmacao-travessia: id do h2 de confirmação do local. */
 .app #titulo-confirmacao-travessia {
-    font-size: clamp(1.7rem, 2.5vw, 2.3rem); /* adapta o título à tela */
+    font-size: 1.5rem; /* mantém a pergunta compacta no painel */
     font-weight: 500; /* mantém o título mais leve */
     line-height: 1.15; /* aproxima as linhas do título */
 }
@@ -5977,8 +5977,8 @@ button {
 .app #mapa-base-travessia {
     position: relative; /* mantém o desenho dentro da área do mapa */
     display: block; /* permite sobrepor ruas e marcadores */
-    height: 28rem; /* separa as cinco ruas e acompanha o tamanho das letras */
-    min-height: 420px; /* preserva uma área confortável para os semáforos */
+    height: 26rem; /* separa as ruas e acompanha o tamanho das letras */
+    min-height: 400px; /* preserva a área de seleção dos semáforos */
     padding: 0; /* permite que as ruas atravessem toda a área */
 }
 
@@ -6075,12 +6075,12 @@ button {
 }
 /* mantém uma superfície verde escura por trás dos nomes claros dos marcadores */
 .app #mapa-travessia .marcador-semaforo.com-suporte {
-    background-color: #203d2e; /* preserva a leitura em qualquer tema */
+    background-color: #20763d; /* destaca os pontos disponíveis no mapa */
 }
 
 /* diferencia os locais sem suporte sem depender apenas da cor */
 .app #mapa-travessia .marcador-semaforo.sem-suporte {
-    background-color: #535b58; /* contrasta com o nome e o símbolo brancos */
+    background-color: #a33f35; /* destaca os pontos indisponíveis no mapa */
 }
 
 /* mantém a navegação ampliada dentro da largura do celular */
@@ -6123,4 +6123,290 @@ button {
 /* mantém a confirmação preta sobre o círculo branco do alto contraste */
 .app.alto-contraste .icone-etapa {
     color: #000000; /* evita que a marca desapareça no círculo claro */
+}
+
+/* =========================================================
+   FLUXO SIMPLES DA TRAVESSIA
+   ========================================================= */
+
+/* mantém a apresentação proporcional a uma tela de aplicativo */
+.app .pagina-travessia .texto-introducao h1 {
+    font-size: 2rem; /* destaca o serviço sem ocupar o espaço do mapa */
+}
+
+/* deixa o planejamento disponível quando o cidadão desejar consultá-lo */
+.app .percurso-travessia,
+.app .ajustes-travessia {
+    padding: 14px; /* separa os controles de sua borda */
+    background-color: var(--branco); /* acompanha o tema atual */
+    border: 1px solid var(--borda); /* identifica a área que pode ser aberta */
+    border-radius: var(--raio-medio); /* reutiliza o formato dos cartões */
+}
+
+/* identifica as opções recolhidas sem criar outro botão principal */
+.app .percurso-travessia summary,
+.app .ajustes-travessia summary {
+    cursor: pointer; /* indica que os campos podem ser abertos */
+    font-weight: 700; /* destaca o nome da opção */
+}
+
+/* aproveita a largura disponível para partida e destino */
+.app .campos-percurso {
+    display: grid; /* distribui os dois campos */
+    grid-template-columns: repeat(2, minmax(0, 1fr)); /* evita campos excessivamente largos */
+    gap: 12px; /* separa partida e destino */
+    margin: 16px 0; /* afasta os campos do resumo e do link */
+}
+
+/* mantém o cruzamento selecionado junto da escolha de tempo */
+.app .confirmacao-travessia .local-confirmacao {
+    display: flex; /* apresenta o símbolo e o endereço */
+    align-items: center; /* alinha o texto ao ícone */
+    gap: 8px; /* separa as informações */
+    font-size: 0.9rem; /* mantém o endereço proporcional ao cartão */
+}
+
+/* evita repetir o endereço nas duas colunas da tela inicial */
+.app .pagina-travessia .cruzamento-selecionado {
+    display: none; /* o painel de tempo já apresenta o local escolhido */
+}
+
+/* destaca a disponibilidade por cor e por texto */
+.app .situacao-local {
+    align-self: flex-start; /* mantém a etiqueta proporcional à mensagem */
+    padding: 6px 10px; /* delimita o estado do cruzamento */
+    border-radius: var(--raio-circular); /* acompanha as outras etiquetas */
+    background-color: #e4f3e8; /* diferencia os locais disponíveis */
+    color: #185e30; /* contrasta com a superfície verde clara */
+    font-size: 0.8rem; /* mantém a informação compacta */
+    font-weight: 800; /* destaca o estado do local */
+}
+
+/* identifica os locais que ainda não permitem pedir tempo */
+.app .situacao-local[data-suporte="false"] {
+    background-color: #fbe8e5; /* diferencia o estado indisponível */
+    color: #91382e; /* mantém o texto vermelho legível */
+}
+
+/* centraliza a escolha de segundos extras */
+.app .confirmacao-travessia .controle-tempo {
+    justify-content: center; /* aproxima os controles do centro do cartão */
+    padding: 12px 0; /* separa a escolha dos outros elementos */
+}
+
+/* valor principal da escolha de tempo */
+.app #tempo-adicional {
+    width: 80px; /* reserva espaço para o número em destaque */
+    font-size: 1.75rem; /* facilita conferir o valor escolhido */
+    padding: 8px 4px; /* mantém os dois algarismos visíveis ao ampliar as letras */
+    font-weight: 800; /* diferencia a quantidade das ações laterais */
+}
+
+/* mantém o pedido de tempo legível mesmo com a fonte ampliada */
+.app .pagina-travessia #solicitar-travessia {
+    padding: 14px 12px; /* preserva espaço para o texto com letras ampliadas */
+    border-radius: var(--raio-medio); /* evita um formato excessivamente alto na ampliação */
+    flex-wrap: wrap; /* permite acomodar a seta abaixo do texto quando necessário */
+}
+
+/* mantém as palavras do pedido inteiras em telas estreitas */
+.app #texto-solicitar-travessia {
+    overflow-wrap: normal; /* permite quebrar a frase apenas entre as palavras */
+}
+
+/* compacta as preferências sem remover seus controles */
+.app .ajustes-travessia .opcao-preferencia {
+    padding: 12px 0; /* reduz os espaços entre som e vibração */
+    gap: 12px; /* mantém os textos afastados do interruptor */
+}
+
+/* explica o caráter da simulação em um único lugar */
+.app .nota-simulacao {
+    margin-top: 20px; /* separa a orientação do fluxo principal */
+    color: var(--texto-secundario); /* mantém a informação discreta e legível */
+    font-size: 0.8rem; /* evita competir com o contador */
+}
+
+/* =========================================================
+   TELA DE CONTAGEM
+   ========================================================= */
+
+/* apresenta o pedido como uma tela própria dentro do aplicativo */
+.app .resultado-servico.contagem-travessia {
+    width: 100%; /* acompanha a área principal disponível */
+    max-width: 680px; /* mantém o foco na contagem */
+    margin: 0 auto; /* centraliza a tela no computador */
+    padding: 28px; /* separa os dados das bordas */
+    gap: 16px; /* organiza cada informação da tela */
+    background-color: var(--branco); /* mantém a identidade dos cartões */
+    border: 1px solid var(--borda); /* delimita a área de acompanhamento */
+    border-radius: var(--raio-grande); /* reaproveita os cantos do aplicativo */
+    scroll-margin-top: 110px; /* mantém o título abaixo do cabeçalho fixo */
+}
+
+/* destaca a fase atual acima do número */
+.app .contagem-travessia h2 {
+    font-size: 1.7rem; /* identifica a fase sem disputar destaque com os segundos */
+    margin: 0; /* utiliza o espaçamento do cartão */
+}
+
+/* mantém o local do pedido próximo do contador */
+.app #local-contagem {
+    color: var(--texto-secundario); /* diferencia o local do estado atual */
+    margin: 0; /* evita espaços duplicados */
+}
+
+/* organiza a quantidade e a unidade como um único mostrador */
+.app .mostrador-segundos {
+    display: flex; /* organiza o número e a unidade */
+    flex-direction: column; /* posiciona segundos abaixo da quantidade */
+    align-items: center; /* centraliza o conteúdo */
+    justify-content: center; /* centraliza a contagem na altura */
+    width: 100%; /* ocupa a largura disponível */
+    max-width: 360px; /* mantém o contador proporcional */
+    min-height: 220px; /* reserva a área principal da tela */
+    padding: 24px 12px; /* mantém espaço ao redor do número */
+    border-radius: var(--raio-grande); /* acompanha o cartão principal */
+    background-color: #f7efda; /* identifica a espera pela abertura */
+    color: #765613; /* contrasta com a superfície clara */
+}
+
+/* mantém os segundos grandes e alinhados */
+.app #contagem-travessia {
+    font-size: clamp(3rem, 22vw, 9rem); /* adapta o número à tela e à ampliação das letras */
+    font-weight: 800; /* torna a quantidade o foco principal */
+    line-height: 1; /* evita espaços excessivos acima e abaixo */
+    font-variant-numeric: tabular-nums; /* mantém os números alinhados durante a contagem */
+}
+
+/* identifica a unidade sem anunciar cada atualização */
+.app .mostrador-segundos span {
+    font-weight: 700; /* deixa a unidade fácil de localizar */
+    font-size: 1rem; /* acompanha o tamanho de leitura escolhido */
+}
+
+/* diferencia a contagem em andamento */
+.app .contagem-travessia[data-fase="travessia"] .mostrador-segundos {
+    background-color: #e4f3e8; /* identifica a fase de contagem */
+    color: #185e30; /* mantém o número verde legível */
+}
+
+/* destaca a proximidade do encerramento */
+.app .contagem-travessia[data-fase="atencao"] .mostrador-segundos {
+    background-color: #fbe8e5; /* identifica a fase de atenção */
+    color: #91382e; /* diferencia a contagem final */
+}
+
+/* mantém o encerramento visualmente distinto */
+.app .contagem-travessia[data-fase="encerrada"] .mostrador-segundos {
+    background-color: #edf0ee; /* retira o destaque de uma contagem ativa */
+    color: #48594d; /* mantém o zero legível */
+}
+
+/* apresenta as informações adicionais apenas quando solicitadas */
+.app .contagem-travessia .historico-solicitacao {
+    width: 100%; /* acompanha a largura do cartão */
+    margin: 0; /* evita recuos excessivos */
+    padding: 14px 0; /* separa o resumo do histórico */
+    text-align: left; /* alinha as etapas para leitura */
+}
+
+/* mantém as preferências disponíveis na tela de contagem */
+.app #ajustes-contagem {
+    width: 100%; /* acompanha os outros controles do pedido */
+}
+
+/* =========================================================
+   DISPONIBILIDADE DOS CRUZAMENTOS
+   ========================================================= */
+
+/* acrescenta um sinal para que a seleção não dependa apenas das cores */
+.app #mapa-travessia .marcador-semaforo::after {
+    content: '✓'; /* identifica o cruzamento disponível */
+    position: absolute; /* posiciona o sinal junto do semáforo */
+    top: -5px; /* destaca o selo acima do marcador */
+    right: -5px; /* diferencia o selo do símbolo central */
+    width: 18px; /* mantém o sinal compacto */
+    height: 18px; /* preserva o formato circular */
+    border-radius: 50%; /* acompanha os pontos do mapa */
+    background-color: #ffffff; /* destaca o sinal sobre o semáforo */
+    color: #185e30; /* relaciona o sinal aos locais disponíveis */
+    font-size: 12px; /* permite reconhecer a confirmação */
+    font-weight: 800; /* deixa o sinal nítido */
+}
+
+/* identifica os locais indisponíveis com um sinal diferente */
+.app #mapa-travessia .marcador-semaforo.sem-suporte::after {
+    content: '×'; /* identifica o local indisponível sem depender da cor */
+    color: #91382e; /* acompanha o marcador vermelho */
+}
+
+/* mantém o estado explícito junto do nome de cada rua */
+.app .rua-mapa .nome-rua::after {
+    content: 'Disponível'; /* identifica os cruzamentos contemplados */
+    display: block; /* separa o estado do nome da rua */
+    font-size: 0.65rem; /* mantém a informação secundária compacta */
+    font-weight: 800; /* diferencia o estado do restante do mapa */
+    color: #185e30; /* acompanha os semáforos verdes */
+}
+
+/* identifica as ruas que ainda não oferecem a solicitação */
+.app .rua-mapa[data-suporte="false"] .nome-rua::after {
+    content: 'Indisponível'; /* deixa explícito o bloqueio da solicitação */
+    color: #91382e; /* acompanha os semáforos vermelhos */
+}
+
+/* relaciona a legenda aos mesmos estados apresentados pelos semáforos */
+.app .pagina-travessia .ponto-com-suporte .indicador-suporte {
+    background-color: #20763d; /* identifica os pontos disponíveis */
+}
+.app .pagina-travessia .ponto-sem-suporte .indicador-suporte {
+    background-color: #a33f35; /* identifica os pontos indisponíveis */
+    border-color: #a33f35; /* mantém a borda com a mesma cor */
+}
+.app .pagina-travessia .ponto-sem-suporte .icone {
+    filter: brightness(0) invert(1); /* mantém o sinal legível sobre o vermelho */
+}
+
+/* preserva as identificações textuais sobre os mapas escuros */
+.app.tema-escuro .nome-rua::after,
+.app.alto-contraste .nome-rua::after {
+    color: #d8f5df; /* mantém os estados legíveis sobre a rua escura */
+}
+.app.tema-escuro .rua-mapa[data-suporte="false"] .nome-rua::after,
+.app.alto-contraste .rua-mapa[data-suporte="false"] .nome-rua::after {
+    color: #ffd2c9; /* diferencia os estados indisponíveis com contraste */
+}
+
+/* mantém o contador e a etiqueta claros no tema escuro e no alto contraste */
+.app.alto-contraste .mostrador-segundos,
+.app.alto-contraste .contagem-travessia[data-fase] .mostrador-segundos {
+    background-color: #000000; /* respeita o fundo preto escolhido */
+    color: #ffffff; /* destaca os segundos em qualquer fase */
+    border: 1px solid #ffffff; /* delimita o mostrador sem depender da cor */
+}
+.app.alto-contraste .situacao-local {
+    background-color: #000000; /* mantém a superfície de alto contraste */
+    color: #ffffff; /* preserva a leitura do estado */
+    border: 1px solid #ffffff; /* delimita a etiqueta */
+}
+.app.alto-contraste #mapa-travessia .marcador-semaforo.sem-suporte {
+    background-color: #000000; /* mantém o ponto coerente com o mapa escuro */
+    border-color: #ffff00; /* destaca a indisponibilidade pelo contorno */
+}
+
+/* acomoda os campos e a contagem no celular */
+@media (max-width: 600px) {
+    .app .pagina-travessia .confirmacao-travessia {
+        padding: 20px; /* acomoda os três controles de tempo no celular */
+    }
+    .app .campos-percurso {
+        grid-template-columns: 1fr; /* mantém partida e destino legíveis */
+    }
+    .app .resultado-servico.contagem-travessia {
+        padding: 20px 16px; /* aproveita a área de leitura disponível */
+    }
+    .app .mostrador-segundos {
+        min-height: 180px; /* mantém a quantidade em destaque no celular */
+    }
 }
