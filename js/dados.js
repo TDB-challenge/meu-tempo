@@ -21,13 +21,9 @@
 // guarda as funções disponíveis em cada instituição
 const funcoesInstituicoes = {
   metro: ["Agente de transporte", "Coordenador"],
-
   cptm: ["Agente de transporte", "Coordenador"],
-
   viaquatro: ["Agente de transporte", "Coordenador"],
-
   viamobilidade: ["Agente de transporte", "Coordenador"],
-
   cet: ["Operador CET", "Coordenador"],
 };
 
