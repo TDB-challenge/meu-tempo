@@ -630,7 +630,7 @@ if (btnApagarPreferencias) {
 
     if (avisoPrivacidade) {
       avisoPrivacidade.textContent =
-        "Preferências locais e dados de sessão apagados deste navegador.";
+        "Preferências restauradas neste navegador.";
     }
   });
 }

@@ -20,7 +20,7 @@
       <!-- Menu lateral do aplicativo -->
       <aside class="menu-lateral">
         <a href="inicio.html" class="logo">
-          <img src="../../assets/icones/clock-three.png" class="marca-icone" alt="" />
+          <img src="../../assets/icones/clock.png" class="marca-icone" alt="" />
           <div class="texto-logo">
             <strong>meu tempo</strong>
             <small class="slogan">A cidade no seu ritmo.</small>
@@ -42,12 +42,14 @@
 
             <li>
               <a href="servicos.html">
+                <img src="../../assets/icones/lista.svg" class="icone" alt="" />
                 <span>Serviços</span>
               </a>
             </li>
 
             <li>
               <a href="solicitacoes.html">
+                <img src="../../assets/icones/lista.svg" class="icone" alt="" />
                 <span>Pedidos</span>
               </a>
             </li>
@@ -65,6 +67,7 @@
 
             <li>
               <a href="perfil.html" aria-current="page">
+                <img src="../../assets/icones/user.png" class="icone" alt="" />
                 <span>Perfil</span>
               </a>
             </li>
@@ -99,7 +102,7 @@
 
           <!-- Logo exibida em telas menores -->
           <a href="inicio.html" class="logo-mobile">
-          <img src="../../assets/icones/clock-three.png" class="marca-icone" alt="" />
+          <img src="../../assets/icones/clock.png" class="marca-icone" alt="" />
             <strong>meu tempo</strong>
           </a>
 
@@ -215,7 +218,7 @@
                 <span class="descricao-preferencia">
                   <strong>Ouvir a IARA</strong>
 
-                  <small> Indisponível até configurar o webchat. </small>
+                  <small> Ative ou desative sua preferência de voz. </small>
                 </span>
 
                 <input
@@ -254,8 +257,8 @@
             </div>
 
 <!-- data-preferencia identifica a configuração sincronizada com o botão global -->
-<label class="opcao-preferencia">Orientações por voz <input type="checkbox" data-preferencia="orientacoesVoz" /></label>
-<label class="opcao-preferencia">Guia sonoro da travessia <input type="checkbox" data-preferencia="somTravessia" /></label>
+<label class="opcao-preferencia">Orientações por voz <input class="interruptor" role="switch" type="checkbox" data-preferencia="orientacoesVoz" /></label>
+<label class="opcao-preferencia">Guia sonoro da travessia <input class="interruptor" role="switch" type="checkbox" data-preferencia="somTravessia" /></label>
             <!-- Outras configurações de leitura -->
             <details class="opcoes-leitura">
               <summary class="titulo-opcoes-leitura">
@@ -401,32 +404,43 @@
                   <option value="outro">Outro documento</option>
                 </select>
 
+                <!-- identidade permanece somente para consulta até uma nova conferência -->
+                <label for="cpf-perfil">CPF / número da CIN</label>
+                <input type="text" id="cpf-perfil" readonly autocomplete="off" />
+                <label for="rg-perfil">RG, quando aplicável</label>
+                <input type="text" id="rg-perfil" readonly autocomplete="off" />
+                <label for="email-perfil">E-mail de acesso</label>
+                <input type="email" id="email-perfil" readonly autocomplete="email" />
+                <label for="categoria-perfil">Categoria autodeclarada</label>
+                <input type="text" id="categoria-perfil" readonly />
+                <label for="estado-perfil">Estado (UF)</label>
+                <input type="text" id="estado-perfil" name="estado-cidadao" autocomplete="address-level1" minlength="2" maxlength="2" pattern="AC|AL|AP|AM|BA|CE|DF|ES|GO|MA|MT|MS|MG|PA|PB|PR|PE|PI|RJ|RN|RS|RO|RR|SC|SP|SE|TO" required />
                 <!-- dados de contato e escolhas editáveis do cidadão -->
                 <label for="telefone-perfil">Telefone</label>
                 <input type="tel" id="telefone-perfil" maxlength="20" autocomplete="tel" />
                 <label for="municipio-perfil">Município</label>
-                <input type="text" id="municipio-perfil" maxlength="100" required />
+                <input type="text" id="municipio-perfil" name="municipio-cidadao" autocomplete="address-level2" maxlength="100" required />
                 <label for="bairro-perfil">Bairro</label>
-                <input type="text" id="bairro-perfil" maxlength="100" />
-                <fieldset><legend>Necessidades e mobilidade autodeclaradas</legend>
-<label ><input type="checkbox" name="necessidade-perfil" value="Mobilidade reduzida" /> <span>Mobilidade reduzida</span></label>
-<label ><input type="checkbox" name="necessidade-perfil" value="Dificuldade para caminhar longas distâncias" /> <span>Dificuldade para caminhar longas distâncias</span></label>
-<label ><input type="checkbox" name="necessidade-perfil" value="Dificuldade com escadas" /> <span>Dificuldade com escadas</span></label>
-<label ><input type="checkbox" name="necessidade-perfil" value="Uso de cadeira de rodas" /> <span>Uso de cadeira de rodas</span></label>
-<label ><input type="checkbox" name="necessidade-perfil" value="Uso de bengala" /> <span>Uso de bengala</span></label>
-<label ><input type="checkbox" name="necessidade-perfil" value="Uso de muletas" /> <span>Uso de muletas</span></label>
-<label ><input type="checkbox" name="necessidade-perfil" value="Deficiência visual ou baixa visão" /> <span>Deficiência visual ou baixa visão</span></label>
-<label ><input type="checkbox" name="necessidade-perfil" value="Deficiência auditiva" /> <span>Deficiência auditiva</span></label>
-<label ><input type="checkbox" name="necessidade-perfil" value="Necessidade de acompanhamento" /> <span>Necessidade de acompanhamento</span></label>
-<label ><input type="checkbox" name="necessidade-perfil" value="Sensibilidade a estímulos sonoros ou visuais" /> <span>Sensibilidade a estímulos sonoros ou visuais</span></label>
-<label ><input type="checkbox" name="necessidade-perfil" value="Limitação temporária" /> <span>Limitação temporária</span></label>
-<label ><input type="checkbox" name="necessidade-perfil" value="Outras necessidades" /> <span>Outras necessidades</span></label>
-<label ><input type="checkbox" name="necessidade-perfil" value="Prefiro não informar" /> <span>Prefiro não informar</span></label>
+                <input type="text" id="bairro-perfil" name="bairro-cidadao" autocomplete="off" maxlength="100" />
+                <fieldset class="cadastro-opcoes-lista"><legend>Necessidades e mobilidade autodeclaradas</legend>
+<label class="opcao-check-card"><input type="checkbox" name="necessidade-perfil" value="Mobilidade reduzida" /> <span>Mobilidade reduzida</span></label>
+<label class="opcao-check-card"><input type="checkbox" name="necessidade-perfil" value="Dificuldade para caminhar longas distâncias" /> <span>Dificuldade para caminhar longas distâncias</span></label>
+<label class="opcao-check-card"><input type="checkbox" name="necessidade-perfil" value="Dificuldade com escadas" /> <span>Dificuldade com escadas</span></label>
+<label class="opcao-check-card"><input type="checkbox" name="necessidade-perfil" value="Uso de cadeira de rodas" /> <span>Uso de cadeira de rodas</span></label>
+<label class="opcao-check-card"><input type="checkbox" name="necessidade-perfil" value="Uso de bengala" /> <span>Uso de bengala</span></label>
+<label class="opcao-check-card"><input type="checkbox" name="necessidade-perfil" value="Uso de muletas" /> <span>Uso de muletas</span></label>
+<label class="opcao-check-card"><input type="checkbox" name="necessidade-perfil" value="Deficiência visual ou baixa visão" /> <span>Deficiência visual ou baixa visão</span></label>
+<label class="opcao-check-card"><input type="checkbox" name="necessidade-perfil" value="Deficiência auditiva" /> <span>Deficiência auditiva</span></label>
+<label class="opcao-check-card"><input type="checkbox" name="necessidade-perfil" value="Necessidade de acompanhamento" /> <span>Necessidade de acompanhamento</span></label>
+<label class="opcao-check-card"><input type="checkbox" name="necessidade-perfil" value="Sensibilidade a estímulos sonoros ou visuais" /> <span>Sensibilidade a estímulos sonoros ou visuais</span></label>
+<label class="opcao-check-card"><input type="checkbox" name="necessidade-perfil" value="Limitação temporária" /> <span>Limitação temporária</span></label>
+<label class="opcao-check-card"><input type="checkbox" name="necessidade-perfil" value="Outras necessidades" /> <span>Outras necessidades</span></label>
+<label class="opcao-check-card"><input type="checkbox" name="necessidade-perfil" value="Prefiro não informar" /> <span>Prefiro não informar</span></label>
 </fieldset>
-                <fieldset><legend>Serviços de interesse</legend>
-                <label><input type="checkbox" name="servico-perfil" value="travessia" /> Travessia acessível</label>
-                <label><input type="checkbox" name="servico-perfil" value="metro" /> Apoio ferroviário</label>
-                <label><input type="checkbox" name="servico-perfil" value="zeladoria" /> Zeladoria</label>
+                <fieldset class="cadastro-opcoes-lista"><legend>Serviços de interesse</legend>
+                <label class="opcao-check-card"><input type="checkbox" name="servico-perfil" value="travessia" /> Travessia acessível</label>
+                <label class="opcao-check-card"><input type="checkbox" name="servico-perfil" value="metro" /> Apoio no Metrô e CPTM</label>
+                <label class="opcao-check-card"><input type="checkbox" name="servico-perfil" value="zeladoria" /> Zeladoria urbana</label>
                 </fieldset>
                 <p id="aviso-perfil" role="status"></p>
                 <button
@@ -468,12 +482,14 @@
 
           <li>
             <a href="servicos.html">
+              <img src="../../assets/icones/lista.svg" class="icone" alt="" />
               <span>Serviços</span>
             </a>
           </li>
 
           <li>
             <a href="solicitacoes.html">
+              <img src="../../assets/icones/lista.svg" class="icone" alt="" />
               <span>Pedidos</span>
             </a>
           </li>
@@ -491,6 +507,7 @@
 
           <li>
             <a href="perfil.html" aria-current="page">
+              <img src="../../assets/icones/user.png" class="icone" alt="" />
               <span>Perfil</span>
             </a>
           </li>

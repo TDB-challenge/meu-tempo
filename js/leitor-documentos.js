@@ -40,6 +40,8 @@ function removerPreviaDocumento(tipo) {
   }
   previa.removeAttribute("src");
   previa.hidden = true;
+  document.getElementById("nome-" + tipo).textContent = "";
+  document.getElementById("remover-" + tipo).hidden = true;
 }
 
 // apaga as imagens e os campos após revogação, conclusão ou saída
@@ -90,9 +92,24 @@ function apresentarPreviaDocumento(evento) {
   // recupera a imagem selecionada sem converter para texto ou salvar no navegador
   const arquivo = campo.files[0];
   // aceita somente imagens conhecidas dentro do limite informado
-  if ((arquivo.type !== "image/jpeg" && arquivo.type !== "image/png" && arquivo.type !== "image/webp") || arquivo.size > 5 * 1024 * 1024) {
+  if ((arquivo.type !== "image/jpeg" && arquivo.type !== "image/png" && arquivo.type !== "image/webp" && arquivo.type !== "application/pdf") || arquivo.size > 5 * 1024 * 1024) {
     campo.value = "";
-    statusDocumentos.textContent = "Selecione uma imagem JPG, PNG ou WEBP de até 5 MB.";
+    statusDocumentos.textContent = "Selecione imagem JPG, PNG, WEBP ou PDF de até 5 MB.";
+    return;
+  }
+  document.getElementById("nome-" + tipo).textContent = arquivo.name + " — selecionado apenas nesta página";
+  document.getElementById("remover-" + tipo).hidden = false;
+  // utiliza o serviço real apenas quando houver configuração e autorização
+  if (endpointDocumentos !== "") {
+    lerDadosCadastro(campo, tipo);
+  }
+  // pdf é identificado pelo nome e não recebe uma prévia de imagem
+  if (arquivo.type === "application/pdf") {
+    // o complemento permanece opcional e não representa comprovação médica
+    if (tipo === "complementar") {
+      complementarCidadao = "Selecionado, sem comprovação automática";
+    }
+    statusDocumentos.textContent = "PDF selecionado. Confira e preencha os dados manualmente; a leitura automática ainda não está disponível.";
     return;
   }
   // cria um endereço temporário para exibição local
@@ -107,9 +124,48 @@ function apresentarPreviaDocumento(evento) {
     document.getElementById("conferencia-documento").hidden = false;
   } else {
     previaComplementarLocal = endereco;
-    complementarCidadao = "Aguardando análise";
+    complementarCidadao = "Selecionado, sem comprovação automática";
   }
   statusDocumentos.textContent = "Prévia local disponível. Não há extração automática nem análise documental. Confira os dados manualmente.";
+}
+
+// aproveita somente os dados retornados pelo serviço configurado
+// campo identifica o anexo atual e tipo diferencia identificação e complemento
+async function lerDadosCadastro(campo, tipo) {
+  // preserva a referência para ignorar respostas de arquivos removidos ou substituídos
+  const arquivo = campo.files[0];
+  try {
+    // envia somente ao endpoint configurado, com autorização atual
+    const dados = await solicitarLeituraDocumento(arquivo, consentimentoDocumentos.checked);
+    // ignora uma resposta se o cidadão retirou a autorização ou o arquivo
+    if (!consentimentoDocumentos.checked || campo.files[0] !== arquivo) {
+      return;
+    }
+    // documentos complementares não comprovam diagnósticos automaticamente
+    if (tipo === "complementar") {
+      complementarCidadao = "Dados extraídos por OCR, sem comprovação automática";
+      statusDocumentos.textContent = "Complemento lido. A leitura não comprova condição médica. Revise seus dados.";
+      return;
+    }
+    // preenche somente campos recebidos do serviço, sem inventar valores
+    if (typeof dados.nome === "string") {
+      document.getElementById("cad-nome").value = dados.nome;
+    }
+    if (typeof dados.cpf === "string") {
+      document.getElementById("cad-cpf").value = dados.cpf;
+    }
+    if (typeof dados.rg === "string") {
+      document.getElementById("cad-rg").value = dados.rg;
+    }
+    if (typeof dados.nascimento === "string") {
+      document.getElementById("cad-nascimento").value = dados.nascimento;
+    }
+    identificacaoCidadao = "Dados extraídos por OCR";
+    statusDocumentos.textContent = "Dados extraídos por OCR. Revise e corrija os campos antes de continuar; a leitura não autentica a identidade.";
+  } catch (erro) {
+    // conserva o preenchimento manual quando a leitura falhar
+    statusDocumentos.textContent = "Não foi possível ler o arquivo. Preencha os dados manualmente.";
+  }
 }
 
 // invalida a comparação quando qualquer informação de identificação muda
@@ -157,8 +213,63 @@ function conferirDocumentoManual() {
   statusDocumentos.textContent = "Dados digitados coincidem na conferência manual da demonstração. Isso não comprova autenticidade nem direito a benefício.";
 }
 
+// alterna o tipo de documento sem apagar os dados já digitados
+function atualizarTipoCadastro() {
+  // identifica se a cin utiliza somente o cpf
+  const cin = document.getElementById("cad-tipo-documento").value === "cin";
+  document.getElementById("grupo-cad-rg").hidden = cin;
+  document.getElementById("cad-rg").required = !cin;
+}
+
+// apresenta complemento opcional apenas para pessoa com deficiência
+function atualizarComplementarCadastro() {
+  // recupera a categoria autodeclarada
+  const pcd = document.getElementById("cad-categoria").value === "pcd";
+  document.getElementById("complementar-cadastro").hidden = !pcd;
+  // descarta arquivos complementares quando deixam de ser pertinentes
+  if (!pcd) {
+    removerPreviaDocumento("complementar");
+    arquivoComplementar.value = "";
+  }
+}
+
+// apresenta os anexos opcionais sem exigir leitura para cadastrar
+function escolherScanCadastro() {
+  document.getElementById("arquivos-cadastro").hidden = false;
+  document.getElementById("escolher-scan").setAttribute("aria-expanded", "true");
+  consentimentoDocumentos.focus();
+}
+
+// permite preencher manualmente e descarta anexos da opção anterior
+function escolherManualCadastro() {
+  limparDocumentosCadastro();
+  document.getElementById("arquivos-cadastro").hidden = true;
+  document.getElementById("escolher-scan").setAttribute("aria-expanded", "false");
+  statusDocumentos.textContent = "Preencha os campos abaixo. Não é necessário anexar arquivos.";
+  document.getElementById("cad-nome").focus();
+}
+
+// remove o arquivo escolhido sem alterar os dados preenchidos no cadastro
+// evento representa o botão correspondente ao anexo
+function removerArquivoCadastro(evento) {
+  // identifica o tipo pelo nome do botão
+  const tipo = evento.currentTarget.id.replace("remover-", "");
+  removerPreviaDocumento(tipo);
+  document.getElementById("documento-" + tipo).value = "";
+  statusDocumentos.textContent = "Arquivo removido. Os dados do cadastro foram preservados.";
+}
+
 // registra os eventos apenas no cadastro que possui o leitor
 if (consentimentoDocumentos) {
+  // conecta as escolhas e mantém tipo e categoria coerentes
+  document.getElementById("cad-tipo-documento").addEventListener("change", atualizarTipoCadastro);
+  document.getElementById("cad-categoria").addEventListener("change", atualizarComplementarCadastro);
+  document.getElementById("escolher-scan").addEventListener("click", escolherScanCadastro);
+  document.getElementById("escolher-manual").addEventListener("click", escolherManualCadastro);
+  document.getElementById("remover-identificacao").addEventListener("click", removerArquivoCadastro);
+  document.getElementById("remover-complementar").addEventListener("click", removerArquivoCadastro);
+  atualizarTipoCadastro();
+  atualizarComplementarCadastro();
   consentimentoDocumentos.addEventListener("change", atualizarConsentimentoDocumentos);
   arquivoIdentificacao.addEventListener("change", apresentarPreviaDocumento);
   arquivoComplementar.addEventListener("change", apresentarPreviaDocumento);
@@ -187,6 +298,14 @@ function abrirRevisaoDocumentoPerfil() {
   if (!modal.open) {
     modal.showModal();
   }
+  // recupera os dados salvos para facilitar a revisão sem alterar identidade
+  const cidadao = buscarCidadaoConectado();
+  // preenche somente quando a sessão está disponível
+  if (cidadao) {
+    document.getElementById("manual-nome-completo").value = cidadao.nome;
+    document.getElementById("manual-data-nascimento").value = cidadao.nascimento;
+    document.getElementById("manual-tipo-documento").value = cidadao.tipoDocumento || "";
+  }
   document.getElementById("preenchimento-manual-documento").open = true;
   document.getElementById("manual-nome-completo").focus();
 }
@@ -214,7 +333,7 @@ function conferirDadosDocumentoPerfil() {
     return;
   }
   // informa divergências sem alterar dados ou estados documentais já cadastrados
-  if (nome.value.trim().toLowerCase() !== cidadao.nome.trim().toLowerCase() || nascimento.value !== cidadao.nascimento) {
+  if (nome.value.trim().toLowerCase() !== cidadao.nome.trim().toLowerCase() || nascimento.value !== cidadao.nascimento || (cidadao.tipoDocumento && tipo.value !== cidadao.tipoDocumento)) {
     mensagem.textContent = "Nome ou nascimento divergem do cadastro. Esta revisão local não altera a identidade. A atualização de identidade depende de uma conferência documental ainda indisponível.";
     return;
   }

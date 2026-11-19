@@ -33,7 +33,13 @@ function atualizarCruzamentoMapa() {
   document.getElementById('suporte-cruzamento-' + tipo).textContent = descricao;
   // seleciona o iframe público sem inventar coordenadas
   const mapa = document.getElementById('mapa-base-' + tipo);
-  mapa.src = 'https://maps.google.com/maps?q=' + encodeURIComponent(nome + ', São Paulo, SP') + '&output=embed';
+  // preserva o mapa público da zeladoria; a travessia utiliza o diagrama local
+  if (mapa.tagName === 'IFRAME') mapa.src = 'https://maps.google.com/maps?q=' + encodeURIComponent(nome + ', São Paulo, SP') + '&output=embed';
+  // sincroniza a seleção dos marcadores com a lista textual
+  const marcadores = document.querySelectorAll('[data-marcador-cruzamento]');
+  for (let i = 0; i < marcadores.length; i++) {
+    marcadores[i].setAttribute('aria-pressed', String(marcadores[i].getAttribute('data-marcador-cruzamento') === escolha.value));
+  }
   // atualiza confirmação e elegibilidade somente na travessia
   if (tipo === 'travessia') {
     document.getElementById('endereco-confirmacao').textContent = nome;
@@ -41,6 +47,8 @@ function atualizarCruzamentoMapa() {
     document.getElementById('relatar-local').hidden = suporte;
     document.getElementById('relatar-local').href = 'zeladoria.html?local=' + encodeURIComponent(nome);
     document.getElementById('solicitar-travessia').disabled = !suporte;
+    // atualiza o painel do controlador junto com a escolha do local
+    if (typeof atualizarContagemApp === 'function') atualizarContagemApp();
     // mantém bloqueado durante uma contagem ativa
     if (typeof pedidoTravessia !== 'undefined' && pedidoTravessia) {
       document.getElementById('solicitar-travessia').disabled = true;
@@ -90,8 +98,48 @@ function falharLocalizacaoRelato() {
   document.getElementById('aviso-localizacao').textContent = 'Não foi possível obter a localização. Digite o endereço do relato.';
 }
 
+// permite escolher no diagrama usando os mesmos radios da lista textual
+function prepararMarcadoresTravessia() {
+  // seleciona o contêiner restaurado da representação demonstrativa
+  const mapa = document.getElementById('mapa-base-travessia');
+  if (!mapa || mapa.tagName === 'IFRAME') return;
+  mapa.textContent = '';
+  // apresenta todos os locais do catálogo, sem criar posições geográficas fictícias
+  for (let i = 0; i < cruzamentosMeuTempo.length; i++) {
+    // cria um botão identificável por ícone, nome e situação de suporte
+    const botao = document.createElement('button');
+    botao.type = 'button';
+    botao.className = 'marcador-semaforo sem-suporte';
+    if (cruzamentosMeuTempo[i].suporte) botao.className = 'marcador-semaforo com-suporte';
+    botao.setAttribute('data-marcador-cruzamento', cruzamentosMeuTempo[i].id);
+    botao.setAttribute('aria-pressed', 'false');
+    const icone = document.createElement('img');
+    icone.src = '../../assets/icones/traffic-lights.svg';
+    icone.className = 'icone';
+    icone.alt = '';
+    botao.appendChild(icone);
+    const nome = document.createElement('span');
+    let suporte = ' — sem suporte confirmado';
+    if (cruzamentosMeuTempo[i].suporte) suporte = ' — com suporte na simulação';
+    nome.textContent = cruzamentosMeuTempo[i].nome + suporte;
+    botao.appendChild(nome);
+    // aciona a mesma seleção da alternativa acessível sem enviar solicitações
+    botao.addEventListener('click', function (evento) {
+      const escolhas = document.querySelectorAll('input[name="cruzamento"]');
+      for (let j = 0; j < escolhas.length; j++) {
+        if (escolhas[j].value === evento.currentTarget.getAttribute('data-marcador-cruzamento') && !escolhas[j].disabled) {
+          escolhas[j].checked = true;
+          escolhas[j].dispatchEvent(new Event('change', {bubbles: true}));
+        }
+      }
+    });
+    mapa.appendChild(botao);
+  }
+}
+
 // conecta a alternativa de lista e os campos de percurso
 function prepararMapas() {
+  prepararMarcadoresTravessia();
   // recupera todos os controles de cruzamento existentes
   const escolhas = document.querySelectorAll('input[name="cruzamento"]');
   // conecta cada mudança de cruzamento ao mapa público
@@ -102,6 +150,8 @@ function prepararMapas() {
   if (escolhas.length) {
     atualizarCruzamentoMapa();
   }
+  // mantém os marcadores bloqueados quando um pedido foi recuperado
+  if (document.getElementById('formulario-travessia')) bloquearSelecaoTravessia(pedidoTravessia !== null);
   // seleciona o campo de origem do percurso
   const partida = document.getElementById('partida-percurso');
   // conecta a consulta externa aos endereços informados

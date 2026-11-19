@@ -1323,7 +1323,7 @@ function sincronizarTransporteAdministrativo() {
   sincronizarEquipamentosCoordenacao();
   const tabelas = document.querySelectorAll("[data-pedidos-operacionais]");
   // relaciona a situação apresentada aos filtros existentes
-  const codigos = {"Pedido recebido": "aguardando", "Aprovado": "aprovado", "Funcionário a caminho": "caminho", "Em atendimento": "atendimento", "Concluído": "concluido", "Recusado": "recusado", "Em análise": "analise", "Aguardando abertura": "aguardando", "Travessia liberada na simulação": "atendimento", "Tempo próximo do fim": "atendimento", "Simulação concluída": "concluido", "Simulação encerrada pelo cidadão": "concluido"};
+  const codigos = {"Pedido recebido": "aguardando", "Aprovado": "aprovado", "Funcionário a caminho": "caminho", "Em atendimento": "atendimento", "Concluído": "concluido", "Recusado": "recusado", "Em análise": "analise", "Aguardando abertura": "aguardando", "Fase de segurança": "aguardando", "Travessia liberada na simulação": "atendimento", "Tempo próximo do fim": "atendimento", "Simulação concluída": "concluido", "Simulação encerrada pelo cidadão": "concluido"};
   // percorre as tabelas da coordenação e dos relatórios
   for (let i = 0; i < tabelas.length; i++) {
     // seleciona as linhas de transporte que serão atualizadas
@@ -1554,6 +1554,8 @@ function exibirPedidosAplicativoCET() {
           adicionarTextoOperacional(meta, "span", pedido.situacao, "admin-status-pill");
           adicionarTextoOperacional(cartao, "h3", pedido.tipo + " · " + pedido.nome, "");
           adicionarTextoOperacional(cartao, "p", pedido.local, "admin-chamado-local");
+          // apresenta a reserva e a concessão registradas pelo controlador local
+          if (pedido.servico === "travessia") adicionarTextoOperacional(cartao, "p", "Adicional solicitado: " + (pedido.tempoAdicionalSolicitado || 0) + " s. Concedido: " + (pedido.tempoAdicionalConcedido || 0) + " s. Cenário: " + (pedido.cenario || "Anterior") + ".", "admin-chamado-local");
           // inclui a descrição quando o serviço recebeu um relato textual
           if (pedido.descricao) adicionarTextoOperacional(cartao, "p", pedido.descricao, "admin-chamado-local");
           const detalhes = adicionarTextoOperacional(cartao, "details", "", "");
@@ -1627,3 +1629,44 @@ if (paginaAdmin.endsWith("/cet.html") && profissionalAdmin !== null && profissio
     if (exemplos[i]) exemplos[i].addEventListener("click", exibirPedidosAplicativoCET);
   }
 }
+
+// =================================================================
+// ATUALIZAÇÃO DOS CICLOS NOS PAINÉIS DE ACOMPANHAMENTO
+// =================================================================
+
+// guarda a única consulta periódica das etapas automáticas
+let temporizadorCiclosAdmin = null;
+
+// recupera as mudanças programadas quando o aplicativo não está aberto
+function atualizarCiclosAdministrativos() {
+  // compara o armazenamento para evitar reconstruir tabelas sem necessidade
+  const anterior = localStorage.getItem("meu-tempo-pedidos");
+  buscarPedidosOperacionais();
+  // atualiza somente quando a conciliação registrou uma nova etapa
+  if (anterior !== localStorage.getItem("meu-tempo-pedidos")) {
+    if (profissionalAdmin.funcao === "Operador CET") exibirPedidosAplicativoCET();
+    else sincronizarTransporteAdministrativo();
+  }
+}
+
+// inicia a consulta apenas nas páginas que acompanham as travessias
+if (profissionalAdmin !== null && (profissionalAdmin.funcao === "Operador CET" || profissionalAdmin.funcao === "Coordenador")) {
+  temporizadorCiclosAdmin = setInterval(atualizarCiclosAdministrativos, 1000);
+  // encerra a consulta ao sair do painel
+  window.addEventListener("pagehide", function () {
+    clearInterval(temporizadorCiclosAdmin);
+    temporizadorCiclosAdmin = null;
+  });
+  // retoma somente a consulta interrompida pelo histórico do navegador
+  window.addEventListener("pageshow", function (evento) {
+    if (evento.persisted && temporizadorCiclosAdmin === null) {
+      atualizarCiclosAdministrativos();
+      temporizadorCiclosAdmin = setInterval(atualizarCiclosAdministrativos, 1000);
+    }
+  });
+}
+
+// revalida a saída ao restaurar uma página administrativa pelo histórico
+window.addEventListener("pageshow", function (evento) {
+  if (evento.persisted && sessionStorage.getItem("admin-sessao") === null) window.location.replace("login.html");
+});

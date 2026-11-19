@@ -40,7 +40,7 @@ function iniciarApp() {
   textoApp('usuario-primeiro-nome', partes[0]);
   textoApp('usuario-iniciais', iniciais.toUpperCase());
   textoApp('perfil-iniciais', iniciais.toUpperCase());
-  textoApp('data-atual', new Date().toLocaleDateString('pt-BR'));
+  textoApp('data-atual', new Date().toLocaleDateString('pt-BR', {day: 'numeric', month: 'long', year: 'numeric'}));
   textoApp('usuario-localizacao', cidadaoApp.bairro + ' — ' + cidadaoApp.municipio);
   // seleciona a saída exclusiva do cidadão
   const sair = document.getElementById('sair-app');
@@ -58,6 +58,10 @@ function iniciarApp() {
       window.location.href = 'perfil.html#formulario-perfil';
     });
   }
+  // revalida a sessão quando o navegador restaura uma tela após o logout
+  window.addEventListener('pageshow', function (evento) {
+    if (evento.persisted && buscarCidadaoConectado() === null) window.location.replace('../login.html');
+  });
   prepararPerfil();
   prepararMetro();
   prepararZeladoria();
@@ -78,10 +82,30 @@ function prepararPerfil() {
   document.getElementById('telefone-perfil').value = cidadaoApp.telefone || '';
   document.getElementById('municipio-perfil').value = cidadaoApp.municipio || '';
   document.getElementById('bairro-perfil').value = cidadaoApp.bairro || '';
-  textoApp('status-documento', 'Identificação: não informada. Complementar: não informado.');
+  // recupera identidade, contato e localização sem liberar edição documental
+  document.getElementById('tipo-documento-perfil').value = cidadaoApp.tipoDocumento || '';
+  document.getElementById('cpf-perfil').value = cidadaoApp.cpf || '';
+  document.getElementById('rg-perfil').value = cidadaoApp.rg || '';
+  document.getElementById('rg-perfil').disabled = cidadaoApp.tipoDocumento === 'cin';
+  document.getElementById('email-perfil').value = cidadaoApp.email || '';
+  document.getElementById('estado-perfil').value = cidadaoApp.estado || '';
+  // apresenta a categoria pelo nome completo
+  const categorias = {geral: 'Demais cidadãos', idosa: 'Pessoa idosa', pcd: 'Pessoa com deficiência', mobilidade: 'Pessoa com mobilidade reduzida', temporaria: 'Necessidade temporária de apoio'};
+  document.getElementById('categoria-perfil').value = categorias[cidadaoApp.categoria] || 'Não informada';
+  textoApp('status-documento', 'Identificação: dados antigos sem conferência de formato registrada.');
   // apresenta os registros existentes sem alegar autenticação externa
   if (cidadaoApp.documentos) {
-    textoApp('status-documento', 'Identificação: ' + estadoDocumento(cidadaoApp.documentos.identificacao) + '. Complementar: ' + estadoDocumento(cidadaoApp.documentos.complementar) + '.');
+    // não apresenta complemento quando ele não foi enviado ou não se aplica
+    let situacao = 'Identificação: ' + estadoDocumento(cidadaoApp.documentos.identificacao) + '.';
+    // informa separadamente quando os dados vieram de leitura automática
+    if (cidadaoApp.documentos.leitura === 'Dados extraídos por OCR') {
+      situacao = situacao + ' Dados extraídos por OCR e revisados no cadastro.';
+    }
+    // diferencia registro complementar de conferência de identificação
+    if (cidadaoApp.categoria === 'pcd' && cidadaoApp.documentos.complementar && cidadaoApp.documentos.complementar !== 'Não informado') {
+      situacao = situacao + ' Complementar: ' + estadoDocumento(cidadaoApp.documentos.complementar) + '.';
+    }
+    textoApp('status-documento', situacao);
   }
   // reúne escolhas editáveis do perfil
   const escolhas = formulario.querySelectorAll('input[type="checkbox"]');
@@ -166,12 +190,19 @@ function salvarPerfilApp(evento) {
   }
   // preserva eventuais documentos conferidos após a abertura desta página
   const atualizado = buscarCidadaoConectado();
+  // impede salvar sem sessão válida
+  if (!atualizado) {
+    textoApp('aviso-perfil', 'Entre novamente para salvar seus dados.');
+    return;
+  }
   cidadaoApp.documentos = atualizado.documentos;
   cidadaoApp.nome = atualizado.nome;
   cidadaoApp.nascimento = atualizado.nascimento;
   cidadaoApp.telefone = document.getElementById('telefone-perfil').value.trim();
   cidadaoApp.municipio = document.getElementById('municipio-perfil').value.trim();
   cidadaoApp.bairro = document.getElementById('bairro-perfil').value.trim();
+  // salva a uf informada sem alterar os campos de identidade
+  cidadaoApp.estado = document.getElementById('estado-perfil').value.trim().toUpperCase();
   // rejeita município formado apenas por espaços
   if (!cidadaoApp.municipio) {
     textoApp('aviso-perfil', 'Informe o município.');
@@ -381,46 +412,85 @@ function registrarZeladoriaApp(evento) {
 // SIMULAÇÃO DE TRAVESSIA
 // =================================================================
 
+// guarda os quatro áudios próprios gerados para esta demonstração
+const sonsTravessia = {};
+// registra o ritmo atual para não reiniciar o mesmo áudio a cada segundo
+let ritmoTravessia = "";
+// registra a última situação anunciada para evitar repetições no leitor de tela
+let estadoAnunciadoTravessia = "";
+
 // conecta a contagem e recupera seu horário final após recarregar
 function prepararTravessia() {
   // seleciona o formulário de travessia
   const formulario = document.getElementById('formulario-travessia');
   // ignora páginas sem o serviço
-  if (!formulario) {
-    return;
+  if (!formulario) return;
+  // recupera os áudios locais de autoria do próprio projeto
+  const nomes = ['aguardando', 'travessia', 'atencao', 'encerramento'];
+  for (let i = 0; i < nomes.length; i++) {
+    sonsTravessia[nomes[i]] = new Audio('../../assets/audios/' + nomes[i] + '.wav');
+    sonsTravessia[nomes[i]].volume = 0.3;
+    sonsTravessia[nomes[i]].preload = 'auto';
   }
   // inicia somente após pedido explícito
   formulario.addEventListener('submit', iniciarTravessiaApp);
   // permite encerrar a simulação
   document.getElementById('encerrar-travessia').addEventListener('click', encerrarTravessiaApp);
+  // altera um segundo por clique sem permitir valores negativos ou superiores a quinze
+  document.getElementById('diminuir-tempo').addEventListener('click', function () { alterarTempoAdicional(-1); });
+  document.getElementById('aumentar-tempo').addEventListener('click', function () { alterarTempoAdicional(1); });
+  // permite testar o áudio por uma interação explícita do cidadão
+  document.getElementById('testar-som-travessia').addEventListener('click', function (evento) {
+    evento.stopPropagation();
+    tocarSomTravessia('aguardando', false);
+  });
+  // ajusta o volume moderado dos quatro sons sem criar outra preferência global
+  document.getElementById('volume-travessia').addEventListener('input', function (evento) {
+    for (let i = 0; i < nomes.length; i++) sonsTravessia[nomes[i]].volume = Number(evento.currentTarget.value);
+  });
   // recupera pedidos associados à sessão atual
   const pedidos = buscarPedidosCidadao();
-  // procura uma simulação ainda em andamento
-  for (let i = 0; i < pedidos.length; i = i + 1) {
-    if (pedidos[i].servico === 'travessia' && pedidos[i].fimSimulacao && !pedidos[i].simulacaoEncerrada) {
-      pedidoTravessia = pedidos[i];
-    }
+  for (let i = 0; i < pedidos.length; i++) {
+    if (pedidos[i].servico === 'travessia' && !pedidos[i].simulacaoEncerrada) pedidoTravessia = pedidos[i];
   }
-  // recalcula a contagem sem reiniciar seu horário final
+  // restaura a seleção do pedido sem criar outro protocolo ou outro ciclo
   if (pedidoTravessia) {
-    // recupera os controles existentes sem alterar o cruzamento do pedido salvo
-    const cruzamentos = document.querySelectorAll('input[name="cruzamento"]');
-    // restaura a seleção correspondente ao protocolo que continua ativo
-    for (let i = 0; i < cruzamentos.length; i = i + 1) {
-      cruzamentos[i].checked = cruzamentos[i].value === pedidoTravessia.cruzamento;
-    }
-    document.getElementById('ciclo-simulado').value = pedidoTravessia.cicloSimulado;
-    // atualiza endereço, cobertura e mapa somente quando o módulo estiver disponível
-    if (typeof atualizarCruzamentoMapa === 'function') {
-      atualizarCruzamentoMapa();
-    }
-    bloquearSelecaoTravessia(true);
-    atualizarContagemApp();
-    // agenda somente quando ainda houver tempo restante
-    if (pedidoTravessia) {
+    const escolhas = document.querySelectorAll('input[name="cruzamento"]');
+    for (let i = 0; i < escolhas.length; i++) escolhas[i].checked = escolhas[i].value === pedidoTravessia.cruzamento;
+    document.getElementById('tempo-adicional').value = pedidoTravessia.tempoAdicionalSolicitado || 0;
+  }
+  alterarTempoAdicional(0);
+  bloquearSelecaoTravessia(pedidoTravessia !== null);
+  // mantém uma única atualização do controlador, inclusive antes de qualquer pedido
+  atualizarContagemApp();
+  temporizadorTravessia = setInterval(atualizarContagemApp, 1000);
+  // interrompe sons e vibração imediatamente após mudar as preferências
+  document.addEventListener('change', atualizarAvisosTravessia);
+  document.addEventListener('click', atualizarAvisosTravessia);
+  window.addEventListener('storage', atualizarAvisosTravessia);
+  // descarta o temporizador e todos os avisos ao sair da página
+  window.addEventListener('pagehide', function () {
+    clearInterval(temporizadorTravessia);
+    temporizadorTravessia = null;
+    pararAvisosTravessia();
+  });
+  // retoma uma página restaurada do histórico sem duplicar seu temporizador
+  window.addEventListener('pageshow', function (evento) {
+    if (evento.persisted && temporizadorTravessia === null) {
+      atualizarContagemApp();
       temporizadorTravessia = setInterval(atualizarContagemApp, 1000);
     }
-  }
+  });
+}
+
+// altera somente a extensão solicitada, nunca o horário atual do ciclo
+// variacao indica um segundo a mais ou a menos
+function alterarTempoAdicional(variacao) {
+  // limita o valor mesmo quando a função for chamada fora dos botões
+  const campo = document.getElementById('tempo-adicional');
+  campo.value = Math.max(0, Math.min(15, Number(campo.value) + variacao));
+  document.getElementById('diminuir-tempo').disabled = Number(campo.value) === 0 || pedidoTravessia !== null;
+  document.getElementById('aumentar-tempo').disabled = Number(campo.value) === 15 || pedidoTravessia !== null;
 }
 
 // bloqueia a troca de cruzamento enquanto o pedido salvo estiver em andamento
@@ -428,108 +498,134 @@ function prepararTravessia() {
 function bloquearSelecaoTravessia(bloqueado) {
   // recupera todas as opções de cruzamento da simulação
   const cruzamentos = document.querySelectorAll('input[name="cruzamento"]');
-  // mantém a seleção fixa até a conclusão ou o encerramento
-  for (let i = 0; i < cruzamentos.length; i = i + 1) {
-    cruzamentos[i].disabled = bloqueado;
-  }
-  document.getElementById('ciclo-simulado').disabled = bloqueado;
+  for (let i = 0; i < cruzamentos.length; i++) cruzamentos[i].disabled = bloqueado;
+  // mantém os marcadores com a mesma disponibilidade da alternativa textual
+  const marcadores = document.querySelectorAll('[data-marcador-cruzamento]');
+  for (let i = 0; i < marcadores.length; i++) marcadores[i].disabled = bloqueado;
   document.getElementById('trocar-cruzamento').disabled = bloqueado;
+  alterarTempoAdicional(0);
 }
 
-// inicia a contagem demonstrativa de 28 segundos sem controlar semáforos
+// inicia a solicitação sem controlar diretamente a fase do semáforo simulado
 // evento representa o envio do formulário
 function iniciarTravessiaApp(evento) {
   evento.preventDefault();
   // impede pedidos e intervalos simultâneos
-  if (pedidoTravessia) {
+  if (pedidoTravessia) return;
+  // valida novamente a extensão, inclusive quando o valor for alterado fora dos botões
+  const adicional = Number(document.getElementById('tempo-adicional').value);
+  if (!Number.isInteger(adicional) || adicional < 0 || adicional > 15) {
+    textoApp('aviso-travessia', 'Escolha um tempo adicional entre zero e quinze segundos.');
     return;
   }
-  // recupera a opção escolhida
+  // recupera a opção escolhida na lista ou no diagrama
   const selecionado = document.querySelector('input[name="cruzamento"]:checked');
-  // respeita a cobertura demonstrativa do cruzamento
-  if (!selecionado || selecionado.parentElement.getAttribute('data-suporte') !== 'true') {
+  if (!selecionado) return;
+  // delega a análise ao controlador compartilhado, que aplica os limites do ciclo
+  pedidoTravessia = registrarTravessiaSimulada(selecionado.value, adicional);
+  if (pedidoTravessia === null) {
+    textoApp('aviso-travessia', 'Não foi possível reservar esse tempo. Consulte seus pedidos ou escolha outro cruzamento com suporte.');
     return;
   }
-  // recupera o tempo de ciclo escolhido apenas para esta simulação acadêmica
-  const ciclo = Number(document.getElementById('ciclo-simulado').value);
-  // valida o intervalo permitido pelo formulário
-  if (!evento.currentTarget.reportValidity() || ciclo < 1 || ciclo > 60) {
-    return;
-  }
-  // aguarda uma transição curta quando ainda houver mais de oito segundos
-  let espera = 2;
-  // reserva para o próximo ciclo demonstrativo quando restarem oito segundos ou menos
-  if (ciclo <= 8) {
-    espera = ciclo + 2;
-  }
-  // calcula o instante de abertura sem consultar um semáforo real
-  const abertura = Date.now() + espera * 1000;
-  pedidoTravessia = registrarPedidoCidadao({servico: 'travessia', tipo: 'Simulação de travessia', orgao: 'cet', cruzamento: selecionado.value, local: document.getElementById('nome-cruzamento-travessia').textContent.trim(), aberturaSimulacao: abertura, fimSimulacao: abertura + 28000, cicloSimulado: ciclo, simulacaoEncerrada: false});
+  estadoAnunciadoTravessia = '';
   bloquearSelecaoTravessia(true);
-  etapaTravessiaApp('Aguardando abertura');
-  alertarTravessiaApp('Solicitação recebida. Aguarde a abertura simulada. Observe o sinal físico de pedestres.');
   atualizarContagemApp();
-  temporizadorTravessia = setInterval(atualizarContagemApp, 1000);
+}
+
+// apresenta os segundos no formato de minutos e segundos
+// segundos representa o tempo restante calculado pelo controlador
+function formatarTempoTravessia(segundos) {
+  // mantém a contagem inteira e não negativa
+  const tempo = Math.max(0, Math.ceil(segundos));
+  return String(Math.floor(tempo / 60)).padStart(2, '0') + ':' + String(tempo % 60).padStart(2, '0');
 }
 
 // calcula o tempo pelo instante final salvo
 function atualizarContagemApp() {
-  // ignora chamadas sem simulação ativa
-  if (!pedidoTravessia) {
+  // consulta o ciclo automático do cruzamento mesmo sem uma solicitação
+  const selecionado = document.querySelector('input[name="cruzamento"]:checked');
+  if (!selecionado) return;
+  const ciclo = consultarCicloTravessia(selecionado.value);
+  // informa ausência de suporte sem criar um controlador para esse local
+  if (ciclo === null) {
+    textoApp('cenario-ciclo', 'Suporte não confirmado no catálogo da simulação.');
+    textoApp('estado-ciclo', 'Selecione outro cruzamento com suporte.');
+    textoApp('contagem-ciclo', '00:00');
     return;
+  }
+  textoApp('cenario-ciclo', 'Cenário demonstrativo: trânsito ' + ciclo.cenario.toLowerCase() + '. Tempo-base: ' + ciclo.tempoBase + ' segundos.');
+  textoApp('estado-ciclo', 'Ciclo automático: ' + ciclo.estado + '.');
+  // identifica a próxima mudança prevista sem anunciar cada segundo
+  let proximo = ciclo.transicao;
+  if (Date.now() >= ciclo.fim) proximo = ciclo.fimCiclo;
+  else if (Date.now() >= ciclo.abertura) proximo = ciclo.fim;
+  else if (Date.now() >= ciclo.transicao) proximo = ciclo.abertura;
+  textoApp('contagem-ciclo', formatarTempoTravessia((proximo - Date.now()) / 1000));
+  // mantém o botão disponível apenas em locais contemplados e sem pedido ativo
+  document.getElementById('solicitar-travessia').disabled = pedidoTravessia !== null;
+  if (!pedidoTravessia) return;
+  // recupera o mesmo protocolo com as etapas conciliadas, inclusive após trocar de página
+  const pedidos = buscarPedidosOperacionais();
+  for (let i = 0; i < pedidos.length; i++) {
+    if (pedidos[i].protocolo === pedidoTravessia.protocolo) pedidoTravessia = pedidos[i];
   }
   document.getElementById('resultado-travessia').hidden = false;
-  document.getElementById('encerrar-travessia').hidden = false;
-  document.getElementById('solicitar-travessia').disabled = true;
-  // calcula o tempo sem depender da precisão do intervalo
-  const restante = Math.max(0, Math.ceil((pedidoTravessia.fimSimulacao - Date.now()) / 1000));
-  // calcula a espera até a abertura programada da simulação
-  const espera = Math.max(0, Math.ceil((pedidoTravessia.aberturaSimulacao - Date.now()) / 1000));
-  // apresenta a etapa de espera e a regra acadêmica sem autorizar travessia real
-  if (espera > 0) {
-    textoApp('contagem-travessia', pedidoTravessia.protocolo + ' — aguardando abertura simulada: ' + espera + ' segundos. Com oito segundos ou menos, o pedido fica para o próximo ciclo demonstrativo. Observe o sinal físico da rua.');
-    return;
+  textoApp('titulo-confirmacao-travessia', 'Acompanhe sua solicitação');
+  textoApp('descricao-confirmacao-travessia', 'A reserva é analisada pelo controlador da simulação.');
+  textoApp('titulo-resultado-travessia', pedidoTravessia.situacao);
+  textoApp('dados-travessia', pedidoTravessia.protocolo + ' · ' + pedidoTravessia.local + ' · Adicional solicitado: ' + (pedidoTravessia.tempoAdicionalSolicitado || 0) + ' s. Concedido: ' + (pedidoTravessia.tempoAdicionalConcedido || 0) + ' s.');
+  textoApp('estado-pedido-travessia', 'Tempo total programado neste ciclo: ' + (pedidoTravessia.tempoTotalSimulado || 28) + ' segundos.');
+  // utiliza a abertura na espera e o encerramento durante a fase de pedestres
+  let fim = pedidoTravessia.fimSimulacao;
+  if (Date.now() < pedidoTravessia.aberturaSimulacao) fim = pedidoTravessia.aberturaSimulacao;
+  textoApp('contagem-travessia', formatarTempoTravessia((fim - Date.now()) / 1000));
+  apresentarEtapasTravessia();
+  // comunica apenas mudanças importantes, respeitando as preferências independentes
+  if (estadoAnunciadoTravessia !== pedidoTravessia.situacao) {
+    estadoAnunciadoTravessia = pedidoTravessia.situacao;
+    alertarTravessiaApp(pedidoTravessia.situacao);
   }
-  // registra a abertura somente uma vez, inclusive após recarregar a página
-  if (pedidoTravessia.situacao === 'Aguardando abertura' && restante > 0) {
-    etapaTravessiaApp('Travessia liberada na simulação');
-    alertarTravessiaApp('Início da contagem simulada. Observe o sinal físico da rua.');
-  }
-  // avisa quando a contagem simulada estiver nos últimos oito segundos
-  if (restante > 0 && restante <= 8 && pedidoTravessia.situacao !== 'Tempo próximo do fim') {
-    etapaTravessiaApp('Tempo próximo do fim');
-    alertarTravessiaApp('Atenção: tempo próximo do fim na simulação. Observe o sinal físico da rua.');
-  }
-  textoApp('contagem-travessia', pedidoTravessia.protocolo + ' — simulação: ' + restante + ' segundos. Observe o sinal físico da rua.');
-  // encerra somente a simulação ao chegar a zero
-  if (restante === 0) {
-    finalizarTravessiaApp('Simulação concluída');
+  atualizarAvisosTravessia();
+  // libera a seleção ao encerrar o pedido sem manter avisos antigos
+  if (pedidoTravessia.simulacaoEncerrada) {
+    textoApp('descricao-confirmacao-travessia', 'Solicitação encerrada. Você pode fazer um novo pedido.');
+    document.getElementById('encerrar-travessia').hidden = true;
+    pedidoTravessia = null;
+    bloquearSelecaoTravessia(false);
+    document.getElementById('solicitar-travessia').disabled = false;
+  } else document.getElementById('encerrar-travessia').hidden = false;
+}
+
+// monta somente as etapas efetivamente registradas no histórico
+function apresentarEtapasTravessia() {
+  // recupera a lista dentro do painel existente
+  const lista = document.getElementById('etapas-travessia');
+  lista.textContent = '';
+  for (let i = 0; i < pedidoTravessia.etapas.length; i++) {
+    // cria cada etapa com texto seguro e a estrutura visual já usada nos pedidos
+    const item = document.createElement('li');
+    item.className = 'etapa-solicitacao';
+    const dados = document.createElement('div');
+    dados.className = 'dados-etapa';
+    dados.textContent = pedidoTravessia.etapas[i].titulo + ' · ' + pedidoTravessia.etapas[i].horario;
+    item.appendChild(dados);
+    lista.appendChild(item);
   }
 }
 
 // encerra a simulação após solicitação do cidadão
 function encerrarTravessiaApp() {
   // impede alteração de pedidos já encerrados
-  if (pedidoTravessia) {
-    finalizarTravessiaApp('Simulação encerrada pelo cidadão');
-  }
+  if (pedidoTravessia) finalizarTravessiaApp('Simulação encerrada pelo cidadão');
 }
 
-// finaliza o único intervalo e registra o evento real
+// finaliza o pedido sem interromper a existência do ciclo automático
 // titulo indica o motivo do encerramento
 function finalizarTravessiaApp(titulo) {
-  clearInterval(temporizadorTravessia);
-  temporizadorTravessia = null;
   pedidoTravessia.simulacaoEncerrada = true;
+  pedidoTravessia.dataConclusao = new Date().toLocaleString('pt-BR');
   etapaTravessiaApp(titulo);
-  textoApp('contagem-travessia', pedidoTravessia.protocolo + ' — ' + titulo + '. Observe o sinal físico da rua.');
-  pedidoTravessia = null;
-  bloquearSelecaoTravessia(false);
-  document.getElementById('encerrar-travessia').hidden = true;
-  // recupera a cobertura da opção atual
-  const selecionado = document.querySelector('input[name="cruzamento"]:checked');
-  document.getElementById('solicitar-travessia').disabled = selecionado.parentElement.getAttribute('data-suporte') !== 'true';
-  alertarTravessiaApp(titulo + '. Observe o sinal físico de pedestres.');
+  atualizarContagemApp();
 }
 
 // acrescenta somente uma etapa ocorrida na simulação
@@ -538,32 +634,103 @@ function etapaTravessiaApp(titulo) {
   // recupera o instante real do evento
   const agora = new Date();
   pedidoTravessia.situacao = titulo;
-  pedidoTravessia.etapas.push({titulo: titulo, horario: agora.toLocaleTimeString('pt-BR'), instante: agora.toISOString()});
+  pedidoTravessia.etapas.push({titulo: titulo, horario: agora.toLocaleString('pt-BR'), instante: agora.toISOString()});
   // atualiza o mesmo protocolo sem duplicar pedidos
   salvarPedidoCidadao(pedidoTravessia);
+}
+
+// interrompe toda reprodução anterior e qualquer vibração pendente
+function pararAvisosTravessia() {
+  pararSonsTravessia();
+  if (navigator.vibrate) navigator.vibrate(0);
+}
+
+// pausa apenas os áudios sem interferir nos alertas vibratórios
+function pararSonsTravessia() {
+  // percorre os quatro sons conhecidos sem carregar recursos externos
+  const nomes = ['aguardando', 'travessia', 'atencao', 'encerramento'];
+  for (let i = 0; i < nomes.length; i++) {
+    if (sonsTravessia[nomes[i]]) {
+      sonsTravessia[nomes[i]].pause();
+      sonsTravessia[nomes[i]].currentTime = 0;
+    }
+  }
+  ritmoTravessia = '';
+}
+
+// reproduz um único ritmo local por vez
+// nome identifica o áudio; repetir indica se a fase exige repetição
+function tocarSomTravessia(nome, repetir) {
+  pararSonsTravessia();
+  // inicia a reprodução somente depois da escolha ou do teste explícito do cidadão
+  const som = sonsTravessia[nome];
+  ritmoTravessia = nome;
+  som.loop = repetir;
+  // mantém as outras funções operando quando o navegador bloquear o áudio
+  som.play().catch(function () {
+    textoApp('aviso-travessia', 'O navegador bloqueou o som. Utilize Testar som para autorizar a reprodução.');
+  });
 }
 
 // respeita preferências de som e vibração separadas da voz da iara
 // mensagem indica o aviso de início ou término
 function alertarTravessiaApp(mensagem) {
-  // recupera as preferências atuais
-  const preferencias = buscarPreferenciasAcessibilidade();
-  // utiliza voz nativa somente quando autorizada e disponível
-  if (preferencias.somTravessia && window.speechSynthesis) {
-    // prepara a fala em português
-    const fala = new SpeechSynthesisUtterance(mensagem);
-    fala.lang = 'pt-BR';
-    window.speechSynthesis.speak(fala);
+  textoApp('aviso-travessia', mensagem + '. Aviso exclusivo da simulação acadêmica.');
+  // interrompe os sons anteriores e apresenta um único aviso de encerramento
+  if (mensagem === 'Simulação concluída' || mensagem === 'Simulação encerrada pelo cidadão') {
+    pararAvisosTravessia();
+    if (buscarPreferenciasAcessibilidade().somTravessia) tocarSomTravessia('encerramento', false);
   }
-  // vibra somente quando a preferência e o dispositivo permitirem
-  if (preferencias.vibracao && navigator.vibrate) {
-    navigator.vibrate(200);
+  // emite padrões curtos conforme o evento, quando o dispositivo oferecer suporte
+  if (buscarPreferenciasAcessibilidade().vibracao && navigator.vibrate) {
+    if (mensagem === 'Travessia liberada na simulação') navigator.vibrate([100, 120, 100]);
+    else if (mensagem === 'Tempo próximo do fim') navigator.vibrate([80, 80, 80, 80, 80]);
+    else if (mensagem === 'Simulação concluída' || mensagem === 'Simulação encerrada pelo cidadão') navigator.vibrate(220);
+    else navigator.vibrate(100);
   }
 }
 
+// atualiza o ritmo e interrompe avisos assim que uma preferência for desativada
+function atualizarAvisosTravessia() {
+  // evita utilizar áudio em páginas que não possuem o formulário
+  if (!document.getElementById('formulario-travessia')) return;
+  const preferencias = buscarPreferenciasAcessibilidade();
+  if (!preferencias.vibracao && navigator.vibrate) navigator.vibrate(0);
+  // desativa imediatamente todos os sons ao desligar a preferência
+  if (!preferencias.somTravessia) {
+    pararSonsTravessia();
+    return;
+  }
+  if (!pedidoTravessia || pedidoTravessia.simulacaoEncerrada) return;
+  // escolhe um único ritmo para a fase atual sem utilizar fala sintetizada
+  let ritmo = 'aguardando';
+  if (pedidoTravessia.situacao === 'Travessia liberada na simulação') ritmo = 'travessia';
+  else if (pedidoTravessia.situacao === 'Tempo próximo do fim') ritmo = 'atencao';
+  // retoma a repetição mesmo quando o mesmo som foi testado uma única vez
+  if (ritmoTravessia !== ritmo || !sonsTravessia[ritmo].loop) tocarSomTravessia(ritmo, true);
+}
+
 // =================================================================
+
 // PEDIDOS DO CIDADÃO
 // =================================================================
+
+// guarda o único temporizador de consulta na página de pedidos
+let temporizadorPedidosApp = null;
+// guarda o conteúdo consultado para preservar o foco quando nada mudou
+let dadosPedidosApp = '';
+
+// concilia os horários mesmo quando o cidadão saiu da tela de travessia
+function atualizarPedidosEmAberto() {
+  // recupera etapas vencidas e compara as duas listas compartilhadas
+  buscarPedidosOperacionais();
+  const atual = localStorage.getItem('metro-chamados') + '|' + localStorage.getItem('meu-tempo-pedidos');
+  // reconstrói os cartões somente quando houver alguma alteração real
+  if (atual !== dadosPedidosApp) {
+    dadosPedidosApp = atual;
+    apresentarPedidosApp(document.getElementById('lista-solicitacoes').getAttribute('data-filtro'));
+  }
+}
 
 // conecta filtros e atualizações recebidas de outra aba
 function prepararPedidos() {
@@ -582,6 +749,21 @@ function prepararPedidos() {
     });
   }
   apresentarPedidosApp('filtro-todas');
+  // consulta uma vez por segundo sem reiniciar ciclos ou registrar novos pedidos
+  dadosPedidosApp = localStorage.getItem('metro-chamados') + '|' + localStorage.getItem('meu-tempo-pedidos');
+  temporizadorPedidosApp = setInterval(atualizarPedidosEmAberto, 1000);
+  // interrompe a consulta quando esta página deixa de ser utilizada
+  window.addEventListener('pagehide', function () {
+    clearInterval(temporizadorPedidosApp);
+    temporizadorPedidosApp = null;
+  });
+  // restaura a consulta ao voltar pelo histórico do navegador
+  window.addEventListener('pageshow', function (evento) {
+    if (evento.persisted && temporizadorPedidosApp === null) {
+      atualizarPedidosEmAberto();
+      temporizadorPedidosApp = setInterval(atualizarPedidosEmAberto, 1000);
+    }
+  });
   // recebe atualizações de situação feitas pelo painel em outra aba
   window.addEventListener('storage', function () {
     apresentarPedidosApp(lista.getAttribute('data-filtro'));
@@ -591,56 +773,139 @@ function prepararPedidos() {
 // apresenta somente pedidos e etapas realmente registrados
 // filtro indica todas, andamento ou finalizadas
 function apresentarPedidosApp(filtro) {
-  // recupera os pedidos já limitados ao cidadão conectado
+  // recupera os pedidos do cidadão já ordenados pela data mais recente
   const pedidos = buscarPedidosCidadao();
-  // recupera o contêiner da lista
   const lista = document.getElementById('lista-solicitacoes');
+  // preserva o acompanhamento aberto e o foco durante atualizações de situação
+  const abertos = lista.querySelectorAll('.card-solicitacao[open]');
+  const protocolosAbertos = [];
+  for (let i = 0; i < abertos.length; i++) protocolosAbertos.push(abertos[i].getAttribute('data-protocolo'));
+  // identifica somente o foco que pertence à lista, mantendo os filtros independentes
+  const focoAnterior = document.activeElement.closest('.card-solicitacao');
+  let protocoloFoco = '';
+  if (focoAnterior && lista.contains(focoAnterior)) protocoloFoco = focoAnterior.getAttribute('data-protocolo');
   lista.textContent = '';
   lista.setAttribute('data-filtro', filtro);
-  // percorre pedidos do mais recente para o mais antigo
-  for (let i = pedidos.length - 1; i >= 0; i = i - 1) {
-    // identifica situações encerradas
-    const finalizado = pedidos[i].situacao === 'Concluído' || pedidos[i].situacao === 'Recusado' || pedidos[i].situacao === 'Cancelado' || pedidos[i].situacao === 'Simulação concluída' || pedidos[i].situacao === 'Simulação encerrada pelo cidadão';
-    // aplica o filtro escolhido
+  // percorre os registros sem misturar pedidos de outros cidadãos
+  for (let i = 0; i < pedidos.length; i++) {
+    // identifica as situações encerradas que pertencem ao filtro de finalizadas
+    const pedido = pedidos[i];
+    const finalizado = pedido.situacao === 'Concluído' || pedido.situacao === 'Recusado' || pedido.situacao === 'Cancelado' || pedido.situacao === 'Simulação concluída' || pedido.situacao === 'Simulação encerrada pelo cidadão';
     if ((filtro !== 'filtro-andamento' || !finalizado) && (filtro !== 'filtro-finalizadas' || finalizado)) {
-      // cria o cartão expansível preservando a classe existente
+      // recupera o nome completo e o ícone local do serviço correspondente
+      let nomeServico = 'Zeladoria urbana';
+      let caminhoIcone = 'zeladoria.svg';
+      if (pedido.servico === 'metro') {
+        nomeServico = 'Apoio no Metrô e CPTM';
+        caminhoIcone = 'metro.svg';
+      } else if (pedido.servico === 'travessia') {
+        nomeServico = 'Travessia acessível';
+        caminhoIcone = 'traffic-lights.svg';
+      }
+      // reutiliza a mesma estrutura de cartão expansível que já possui estilos
       const cartao = document.createElement('details');
       cartao.className = 'card-solicitacao';
-      // apresenta protocolo, serviço e situação
-      const resumo = document.createElement('summary');
-      resumo.textContent = pedidos[i].protocolo + ' — ' + pedidos[i].tipo + ' — ' + pedidos[i].situacao;
-      cartao.appendChild(resumo);
-      // apresenta os dados de data e localização
-      const dados = document.createElement('p');
-      dados.textContent = pedidos[i].horarioSolicitacao + ' — ' + (pedidos[i].local || pedidos[i].estacao || '') + ' — ' + (pedidos[i].linha || '') + ' — ' + (pedidos[i].descricao || '');
-      cartao.appendChild(dados);
-      // apresenta o motivo informado pelo operador sem interpretar marcação externa
-      if (pedidos[i].motivoRecusa) {
-        // cria uma explicação textual acessível no acompanhamento do pedido
-        const motivo = document.createElement('p');
-        motivo.textContent = 'Motivo da recusa: ' + pedidos[i].motivoRecusa;
-        cartao.appendChild(motivo);
+      cartao.setAttribute('data-protocolo', pedido.protocolo);
+      // recupera apenas os cartões que o cidadão já havia expandido
+      for (let j = 0; j < protocolosAbertos.length; j++) {
+        if (protocolosAbertos[j] === pedido.protocolo) cartao.open = true;
       }
-      // cria a linha de etapas do pedido
+      const resumo = document.createElement('summary');
+      resumo.setAttribute('aria-expanded', 'false');
+      resumo.setAttribute('aria-label', 'Ver acompanhamento: ' + nomeServico + ', ' + pedido.protocolo);
+      cartao.appendChild(resumo);
+      // apresenta o ícone decorativo junto do nome textual do serviço
+      const circulo = document.createElement('span');
+      circulo.className = 'icone-solicitacao';
+      const icone = document.createElement('img');
+      icone.className = 'icone';
+      icone.src = '../../assets/icones/' + caminhoIcone;
+      icone.alt = '';
+      circulo.appendChild(icone);
+      resumo.appendChild(circulo);
+      // organiza nome, protocolo, data e local com as classes existentes
+      const informacoes = document.createElement('span');
+      informacoes.className = 'dados-solicitacao';
+      const nome = document.createElement('strong');
+      nome.textContent = nomeServico;
+      informacoes.appendChild(nome);
+      const metadados = document.createElement('small');
+      let horario = pedido.horarioSolicitacao || 'Horário não registrado';
+      if (pedido.dataSolicitacao) horario = new Date(pedido.dataSolicitacao).toLocaleString('pt-BR');
+      metadados.textContent = pedido.protocolo + ' · ' + horario;
+      informacoes.appendChild(metadados);
+      const local = document.createElement('small');
+      local.textContent = pedido.local || pedido.estacao || '';
+      informacoes.appendChild(local);
+      const chamada = document.createElement('small');
+      chamada.textContent = 'Ver acompanhamento';
+      informacoes.appendChild(chamada);
+      resumo.appendChild(informacoes);
+      // mantém a etiqueta de situação com a aparência dos cartões originais
+      const situacao = document.createElement('span');
+      situacao.className = 'status-solicitacao status-andamento';
+      if (finalizado) situacao.className = 'status-solicitacao status-finalizada';
+      situacao.textContent = pedido.situacao;
+      resumo.appendChild(situacao);
+      const seta = document.createElement('img');
+      seta.src = '../../assets/icones/seta-direita.svg';
+      seta.alt = '';
+      seta.className = 'icone seta-solicitacao';
+      resumo.appendChild(seta);
+      // agrupa os detalhes dentro da área recolhida que já possui espaçamento
+      const historico = document.createElement('div');
+      historico.className = 'historico-solicitacao';
+      const detalhes = document.createElement('p');
+      detalhes.className = 'protocolo-solicitacao';
+      detalhes.textContent = pedido.tipo;
+      if (pedido.servico === 'metro') detalhes.textContent = pedido.tipo + ' · ' + pedido.linha + ' · ' + pedido.estacao;
+      else if (pedido.servico === 'travessia') detalhes.textContent = 'Adicional solicitado: ' + (pedido.tempoAdicionalSolicitado || 0) + ' s. Concedido: ' + (pedido.tempoAdicionalConcedido || 0) + ' s.';
+      else detalhes.textContent = (pedido.categoria || 'Relato') + ' · ' + (pedido.descricao || '').slice(0, 180);
+      historico.appendChild(detalhes);
+      // apresenta o motivo da recusa usando somente texto
+      if (pedido.motivoRecusa) {
+        const motivo = document.createElement('p');
+        motivo.textContent = 'Motivo da recusa: ' + pedido.motivoRecusa;
+        historico.appendChild(motivo);
+      }
+      // utiliza a estrutura original das linhas do tempo, sem marcar etapas futuras
       const etapas = document.createElement('ol');
       etapas.className = 'linha-tempo';
-      // apresenta somente eventos persistidos no pedido
-      for (let j = 0; j < pedidos[i].etapas.length; j = j + 1) {
-        // cria o texto de uma etapa registrada
+      for (let j = 0; j < pedido.etapas.length; j++) {
         const etapa = document.createElement('li');
         etapa.className = 'etapa-solicitacao';
-        etapa.textContent = pedidos[i].etapas[j].titulo + ' — ' + pedidos[i].etapas[j].horario;
+        const marca = document.createElement('span');
+        marca.className = 'icone-etapa';
+        marca.textContent = '✓';
+        marca.setAttribute('aria-hidden', 'true');
+        etapa.appendChild(marca);
+        const dados = document.createElement('div');
+        dados.className = 'dados-etapa';
+        const titulo = document.createElement('strong');
+        titulo.textContent = pedido.etapas[j].titulo;
+        dados.appendChild(titulo);
+        const data = document.createElement('p');
+        data.textContent = pedido.etapas[j].horario;
+        if (pedido.etapas[j].instante) data.textContent = new Date(pedido.etapas[j].instante).toLocaleString('pt-BR');
+        dados.appendChild(data);
+        etapa.appendChild(dados);
         etapas.appendChild(etapa);
       }
-      cartao.appendChild(etapas);
+      historico.appendChild(etapas);
+      cartao.appendChild(historico);
+      // informa a expansão e o recolhimento também para tecnologias assistivas
+      cartao.addEventListener('toggle', function (evento) {
+        evento.currentTarget.querySelector('summary').setAttribute('aria-expanded', String(evento.currentTarget.open));
+      });
       lista.appendChild(cartao);
+      // mantém a posição de navegação ao atualizar um pedido que estava em foco
+      if (protocoloFoco === pedido.protocolo) resumo.focus();
     }
   }
+  // apresenta o estado vazio somente quando o filtro não possui resultados
   document.getElementById('sem-solicitacoes').hidden = lista.children.length > 0;
-  // recupera controles de filtro para sincronizar o destaque
   const botoes = document.querySelectorAll('button[id^="filtro-"]');
-  // informa o filtro ativo visualmente e aos leitores de tela
-  for (let i = 0; i < botoes.length; i = i + 1) {
+  for (let i = 0; i < botoes.length; i++) {
     botoes[i].classList.remove('ativo');
     botoes[i].setAttribute('aria-pressed', 'false');
     if (botoes[i].id === filtro) {

@@ -602,25 +602,182 @@ function salvarPedidoCidadao(pedido) {
   localStorage.setItem(chave, JSON.stringify(pedidos));
 }
 
+// =================================================================
+// PROTOCOLOS DOS SERVIÇOS
+// =================================================================
+
+// gera um número anual por serviço sem modificar protocolos já registrados
+// tipoServico identifica travessia, metro ou zeladoria
+function gerarProtocoloPedido(tipoServico) {
+  // relaciona o serviço à sigla apresentada ao cidadão
+  let sigla = "ZU";
+  if (tipoServico === "travessia") sigla = "TR";
+  else if (tipoServico === "metro") sigla = "AF";
+  // recupera o ano atual e o contador persistido desse serviço
+  const ano = new Date().getFullYear();
+  const prefixo = "MT-" + sigla + "-" + ano + "-";
+  const chave = "meu-tempo-sequencia-" + sigla + "-" + ano;
+  let sequencia = Number(localStorage.getItem(chave));
+  // ignora somente contadores inválidos, mantendo os registros existentes
+  if (!Number.isInteger(sequencia) || sequencia < 0) sequencia = 0;
+  // verifica também os protocolos salvos para não reutilizar um número existente
+  const listas = [lerListaOperacional("metro-chamados"), lerListaOperacional("meu-tempo-pedidos")];
+  for (let i = 0; i < listas.length; i++) {
+    for (let j = 0; j < listas[i].length; j++) {
+      // compara somente protocolos do mesmo serviço e ano
+      const protocolo = listas[i][j].protocolo || "";
+      if (protocolo.indexOf(prefixo) === 0) {
+        // recupera a sequência final sem mudar o identificador original
+        const numero = Number(protocolo.slice(prefixo.length));
+        if (Number.isInteger(numero) && numero > sequencia) sequencia = numero;
+      }
+    }
+  }
+  // reserva o próximo número mesmo quando o pedido vier a ser cancelado
+  sequencia = sequencia + 1;
+  localStorage.setItem(chave, String(sequencia));
+  return prefixo + String(sequencia).padStart(4, "0");
+}
+
+// =================================================================
+// CONTROLADOR COMPARTILHADO DA TRAVESSIA SIMULADA
+// =================================================================
+
+// consulta um ciclo que existe independentemente de qualquer solicitação
+// cruzamento identifica o local; numero permite consultar uma reserva futura
+function consultarCicloTravessia(cruzamento, numero) {
+  // procura o local no catálogo já utilizado pelo aplicativo
+  let indice = -1;
+  for (let i = 0; i < cruzamentosMeuTempo.length; i++) {
+    if (cruzamentosMeuTempo[i].id === cruzamento) indice = i;
+  }
+  // impede iniciar controladores para locais desconhecidos ou sem suporte
+  if (indice === -1 || !cruzamentosMeuTempo[indice].suporte) return null;
+  // define cenários acadêmicos fixos, sem simular medições reais de trânsito
+  const cenarios = [
+    {nome: "Baixo", espera: 20, base: 20},
+    {nome: "Moderado", espera: 25, base: 25},
+    {nome: "Alto", espera: 30, base: 30}
+  ];
+  // distribui os três cenários entre os locais que realmente possuem suporte
+  let indiceCenario = 0;
+  for (let i = 0; i < indice; i++) {
+    if (cruzamentosMeuTempo[i].suporte) indiceCenario = indiceCenario + 1;
+  }
+  const cenario = cenarios[indiceCenario % cenarios.length];
+  const controles = lerListaOperacional("meu-tempo-ciclos");
+  let controle = null;
+  // procura o horário inicial que será compartilhado entre as páginas
+  for (let i = 0; i < controles.length; i++) {
+    if (controles[i].cruzamento === cruzamento) controle = controles[i];
+  }
+  // inicia uma única referência temporal ao consultar o cruzamento pela primeira vez
+  if (controle === null) {
+    controle = {cruzamento: cruzamento, inicio: Date.now(), reservas: []};
+    controles.push(controle);
+    localStorage.setItem("meu-tempo-ciclos", JSON.stringify(controles));
+  }
+  // reserva quinze segundos no ciclo para a extensão e três para cada transição
+  const duracao = (cenario.espera + 3 + cenario.base + 15 + 3) * 1000;
+  let cicloNumero = Math.floor((Date.now() - controle.inicio) / duracao);
+  // permite consultar uma reserva do próximo ciclo sem mudar o relógio do controlador
+  if (typeof numero === "number") cicloNumero = numero;
+  // recupera o total de extensões já reservado para esse ciclo
+  let adicional = 0;
+  for (let i = 0; i < controle.reservas.length; i++) {
+    if (controle.reservas[i].numero === cicloNumero) adicional = controle.reservas[i].adicional;
+  }
+  // calcula as fases a partir da referência compartilhada, sem depender de temporizadores
+  const inicio = controle.inicio + cicloNumero * duracao;
+  const transicao = inicio + cenario.espera * 1000;
+  const abertura = transicao + 3000;
+  const fim = abertura + (cenario.base + adicional) * 1000;
+  const agora = Date.now();
+  let estado = "Aguardando abertura";
+  // cada instante possui apenas um estado dentro da demonstração
+  if (agora >= fim) estado = "Travessia encerrada";
+  else if (agora >= fim - 8000) estado = "Tempo próximo do fim";
+  else if (agora >= abertura + 1000) estado = "Travessia em andamento";
+  else if (agora >= abertura) estado = "Travessia iniciada";
+  else if (agora >= transicao) estado = "Fase de segurança";
+  return {cruzamento: cruzamento, numero: cicloNumero, cenario: cenario.nome, inicio: inicio, transicao: transicao, abertura: abertura, fim: fim, fimCiclo: inicio + duracao, tempoBase: cenario.base, adicional: adicional, tempoTotal: cenario.base + adicional, estado: estado};
+}
+
+// analisa uma solicitação e reserva a extensão no ciclo apropriado
+// cruzamento indica o local; adicional contém somente os segundos solicitados
+function registrarTravessiaSimulada(cruzamento, adicional) {
+  // exige sessão e um valor inteiro dentro do limite acadêmico de quinze segundos
+  const cidadao = buscarCidadaoConectado();
+  if (cidadao === null || !Number.isInteger(adicional) || adicional < 0 || adicional > 15) return null;
+  // recupera o controlador automático sem aceitar um horário enviado pelo cidadão
+  let ciclo = consultarCicloTravessia(cruzamento);
+  if (ciclo === null) return null;
+  // impede duas travessias ativas do mesmo cidadão, inclusive em abas diferentes
+  const pedidos = buscarPedidosOperacionais();
+  for (let i = 0; i < pedidos.length; i++) {
+    if (pedidos[i].servico === "travessia" && pedidos[i].cidadaoId === cidadao.id && !pedidos[i].simulacaoEncerrada) return null;
+  }
+  // reserva o próximo ciclo quando restam oito segundos ou não há margem para a extensão
+  if (ciclo.fim - Date.now() <= 8000 || ciclo.adicional + adicional > 15) {
+    ciclo = consultarCicloTravessia(cruzamento, ciclo.numero + 1);
+  }
+  // informa indisponibilidade quando o próximo ciclo também atingiu o limite
+  if (ciclo.adicional + adicional > 15) return null;
+  // atualiza apenas a reserva do controlador escolhido
+  const controles = lerListaOperacional("meu-tempo-ciclos");
+  for (let i = 0; i < controles.length; i++) {
+    if (controles[i].cruzamento === cruzamento) {
+      // procura a reserva sem duplicar o número do ciclo
+      let reserva = null;
+      for (let j = 0; j < controles[i].reservas.length; j++) {
+        if (controles[i].reservas[j].numero === ciclo.numero) reserva = controles[i].reservas[j];
+      }
+      // cria a reserva somente quando esse ciclo ainda não recebeu solicitações
+      if (reserva === null) {
+        reserva = {numero: ciclo.numero, adicional: 0};
+        controles[i].reservas.push(reserva);
+      }
+      reserva.adicional = reserva.adicional + adicional;
+    }
+  }
+  localStorage.setItem("meu-tempo-ciclos", JSON.stringify(controles));
+  // recupera o horário atualizado para todos os cidadãos do mesmo ciclo
+  ciclo = consultarCicloTravessia(cruzamento, ciclo.numero);
+  for (let i = 0; i < pedidos.length; i++) {
+    if (pedidos[i].servico === "travessia" && pedidos[i].cruzamento === cruzamento && pedidos[i].cicloNumero === ciclo.numero && !pedidos[i].simulacaoEncerrada) {
+      pedidos[i].fimSimulacao = ciclo.fim;
+      pedidos[i].tempoTotalSimulado = ciclo.tempoTotal;
+      salvarPedidoCidadao(pedidos[i]);
+    }
+  }
+  // utiliza o nome do catálogo original, sem aceitar texto de um campo oculto
+  let local = "";
+  for (let i = 0; i < cruzamentosMeuTempo.length; i++) {
+    if (cruzamentosMeuTempo[i].id === cruzamento) local = cruzamentosMeuTempo[i].nome;
+  }
+  // registra o pedido uma única vez com o mesmo protocolo em todos os painéis
+  const pedido = registrarPedidoCidadao({servico: "travessia", tipo: "Travessia acessível", orgao: "cet", cruzamento: cruzamento, local: local, cicloNumero: ciclo.numero, cenario: ciclo.cenario, tempoBase: ciclo.tempoBase, tempoAdicionalSolicitado: adicional, tempoAdicionalReservado: adicional, tempoAdicionalConcedido: 0, tempoTotalSimulado: ciclo.tempoTotal, aberturaSimulacao: ciclo.abertura, fimSimulacao: ciclo.fim, simulacaoEncerrada: false});
+  // registra a análise automática local, preservando o horário real do pedido
+  pedido.situacao = "Aguardando abertura";
+  pedido.etapas.push({titulo: "Aguardando abertura", horario: new Date().toLocaleString("pt-BR"), instante: new Date().toISOString()});
+  salvarPedidoCidadao(pedido);
+  // recupera imediatamente a etapa correspondente se o ciclo já estiver aberto
+  const atualizados = buscarPedidosOperacionais();
+  for (let i = 0; i < atualizados.length; i++) {
+    if (atualizados[i].protocolo === pedido.protocolo) return atualizados[i];
+  }
+  return pedido;
+}
+
 // registra uma solicitação com o cidadão da sessão atual
 // pedido contém somente as informações necessárias ao serviço escolhido
 function registrarPedidoCidadao(pedido) {
   // identifica quem está enviando a solicitação
   const cidadao = buscarCidadaoConectado();
   if (cidadao === null) return null;
-  // prepara a chave e o prefixo do serviço
-  let prefixo = "ZEL-";
-  let chave = "meu-tempo-pedidos";
-  if (pedido.servico === "metro") {
-    prefixo = "MT-";
-    chave = "metro-chamados";
-  } else if (pedido.servico === "travessia") {
-    prefixo = "TR-";
-  }
-  // utiliza o instante e a quantidade para diferenciar solicitações consecutivas
-  const existentes = lerListaOperacional(chave);
+  // cria o protocolo anual apenas no registro de uma nova solicitação
   const data = new Date();
-  pedido.protocolo = prefixo + Date.now() + "-" + (existentes.length + 1);
+  pedido.protocolo = gerarProtocoloPedido(pedido.servico);
   pedido.cidadaoId = cidadao.id;
   pedido.nome = cidadao.nome;
   pedido.dataSolicitacao = data.toISOString();
@@ -652,8 +809,8 @@ function buscarPedidosOperacionais() {
     const pedido = pedidos[i];
     if (pedido.servico === "travessia" && !pedido.simulacaoEncerrada && pedido.aberturaSimulacao && pedido.fimSimulacao) {
       // relaciona cada etapa ao horário programado na própria simulação
-      const momentos = [pedido.aberturaSimulacao, pedido.fimSimulacao - 8000, pedido.fimSimulacao];
-      const titulos = ["Travessia liberada na simulação", "Tempo próximo do fim", "Simulação concluída"];
+      const momentos = [Math.max(Date.parse(pedido.dataSolicitacao), pedido.aberturaSimulacao - 3000), Math.max(Date.parse(pedido.dataSolicitacao), pedido.aberturaSimulacao), Math.max(Date.parse(pedido.dataSolicitacao), pedido.fimSimulacao - 8000), pedido.fimSimulacao];
+      const titulos = ["Fase de segurança", "Travessia liberada na simulação", "Tempo próximo do fim", "Simulação concluída"];
       // prepara o histórico caso um registro antigo ainda não possua etapas
       if (!Array.isArray(pedido.etapas)) pedido.etapas = [];
       // guarda a última etapa alcançada para comparar apenas uma vez
@@ -681,6 +838,11 @@ function buscarPedidosOperacionais() {
         pedido.situacao = situacaoAtual;
         alterou = true;
       }
+      // confirma a extensão somente quando a fase de pedestres realmente começa na simulação
+      if (agora >= pedido.aberturaSimulacao && pedido.tempoAdicionalReservado !== undefined && pedido.tempoAdicionalConcedido !== pedido.tempoAdicionalReservado) {
+        pedido.tempoAdicionalConcedido = pedido.tempoAdicionalReservado;
+        alterou = true;
+      }
       // encerra a demonstração mesmo quando a página da contagem foi fechada
       if (agora >= pedido.fimSimulacao) {
         pedido.simulacaoEncerrada = true;
@@ -706,6 +868,17 @@ function buscarPedidosCidadao() {
   for (let i = 0; i < listas.length; i++) {
     for (let j = 0; j < listas[i].length; j++) {
       if (listas[i][j].cidadaoId === cidadao.id) resultado.push(listas[i][j]);
+    }
+  }
+  // ordena os registros pela data, sem alterar seus identificadores ou o armazenamento
+  for (let i = 0; i < resultado.length; i++) {
+    for (let j = i + 1; j < resultado.length; j++) {
+      if (Date.parse(resultado[j].dataSolicitacao) > Date.parse(resultado[i].dataSolicitacao)) {
+        // troca somente a posição dos dois registros na lista apresentada
+        const anterior = resultado[i];
+        resultado[i] = resultado[j];
+        resultado[j] = anterior;
+      }
     }
   }
   return resultado;

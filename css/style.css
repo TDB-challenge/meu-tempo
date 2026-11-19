@@ -3105,13 +3105,13 @@ CSS
 @media (max-width: 600px) {
   .botao-acessibilidade-global {
     top: auto; /* utiliza a base da tela em celulares */
-    bottom: 120px; /* reserva espaço para a navegação do aplicativo */
+    bottom: 140px; /* reserva espaço para a navegação com letras ampliadas */
     right: 10px; /* mantém o acesso dentro da tela */
     margin-top: 0; /* retira o deslocamento usado no computador */
   }
   [vw].enabled {
     top: auto !important; /* utiliza o mesmo alinhamento do botão de ajustes */
-    bottom: 178px !important; /* mantém dez pixels entre os dois acessos */
+    bottom: 198px !important; /* mantém dez pixels entre os dois acessos */
     right: 10px !important; /* acompanha a lateral escolhida */
     transform: none; /* preserva a separação entre os controles */
   }
@@ -3276,4 +3276,38 @@ body.alto-contraste .logo-circulo img {
 .app.tema-escuro .logo-mobile .marca-icone,
 .app.alto-contraste .logo-mobile .marca-icone {
   filter: brightness(0) invert(1); /* acompanha o texto claro da marca no aplicativo */
+}
+/* acomoda os campos e os textos ampliados nas menores telas */
+@media (max-width: 600px) {
+  .chat-form input,
+  .cadastro-passo .campo-grupo {
+    min-width: 0; /* permite reduzir o controle sem alargar seu cartão */
+  }
+  .com-acessibilidade main {
+    overflow-wrap: anywhere; /* mantém palavras longas dentro da área de leitura */
+  }
+}
+
+/* =========================================================
+   POSIÇÃO DO ACESSO VISÍVEL DO VLIBRAS OFICIAL
+   ========================================================= */
+
+/* adapta o elemento externo que contém o botão oficial em sua área isolada */
+#vlibras-access-wrapper {
+  position: fixed; /* acompanha a tela sem modificar os eventos oficiais */
+  right: 4px; /* compensa os dez pixels internos ampliados para alinhar os acessos */
+  top: calc(24px - 10vh); /* compensa a posição central interna e mantém o botão em metade da tela */
+  width: 0; /* usa a lateral direita como referência para o botão interno */
+  height: 0; /* evita criar uma área vazia sobre o conteúdo */
+  transform: scale(1.2); /* amplia o botão oficial de quarenta para quarenta e oito pixels */
+  transform-origin: top right; /* preserva a referência usada no alinhamento lateral */
+  z-index: 9998; /* mantém o acesso visível junto ao botão de ajustes */
+}
+
+/* mantém o botão oficial dez pixels acima dos ajustes no celular */
+@media (max-width: 600px) {
+  #vlibras-access-wrapper {
+    right: -2px; /* compensa a margem interna ampliada e mantém dez pixels da borda */
+    top: calc(40vh - 222px); /* compensa o centro interno e posiciona o botão acima dos ajustes */
+  }
 }

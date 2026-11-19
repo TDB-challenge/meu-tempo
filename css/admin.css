@@ -2920,3 +2920,9 @@ body.alto-contraste .admin-nav-item.ativo {
   background-color: #303030; /* diferencia o item apontado ou selecionado */
   color: #ffffff; /* mantém a leitura sobre o destaque escuro */
 }
+
+/* permite ampliar as letras dos indicadores sem alargar a grade */
+.pagina-admin .admin-kpi-card {
+  min-width: 0; /* permite que o cartão acompanhe sua coluna */
+  overflow-wrap: anywhere; /* mantém os títulos ampliados dentro do cartão */
+}

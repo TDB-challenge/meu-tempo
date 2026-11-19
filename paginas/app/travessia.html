@@ -20,7 +20,7 @@
       <!-- Menu lateral para computadores -->
       <aside class="menu-lateral">
         <a href="inicio.html" class="logo">
-          <img src="../../assets/icones/clock-three.png" class="marca-icone" alt="" />
+          <img src="../../assets/icones/clock.png" class="marca-icone" alt="" />
           <div class="texto-logo">
             <strong>meu tempo</strong>
             <small class="slogan">A cidade no seu ritmo.</small>
@@ -43,12 +43,14 @@
 
             <li>
               <a href="servicos.html" aria-current="location">
+                <img src="../../assets/icones/lista.svg" class="icone" alt="" />
                 <span>Serviços</span>
               </a>
             </li>
 
             <li>
               <a href="solicitacoes.html">
+                <img src="../../assets/icones/lista.svg" class="icone" alt="" />
                 <span>Pedidos</span>
               </a>
             </li>
@@ -66,6 +68,7 @@
 
             <li>
               <a href="perfil.html">
+                <img src="../../assets/icones/user.png" class="icone" alt="" />
                 <span>Perfil</span>
               </a>
             </li>
@@ -100,7 +103,7 @@
 
           <!-- Logo exibida em tablets e celulares -->
           <a href="inicio.html" class="logo-mobile">
-          <img src="../../assets/icones/clock-three.png" class="marca-icone" alt="" />
+          <img src="../../assets/icones/clock.png" class="marca-icone" alt="" />
             <strong>meu tempo</strong>
           </a>
 
@@ -179,13 +182,13 @@
               <div class="cabecalho-mapa">
                 <h2>Onde você quer atravessar?</h2>
 
-                <p>Escolha na lista para consultar o mapa público.</p>
+                <p>Consulte os cruzamentos no diagrama ou escolha pela lista textual.</p>
               </div>
 
               <!-- consulta de percurso público sem calcular distâncias no aplicativo -->
-              <label for="partida-percurso">Partida</label><input type="text" id="partida-percurso" placeholder="Endereço de partida" />
-              <label for="destino-percurso">Destino</label><input type="text" id="destino-percurso" placeholder="Endereço de destino" />
-              <a id="consultar-percurso" href="https://www.google.com/maps/dir/?api=1&amp;travelmode=walking" target="_blank" rel="noopener noreferrer">Consultar percurso a pé no mapa público</a>
+              <div class="campo-formulario"><label for="partida-percurso">Partida</label><input type="text" id="partida-percurso" placeholder="Endereço de partida" /></div>
+              <div class="campo-formulario"><label for="destino-percurso">Destino</label><input type="text" id="destino-percurso" placeholder="Endereço de destino" /></div>
+              <a class="botao-localizacao" id="consultar-percurso" href="https://www.google.com/maps/dir/?api=1&amp;travelmode=walking" target="_blank" rel="noopener noreferrer">Consultar percurso a pé no mapa público</a>
               <p>Confira obstáculos e acessibilidade no local. O aplicativo não calcula distâncias nem garante uma rota acessível.</p>
               <!-- Legenda que indica quais semáforos possuem suporte -->
               <div class="legenda-mapa">
@@ -219,11 +222,11 @@
                 <div
                   class="mapa-cruzamentos"
                   id="mapa-travessia"
-                  aria-label="Mapa público por endereço dos cruzamentos"
+                  aria-label="Diagrama demonstrativo dos cruzamentos cadastrados"
                 >
                   <!-- o mapa público oferece seus próprios controles de navegação -->
-                  <!-- iframe consulta o endereço escolhido; a lista permanece disponível -->
-                  <iframe id="mapa-base-travessia" title="Mapa público do endereço selecionado" width="100%" height="300" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                  <!-- diagrama sem escala geográfica; a lista textual oferece a mesma seleção -->
+                  <div class="mapa-visual" id="mapa-base-travessia" role="group" aria-label="Selecionar um cruzamento no diagrama"></div>
                 </div>
 
                 <!-- controles antigos preservados; o iframe oferece navegação própria -->
@@ -258,7 +261,7 @@
                 </div>
 
                 <!-- Informação sobre a cobertura demonstrativa -->
-                <small class="identificacao-mapa"> Mapa público por endereço </small>
+                <small class="identificacao-mapa"> Diagrama demonstrativo, sem escala geográfica </small>
               </div>
 
               <!-- Avisos sobre o funcionamento do mapa -->
@@ -496,10 +499,25 @@
                 </strong>
               </div>
 
-<!-- valor manual do ciclo acadêmico; não representa o semáforo da rua -->
-<label for="ciclo-simulado">Segundos restantes no ciclo demonstrativo</label>
-<input type="number" id="ciclo-simulado" min="1" max="60" value="16" required />
-<p>A regra dos oito segundos e a contagem de 28 segundos são exclusivamente acadêmicas.</p>
+              <!-- o controlador mantém o ciclo; o cidadão escolhe apenas o tempo adicional -->
+              <p id="cenario-ciclo"></p>
+              <p id="estado-ciclo"></p>
+              <p>Próxima mudança na simulação: <strong id="contagem-ciclo">00:00</strong></p>
+              <label for="tempo-adicional">Tempo adicional solicitado (até 15 segundos)</label>
+              <div class="controle-tempo">
+                <button type="button" class="botao-mapa" id="diminuir-tempo" aria-label="Diminuir um segundo">−</button>
+                <input type="text" id="tempo-adicional" value="5" readonly inputmode="numeric" />
+                <span>segundos</span>
+                <button type="button" class="botao-mapa" id="aumentar-tempo" aria-label="Aumentar um segundo">+</button>
+              </div>
+              <!-- preferências independentes acompanham as escolhas globais -->
+              <label class="opcao-preferencia">Guia sonoro da travessia <input type="checkbox" class="interruptor" data-preferencia="somTravessia" /></label>
+              <label class="opcao-preferencia">Alertas vibratórios <input type="checkbox" class="interruptor" data-preferencia="vibracao" /></label>
+              <label for="volume-travessia">Volume do guia sonoro</label>
+              <input type="range" id="volume-travessia" min="0" max="0.5" step="0.05" value="0.3" />
+              <button type="button" class="trocar-cruzamento" id="testar-som-travessia">Testar som</button>
+              <!-- anuncia mudanças de estado sem narrar cada segundo da contagem -->
+              <p id="aviso-travessia" role="status"></p>
               <!-- Disponível apenas quando o cruzamento possui suporte -->
               <button
                 type="submit"
@@ -515,6 +533,20 @@
                   alt=""
                 />
               </button>
+
+              <!-- reaproveita o resultado dentro do próprio painel de acompanhamento -->
+              <section class="resultado-servico" id="resultado-travessia" hidden>
+                <h3 id="titulo-resultado-travessia">Solicitação registrada</h3>
+                <p id="dados-travessia"></p>
+                <p id="estado-pedido-travessia"></p>
+                <p>Contagem da solicitação: <strong id="contagem-travessia">00:00</strong></p>
+                <details class="historico-solicitacao">
+                  <summary>Ver acompanhamento</summary>
+                  <ol id="etapas-travessia" class="linha-tempo"></ol>
+                </details>
+                <button type="button" id="encerrar-travessia" class="trocar-cruzamento">Encerrar solicitação</button>
+                <a href="solicitacoes.html" class="solicitar-por-voz">Acompanhar meus pedidos</a>
+              </section>
 
               <!-- Alternativa para realizar o atendimento por voz -->
               <a href="iara.html" class="solicitar-por-voz">
@@ -574,33 +606,12 @@
                   alt=""
                 />
 
-                <p>Observe sempre o sinal físico de pedestres da rua. A contagem da simulação não autoriza atravessar.</p>
+                <p>Simulação acadêmica sem conexão com o trânsito real. Contadores, sons e vibrações não autorizam atravessar uma rua.</p>
               </div>
             </section>
           </form>
 
-          <!-- Feedback exibido após uma solicitação simulada -->
-          <section
-            class="resultado-servico"
-            id="resultado-travessia"
-            role="status"
-            hidden
-          >
-            <img src="../../assets/icones/sucesso.svg" class="icone" alt="" />
 
-            <h2>Solicitação registrada</h2>
-<p id="contagem-travessia" aria-live="polite"></p>
-<button type="button" id="encerrar-travessia" class="botao-principal">Encerrar simulação</button>
-
-            <p>
-              Seu pedido foi registrado na demonstração do Meu Tempo. Aguarde o
-              sinal de pedestres.
-            </p>
-
-            <a href="solicitacoes.html" class="botao-principal">
-              Acompanhar meus pedidos
-            </a>
-          </section>
         </main>
       </div>
 
@@ -619,12 +630,14 @@
 
           <li>
             <a href="servicos.html" aria-current="location">
+              <img src="../../assets/icones/lista.svg" class="icone" alt="" />
               <span>Serviços</span>
             </a>
           </li>
 
           <li>
             <a href="solicitacoes.html">
+              <img src="../../assets/icones/lista.svg" class="icone" alt="" />
               <span>Pedidos</span>
             </a>
           </li>
@@ -642,6 +655,7 @@
 
           <li>
             <a href="perfil.html">
+              <img src="../../assets/icones/user.png" class="icone" alt="" />
               <span>Perfil</span>
             </a>
           </li>

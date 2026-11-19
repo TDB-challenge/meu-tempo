@@ -75,6 +75,8 @@
           <h2>Que bom ter você aqui.</h2>
           <p class="cadastro-subtitulo">Entre para acompanhar seus pedidos. Demonstração local: utilize somente credenciais fictícias.</p>
 
+          <p>Contas antigas com senha permanecem salvas. A conversão para PIN exige recuperação ainda indisponível; use uma nova conta fictícia com outro e-mail.</p>
+
           <form id="form-login" class="form-contato" novalidate>
             <div class="campo-grupo">
               <label for="login-email">E-mail <span class="asterisco">*</span></label>
@@ -88,12 +90,12 @@
             </div>
 
             <div class="campo-grupo">
-              <label for="login-senha">Senha <span class="asterisco">*</span></label>
+              <label for="login-senha">PIN de quatro dígitos <span class="asterisco">*</span></label>
               <div class="campo-senha-wrap">
                 <input
                   type="password"
                   id="login-senha"
-                  name="senha"
+                  name="pin-cidadao" inputmode="numeric" minlength="4" maxlength="4" pattern="[0-9]{4}"
                   autocomplete="current-password"
                   required
                 />
@@ -101,7 +103,7 @@
                   type="button"
                   id="btn-toggle-senha"
                   class="btn-toggle-senha"
-                  aria-label="Mostrar senha"
+                  aria-label="Mostrar PIN"
                   aria-pressed="false"
                 >
                   <img src="../assets/icones/eye.png" alt="" class="icone" />
@@ -110,7 +112,7 @@
             </div>
 
             <div class="login-esqueci-linha">
-              <a href="recuperar-senha.html" class="login-link-esqueci">Esqueci minha senha</a>
+              <a href="recuperar-senha.html" class="login-link-esqueci">Esqueci meu acesso</a>
             </div>
 
             <button type="submit" class="btn login-btn-full">

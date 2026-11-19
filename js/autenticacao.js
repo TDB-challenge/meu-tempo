@@ -1136,7 +1136,7 @@ function validarIdentificacaoCidadao() {
   // percorre os campos e apresenta a validação nativa no primeiro erro
   for (let i = 0; i < campos.length; i++) {
     // recusa campos vazios ou formatos inválidos
-    if (!campos[i].checkValidity() || campos[i].value.trim() === "") {
+    if (campos[i].id !== "cad-senha" && campos[i].id !== "cad-confirma-senha" && (!campos[i].checkValidity() || campos[i].value.trim() === "")) {
       mostrarPassoCidadao(1);
       campos[i].reportValidity();
       campos[i].focus();
@@ -1148,18 +1148,30 @@ function validarIdentificacaoCidadao() {
   const senha = document.getElementById("cad-senha").value;
   // recupera a repetição da senha para comparação
   const confirmacao = document.getElementById("cad-confirma-senha").value;
-  // aplica os mesmos requisitos básicos já usados no cadastro administrativo
-  if (senha.length < 8 || !/[A-Z]/.test(senha) || !/[a-z]/.test(senha) || !/[0-9]/.test(senha) || !/[!@#$%&*()+?_=.,:;/-]/.test(senha)) {
+  // exige exatamente quatro números sem converter o pin para inteiro
+  if (!/^[0-9]{4}$/.test(senha)) {
     mostrarPassoCidadao(1);
-    avisoCadastroCidadao.textContent = "A senha precisa de 8 caracteres, maiúscula, minúscula, número e símbolo indicado.";
+    avisoCadastroCidadao.textContent = "Informe quatro números.";
     document.getElementById("cad-senha").focus();
     return false;
   }
   // exige confirmação idêntica sem expor a senha na revisão
   if (senha !== confirmacao) {
     mostrarPassoCidadao(1);
-    avisoCadastroCidadao.textContent = "As senhas precisam ser iguais.";
+    avisoCadastroCidadao.textContent = "Os PINs precisam ser iguais.";
     document.getElementById("cad-confirma-senha").focus();
+    return false;
+  }
+  // confere somente o formato fictício de cpf e rg, sem consultar identidade oficial
+  const cpf = document.getElementById("cad-cpf").value.replace(/[.\-]/g, "");
+  // recupera o rg removendo apenas a pontuação permitida
+  const rg = document.getElementById("cad-rg").value.replace(/[.\-]/g, "").toUpperCase();
+  // diferencia a cin, cujo número de identificação é o próprio cpf
+  const tipo = document.getElementById("cad-tipo-documento").value;
+  // recusa letras e quantidades incorretas no cpf ou no rg paulista
+  if (!/^[0-9]{11}$/.test(cpf) || (tipo === "rg" && !/^[0-9]{8}[0-9X]$/.test(rg))) {
+    mostrarPassoCidadao(1);
+    avisoCadastroCidadao.textContent = "Informe CPF com onze dígitos e, para RG paulista, nove posições com X permitido no final.";
     return false;
   }
   // calcula a idade com base na data preenchida
@@ -1254,6 +1266,9 @@ function coletarCadastroCidadao() {
     id: "CID-" + Date.now(),
     nome: document.getElementById("cad-nome").value.trim(),
     nascimento: document.getElementById("cad-nascimento").value,
+    tipoDocumento: document.getElementById("cad-tipo-documento").value,
+    cpf: document.getElementById("cad-cpf").value.replace(/[.\-]/g, ""),
+    rg: document.getElementById("cad-rg").value.replace(/[.\-]/g, "").toUpperCase(),
     email: document.getElementById("cad-email").value.trim().toLowerCase(),
     telefone: document.getElementById("cad-telefone").value.trim(),
     municipio: document.getElementById("cad-municipio").value.trim(),
@@ -1261,14 +1276,16 @@ function coletarCadastroCidadao() {
     bairro: document.getElementById("cad-bairro").value.trim(),
     categoria: document.getElementById("cad-categoria").value,
     idade: calcularIdadeCidadao(document.getElementById("cad-nascimento").value),
-    documentos: {identificacao: identificacaoCidadao, complementar: complementarCidadao},
+    documentos: {identificacao: "Formato validado", leitura: identificacaoCidadao, complementar: complementarCidadao},
     necessidades: coletarEscolhasCidadao("necessidade"),
     preferencias: preferencias,
     servicos: coletarEscolhasCidadao("uso"),
     termosAceitos: document.getElementById("cad-termos").checked
   };
-  // mantém a iara futura desabilitada mesmo se uma preferência antiga existir
-  cadastro.preferencias.vozIara = false;
+  // a cin usa somente o cpf e não guarda um rg tradicional oculto
+  if (cadastro.tipoDocumento === "cin") {
+    cadastro.rg = "";
+  }
   // retorna o objeto sem guardar arquivos nem texto complementar livre
   return cadastro;
 }
@@ -1276,37 +1293,82 @@ function coletarCadastroCidadao() {
 // adiciona uma linha segura ao resumo sem interpretar os dados como html
 // titulo descreve a informação; texto representa o valor a apresentar
 function acrescentarResumoCidadao(titulo, texto) {
-  // cria um parágrafo para o dado informado
+  // cria um cartão com título e conteúdo inserido de maneira segura
+  const bloco = document.createElement("section");
+  // reaproveita o cartão existente para separar os blocos da revisão
+  bloco.className = "cadastro-qrcode-box";
+  // cria o título do grupo
+  const cabecalho = document.createElement("h4");
+  cabecalho.textContent = titulo;
+  // cria o texto sem interpretar valores como html
   const linha = document.createElement("p");
-  linha.textContent = titulo + ": " + texto;
-  document.getElementById("resumo-cadastro-cidadao").appendChild(linha);
+  linha.textContent = texto;
+  bloco.appendChild(cabecalho);
+  bloco.appendChild(linha);
+  document.getElementById("resumo-cadastro-cidadao").appendChild(bloco);
 }
 
-// apresenta os dados editáveis na etapa final sem mostrar senha ou imagem
+// apresenta blocos legíveis sem pin ou imagens pessoais
 function revisarCadastroCidadao() {
-  // reúne os valores atuais e seleciona as preferências com nomes visíveis
+  // recupera os dados atuais sem armazenar arquivos
   const cadastro = coletarCadastroCidadao();
-  // seleciona os controles de acessibilidade para descrever a revisão
+  // seleciona os recursos disponíveis no formulário
   const controles = formularioCidadao.querySelectorAll("[data-preferencia]");
-  // reúne os nomes das preferências habilitadas
+  // reúne os nomes dos recursos ativados
   const preferenciasTexto = [];
   document.getElementById("resumo-cadastro-cidadao").textContent = "";
-  // lista somente recursos escolhidos e disponíveis
+  // percorre as preferências e usa seus rótulos visíveis
   for (let i = 0; i < controles.length; i++) {
-    // os checkboxes ativos possuem o nome em um span no mesmo cartão
-    if (controles[i].type === "checkbox" && controles[i].checked && !controles[i].disabled) {
+    // descreve somente recursos ativados
+    if (controles[i].type === "checkbox" && controles[i].checked) {
       preferenciasTexto.push(controles[i].parentElement.querySelector("span").textContent);
     }
   }
-  acrescentarResumoCidadao("Identificação", cadastro.nome + " · " + cadastro.nascimento + " · " + cadastro.idade + " anos");
-  acrescentarResumoCidadao("Contato", cadastro.email + " · " + cadastro.telefone);
-  acrescentarResumoCidadao("Localização", cadastro.municipio + "/" + cadastro.estado + " · " + cadastro.bairro);
-  acrescentarResumoCidadao("Categoria autodeclarada", document.getElementById("cad-categoria").selectedOptions[0].textContent);
-  acrescentarResumoCidadao("Identificação documental", cadastro.documentos.identificacao);
-  acrescentarResumoCidadao("Documento complementar", cadastro.documentos.complementar);
-  acrescentarResumoCidadao("Necessidades autodeclaradas", cadastro.necessidades.join(", "));
-  acrescentarResumoCidadao("Preferências", "Fonte " + cadastro.preferencias.fonte + "% · " + preferenciasTexto.join(", "));
-  acrescentarResumoCidadao("Serviços de interesse", cadastro.servicos.join(", "));
+  // formata a data localmente para preservar o dia no fuso brasileiro
+  const nascimento = new Date(cadastro.nascimento + "T12:00:00").toLocaleDateString("pt-BR");
+  // recupera o nome completo do documento selecionado
+  const tipo = document.getElementById("cad-tipo-documento").selectedOptions[0].textContent;
+  // inicia os dados documentais pelo cpf utilizado também na cin
+  let documento = "CPF: " + cadastro.cpf;
+  // apresenta rg somente quando este tipo foi escolhido
+  if (cadastro.tipoDocumento === "rg") {
+    documento = documento + " · RG: " + cadastro.rg;
+  }
+  // distingue a leitura automática da conferência obrigatória de formato
+  let leitura = "";
+  if (cadastro.documentos.leitura === "Dados extraídos por OCR") {
+    leitura = " · Dados extraídos por OCR, sujeitos à revisão";
+  }
+  acrescentarResumoCidadao("Identificação", cadastro.nome + " · Nascimento: " + nascimento + " · " + tipo + " · " + documento + " · " + document.getElementById("cad-categoria").selectedOptions[0].textContent + " · Identificação: formato validado" + leitura);
+  // omite contatos opcionais vazios em vez de deixar separadores sem informação
+  let contato = cadastro.municipio + "/" + cadastro.estado;
+  if (cadastro.bairro !== "") contato = contato + " · " + cadastro.bairro;
+  contato = contato + " · " + cadastro.email;
+  if (cadastro.telefone !== "") contato = contato + " · " + cadastro.telefone;
+  acrescentarResumoCidadao("Localização e contato", contato);
+  // informa explicitamente quando não há necessidades autodeclaradas
+  let necessidades = cadastro.necessidades.join(", ");
+  if (necessidades === "") {
+    necessidades = "Nenhuma necessidade informada.";
+  }
+  acrescentarResumoCidadao("Necessidades e mobilidade", necessidades);
+  // recupera os nomes completos dos serviços selecionados
+  const servicos = formularioCidadao.querySelectorAll('input[name="uso"]');
+  // reúne os rótulos sem expor identificadores internos
+  const nomesServicos = [];
+  // percorre os cartões de serviço
+  for (let i = 0; i < servicos.length; i++) {
+    // utiliza o título do cartão escolhido
+    if (servicos[i].checked) {
+      nomesServicos.push(servicos[i].parentElement.querySelector("strong").textContent);
+    }
+  }
+  // informa as escolhas sem expor nomes internos nem deixar grupos em branco
+  let recursos = "Recursos adicionais desativados";
+  if (preferenciasTexto.length > 0) recursos = preferenciasTexto.join(", ");
+  let interesses = "Nenhum selecionado; todos os serviços continuam disponíveis";
+  if (nomesServicos.length > 0) interesses = nomesServicos.join(", ");
+  acrescentarResumoCidadao("Preferências", "Tamanho do texto: " + cadastro.preferencias.fonte + "% · " + recursos + " · Serviços de interesse: " + interesses);
 }
 
 // trata a navegação pelo identificador do botão acionado
@@ -1361,6 +1423,8 @@ async function registrarCadastroCidadao(evento) {
     // reúne os dados fictícios e substitui a senha por seu resumo demonstrativo
     const cadastro = coletarCadastroCidadao();
     cadastro.senhaResumo = await resumirSenhaCidadao(document.getElementById("cad-senha").value);
+    // identifica contas novas sem alterar resumos de credenciais antigas
+    cadastro.acesso = "pin4";
     // recupera as contas locais somente após o cálculo assíncrono
     const cidadaos = buscarCidadaos();
     // recusa cadastrar novamente o mesmo e-mail
@@ -1379,10 +1443,26 @@ async function registrarCadastroCidadao(evento) {
     document.getElementById("cad-complemento").value = "";
     limparDocumentosCadastro();
     formularioCidadao.reset();
-    avisoCadastroCidadao.textContent = "Cadastro demonstrativo concluído. ";
+    avisoCadastroCidadao.textContent = "";
+    // apresenta confirmação com o ícone e a hierarquia já utilizados no projeto
+    const iconeConclusao = document.createElement("img");
+    iconeConclusao.src = "../assets/icones/confirmacao.svg";
+    iconeConclusao.alt = "";
+    iconeConclusao.className = "icone";
+    avisoCadastroCidadao.appendChild(iconeConclusao);
+    const tituloConclusao = document.createElement("h3");
+    tituloConclusao.textContent = "Cadastro concluído!";
+    avisoCadastroCidadao.appendChild(tituloConclusao);
+    const textoConclusao = document.createElement("p");
+    textoConclusao.textContent = "Sua conta fictícia está pronta. Entre para utilizar os serviços.";
+    avisoCadastroCidadao.appendChild(textoConclusao);
+    // reaproveita o cartão existente para destacar a confirmação
+    avisoCadastroCidadao.classList.add("cadastro-qrcode-box");
     // oferece um destino explícito para o login sem reutilizar a leitura de documentos
     const linkEntrada = document.createElement("a");
     linkEntrada.href = "login.html";
+    // destaca a entrada com o botão principal do projeto
+    linkEntrada.className = "btn";
     linkEntrada.textContent = "Entrar com sua conta";
     avisoCadastroCidadao.appendChild(linkEntrada);
     linkEntrada.focus();
@@ -1425,8 +1505,8 @@ async function entrarCidadao(evento) {
   const botao = formularioEntradaCidadao.querySelector("button[type='submit']");
   aviso.textContent = "";
   // exige e-mail válido e senha preenchida sem impor domínio administrativo
-  if (!email.checkValidity() || senha.value === "") {
-    aviso.textContent = "Informe um e-mail válido e a senha escolhida no cadastro.";
+  if (!email.checkValidity() || !/^[0-9]{4}$/.test(senha.value)) {
+    aviso.textContent = "Informe um e-mail válido e quatro números no PIN.";
     formularioEntradaCidadao.reportValidity();
     return;
   }
@@ -1453,7 +1533,7 @@ async function entrarCidadao(evento) {
         return;
       }
     }
-    aviso.textContent = "E-mail ou senha incorretos.";
+    aviso.textContent = "E-mail ou PIN incorretos. Contas antigas com senha exigem recuperação ainda indisponível; use uma nova conta fictícia.";
   } catch (erro) {
     // mantém uma mensagem clara caso o navegador impeça a demonstração
     aviso.textContent = "Não foi possível entrar. " + erro.message;

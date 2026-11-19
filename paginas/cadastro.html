@@ -109,17 +109,32 @@
                 <div class="qrcode-box-topo">
                   <img src="../assets/icones/scan-traces.svg" alt="" class="icone" />
                   <div>
-                    <strong>Conferência manual de documento fictício</strong>
+                    <strong>Como deseja informar seus dados?</strong>
                     <p>Não há OCR configurado nem validação de autenticidade. Nenhuma imagem é enviada ou salva. Serviços gerais continuam disponíveis sem comprovação.</p>
                   </div>
                 </div>
-                <label class="checkbox-termos"><input type="checkbox" id="consentimento-documentos" /> Autorizo visualizar arquivos fictícios apenas durante este cadastro.</label>
-                <label for="documento-identificacao">Documento de identificação fictício (imagem, até 5 MB, opcional)</label>
-                <input type="file" id="documento-identificacao" accept="image/jpeg,image/png,image/webp" disabled />
-                <img id="previa-identificacao" alt="Prévia local do documento fictício" width="200" hidden />
-                <label for="documento-complementar">Laudo ou credencial fictícia complementar (imagem, até 5 MB, opcional)</label>
-                <input type="file" id="documento-complementar" accept="image/jpeg,image/png,image/webp" disabled />
-                <img id="previa-complementar" alt="Prévia local do documento complementar fictício" width="200" hidden />
+                <!-- a escolha manual dispensa anexos e a leitura mantém arquivos apenas na memória -->
+                <div class="cadastro-botoes-linha">
+                  <button type="button" id="escolher-scan" class="btn btn-contorno" aria-expanded="false" aria-controls="arquivos-cadastro">Escanear meu documento</button>
+                  <button type="button" id="escolher-manual" class="btn btn-contorno">Preencher meus dados manualmente</button>
+                </div>
+                <div id="arquivos-cadastro" hidden>
+                  <label class="checkbox-termos"><input type="checkbox" id="consentimento-documentos" /> Autorizo visualizar arquivos fictícios apenas durante este cadastro.</label>
+                  <label for="documento-identificacao">Identificação fictícia: foto, imagem ou PDF (até 5 MB)</label>
+                  <input type="file" id="documento-identificacao" accept="image/jpeg,image/png,image/webp,application/pdf" disabled />
+                  <p id="nome-identificacao" role="status"></p>
+                  <img id="previa-identificacao" alt="Prévia local do documento fictício" width="200" hidden />
+                  <button type="button" id="remover-identificacao" class="btn btn-contorno" hidden>Remover identificação</button>
+                  <!-- complemento opcional é apresentado somente para a categoria pcd -->
+                  <div id="complementar-cadastro" hidden>
+                    <label for="documento-complementar">Documento complementar fictício (opcional, imagem ou PDF, até 5 MB)</label>
+                    <p>Se a identificação já contiver as informações necessárias, não é preciso outro arquivo.</p>
+                    <input type="file" id="documento-complementar" accept="image/jpeg,image/png,image/webp,application/pdf" disabled />
+                    <p id="nome-complementar" role="status"></p>
+                    <img id="previa-complementar" alt="Prévia local do documento complementar fictício" width="200" hidden />
+                    <button type="button" id="remover-complementar" class="btn btn-contorno" hidden>Remover complemento</button>
+                  </div>
+                </div>
                 <p id="status-qrcode-cadastro" class="qrcode-nota" role="status">Sem OCR: preencha os dados e confira manualmente a prévia, se desejar.</p>
                 <div id="conferencia-documento" hidden>
                   <label for="documento-nome">Nome que você lê no documento fictício</label>
@@ -133,20 +148,35 @@
               <div class="form-contato">
                 <div class="campo-grupo">
                   <label for="cad-nome">Nome completo <span class="asterisco">*</span></label>
-                  <input type="text" id="cad-nome" name="nome" required />
+                  <input type="text" id="cad-nome" name="nome-cidadao" autocomplete="name" required />
                 </div>
 
+                <!-- formato demonstrativo de rg paulista ou cin identificada pelo cpf -->
+                <div class="campo-grupo">
+                  <label for="cad-tipo-documento">Tipo de documento *</label>
+                  <select id="cad-tipo-documento" name="tipo-documento-cidadao" required><option value="rg">RG tradicional (referência paulista)</option><option value="cin">Carteira de Identidade Nacional (CIN)</option></select>
+                </div>
+                <div class="campo-grupo" id="grupo-cad-rg">
+                  <label for="cad-rg">RG (referência paulista) *</label>
+                  <input type="text" id="cad-rg" name="rg-cidadao" autocomplete="off" maxlength="12" required />
+                  <small>Nove posições, com X permitido na última. Não é um padrão universal dos estados.</small>
+                </div>
+                <div class="campo-grupo">
+                  <label for="cad-cpf">CPF / número da CIN *</label>
+                  <input type="text" id="cad-cpf" name="cpf-cidadao" autocomplete="off" inputmode="numeric" maxlength="14" required />
+                  <small>Use onze dígitos fictícios. Conferimos somente o formato.</small>
+                </div>
                 <div class="campo-grupo">
                   <label for="cad-nascimento">Data de nascimento *</label>
-                  <input type="date" id="cad-nascimento" required />
+                  <input type="date" id="cad-nascimento" name="nascimento-cidadao" autocomplete="bday" required />
                 </div>
                 <div class="campo-grupo">
                   <label for="cad-municipio">Município *</label>
-                  <input type="text" id="cad-municipio" required />
+                  <input type="text" id="cad-municipio" name="municipio-cidadao" autocomplete="address-level2" required />
                 </div>
                 <div class="campo-grupo">
                   <label for="cad-estado">Estado (UF) *</label>
-                  <select id="cad-estado" required>
+                  <select id="cad-estado" name="estado-cidadao" autocomplete="address-level1" required>
                     <option value="">Selecione</option>
                     <option>AC</option>
                     <option>AL</option>
@@ -179,11 +209,11 @@
                 </div>
                 <div class="campo-grupo">
                   <label for="cad-bairro">Bairro ou região (opcional)</label>
-                  <input type="text" id="cad-bairro" />
+                  <input type="text" id="cad-bairro" name="bairro-cidadao" autocomplete="off" />
                 </div>
                 <div class="campo-grupo">
                   <label for="cad-telefone">Telefone (opcional)</label>
-                  <input type="tel" id="cad-telefone" />
+                  <input type="tel" id="cad-telefone" name="telefone-cidadao" autocomplete="tel" />
                 </div>
                 <div class="campo-grupo">
                   <label for="cad-categoria">Categoria autodeclarada *</label>
@@ -198,17 +228,17 @@
                 </div>
                 <div class="campo-grupo">
                   <label for="cad-email">E-mail <span class="asterisco">*</span></label>
-                  <input type="email" id="cad-email" name="email" required />
+                  <input type="email" id="cad-email" name="email-cidadao" autocomplete="email" required />
                 </div>
 
                 <div class="campo-grupo">
-                  <label for="cad-senha">Senha <span class="asterisco">*</span></label>
+                  <label for="cad-senha">PIN de acesso <span class="asterisco">*</span></label>
                   <div class="campo-senha-wrap">
-                    <input type="password" id="cad-senha" name="senha" minlength="8" required />
+                    <input type="password" id="cad-senha" name="pin-cidadao" autocomplete="new-password" inputmode="numeric" pattern="[0-9]{4}" minlength="4" maxlength="4" required />
                     <button
                       type="button"
                       class="btn-toggle-senha"
-                      aria-label="Mostrar senha"
+                      aria-label="Mostrar PIN"
                       aria-pressed="false"
                     >
                       <img src="../assets/icones/eye.png" alt="" class="icone" />
@@ -217,19 +247,19 @@
                 </div>
 
                 <div class="campo-grupo">
-                  <label for="cad-confirma-senha">Confirme a senha <span class="asterisco">*</span></label>
+                  <label for="cad-confirma-senha">Confirme o PIN <span class="asterisco">*</span></label>
                   <div class="campo-senha-wrap">
-                    <input type="password" id="cad-confirma-senha" name="confirmaSenha" minlength="8" required />
+                    <input type="password" id="cad-confirma-senha" name="confirma-pin-cidadao" autocomplete="new-password" inputmode="numeric" pattern="[0-9]{4}" minlength="4" maxlength="4" required />
                     <button
                       type="button"
                       class="btn-toggle-senha"
-                      aria-label="Mostrar confirmação de senha"
+                      aria-label="Mostrar confirmação do PIN"
                       aria-pressed="false"
                     >
                       <img src="../assets/icones/eye.png" alt="" class="icone" />
                     </button>
                   </div>
-                  <small class="campo-dica">Use pelo menos 8 caracteres, letra maiúscula, minúscula, número e símbolo (!@#$%&amp;*()+?_=.,:;/-). Não reutilize uma senha real.</small>
+                  <small class="campo-dica">Informe quatro números. Use somente um PIN fictício nesta demonstração.</small>
                 </div>
 
                 <div>
@@ -278,7 +308,7 @@
             <!-- ================= ETAPA 3: PREFERÊNCIAS ================= -->
             <div id="cadastro-passo-3" class="cadastro-passo" hidden>
               <h3>Acessibilidade e preferências</h3>
-              <p>As preferências acompanham sua navegação. Recursos futuros aparecem desabilitados.</p>
+              <p>As preferências acompanham sua navegação. Orientações por voz e voz da IARA ficam preparadas para integração futura.</p>
               <!-- data-preferencia conecta os controles às preferências globais -->
               <div class="campo-grupo">
                 <label for="pref-tamanho">Tamanho das letras</label>
@@ -289,7 +319,7 @@
                 <label class="opcao-check-card"><input type="checkbox" id="pref-tema" data-preferencia="temaEscuro" /> <span>Tema escuro</span></label>
                 <label class="opcao-check-card"><input type="checkbox" id="pref-fonte" data-preferencia="fonteLegivel" /> <span>Fonte de alta legibilidade</span></label>
                 <label class="opcao-check-card"><input type="checkbox" id="pref-orientacoes" data-preferencia="orientacoesVoz" /> <span>Orientações por voz</span></label>
-                <label class="opcao-check-card"><input type="checkbox" id="pref-voz" data-preferencia="vozIara" disabled /> <span>Respostas por voz da IARA (integração futura)</span></label>
+                <label class="opcao-check-card"><input type="checkbox" id="pref-voz" data-preferencia="vozIara" /> <span>Ouvir a IARA</span></label>
                 <label class="opcao-check-card"><input type="checkbox" id="pref-som" data-preferencia="somTravessia" /> <span>Guia sonoro da travessia</span></label>
                 <label class="opcao-check-card"><input type="checkbox" id="pref-vibracao" data-preferencia="vibracao" /> <span>Alertas vibratórios (dependem do dispositivo)</span></label>
               </div>
@@ -301,7 +331,7 @@
                 <label class="opcao-check-card">
                   <input type="checkbox" name="uso" value="travessia" />
                   <div>
-                    <strong>Travessia com tempo estendido</strong>
+                    <strong>Travessia acessível</strong>
                     <span>Solicitação de tempo adicional em cruzamentos semafóricos (CET).</span>
                   </div>
                 </label>
@@ -309,7 +339,7 @@
                 <label class="opcao-check-card">
                   <input type="checkbox" name="uso" value="metro" />
                   <div>
-                    <strong>Apoio geolocalizado no Metrô e CPTM</strong>
+                    <strong>Apoio no Metrô e CPTM</strong>
                     <span>Acompanhamento de agentes da estação desde o bloqueio até o embarque.</span>
                   </div>
                 </label>
@@ -317,14 +347,12 @@
                 <label class="opcao-check-card">
                   <input type="checkbox" name="uso" value="zeladoria" />
                   <div>
-                    <strong>Zeladoria urbana e elevadores</strong>
+                    <strong>Zeladoria urbana</strong>
                     <span>Consulta e relato de elevadores, rampas e pisos táteis.</span>
                   </div>
                 </label>
               </div>
 
-              <label class="opcao-check-card"><input type="checkbox" name="uso" value="equipamentos" /> <span>Consulta de equipamentos</span></label>
-              <label class="opcao-check-card"><input type="checkbox" name="uso" value="pedidos" /> <span>Acompanhamento de pedidos</span></label>
 
               <div class="cadastro-botoes-linha">
                 <button type="button" id="btn-cad-voltar-2" class="btn btn-contorno">

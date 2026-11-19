@@ -35,10 +35,18 @@ function prepararIara() {
   }
   // seleciona o controle que poderia oferecer voz de conversa
   const ouvir = document.getElementById('ouvir-mensagem');
-  // informa indisponibilidade também no controle de voz
+  // guarda a escolha de voz sem inventar uma conexão com o serviço
   if (ouvir) {
-    ouvir.disabled = true;
-    ouvir.title = 'Voz da IARA indisponível até a configuração do webchat.';
+    ouvir.disabled = false;
+    ouvir.setAttribute('aria-pressed', String(buscarPreferenciasAcessibilidade().vozIara));
+    ouvir.addEventListener('click', function () {
+      // sincroniza a mesma preferência utilizada no cadastro e no perfil
+      const preferencias = buscarPreferenciasAcessibilidade();
+      preferencias.vozIara = !preferencias.vozIara;
+      salvarPreferenciasAcessibilidade(preferencias);
+      ouvir.setAttribute('aria-pressed', String(preferencias.vozIara));
+      aviso.textContent = 'Sua preferência foi salva. A conversa por voz ainda não está disponível.';
+    });
   }
 }
 

@@ -6016,3 +6016,45 @@ button {
 .app #mapa-travessia .marcador-semaforo.sem-suporte {
     background-color: #535b58; /* contrasta com o nome e o símbolo brancos */
 }
+
+/* mantém a navegação ampliada dentro da largura do celular */
+@media (max-width: 600px) {
+  .app .navegacao-inferior {
+    width: 100%; /* limita a barra à tela disponível */
+    max-width: 100vw; /* impede que textos ampliados alarguem a página */
+  }
+  .app .navegacao-inferior a {
+    overflow-wrap: anywhere; /* permite acomodar o nome completo do serviço */
+    min-width: 0; /* mantém cada opção na sua coluna */
+  }
+}
+
+/* identifica claramente os botões de aumentar e diminuir o tempo */
+.app .controle-tempo .botao-mapa {
+    width: 44px; /* oferece uma área confortável para cada ação */
+    height: 44px; /* mantém os controles quadrados */
+    border: 1px solid var(--borda-input); /* diferencia o botão do fundo do painel */
+    border-radius: var(--raio-pequeno); /* acompanha o campo numérico */
+    background-color: var(--branco); /* respeita a superfície do tema atual */
+}
+
+/* mantém o ajuste nativo de volume na paleta da plataforma */
+.app #volume-travessia {
+    width: 100%; /* alinha o controle ao painel lateral */
+    accent-color: var(--verde-floresta); /* evita a cor azul padrão do navegador */
+}
+
+/* mantém a marca textual das etapas legível sobre o círculo escuro */
+.app .icone-etapa {
+    color: #ffffff; /* destaca a confirmação sobre o verde original */
+}
+
+/* diferencia a marca sobre os círculos claros do tema escuro */
+.app.tema-escuro .icone-etapa {
+    color: #10251a; /* contrasta com a superfície verde clara */
+}
+
+/* mantém a confirmação preta sobre o círculo branco do alto contraste */
+.app.alto-contraste .icone-etapa {
+    color: #000000; /* evita que a marca desapareça no círculo claro */
+}
