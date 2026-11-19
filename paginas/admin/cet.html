@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../../css/style.css" />
     <link rel="stylesheet" href="../../css/admin.css">
     <script src="../../js/script.js" defer></script>
+    <script src="../../js/dados.js" defer></script>
     <script src="../../js/administrativo.js" defer></script>
     <!-- importa as funcionalidades dos painéis administrativos -->
 </head>
@@ -312,7 +313,7 @@
             </div>
 
             <div class="admin-badge-status">
-              <img src="../../assets/icones/sinal.png" alt="" class="icone" />
+              <img src="../../assets/icones/wifi.png" alt="" class="icone" />
               <span>Acompanhamento de pedidos</span>
             </div>
           </div>
@@ -452,7 +453,7 @@
             </div>
 
             <div class="admin-badge-status">
-              <img src="../../assets/icones/sinal.png" alt="" class="icone" />
+              <img src="../../assets/icones/wifi.png" alt="" class="icone" />
               <span>Acompanhamento de pedidos</span>
             </div>
           </div>
@@ -467,7 +468,7 @@
 
             <article class="admin-chamado-item">
               <div class="admin-chamado-meta">
-                <span>MT-1041 · Hoje · 09:15</span>
+                <span>ZEL-1041 · Hoje · 09:15</span>
               </div>
 
               <h3>Piso tátil danificado</h3>
@@ -579,46 +580,28 @@
               </div>
             </div>
 
-            <ul class="cet-timeline">
+            <ul data-etapas-operacionais class="cet-timeline">
+
+
+
               <li>
                 <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
                 <div>
-                  <strong>MT-1042 · Funcionário a caminho</strong>
-                  <p>14:35 · Aguarde próximo à entrada principal.</p>
-                </div>
-              </li>
-              <li>
-                <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
-                <div>
-                  <strong>MT-1042 · Aprovado</strong>
-                  <p>14:33</p>
-                </div>
-              </li>
-              <li>
-                <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
-                <div>
-                  <strong>MT-1042 · Pedido recebido</strong>
-                  <p>14:32</p>
-                </div>
-              </li>
-              <li>
-                <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
-                <div>
-                  <strong>MT-1041 · Concluído</strong>
+                  <strong>ZEL-1041 · Concluído</strong>
                   <p>11:45 · Passagem desobstruída.</p>
                 </div>
               </li>
               <li>
                 <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
                 <div>
-                  <strong>MT-1041 · Em análise</strong>
+                  <strong>ZEL-1041 · Em análise</strong>
                   <p>09:22</p>
                 </div>
               </li>
               <li>
                 <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
                 <div>
-                  <strong>MT-1041 · Pedido recebido</strong>
+                  <strong>ZEL-1041 · Pedido recebido</strong>
                   <p>09:15</p>
                 </div>
               </li>
@@ -648,14 +631,8 @@
               </div>
             </div>
 
-            <ul class="cet-timeline">
-              <li>
-                <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
-                <div>
-                  <strong>MT-1042 · Funcionário a caminho</strong>
-                  <p>14:35 · Aguarde próximo à entrada principal.</p>
-                </div>
-              </li>
+            <ul data-etapas-operacionais class="cet-timeline">
+
               <li>
                 <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
                 <div>
@@ -698,6 +675,9 @@
                 <h2 data-nome-profissional>Carlos Oliveira</h2>
                 <p>Matrícula <span data-matricula-profissional>48217</span> · <span data-funcao-profissional>CET · Gestão viária</span></p>
                 <p>Vínculo: <span data-local-profissional>Região Paulista</span></p>
+                <!-- apresenta a instituição e a linha da sessão -->
+                <p>Instituição: <span data-orgao-profissional></span></p>
+                <p>Linha: <span data-linha-profissional></span></p>
               </div>
             </div>
 
@@ -876,39 +856,21 @@
       <div class="card-branco admin-modal-card-interno">
         <h3>Histórico de atividades</h3>
 
-        <ul class="cet-timeline cet-timeline-conectada">
+        <ul data-etapas-operacionais class="cet-timeline cet-timeline-conectada">
+
+
+
           <li>
             <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
             <div>
-              <strong>MT-1042 · Funcionário a caminho</strong>
-              <p>14:35 · Aguarde próximo à entrada principal.</p>
-            </div>
-          </li>
-          <li>
-            <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
-            <div>
-              <strong>MT-1042 · Aprovado</strong>
-              <p>14:33</p>
-            </div>
-          </li>
-          <li>
-            <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
-            <div>
-              <strong>MT-1042 · Pedido recebido</strong>
-              <p>14:32</p>
-            </div>
-          </li>
-          <li>
-            <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
-            <div>
-              <strong>MT-1041 · Concluído</strong>
+              <strong>ZEL-1041 · Concluído</strong>
               <p>11:40 · Passagem desobstruída.</p>
             </div>
           </li>
           <li>
             <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
             <div>
-              <strong>MT-1041 · Em análise</strong>
+              <strong>ZEL-1041 · Em análise</strong>
               <p>09:22</p>
             </div>
           </li>
@@ -947,6 +909,9 @@
             <h3 data-nome-profissional>Carlos Oliveira</h3>
             <p>Matrícula <span data-matricula-profissional>48217</span> · <span data-funcao-profissional>Operação integrada</span></p>
             <p>Vínculo: <span data-local-profissional>Região Paulista / Estação Consolação</span></p>
+                <!-- apresenta a instituição e a linha da sessão -->
+                <p>Instituição: <span data-orgao-profissional></span></p>
+                <p>Linha: <span data-linha-profissional></span></p>
           </div>
         </div>
 

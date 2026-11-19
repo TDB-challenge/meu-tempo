@@ -164,13 +164,13 @@
           <!-- 4 KPIs -->
           <div class="admin-kpis-grid">
             <article class="card-branco admin-kpi-card">
-              <span class="admin-kpi-titulo">Solicitações hoje</span>
-              <strong class="admin-kpi-valor">2</strong>
+              <span class="admin-kpi-titulo">Solicitações registradas</span>
+              <strong data-total-pedidos class="admin-kpi-valor">2</strong>
             </article>
 
             <article class="card-branco admin-kpi-card">
               <span class="admin-kpi-titulo">Atendimentos concluídos</span>
-              <strong class="admin-kpi-valor">0</strong>
+              <strong data-concluidos-pedidos class="admin-kpi-valor">0</strong>
             </article>
 
             <article class="card-branco admin-kpi-card">
@@ -180,7 +180,7 @@
 
             <article class="card-branco admin-kpi-card">
               <span class="admin-kpi-titulo">Elevadores inoperantes</span>
-              <strong class="admin-kpi-valor">0</strong>
+              <strong data-elevadores-inoperantes class="admin-kpi-valor">0</strong>
             </article>
           </div>
 
@@ -257,9 +257,9 @@
                     <th>Horário</th>
                   </tr>
                 </thead>
-                <tbody id="tbody-coord-pedidos">
+                <tbody data-pedidos-operacionais id="tbody-coord-pedidos">
                   <tr data-orgao="zeladoria" data-local="paulista" data-situacao="concluido">
-                    <td class="coord-td-proto">MT-1041</td>
+                    <td class="coord-td-proto">ZEL-1041</td>
                     <td>
                       <strong>Piso tátil danificado</strong>
                       <span>Zeladoria</span>
@@ -268,16 +268,7 @@
                     <td><span class="admin-status-pill cet-pill-aprovado">Concluído</span></td>
                     <td>Hoje · 09:15</td>
                   </tr>
-                  <tr data-orgao="metro" data-local="consolacao" data-situacao="caminho">
-                    <td class="coord-td-proto">MT-1042</td>
-                    <td>
-                      <strong>Acompanhamento até a plataforma</strong>
-                      <span>Metrô</span>
-                    </td>
-                    <td>Consolação · Linha 2 — Verde · Entrada principal</td>
-                    <td><span class="admin-status-pill">Funcionário a caminho</span></td>
-                    <td>Hoje · 14:32</td>
-                  </tr>
+
                 </tbody>
               </table>
             </div>
@@ -326,7 +317,7 @@
             <details class="cet-dados-texto">
               <summary>Ver os dados em texto</summary>
               <ul>
-                <li>Metrô: 1 solicitações.</li>
+                <li data-resumo-transporte>Metrô: 1 solicitações.</li>
                 <li>Travessia: 2 solicitações.</li>
                 <li>Zeladoria: 1 solicitações.</li>
               </ul>
@@ -376,9 +367,9 @@
                     <th>Horário</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody data-pedidos-operacionais>
                   <tr>
-                    <td class="coord-td-proto">MT-1041</td>
+                    <td class="coord-td-proto">ZEL-1041</td>
                     <td>
                       <strong>Piso tátil danificado</strong>
                       <span>Zeladoria</span>
@@ -387,16 +378,7 @@
                     <td><span class="admin-status-pill cet-pill-aprovado">Concluído</span></td>
                     <td>Hoje · 09:15</td>
                   </tr>
-                  <tr>
-                    <td class="coord-td-proto">MT-1042</td>
-                    <td>
-                      <strong>Acompanhamento até a plataforma</strong>
-                      <span>Metrô</span>
-                    </td>
-                    <td>Consolação · Linha 2 — Verde · Entrada principal</td>
-                    <td><span class="admin-status-pill">Funcionário a caminho</span></td>
-                    <td>Hoje · 14:32</td>
-                  </tr>
+
                 </tbody>
               </table>
             </div>
@@ -576,35 +558,8 @@
             </div>
           </div>
 
-          <div class="termos-grid">
-            <article class="card-branco">
-              <div class="admin-chamado-meta">
-                <h3>Elevador 01</h3>
-                <span class="admin-status-pill cet-pill-aprovado">&check; Operando</span>
-              </div>
-              <p class="admin-chamado-local">Acesso Rua &rarr; Mezanino</p>
-              <p style="font-size: 0.84rem; color: var(--texto-secundario); margin-bottom: 10px;">
-                Código ELV-01 · Consolação
-              </p>
-              <p style="font-size: 0.8rem; color: var(--texto-secundario); margin-bottom: 0;">
-                Última atualização: Hoje, 14:30
-              </p>
-            </article>
-
-            <article class="card-branco">
-              <div class="admin-chamado-meta">
-                <h3>Elevador 02</h3>
-                <span class="admin-status-pill cet-pill-aprovado">&check; Operando</span>
-              </div>
-              <p class="admin-chamado-local">Mezanino &rarr; Plataforma</p>
-              <p style="font-size: 0.84rem; color: var(--texto-secundario); margin-bottom: 10px;">
-                Código ELV-02 · Consolação
-              </p>
-              <p style="font-size: 0.8rem; color: var(--texto-secundario); margin-bottom: 0;">
-                Última atualização: Hoje, 14:30
-              </p>
-            </article>
-          </div>
+          <!-- utiliza os mesmos equipamentos e situações do painel de transporte -->
+          <div id="lista-equipamentos-coordenacao" class="termos-grid"></div>
         </section>
 
         <!-- Indicadores -->
@@ -658,7 +613,7 @@
             <details class="cet-dados-texto" open>
               <summary>Ver os dados em texto</summary>
               <ul>
-                <li>Metrô: 1 solicitações.</li>
+                <li data-resumo-transporte>Metrô: 1 solicitações.</li>
                 <li>Travessia: 2 solicitações.</li>
                 <li>Zeladoria: 1 solicitações.</li>
               </ul>
@@ -744,9 +699,9 @@
                     <th>Horário</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody data-pedidos-operacionais>
                   <tr>
-                    <td class="coord-td-proto">MT-1041</td>
+                    <td class="coord-td-proto">ZEL-1041</td>
                     <td>
                       <strong>Piso tátil danificado</strong>
                       <span>Zeladoria</span>
@@ -755,16 +710,7 @@
                     <td><span class="admin-status-pill cet-pill-aprovado">Concluído</span></td>
                     <td>Hoje · 09:15</td>
                   </tr>
-                  <tr>
-                    <td class="coord-td-proto">MT-1042</td>
-                    <td>
-                      <strong>Acompanhamento até a plataforma</strong>
-                      <span>Metrô</span>
-                    </td>
-                    <td>Consolação · Linha 2 — Verde · Entrada principal</td>
-                    <td><span class="admin-status-pill">Funcionário a caminho</span></td>
-                    <td>Hoje · 14:32</td>
-                  </tr>
+
                 </tbody>
               </table>
             </div>
@@ -822,7 +768,7 @@
                 </span>
               </div>
 
-              <p class="painel-status" data-credenciais-cadastro hidden></p>
+              <div class="painel-status" data-credenciais-cadastro hidden></div>
 
               <div class="admin-chamado-acoes">
                 <button type="button" id="btn-aprovar-cadastro" class="btn">
@@ -861,46 +807,28 @@
               </div>
             </div>
 
-            <ul class="cet-timeline cet-timeline-conectada">
+            <ul data-etapas-operacionais class="cet-timeline cet-timeline-conectada">
+
+
+
               <li>
                 <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
                 <div>
-                  <strong>MT-1042 · Funcionário a caminho</strong>
-                  <p>14:35 · Aguarde próximo à entrada principal.</p>
-                </div>
-              </li>
-              <li>
-                <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
-                <div>
-                  <strong>MT-1042 · Aprovado</strong>
-                  <p>14:33</p>
-                </div>
-              </li>
-              <li>
-                <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
-                <div>
-                  <strong>MT-1042 · Pedido recebido</strong>
-                  <p>14:32</p>
-                </div>
-              </li>
-              <li>
-                <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
-                <div>
-                  <strong>MT-1041 · Concluído</strong>
+                  <strong>ZEL-1041 · Concluído</strong>
                   <p>11:40 · Passagem desobstruída.</p>
                 </div>
               </li>
               <li>
                 <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
                 <div>
-                  <strong>MT-1041 · Em análise</strong>
+                  <strong>ZEL-1041 · Em análise</strong>
                   <p>09:22</p>
                 </div>
               </li>
               <li>
                 <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
                 <div>
-                  <strong>MT-1041 · Pedido recebido</strong>
+                  <strong>ZEL-1041 · Pedido recebido</strong>
                   <p>09:15</p>
                 </div>
               </li>
@@ -929,14 +857,8 @@
               </div>
             </div>
 
-            <ul class="cet-timeline cet-timeline-conectada">
-              <li>
-                <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
-                <div>
-                  <strong>MT-1042 · Funcionário a caminho</strong>
-                  <p>14:35 · Aguarde próximo à entrada principal.</p>
-                </div>
-              </li>
+            <ul data-etapas-operacionais class="cet-timeline cet-timeline-conectada">
+
               <li>
                 <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
                 <div>
@@ -947,7 +869,7 @@
               <li>
                 <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
                 <div>
-                  <strong>MT-1041 · Concluído</strong>
+                  <strong>ZEL-1041 · Concluído</strong>
                   <p>11:40 · Passagem desobstruída na Av. Paulista &times; Rua Pamplona.</p>
                 </div>
               </li>
@@ -978,6 +900,9 @@
                 <h2 data-nome-profissional>Carlos Oliveira</h2>
                 <p>Matrícula <span data-matricula-profissional>48217</span> · <span data-funcao-profissional>Coordenação</span></p>
                 <p>Vínculo: <span data-local-profissional>Área de coordenação</span></p>
+                <!-- apresenta a instituição e a linha da sessão -->
+                <p>Instituição: <span data-orgao-profissional></span></p>
+                <p>Linha: <span data-linha-profissional></span></p>
               </div>
             </div>
 
@@ -1122,39 +1047,21 @@
 
       <div class="card-branco admin-modal-card-interno">
         <h3>Histórico de atividades</h3>
-        <ul class="cet-timeline cet-timeline-conectada">
+        <ul data-etapas-operacionais class="cet-timeline cet-timeline-conectada">
+
+
+
           <li>
             <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
             <div>
-              <strong>MT-1042 · Funcionário a caminho</strong>
-              <p>14:35 · Aguarde próximo à entrada principal.</p>
-            </div>
-          </li>
-          <li>
-            <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
-            <div>
-              <strong>MT-1042 · Aprovado</strong>
-              <p>14:33</p>
-            </div>
-          </li>
-          <li>
-            <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
-            <div>
-              <strong>MT-1042 · Pedido recebido</strong>
-              <p>14:32</p>
-            </div>
-          </li>
-          <li>
-            <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
-            <div>
-              <strong>MT-1041 · Concluído</strong>
+              <strong>ZEL-1041 · Concluído</strong>
               <p>11:40 · Passagem desobstruída.</p>
             </div>
           </li>
           <li>
             <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
             <div>
-              <strong>MT-1041 · Em análise</strong>
+              <strong>ZEL-1041 · Em análise</strong>
               <p>09:22</p>
             </div>
           </li>
@@ -1181,6 +1088,9 @@
             <h3 data-nome-profissional>Carlos Oliveira</h3>
             <p>Matrícula <span data-matricula-profissional>48217</span> · <span data-funcao-profissional>Coordenação</span></p>
             <p>Vínculo: <span data-local-profissional>Área de coordenação</span></p>
+                <!-- apresenta a instituição e a linha da sessão -->
+                <p>Instituição: <span data-orgao-profissional></span></p>
+                <p>Linha: <span data-linha-profissional></span></p>
           </div>
         </div>
 

@@ -2821,3 +2821,43 @@ body.tema-escuro .coord-estacao-icone img.icone {
     grid-template-columns: 1fr; /* mostra um indicador em telas muito pequenas */
   }
 }
+/* =========================================================
+   ACOMPANHAMENTO E CONFIRMAÇÃO DAS AÇÕES
+   ========================================================= */
+
+.pagina-admin [hidden] {
+  display: none !important; /* preserva o fechamento de formulários e janelas */
+}
+
+.pagina-admin .etapa-realizada {
+  color: var(--verde-floresta); /* destaca somente as etapas registradas */
+}
+
+.pagina-admin .etapa-pendente {
+  opacity: 0.6; /* diferencia as etapas que ainda não ocorreram */
+}
+
+.pagina-admin #formulario-recusa-metro {
+  margin-top: 24px; /* separa a confirmação da linha do tempo */
+}
+
+.pagina-admin #dados-acompanhamento-metro {
+  margin-bottom: 24px; /* separa a identificação das etapas */
+}
+
+.pagina-admin #lista-equipamentos-coordenacao .card-branco {
+  padding: 24px; /* organiza os dados dos equipamentos consolidados */
+}
+/* protege a identificação profissional contra textos compridos */
+.pagina-admin .admin-operador-chip {
+  min-width: 0; /* permite acomodar nomes dentro do cabeçalho */
+  max-width: 100%; /* limita a identificação ao espaço disponível */
+}
+
+.pagina-admin .admin-operador-chip strong {
+  overflow-wrap: anywhere; /* permite acomodar nomes sem espaços */
+}
+
+.pagina-admin .admin-topbar-direita {
+  max-width: 100%; /* evita que os controles ampliem a página */
+}

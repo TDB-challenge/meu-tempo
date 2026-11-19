@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../../css/style.css">
     <link rel="stylesheet" href="../../css/admin.css"/>
     <script src="../../js/script.js" defer></script>
+    <script src="../../js/dados.js" defer></script>
     <script src="../../js/administrativo.js" defer></script>
 </head>
 <body class="pagina-admin">
@@ -228,9 +229,9 @@
                     <th>Horário</th>
                   </tr>
                 </thead>
-                <tbody id="tbody-coord-pedidos">
+                <tbody data-pedidos-operacionais id="tbody-coord-pedidos">
                   <tr data-orgao="zeladoria" data-local="paulista" data-situacao="concluido">
-                    <td class="coord-td-proto">MT-1041</td>
+                    <td class="coord-td-proto">ZEL-1041</td>
                     <td>
                       <strong>Piso tátil danificado</strong>
                       <span>Zeladoria</span>
@@ -239,16 +240,7 @@
                     <td><span class="admin-status-pill cet-pill-aprovado">Concluído</span></td>
                     <td>Hoje · 09:15</td>
                   </tr>
-                  <tr data-orgao="metro" data-local="consolacao" data-situacao="caminho">
-                    <td class="coord-td-proto">MT-1042</td>
-                    <td>
-                      <strong>Acompanhamento até a plataforma</strong>
-                      <span>Metrô</span>
-                    </td>
-                    <td>Consolação · Linha 2 — Verde · Entrada principal</td>
-                    <td><span class="admin-status-pill">Funcionário a caminho</span></td>
-                    <td>Hoje · 14:32</td>
-                  </tr>
+
                 </tbody>
               </table>
             </div>
@@ -399,39 +391,21 @@
 
       <div class="card-branco admin-modal-card-interno">
         <h3>Histórico de atividades</h3>
-        <ul class="cet-timeline cet-timeline-conectada">
+        <ul data-etapas-operacionais class="cet-timeline cet-timeline-conectada">
+
+
+
           <li>
             <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
             <div>
-              <strong>MT-1042 · Funcionário a caminho</strong>
-              <p>14:35 · Aguarde próximo à entrada principal.</p>
-            </div>
-          </li>
-          <li>
-            <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
-            <div>
-              <strong>MT-1042 · Aprovado</strong>
-              <p>14:33</p>
-            </div>
-          </li>
-          <li>
-            <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
-            <div>
-              <strong>MT-1042 · Pedido recebido</strong>
-              <p>14:32</p>
-            </div>
-          </li>
-          <li>
-            <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
-            <div>
-              <strong>MT-1041 · Concluído</strong>
+              <strong>ZEL-1041 · Concluído</strong>
               <p>11:40 · Passagem desobstruída.</p>
             </div>
           </li>
           <li>
             <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
             <div>
-              <strong>MT-1041 · Em análise</strong>
+              <strong>ZEL-1041 · Em análise</strong>
               <p>09:22</p>
             </div>
           </li>
@@ -458,6 +432,9 @@
             <h3 data-nome-profissional>Carlos Oliveira</h3>
             <p>Matrícula <span data-matricula-profissional>48217</span> · <span data-funcao-profissional>Coordenação</span></p>
             <p>Vínculo: <span data-local-profissional>Área de coordenação</span></p>
+                <!-- apresenta a instituição e a linha da sessão -->
+                <p>Instituição: <span data-orgao-profissional></span></p>
+                <p>Linha: <span data-linha-profissional></span></p>
           </div>
         </div>
 

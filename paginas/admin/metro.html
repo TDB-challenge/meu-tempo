@@ -197,32 +197,32 @@
               </div>
               <div class="admin-badge-status">
                 <img src="../../assets/icones/wifi.png" alt="" class="icone" />
-                <span>Ambiente demonstrativo</span>
+                <span>Acompanhamento de pedidos</span>
               </div>
             </div>
             <div class="admin-kpis-grid">
               <article class="card-branco admin-kpi-card">
                 <h2 class="admin-kpi-titulo">Chamados pendentes</h2>
                 <strong id="indicador-pendentes" class="admin-kpi-valor"
-                  >1</strong
+                  >0</strong
                 >
               </article>
               <article class="card-branco admin-kpi-card">
                 <h2 class="admin-kpi-titulo">Em atendimento</h2>
                 <strong id="indicador-andamento" class="admin-kpi-valor"
-                  >1</strong
+                  >0</strong
                 >
               </article>
               <article class="card-branco admin-kpi-card">
                 <h2 class="admin-kpi-titulo">Atendimentos concluídos</h2>
                 <strong id="indicador-concluidos" class="admin-kpi-valor"
-                  >1</strong
+                  >0</strong
                 >
               </article>
               <article class="card-branco admin-kpi-card">
                 <h2 class="admin-kpi-titulo">Equipamentos disponíveis</h2>
                 <strong id="indicador-equipamentos" class="admin-kpi-valor"
-                  >1</strong
+                  >0</strong
                 >
               </article>
             </div>
@@ -232,30 +232,14 @@
             >
               <div class="admin-fila-topo">
                 <div>
-                  <h2 id="titulo-chamados-recentes">Chamados recentes</h2>
-                  <p>Dados fictícios para apresentar o apoio ao passageiro.</p>
+                  <h2 id="titulo-chamados-recentes">Fila de atendimento</h2>
+                  <p>Pedidos vinculados à estação.</p>
                 </div>
+                <button type="button" id="btn-atualizar-fila" class="btn">+ Atualizar fila</button>
               </div>
-              <div id="lista-chamados-recentes" class="admin-chamados-lista">
-                <article class="admin-chamado-item" data-protocolo="MT-1042">
-                  <div class="admin-chamado-meta">
-                    <span>MT-1042 · Apoio no embarque</span>
-                    <span class="admin-status-pill">Aguardando agente</span>
-                  </div>
-                  <h3>Acompanhamento até a plataforma</h3>
-                  <p class="admin-chamado-local">
-                    Consolação · Linha 2 — Verde · Bloqueio sul
-                  </p>
-                </article>
-                <article class="admin-chamado-item" data-protocolo="MT-1041">
-                  <div class="admin-chamado-meta">
-                    <span>MT-1041 · Apoio com elevador</span>
-                    <span class="admin-status-pill">Em atendimento</span>
-                  </div>
-                  <h3>Orientação no acesso ao elevador</h3>
-                  <p class="admin-chamado-local">Consolação · Mezanino</p>
-                </article>
-              </div>
+              <!-- os dados e as ações usam a mesma lista da tabela de chamados -->
+              <div id="lista-chamados-recentes" class="admin-chamados-lista"></div>
+              <p id="aviso-fila-metro" role="status"></p>
             </section>
           </section>
 
@@ -270,7 +254,7 @@
               <h1 id="titulo-chamados">Chamados de apoio</h1>
             </div>
             <div class="card-branco admin-fila-card">
-              <p>Gerencie os chamados de apoio fictícios da estação.</p>
+              <p>Gerencie os chamados de apoio.</p>
               <div class="coord-tabela-wrapper">
                 <table
                   id="tabela-chamados"
@@ -286,99 +270,7 @@
                       <th scope="col">Ações</th>
                     </tr>
                   </thead>
-                  <tbody id="corpo-chamados">
-                    <tr data-protocolo="MT-1042">
-                      <th scope="row" class="coord-td-proto">MT-1042</th>
-                      <td>Apoio no embarque</td>
-                      <td>Consolação · Bloqueio sul</td>
-                      <td>
-                        <span id="situacao-mt1042" class="admin-status-pill"
-                          >Aguardando agente</span
-                        >
-                      </td>
-                      <td>
-                        <div class="admin-chamado-acoes">
-                          <button
-                            type="button"
-                            id="aceitar-mt1042"
-                            class="btn"
-                            data-acao-chamado="aceitar"
-                            data-protocolo="MT-1042"
-                            aria-label="Aceitar chamado MT-1042"
-                          >
-                            Aceitar
-                          </button>
-                          <button
-                            type="button"
-                            id="recusar-mt1042"
-                            class="btn btn-contorno"
-                            data-acao-chamado="recusar"
-                            data-protocolo="MT-1042"
-                            aria-label="Recusar chamado MT-1042"
-                          >
-                            Recusar
-                          </button>
-                          <button
-                            type="button"
-                            id="concluir-mt1042"
-                            class="btn btn-contorno"
-                            data-acao-chamado="concluir"
-                            data-protocolo="MT-1042"
-                            aria-label="Concluir chamado MT-1042"
-                            disabled
-                          >
-                            Concluir
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr data-protocolo="MT-1041">
-                      <th scope="row" class="coord-td-proto">MT-1041</th>
-                      <td>Apoio com elevador</td>
-                      <td>Consolação · Mezanino</td>
-                      <td>
-                        <span id="situacao-mt1041" class="admin-status-pill"
-                          >Em atendimento</span
-                        >
-                      </td>
-                      <td>
-                        <div class="admin-chamado-acoes">
-                          <button
-                            type="button"
-                            id="aceitar-mt1041"
-                            class="btn"
-                            data-acao-chamado="aceitar"
-                            data-protocolo="MT-1041"
-                            aria-label="Aceitar chamado MT-1041"
-                            disabled
-                          >
-                            Aceitar
-                          </button>
-                          <button
-                            type="button"
-                            id="recusar-mt1041"
-                            class="btn btn-contorno"
-                            data-acao-chamado="recusar"
-                            data-protocolo="MT-1041"
-                            aria-label="Recusar chamado MT-1041"
-                            disabled
-                          >
-                            Recusar
-                          </button>
-                          <button
-                            type="button"
-                            id="concluir-mt1041"
-                            class="btn"
-                            data-acao-chamado="concluir"
-                            data-protocolo="MT-1041"
-                            aria-label="Concluir chamado MT-1041"
-                          >
-                            Concluir
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
+                  <tbody id="corpo-chamados"></tbody>
                 </table>
               </div>
             </div>
@@ -409,50 +301,7 @@
                       <th scope="col">Ação</th>
                     </tr>
                   </thead>
-                  <tbody id="corpo-equipamentos">
-                    <tr data-equipamento="EL-01">
-                      <th scope="row" class="coord-td-proto">Elevador EL-01</th>
-                      <td>Consolação · Mezanino</td>
-                      <td>
-                        <span id="situacao-el01" class="admin-status-pill"
-                          >Disponível</span
-                        >
-                      </td>
-                      <td>
-                        <button
-                          type="button"
-                          id="alterar-el01"
-                          class="btn btn-contorno"
-                          data-alterar-equipamento="EL-01"
-                          aria-label="Alterar situação do elevador EL-01"
-                        >
-                          Alterar situação
-                        </button>
-                      </td>
-                    </tr>
-                    <tr data-equipamento="ER-02">
-                      <th scope="row" class="coord-td-proto">
-                        Escada rolante ER-02
-                      </th>
-                      <td>Consolação · Plataforma</td>
-                      <td>
-                        <span id="situacao-er02" class="admin-status-pill"
-                          >Em manutenção</span
-                        >
-                      </td>
-                      <td>
-                        <button
-                          type="button"
-                          id="alterar-er02"
-                          class="btn btn-contorno"
-                          data-alterar-equipamento="ER-02"
-                          aria-label="Alterar situação da escada rolante ER-02"
-                        >
-                          Alterar situação
-                        </button>
-                      </td>
-                    </tr>
-                  </tbody>
+                  <tbody id="corpo-equipamentos"></tbody>
                 </table>
               </div>
             </div>
@@ -509,7 +358,7 @@
                 </div>
                 <!-- apresenta o resultado do registro -->
                 <p id="aviso-ocorrencia" class="painel-status" role="status">
-                  As ocorrências serão armazenadas neste navegador.
+                  Registro de ocorrências.
                 </p>
                 <div class="admin-chamado-acoes">
                   <button type="submit" id="registrar-ocorrencia" class="btn">
@@ -559,19 +408,7 @@
                       <th scope="col">Situação</th>
                     </tr>
                   </thead>
-                  <tbody id="corpo-historico">
-                    <tr>
-                      <th scope="row" class="coord-td-proto">MT-1040</th>
-                      <td>Acompanhamento no desembarque</td>
-                      <td>Consolação · Plataforma</td>
-                      <td>
-                        <time datetime="2026-11-18T09:20"
-                          >18/11/2026 · 09h20</time
-                        >
-                      </td>
-                      <td><span class="admin-status-pill">Concluído</span></td>
-                    </tr>
-                  </tbody>
+                  <tbody id="corpo-historico"></tbody>
                 </table>
               </div>
             </div>
@@ -588,32 +425,7 @@
               <h1 id="titulo-notificacoes">Notificações</h1>
             </div>
             <div class="card-branco admin-fila-card">
-              <ul id="lista-notificacoes" class="cet-timeline">
-                <li>
-                  <span class="cet-timeline-icone"
-                    ><img
-                      src="../../assets/icones/sino.png"
-                      alt=""
-                      class="icone"
-                  /></span>
-                  <div>
-                    <strong>Novo chamado de apoio</strong>
-                    <p>MT-1042 aguarda um agente no bloqueio sul.</p>
-                  </div>
-                </li>
-                <li>
-                  <span class="cet-timeline-icone"
-                    ><img
-                      src="../../assets/icones/elevador.png"
-                      alt=""
-                      class="icone"
-                  /></span>
-                  <div>
-                    <strong>Manutenção de equipamento</strong>
-                    <p>A escada rolante ER-02 está em manutenção.</p>
-                  </div>
-                </li>
-              </ul>
+              <ul id="lista-notificacoes" class="cet-timeline"></ul>
             </div>
           </section>
 
@@ -645,6 +457,9 @@
                     Local de atuação:
                     <span data-local-profissional>Consolação</span>
                   </p>
+                <!-- apresenta a instituição e a linha da sessão -->
+                <p>Instituição: <span data-orgao-profissional></span></p>
+                <p>Linha: <span data-linha-profissional></span></p>
                 </div>
               </div>
             </div>
@@ -833,26 +648,7 @@
             &times;
           </button>
         </div>
-        <ul class="cet-timeline">
-          <li>
-            <span class="cet-timeline-icone"
-              ><img src="../../assets/icones/sino.png" alt="" class="icone"
-            /></span>
-            <div>
-              <strong>MT-1042 aguarda apoio</strong>
-              <p>Chamado de embarque no bloqueio sul.</p>
-            </div>
-          </li>
-          <li>
-            <span class="cet-timeline-icone"
-              ><img src="../../assets/icones/elevador.png" alt="" class="icone"
-            /></span>
-            <div>
-              <strong>Escada rolante em manutenção</strong>
-              <p>ER-02 indisponível na plataforma.</p>
-            </div>
-          </li>
-        </ul>
+        <ul class="cet-timeline"></ul>
       </div>
     </div>
 
@@ -888,8 +684,34 @@
             <p>
               Local de atuação: <span data-local-profissional>Consolação</span>
             </p>
+                <!-- apresenta a instituição e a linha da sessão -->
+                <p>Instituição: <span data-orgao-profissional></span></p>
+                <p>Linha: <span data-linha-profissional></span></p>
           </div>
         </div>
+      </div>
+    </div>
+  <!-- data-protocolo identifica o chamado e aria associa a janela ao título -->
+    <div id="modal-acompanhamento-metro" class="admin-modal-overlay" hidden>
+      <div class="admin-modal-caixa" role="dialog" aria-modal="true" aria-labelledby="titulo-acompanhamento-metro">
+        <div class="admin-modal-topo">
+          <h2 id="titulo-acompanhamento-metro" tabindex="-1">Acompanhamento do cidadão</h2>
+          <button type="button" class="admin-modal-fechar" data-fechar-modal aria-label="Fechar acompanhamento">&times;</button>
+        </div>
+        <div id="dados-acompanhamento-metro"></div>
+        <ol id="etapas-acompanhamento-metro" class="cet-timeline cet-timeline-conectada"></ol>
+        <!-- o motivo é solicitado somente antes de confirmar uma recusa -->
+        <form id="formulario-recusa-metro" class="form-contato" hidden>
+          <div class="campo-grupo">
+            <label for="motivo-recusa-metro">Motivo da recusa</label>
+            <textarea id="motivo-recusa-metro" rows="3" maxlength="300" required></textarea>
+          </div>
+          <p id="aviso-recusa-metro" role="status"></p>
+          <div class="admin-chamado-acoes">
+            <button type="submit" class="btn">Confirmar recusa</button>
+            <button type="button" class="btn btn-contorno" data-fechar-modal>Cancelar</button>
+          </div>
+        </form>
       </div>
     </div>
   </body>
