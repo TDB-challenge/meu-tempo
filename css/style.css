@@ -1107,6 +1107,23 @@ body.alto-contraste .logo-circulo {
   margin-bottom: 14px;
 }
 
+.rodape-marca {/* coloca o relogio ao lado do nome meu tempo no rodape */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.rodape-marca h3 {
+  margin-bottom: 0;
+}
+
+.rodape-marca .icone {
+  width: 24px;
+  height: 24px;
+  filter: brightness(0) invert(1);/* deixa o relogio preto, branco no fundo verde */
+}
+
 .rodape p {
   color: #c5d3c4;
   font-size: 0.88rem;
