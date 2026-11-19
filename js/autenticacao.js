@@ -1288,3 +1288,7 @@ function salvarSessao(usuario) {
   // transforma o objeto em texto e salva na sessão
   sessionStorage.setItem("admin-sessao", JSON.stringify(profissionalConectado));
 }
+
+
+
+

@@ -589,3 +589,80 @@ for (let i = 0; i < botoesIrRelatorios.length; i++) {
     window.location.href = "relatorios.html";
   });
 }
+
+// =================================================================
+// VERIFICAÇÃO DA SESSÃO ADMINISTRATIVA
+// =================================================================
+
+// recupera a sessão armazenada durante o login
+const sessaoAdmin = sessionStorage.getItem("admin-sessao");
+
+// variável que receberá os dados do profissional
+let profissionalAdmin = null;
+
+// recupera o endereço da página atual
+const paginaAdmin = window.location.pathname;
+
+
+// função que verifica a sessão e a permissão do profissional
+function verificarSessaoAdmin() {
+
+    // verifica se existe uma sessão
+    if (sessaoAdmin === null) {
+
+        // retorna ao login caso não exista uma sessão
+        window.location.replace("login.html");
+
+        return;
+
+    }
+
+    // transforma os dados armazenados em um objeto
+    profissionalAdmin = JSON.parse(sessaoAdmin);
+
+    // verifica a permissão do painel de transporte
+    if (paginaAdmin.endsWith("/metro.html")) {
+
+        if (profissionalAdmin.funcao !== "Agente de transporte") {
+
+            window.location.replace("login.html");
+
+        }
+
+    }
+
+    // verifica a permissão do painel da cet
+    if (paginaAdmin.endsWith("/cet.html")) {
+
+        if (profissionalAdmin.funcao !== "Operador CET") {
+
+            window.location.replace("login.html");
+
+        }
+
+    }
+
+    // verifica a permissão da coordenação e dos relatórios
+    if (paginaAdmin.endsWith("/coordenacao.html") ||
+        paginaAdmin.endsWith("/relatorios.html")) {
+
+        if (profissionalAdmin.funcao !== "Coordenador") {
+
+            window.location.replace("login.html");
+
+        }
+
+    }
+
+}
+
+
+// verifica se estamos em uma página administrativa
+if (paginaAdmin.endsWith("/metro.html") ||
+    paginaAdmin.endsWith("/cet.html") ||
+    paginaAdmin.endsWith("/coordenacao.html") ||
+    paginaAdmin.endsWith("/relatorios.html")) {
+
+    verificarSessaoAdmin();
+
+}
