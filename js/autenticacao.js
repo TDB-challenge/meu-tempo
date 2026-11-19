@@ -1112,6 +1112,7 @@ function validarLogin() {
 }
 
 // função que verifica as credenciais do profissional
+// função que verifica as credenciais do profissional
 function prepararLogin(event) {
   // impede o recarregamento da página
   event.preventDefault();
@@ -1122,37 +1123,39 @@ function prepararLogin(event) {
   // recupera a senha digitada
   const senha = senhaLogin.value;
 
-  // percorre a lista de profissionais cadastrados
-  for (let i = 0; i < usuariosAdministrativos.length; i++) {
-    // recupera o profissional da posição atual
-    const usuario = usuariosAdministrativos[i];
+  // recupera todos os usuários autorizados
+  const usuarios = buscarUsuariosAutorizados();
 
-    // verifica se o e-mail e a senha estão corretos
+  // percorre a lista de profissionais
+  for (let i = 0; i < usuarios.length; i++) {
+    // recupera o profissional atual
+    const usuario = usuarios[i];
+
+    // verifica se as credenciais estão corretas
     if (usuario.email === email && usuario.senha === senha) {
       // verifica se o profissional está autorizado
       if (usuario.status === "aprovado") {
-        // salva a sessão do profissional conectado
+        // salva a sessão do profissional
         salvarSessao(usuario);
 
-        // direciona o profissional ao painel correspondente
+        // direciona para o painel correspondente
         direcionarPainel(usuario);
 
-        // encerra a função após encontrar a conta
+        // encerra a função
         return;
       }
     }
   }
 
-  // apresenta uma mensagem caso nenhuma conta seja encontrada
+  // apresenta a mensagem de erro
   mensagemLogin.textContent = "E-mail ou senha incorretos.";
 
-  // aplica a aparência de mensagem de erro
+  // aplica a aparência de erro
   mensagemLogin.classList.add("mensagem-erro");
 
-  // mostra a mensagem na página
+  // mostra a mensagem
   mensagemLogin.hidden = false;
 }
-
 // verifica se estamos na página de login administrativo
 if (formularioLoginAdmin) {
   // verifica o e-mail enquanto o profissional digita
@@ -1288,7 +1291,3 @@ function salvarSessao(usuario) {
   // transforma o objeto em texto e salva na sessão
   sessionStorage.setItem("admin-sessao", JSON.stringify(profissionalConectado));
 }
-
-
-
-

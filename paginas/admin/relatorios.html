@@ -95,7 +95,8 @@
       <div class="admin-sidebar-rodape">
         <a href="../solucao01.html" class="admin-link-secundario">Ver área do cidadão</a>
         <a href="../index.html" class="admin-link-secundario">Voltar ao site</a>
-        <a href="../solucao02.html" class="admin-link-sair">
+        <!-- direciona ao login e identifica a saída para encerrar a sessão administrativa -->
+        <a href="login.html" class="admin-link-sair" data-sair>
           <img src="../../assets/icones/sair.png" alt="" class="icone" />
           <span>Sair</span>
         </a>
@@ -145,8 +146,9 @@
               <img src="../../assets/icones/user.png" alt="" class="icone" />
             </span>
             <div>
-              <strong>Carlos Oliveira</strong>
-              <span>Matrícula 48217</span>
+              <!-- identifica o profissional conectado -->
+              <strong data-nome-profissional>Carlos Oliveira</strong>
+              <span data-matricula-profissional>Matrícula 48217</span>
             </div>
           </button>
         </div>
@@ -460,9 +462,10 @@
             <img src="../../assets/icones/user.png" alt="" class="icone" />
           </span>
           <div>
-            <h3>Carlos Oliveira</h3>
-            <p>Matrícula 48217 · Coordenação</p>
-            <p>Vínculo: Área de coordenação</p>
+            <!-- identifica os dados do profissional conectado -->
+            <h3 data-nome-profissional>Carlos Oliveira</h3>
+            <p>Matrícula <span data-matricula-profissional>48217</span> · <span data-funcao-profissional>Coordenação</span></p>
+            <p>Vínculo: <span data-local-profissional>Área de coordenação</span></p>
           </div>
         </div>
 
@@ -472,7 +475,8 @@
 
         <div class="admin-chamado-acoes">
           <a href="../solucao02.html" class="btn btn-contorno">Trocar perfil &rarr;</a>
-          <a href="../solucao02.html" class="btn">Sair &rarr;</a>
+          <!-- direciona ao login e identifica a saída para encerrar a sessão administrativa -->
+          <a href="login.html" class="btn" data-sair>Sair &rarr;</a>
         </div>
       </div>
     </div>

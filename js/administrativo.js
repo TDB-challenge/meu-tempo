@@ -554,24 +554,78 @@ if (btnImprimirRelatorio) {
 }
 
 // Gestão de acessos (Aprovar / Recusar cadastro CAD-2048)
-const btnAprovarCadastro = document.getElementById("btn-aprovar-cadastro");
-const btnRecusarCadastro = document.getElementById("btn-recusar-cadastro");
-const statusCadastro = document.getElementById("status-cadastro-cad2048");
+// recupera o modelo e a lista de cadastros da coordenacao
+var listaSolicitacoesCadastro = document.getElementById("lista-solicitacoes-cadastro");
+var modeloSolicitacaoCadastro = document.getElementById("modelo-solicitacao-cadastro");
+var avisoSolicitacoesCadastro = document.getElementById("aviso-solicitacoes-cadastro");
 
-if (btnAprovarCadastro && statusCadastro) {
-  btnAprovarCadastro.addEventListener("click", function () {
-    statusCadastro.textContent = "Cadastro aprovado";
-    statusCadastro.className = "admin-status-pill cet-pill-aprovado";
-    mostrarToastAdmin("Cadastro aprovado");
-  });
+// salva a decisao e apresenta a lista atualizada
+function decidirSolicitacaoCadastro() {
+  alterarSituacaoCadastro(this.getAttribute("data-protocolo"), this.getAttribute("data-situacao"));
+  exibirSolicitacoesCadastro();
+  mostrarToastAdmin("Situação do cadastro atualizada");
 }
 
-if (btnRecusarCadastro && statusCadastro) {
-  btnRecusarCadastro.addEventListener("click", function () {
-    statusCadastro.textContent = "Cadastro não autorizado";
-    statusCadastro.className = "admin-status-pill cet-pill-recusado";
-    mostrarToastAdmin("Cadastro não autorizado");
-  });
+// apresenta cada solicitacao usando o cartao existente
+function exibirSolicitacoesCadastro() {
+  var solicitacoes = buscarSolicitacoes();
+  listaSolicitacoesCadastro.textContent = "";
+  avisoSolicitacoesCadastro.hidden = solicitacoes.length > 0;
+
+  for (var i = 0; i < solicitacoes.length; i++) {
+    var cadastro = solicitacoes[i];
+    var cartao = modeloSolicitacaoCadastro.cloneNode(true);
+    cartao.removeAttribute("id");
+    cartao.hidden = false;
+
+    // apresenta os dados cadastrados somente como texto
+    cartao.querySelector(".admin-chamado-meta span").textContent = cadastro.protocolo + " · " + cadastro.orgao;
+    cartao.querySelector("h3").textContent = cadastro.nome;
+    var local = cadastro.regiao || "";
+    if (cadastro.estacao) {
+      local = cadastro.estacao;
+    }
+    if (cadastro.linha) {
+      local = local + " · " + cadastro.linha;
+    }
+    cartao.querySelector(".admin-chamado-local").textContent = "Vínculo: " + local;
+    cartao.querySelector("[data-dados-solicitacao]").textContent = "Matrícula: " + cadastro.matricula + " · " + cadastro.funcao + " · E-mail: " + cadastro.email;
+
+    // atualiza a situacao e mostra as credenciais apenas na aprovacao
+    var situacao = cartao.querySelector(".admin-status-pill");
+    situacao.removeAttribute("id");
+    situacao.className = "admin-status-pill cet-pill-recusado";
+    var credenciais = cartao.querySelector("[data-credenciais-cadastro]");
+    credenciais.hidden = true;
+    if (cadastro.status === "aprovado") {
+      situacao.textContent = "Cadastro aprovado";
+      situacao.className = "admin-status-pill cet-pill-aprovado";
+      credenciais.textContent = "E-mail administrativo: " + cadastro.emailAdministrativo + " · Senha demonstrativa: MeuTempo123!";
+      credenciais.hidden = false;
+    } else if (cadastro.status === "reprovado") {
+      situacao.textContent = "Cadastro reprovado";
+    } else {
+      situacao.textContent = "Aguardando aprovação";
+    }
+
+    // associa cada decisao ao protocolo do cadastro correspondente
+    var aprovar = cartao.querySelector("#btn-aprovar-cadastro");
+    aprovar.removeAttribute("id");
+    aprovar.setAttribute("data-protocolo", cadastro.protocolo);
+    aprovar.setAttribute("data-situacao", "aprovado");
+    aprovar.addEventListener("click", decidirSolicitacaoCadastro);
+    var recusar = cartao.querySelector("#btn-recusar-cadastro");
+    recusar.removeAttribute("id");
+    recusar.setAttribute("data-protocolo", cadastro.protocolo);
+    recusar.setAttribute("data-situacao", "reprovado");
+    recusar.addEventListener("click", decidirSolicitacaoCadastro);
+    listaSolicitacoesCadastro.appendChild(cartao);
+  }
+}
+
+// executa a listagem somente na pagina que possui a gestao de acessos
+if (listaSolicitacoesCadastro && modeloSolicitacaoCadastro) {
+  exibirSolicitacoesCadastro();
 }
 
 // Abre a aba correta ao chegar em coordenacao.html via âncora (#estacoes, #solicitacoes, etc.)
@@ -666,3 +720,95 @@ if (paginaAdmin.endsWith("/metro.html") ||
     verificarSessaoAdmin();
 
 }
+
+// =================================================================
+// ENCERRAMENTO DA SESSÃO ADMINISTRATIVA
+// =================================================================
+
+// seleciona todos os links que possuem o atributo data-sair
+const botoesSairAdmin = document.querySelectorAll("[data-sair]");
+
+
+// função que encerra a sessão do profissional
+function sairAdmin(event) {
+
+    // impede o comportamento padrão do link
+    event.preventDefault();
+
+    // remove a sessão do profissional conectado
+    sessionStorage.removeItem("admin-sessao");
+
+    // retorna para o login administrativo
+    window.location.replace("login.html");
+
+}
+
+
+// percorre todos os botões de saída
+for (let i = 0; i < botoesSairAdmin.length; i++) {
+
+    // encerra a sessão quando o botão é clicado
+    botoesSairAdmin[i].addEventListener("click", sairAdmin);
+
+}
+
+
+
+
+// =================================================================
+// IDENTIFICAÇÃO DO PROFISSIONAL
+// =================================================================
+
+// função que apresenta os dados do profissional conectado
+function exibirDadosProfissional() {
+
+    // seleciona os elementos que receberão os dados
+    const nomes = document.querySelectorAll("[data-nome-profissional]");
+    const matriculas = document.querySelectorAll("[data-matricula-profissional]");
+    const funcoes = document.querySelectorAll("[data-funcao-profissional]");
+    const locais = document.querySelectorAll("[data-local-profissional]");
+
+    // apresenta o nome do profissional
+    for (let i = 0; i < nomes.length; i++) {
+        nomes[i].textContent = profissionalAdmin.nome;
+    }
+
+    // apresenta a matrícula do profissional
+    for (let i = 0; i < matriculas.length; i++) {
+        matriculas[i].textContent = profissionalAdmin.matricula;
+    }
+
+    // apresenta a função do profissional
+    for (let i = 0; i < funcoes.length; i++) {
+        funcoes[i].textContent = profissionalAdmin.funcao;
+    }
+
+    // guarda o local de atuação
+    let localAtuacao = "";
+
+    // verifica se o profissional atua em uma estação
+    if (profissionalAdmin.estacao) {
+
+        localAtuacao = profissionalAdmin.estacao;
+
+    } else {
+
+        localAtuacao = profissionalAdmin.regiao;
+
+    }
+
+    // apresenta o local de atuação
+    for (let i = 0; i < locais.length; i++) {
+        locais[i].textContent = localAtuacao;
+    }
+
+}
+
+// verifica se existe um profissional conectado
+if (profissionalAdmin !== null) {
+
+    // apresenta os dados no painel
+    exibirDadosProfissional();
+
+}
+
