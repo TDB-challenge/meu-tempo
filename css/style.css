@@ -2874,3 +2874,154 @@ CSS
   align-items: center; /* centraliza os elementos na altura */
   gap: 6px; /* separa o ícone do texto */
 }
+/* =========================================================
+   ACESSIBILIDADE COMPARTILHADA ENTRE AS PÁGINAS
+   ========================================================= */
+
+/* organiza o botão de ajustes abaixo do widget oficial de libras */
+.botao-acessibilidade-global {
+  position: fixed; /* acompanha a rolagem da página */
+  right: 16px; /* mantém o acesso junto à lateral */
+  top: 50%; /* acompanha a posição habitual do vlibras */
+  margin-top: 56px; /* separa os dois botões */
+  width: 48px; /* oferece uma área de toque confortável */
+  height: 48px; /* mantém o formato quadrado */
+  padding: 8px; /* afasta o símbolo das bordas */
+  border: 1px solid var(--verde-floresta); /* acompanha a paleta existente */
+  border-radius: 10px; /* suaviza os cantos do botão */
+  background-color: var(--verde-floresta); /* mantém a identidade verde */
+  cursor: pointer; /* identifica a ação disponível */
+  z-index: 9999; /* mantém o acesso acima dos cartões */
+}
+
+/* preserva a proporção e o contraste do novo símbolo */
+.botao-acessibilidade-global img {
+  width: 100%; /* ocupa o espaço reservado ao símbolo */
+  height: 100%; /* preserva o alinhamento vertical */
+  filter: brightness(0) invert(1); /* destaca o símbolo sobre o verde */
+}
+
+/* mantém o widget oficial alinhado ao botão compartilhado */
+[vw].enabled {
+  right: 16px; /* utiliza o mesmo alinhamento lateral */
+}
+
+/* reaproveita a aparência dos cartões administrativos no diálogo nativo */
+.modal-acessibilidade-global {
+  position: fixed; /* mantém a janela dentro da tela */
+  margin: auto; /* centraliza o diálogo nativo */
+  width: 90%; /* respeita a largura de telas menores */
+  max-width: 520px; /* mantém uma leitura confortável */
+  max-height: 85vh; /* permite acessar todos os controles */
+  overflow-y: auto; /* permite rolar somente o conteúdo da janela */
+  padding: 24px; /* afasta os controles das bordas */
+  border: 1px solid var(--borda); /* preserva a borda dos cartões */
+  border-radius: 18px; /* mantém os cantos arredondados */
+  background-color: var(--branco); /* utiliza o fundo do tema atual */
+  color: var(--texto-principal); /* respeita o contraste escolhido */
+  font-family: var(--fonte-principal); /* acompanha a fonte do aplicativo */
+}
+
+/* mantém o fundo da página discreto durante os ajustes */
+.modal-acessibilidade-global::backdrop {
+  background-color: rgba(12, 32, 26, 0.45); /* destaca a janela sem mudar a paleta */
+}
+
+/* mantém o título proporcional e separado do fechamento */
+.modal-acessibilidade-global h2 {
+  font-size: 1.4rem; /* mantém a hierarquia sem ocupar toda a janela */
+  padding-right: 66px; /* reserva espaço para o botão de fechar */
+  margin-bottom: 20px; /* separa o título dos controles */
+}
+
+/* mantém o fechamento visível na parte superior */
+.fechar-acessibilidade-global {
+  position: absolute; /* posiciona o fechamento junto ao título */
+  right: 16px; /* afasta o botão da borda direita */
+  top: 16px; /* alinha o fechamento ao cabeçalho */
+  padding: 8px; /* mantém a área de toque legível */
+  border: 1px solid var(--borda); /* delimita o controle */
+  border-radius: 8px; /* acompanha os outros botões */
+  background-color: var(--verde-claro); /* reaproveita a cor dos ajustes */
+  color: var(--texto-principal); /* mantém o texto legível */
+}
+
+/* organiza cada preferência com seu controle correspondente */
+.opcao-acessibilidade-global {
+  display: flex; /* coloca o nome e o controle lado a lado */
+  align-items: center; /* centraliza o conteúdo na altura */
+  justify-content: space-between; /* separa o texto da escolha */
+  gap: 16px; /* evita aproximar texto e campo */
+  padding: 14px 0; /* separa as opções da lista */
+  border-bottom: 1px solid var(--borda); /* delimita cada preferência */
+}
+
+/* mantém as opções de ativação fáceis de selecionar */
+.opcao-acessibilidade-global input {
+  width: 22px; /* oferece uma área confortável para marcar */
+  min-width: 22px; /* evita reduzir o controle junto a textos longos */
+  height: 22px; /* preserva a proporção da seleção */
+}
+
+/* mantém a seleção de escala compacta */
+.opcao-acessibilidade-global select {
+  padding: 6px; /* separa o texto da borda */
+  font: inherit; /* acompanha a ampliação dos textos */
+  color: inherit; /* respeita o tema escolhido */
+  background-color: var(--branco); /* mantém contraste com as opções */
+}
+
+/* reserva a separação do botão que restaura as configurações */
+.modal-acessibilidade-global .btn {
+  margin-top: 20px; /* separa a restauração das preferências */
+}
+
+/* deixa o foco visível nos novos controles */
+.botao-acessibilidade-global:focus-visible,
+.modal-acessibilidade-global button:focus-visible,
+.modal-acessibilidade-global input:focus-visible,
+.modal-acessibilidade-global select:focus-visible {
+  outline: 3px solid var(--terracota); /* destaca a navegação pelo teclado */
+  outline-offset: 3px; /* separa o foco da borda */
+}
+
+/* apresenta os quatro indicadores sem substituir os estilos do formulário */
+.cadastro-etapas {
+  grid-template-columns: repeat(4, 1fr); /* acomoda as quatro etapas do cidadão */
+}
+
+/* preserva a mesma fonte e o espaçamento da marca no aplicativo */
+.app .texto-logo strong,
+.app .logo-mobile strong {
+  font-family: var(--fonte-principal); /* reaproveita a fonte já utilizada no aplicativo */
+  font-size: 1.25rem; /* acompanha o tamanho dos outros ambientes */
+  font-weight: 800; /* mantém o destaque da marca */
+}
+
+/* mantém os recursos flutuantes acima da navegação móvel */
+@media (max-width: 600px) {
+  .botao-acessibilidade-global {
+    top: auto; /* utiliza a base da tela em celulares */
+    bottom: 120px; /* reserva espaço para a navegação do aplicativo */
+    right: 10px; /* mantém o acesso dentro da tela */
+    margin-top: 0; /* retira o deslocamento usado no computador */
+  }
+  [vw].enabled {
+    top: auto; /* utiliza o mesmo alinhamento do botão de ajustes */
+    bottom: 180px; /* mantém libras acima da acessibilidade */
+    right: 10px; /* acompanha a lateral escolhida */
+    transform: none; /* preserva a separação entre os controles */
+  }
+  .com-acessibilidade main {
+    padding-right: 58px; /* reserva uma faixa para os recursos flutuantes */
+  }
+  .pagina-admin.com-acessibilidade .admin-main {
+    padding-right: 68px; /* impede sobreposição aos controles administrativos */
+  }
+  .app.com-acessibilidade .conteudo-app {
+    padding-right: 68px; /* mantém campos e ações fora da faixa dos controles */
+  }
+  .cadastro-etapas {
+    grid-template-columns: repeat(2, 1fr); /* mantém os quatro passos legíveis no celular */
+  }
+}

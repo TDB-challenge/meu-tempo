@@ -518,3 +518,168 @@ function buscarChamadosMetro() {
   if (possuiHistoricoInicial === false) salvos.push(iniciais[2]);
   return salvos;
 }
+
+// =================================================================
+// CIDADÃOS E SOLICITAÇÕES COMPARTILHADAS
+// =================================================================
+
+// recupera somente os cadastros demonstrativos, sem imagens de documentos
+function buscarCidadaos() {
+  return lerListaOperacional("meu-tempo-cidadaos");
+}
+
+// salva os dados informados na demonstração
+// cidadaos representa a lista de cadastros já conferida pelo formulário
+function salvarCidadaos(cidadaos) {
+  localStorage.setItem("meu-tempo-cidadaos", JSON.stringify(cidadaos));
+}
+
+// procura o cadastro relacionado à sessão do cidadão
+function buscarCidadaoConectado() {
+  // recupera a identificação da sessão sem misturar contas administrativas
+  const texto = sessionStorage.getItem("cidadao-sessao");
+  if (texto === null) return null;
+  try {
+    // recupera o identificador e a lista de cadastros
+    const sessao = JSON.parse(texto);
+    const cidadaos = buscarCidadaos();
+    // procura somente o cidadão identificado nesta aba
+    for (let i = 0; i < cidadaos.length; i++) {
+      if (sessao && cidadaos[i].id === sessao.id) return cidadaos[i];
+    }
+  } catch (erro) {
+    // erro indica uma sessão que não pode ser recuperada
+    sessionStorage.removeItem("cidadao-sessao");
+  }
+  return null;
+}
+
+// atualiza um cadastro sem apagar os dados dos demais cidadãos
+// cidadao representa os dados que o formulário de perfil permite editar
+function salvarDadosCidadao(cidadao) {
+  // recupera os cadastros existentes
+  const cidadaos = buscarCidadaos();
+  // procura o identificador que deve ser atualizado
+  for (let i = 0; i < cidadaos.length; i++) {
+    if (cidadaos[i].id === cidadao.id) {
+      cidadaos[i] = cidadao;
+      salvarCidadaos(cidadaos);
+      return;
+    }
+  }
+}
+
+// recupera os equipamentos utilizados pelo aplicativo e pelo painel ferroviário
+function buscarEquipamentosMetro() {
+  // consulta o mesmo registro alterado pelo profissional
+  const equipamentos = lerListaOperacional("metro-equipamentos");
+  if (equipamentos.length > 0) return equipamentos;
+  // mantém somente os equipamentos já apresentados no protótipo
+  return [
+    {codigo: "EL-01", nome: "Elevador", local: "Mezanino", estacao: "Consolação", orgao: "metro", situacao: "Disponível"},
+    {codigo: "ER-02", nome: "Escada rolante", local: "Plataforma", estacao: "Consolação", orgao: "metro", situacao: "Em manutenção"}
+  ];
+}
+
+// atualiza o mesmo protocolo utilizado no aplicativo e nos painéis
+// pedido representa a solicitação que recebeu uma nova etapa
+function salvarPedidoCidadao(pedido) {
+  // seleciona a chave de acordo com o serviço existente
+  let chave = "meu-tempo-pedidos";
+  if (pedido.servico === "metro") chave = "metro-chamados";
+  // recupera a lista sem alterar os demais protocolos
+  const pedidos = lerListaOperacional(chave);
+  // procura o protocolo que será atualizado
+  for (let i = 0; i < pedidos.length; i++) {
+    if (pedidos[i].protocolo === pedido.protocolo) {
+      pedidos[i] = pedido;
+      localStorage.setItem(chave, JSON.stringify(pedidos));
+      return;
+    }
+  }
+  // acrescenta somente solicitações que ainda não foram registradas
+  pedidos.push(pedido);
+  localStorage.setItem(chave, JSON.stringify(pedidos));
+}
+
+// registra uma solicitação com o cidadão da sessão atual
+// pedido contém somente as informações necessárias ao serviço escolhido
+function registrarPedidoCidadao(pedido) {
+  // identifica quem está enviando a solicitação
+  const cidadao = buscarCidadaoConectado();
+  if (cidadao === null) return null;
+  // prepara a chave e o prefixo do serviço
+  let prefixo = "ZEL-";
+  let chave = "meu-tempo-pedidos";
+  if (pedido.servico === "metro") {
+    prefixo = "MT-";
+    chave = "metro-chamados";
+  } else if (pedido.servico === "travessia") {
+    prefixo = "TR-";
+  }
+  // utiliza o instante e a quantidade para diferenciar solicitações consecutivas
+  const existentes = lerListaOperacional(chave);
+  const data = new Date();
+  pedido.protocolo = prefixo + Date.now() + "-" + (existentes.length + 1);
+  pedido.cidadaoId = cidadao.id;
+  pedido.nome = cidadao.nome;
+  pedido.dataSolicitacao = data.toISOString();
+  pedido.horarioSolicitacao = data.toLocaleString("pt-BR");
+  // inicia o acompanhamento quando o serviço ainda não definiu sua primeira etapa
+  if (!pedido.situacao) pedido.situacao = "Pedido recebido";
+  if (!Array.isArray(pedido.etapas)) pedido.etapas = [{titulo: "Pedido recebido", horario: pedido.horarioSolicitacao, instante: data.toISOString()}];
+  // compartilha somente o resumo documental necessário, sem laudos ou imagens
+  if (pedido.servico === "metro") {
+    pedido.origem = "Aplicativo Meu Tempo";
+    pedido.credencial = "Identificação não conferida";
+    if (cidadao.documentos && cidadao.documentos.identificacao) pedido.credencial = "Situação documental: " + cidadao.documentos.identificacao;
+  }
+  salvarPedidoCidadao(pedido);
+  return pedido;
+}
+
+// reúne somente as solicitações do cidadão conectado
+function buscarPedidosCidadao() {
+  // recupera a sessão e inicia a lista de resultados
+  const cidadao = buscarCidadaoConectado();
+  const resultado = [];
+  if (cidadao === null) return resultado;
+  // consulta as duas listas já utilizadas pelas áreas da plataforma
+  const listas = [lerListaOperacional("metro-chamados"), lerListaOperacional("meu-tempo-pedidos")];
+  // percorre os serviços sem criar cópias de um mesmo atendimento
+  for (let i = 0; i < listas.length; i++) {
+    for (let j = 0; j < listas[i].length; j++) {
+      if (listas[i][j].cidadaoId === cidadao.id) resultado.push(listas[i][j]);
+    }
+  }
+  return resultado;
+}
+
+// guarda os cruzamentos e o suporte da proposta que já estavam no aplicativo
+const cruzamentosMeuTempo = [
+  {
+    "id": "paulista-augusta",
+    "nome": "Av. Paulista × Rua Augusta",
+    "suporte": true
+  },
+  {
+    "id": "paulista-consolacao",
+    "nome": "Av. Paulista × Rua da Consolação",
+    "suporte": false
+  },
+  {
+    "id": "paulista-pamplona",
+    "nome": "Av. Paulista × Rua Pamplona",
+    "suporte": false
+  },
+  {
+    "id": "paulista-campinas",
+    "nome": "Av. Paulista × Alameda Campinas",
+    "suporte": true
+  },
+  {
+    "id": "paulista-brigadeiro",
+    "nome": "Av. Paulista × Av. Brigadeiro Luís Antônio",
+    "suporte": true
+  }
+];

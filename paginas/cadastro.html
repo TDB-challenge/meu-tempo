@@ -6,31 +6,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Cadastro | Meu Tempo</title>
   <link rel="stylesheet" href="../css/style.css" />
+  <script src="../js/dados.js" defer></script>
   <script src="../js/script.js" defer></script>
+  <script src="../js/api.js" defer></script>
+  <script src="../js/leitor-documentos.js" defer></script>
+  <script src="../js/autenticacao.js" defer></script>
 </head>
 <body>
   <!-- Barra superior -->
-  <div class="barra-util">
-    <div class="container">
-      <span>Uma cidade para todas as pessoas. Um caminho de cada vez.</span>
-      <button type="button" id="btn-abrir-acess" class="btn-acess-topo">
-        Recursos de acessibilidade &rsaquo;
-      </button>
-    </div>
-  </div>
+
 
   <!-- Barra de ajustes rápidos -->
-  <div id="painel-acess-rapido" class="painel-acess-rapido">
-    <div class="container">
-      <strong>Ajustes rápidos de leitura:</strong>
-      <div class="botoes-acess">
-        <button type="button" class="acao-aumentar">A+ Aumentar texto</button>
-        <button type="button" class="acao-diminuir">A- Texto normal</button>
-        <button type="button" class="acao-contraste">Alto contraste</button>
-        <button type="button" class="acao-tema">Tema escuro</button>
-      </div>
-    </div>
-  </div>
+
 
   <!-- Cabeçalho -->
   <header class="cabecalho">
@@ -49,7 +36,7 @@
 
       <nav id="menu-navegacao" class="menu">
         <a href="index.html">Início</a>
-        <a href="sobre.html" class="ativo">Sobre</a>
+        <a href="sobre.html">Sobre</a>
         <a href="solucao.html">Nossa solução</a>
         <a href="acessibilidade.html">Acessibilidade</a>
         <a href="integrantes.html">Equipe</a>
@@ -57,7 +44,7 @@
         <a href="contato.html">Contato</a>
       </nav>
 
-      <a href="cadastro.html" class="btn btn-pequeno header-cta">Acessar plataforma &rarr;</a>
+      <a href="login.html" class="btn btn-pequeno header-cta">Entrar na plataforma &rarr;</a>
     </div>
   </header>
 
@@ -70,7 +57,7 @@
           <div class="etiqueta">SEJA BEM-VINDO AO MEU TEMPO</div>
           <h1>Seu próximo caminho começa por aqui.</h1>
           <p class="cadastro-lead">
-            Mais autonomia para seguir no seu ritmo. Valide sua credencial e configure sua experiência em poucos passos.
+            Mais autonomia para seguir no seu ritmo. Informe dados fictícios e configure sua experiência em poucos passos.
           </p>
 
           <div class="cadastro-foto-arco">
@@ -94,47 +81,53 @@
           <h2>Vamos começar?</h2>
           <p class="cadastro-subtitulo">Precisamos de poucas informações para começar.</p>
 
-          <!-- Indicador das 3 etapas -->
+          <!-- indicador das quatro etapas; data-indicador-etapa identifica o passo atual -->
           <div class="cadastro-etapas" aria-label="Etapas do cadastro">
             <div class="etapa-item ativa" data-indicador-etapa="1">
               <div class="etapa-barra"></div>
-              <span>1. Dados básicos</span>
+              <span>1. Identificação</span>
             </div>
             <div class="etapa-item" data-indicador-etapa="2">
               <div class="etapa-barra"></div>
-              <span>2. Acessibilidade</span>
+              <span>2. Necessidades</span>
             </div>
             <div class="etapa-item" data-indicador-etapa="3">
               <div class="etapa-barra"></div>
               <span>3. Preferências</span>
             </div>
+            <div class="etapa-item" data-indicador-etapa="4">
+              <div class="etapa-barra"></div>
+              <span>4. Revisão</span>
+            </div>
           </div>
 
           <form id="form-cadastro" novalidate>
-            <!-- ================= ETAPA 1: DADOS BÁSICOS ================= -->
+            <!-- ================= ETAPA 1: IDENTIFICAÇÃO E DOCUMENTOS ================= -->
             <div id="cadastro-passo-1" class="cadastro-passo">
-              <!-- Box verde de validação obrigatória por QR Code -->
+              <!-- arquivos fictícios ficam apenas na memória desta página -->
               <div id="box-qrcode-cadastro" class="cadastro-qrcode-box">
                 <div class="qrcode-box-topo">
-                  <span class="qrcode-icone-wrap">
-                    <img src="../assets/icones/qr.png" alt="" class="icone" />
-                  </span>
+                  <img src="../assets/icones/scan-traces.svg" alt="" class="icone" />
                   <div>
-                    <strong>Valide sua credencial com QR Code <span class="asterisco">*</span></strong>
-                    <p>
-                      Obrigatório para evitar fraudes e liberar os benefícios (CIN, CIPCD, CIPTEA ou Carteira da Pessoa Idosa).
-                    </p>
+                    <strong>Conferência manual de documento fictício</strong>
+                    <p>Não há OCR configurado nem validação de autenticidade. Nenhuma imagem é enviada ou salva. Serviços gerais continuam disponíveis sem comprovação.</p>
                   </div>
                 </div>
-
-                <button type="button" id="btn-simular-qrcode" class="btn-qrcode-ler">
-                  <img src="../assets/icones/qr.png" alt="" class="icone" />
-                  <span>Ler QR Code da credencial</span>
-                </button>
-
-                <p id="status-qrcode-cadastro" class="qrcode-nota">
-                  Após validar o QR Code, confira ou complete seus dados básicos abaixo.
-                </p>
+                <label class="checkbox-termos"><input type="checkbox" id="consentimento-documentos" /> Autorizo visualizar arquivos fictícios apenas durante este cadastro.</label>
+                <label for="documento-identificacao">Documento de identificação fictício (imagem, até 5 MB, opcional)</label>
+                <input type="file" id="documento-identificacao" accept="image/jpeg,image/png,image/webp" disabled />
+                <img id="previa-identificacao" alt="Prévia local do documento fictício" width="200" hidden />
+                <label for="documento-complementar">Laudo ou credencial fictícia complementar (imagem, até 5 MB, opcional)</label>
+                <input type="file" id="documento-complementar" accept="image/jpeg,image/png,image/webp" disabled />
+                <img id="previa-complementar" alt="Prévia local do documento complementar fictício" width="200" hidden />
+                <p id="status-qrcode-cadastro" class="qrcode-nota" role="status">Sem OCR: preencha os dados e confira manualmente a prévia, se desejar.</p>
+                <div id="conferencia-documento" hidden>
+                  <label for="documento-nome">Nome que você lê no documento fictício</label>
+                  <input type="text" id="documento-nome" autocomplete="off" />
+                  <label for="documento-nascimento">Nascimento que você lê no documento fictício</label>
+                  <input type="date" id="documento-nascimento" />
+                  <button type="button" id="btn-simular-qrcode" class="btn-qrcode-ler">Conferir os dados digitados manualmente</button>
+                </div>
               </div>
 
               <div class="form-contato">
@@ -143,6 +136,66 @@
                   <input type="text" id="cad-nome" name="nome" required />
                 </div>
 
+                <div class="campo-grupo">
+                  <label for="cad-nascimento">Data de nascimento *</label>
+                  <input type="date" id="cad-nascimento" required />
+                </div>
+                <div class="campo-grupo">
+                  <label for="cad-municipio">Município *</label>
+                  <input type="text" id="cad-municipio" required />
+                </div>
+                <div class="campo-grupo">
+                  <label for="cad-estado">Estado (UF) *</label>
+                  <select id="cad-estado" required>
+                    <option value="">Selecione</option>
+                    <option>AC</option>
+                    <option>AL</option>
+                    <option>AP</option>
+                    <option>AM</option>
+                    <option>BA</option>
+                    <option>CE</option>
+                    <option>DF</option>
+                    <option>ES</option>
+                    <option>GO</option>
+                    <option>MA</option>
+                    <option>MT</option>
+                    <option>MS</option>
+                    <option>MG</option>
+                    <option>PA</option>
+                    <option>PB</option>
+                    <option>PR</option>
+                    <option>PE</option>
+                    <option>PI</option>
+                    <option>RJ</option>
+                    <option>RN</option>
+                    <option>RS</option>
+                    <option>RO</option>
+                    <option>RR</option>
+                    <option>SC</option>
+                    <option>SP</option>
+                    <option>SE</option>
+                    <option>TO</option>
+                  </select>
+                </div>
+                <div class="campo-grupo">
+                  <label for="cad-bairro">Bairro ou região (opcional)</label>
+                  <input type="text" id="cad-bairro" />
+                </div>
+                <div class="campo-grupo">
+                  <label for="cad-telefone">Telefone (opcional)</label>
+                  <input type="tel" id="cad-telefone" />
+                </div>
+                <div class="campo-grupo">
+                  <label for="cad-categoria">Categoria autodeclarada *</label>
+                  <select id="cad-categoria" required>
+                    <option value="geral">Demais cidadãos</option>
+                    <option value="idosa">Pessoa idosa (a partir de 60 anos)</option>
+                    <option value="pcd">Pessoa com deficiência</option>
+                    <option value="mobilidade">Pessoa com mobilidade reduzida</option>
+                    <option value="temporaria">Necessidade temporária de apoio</option>
+                  </select>
+                  <small>Benefícios específicos dependem de comprovação. Documentação complementar fica aguardando análise na demonstração.</small>
+                </div>
                 <div class="campo-grupo">
                   <label for="cad-email">E-mail <span class="asterisco">*</span></label>
                   <input type="email" id="cad-email" name="email" required />
@@ -176,16 +229,8 @@
                       <img src="../assets/icones/eye.png" alt="" class="icone" />
                     </button>
                   </div>
-                  <small class="campo-dica">Use pelo menos 8 caracteres.</small>
+                  <small class="campo-dica">Use pelo menos 8 caracteres, letra maiúscula, minúscula, número e símbolo (!@#$%&amp;*()+?_=.,:;/-). Não reutilize uma senha real.</small>
                 </div>
-
-                <label class="checkbox-termos" for="cad-termos">
-                  <input type="checkbox" id="cad-termos" required />
-                  <span>
-                    Li os <a href="acessibilidade.html#termos-uso">termos de uso</a> e as
-                    <a href="privacidade.html">informações de privacidade</a>.
-                  </span>
-                </label>
 
                 <div>
                   <button type="button" id="btn-cad-ir-passo2" class="btn">
@@ -195,53 +240,31 @@
               </div>
             </div>
 
-            <!-- ================= ETAPA 2: ACESSIBILIDADE ================= -->
+            <!-- ================= ETAPA 2: NECESSIDADES E MOBILIDADE ================= -->
             <div id="cadastro-passo-2" class="cadastro-passo" hidden>
-              <div class="painel-status" style="margin-bottom: 20px;">
-                <strong>Perfil identificado pela credencial:</strong>
-                <p id="resumo-perfil-qrcode" style="margin: 6px 0 0;">
-                  Credencial validada · Recursos visuais e sonoros recomendados ativados.
-                </p>
-              </div>
-
-              <p style="font-size: 0.92rem; margin-bottom: 16px;">
-                Personalize como você prefere visualizar e interagir com a plataforma:
-              </p>
-
+              <h3>Como podemos facilitar seus caminhos?</h3>
+              <p>Selecione apenas o que deseja informar. Estas declarações não comprovam diagnósticos.</p>
               <div class="cadastro-opcoes-lista">
-                <label class="opcao-check-card">
-                  <input type="checkbox" id="pref-contraste" />
-                  <div>
-                    <strong>Alto contraste visual</strong>
-                    <span>Reforça bordas e contraste entre textos e botões na tela.</span>
-                  </div>
-                </label>
-
-                <label class="opcao-check-card">
-                  <input type="checkbox" id="pref-fonte" checked />
-                  <div>
-                    <strong>Fonte de alta legibilidade</strong>
-                    <span>Amplia o espaçamento e facilita a leitura rápida na rua.</span>
-                  </div>
-                </label>
-
-                <label class="opcao-check-card">
-                  <input type="checkbox" id="pref-voz" checked />
-                  <div>
-                    <strong>Comandos e respostas por voz (IARA)</strong>
-                    <span>Permite solicitar travessias e apoio falando com a assistente.</span>
-                  </div>
-                </label>
-
-                <label class="opcao-check-card">
-                  <input type="checkbox" id="pref-vibracao" checked />
-                  <div>
-                    <strong>Alerta vibratório e guia musical</strong>
-                    <span>Sinalização tátil e sonora durante a abertura do semáforo.</span>
-                  </div>
-                </label>
+                <label class="opcao-check-card"><input type="checkbox" name="necessidade" value="Mobilidade reduzida" /> <span>Mobilidade reduzida</span></label>
+                <label class="opcao-check-card"><input type="checkbox" name="necessidade" value="Dificuldade para caminhar longas distâncias" /> <span>Dificuldade para caminhar longas distâncias</span></label>
+                <label class="opcao-check-card"><input type="checkbox" name="necessidade" value="Dificuldade com escadas" /> <span>Dificuldade com escadas</span></label>
+                <label class="opcao-check-card"><input type="checkbox" name="necessidade" value="Uso de cadeira de rodas" /> <span>Uso de cadeira de rodas</span></label>
+                <label class="opcao-check-card"><input type="checkbox" name="necessidade" value="Uso de bengala" /> <span>Uso de bengala</span></label>
+                <label class="opcao-check-card"><input type="checkbox" name="necessidade" value="Uso de muletas" /> <span>Uso de muletas</span></label>
+                <label class="opcao-check-card"><input type="checkbox" name="necessidade" value="Deficiência visual ou baixa visão" /> <span>Deficiência visual ou baixa visão</span></label>
+                <label class="opcao-check-card"><input type="checkbox" name="necessidade" value="Deficiência auditiva" /> <span>Deficiência auditiva</span></label>
+                <label class="opcao-check-card"><input type="checkbox" name="necessidade" value="Necessidade de acompanhamento" /> <span>Necessidade de acompanhamento</span></label>
+                <label class="opcao-check-card"><input type="checkbox" name="necessidade" value="Sensibilidade a estímulos sonoros ou visuais" /> <span>Sensibilidade a estímulos sonoros ou visuais</span></label>
+                <label class="opcao-check-card"><input type="checkbox" name="necessidade" value="Limitação temporária" /> <span>Limitação temporária</span></label>
+                <label class="opcao-check-card"><input type="checkbox" name="necessidade" value="Outras necessidades" /> <span>Outras necessidades</span></label>
+                <label class="opcao-check-card"><input type="checkbox" name="necessidade" value="Prefiro não informar" /> <span>Prefiro não informar</span></label>
               </div>
-
+              <div class="campo-grupo">
+                <label for="cad-complemento">Informação complementar fictícia (opcional)</label>
+                <textarea id="cad-complemento" maxlength="250" aria-describedby="dica-complemento"></textarea>
+                <!-- aria-describedby associa a orientação ao campo -->
+                <small id="dica-complemento">Não informe doenças, diagnósticos ou dados médicos reais. Este texto não será armazenado.</small>
+              </div>
               <div class="cadastro-botoes-linha">
                 <button type="button" id="btn-cad-voltar-1" class="btn btn-contorno">
                   &larr; Voltar
@@ -254,13 +277,29 @@
 
             <!-- ================= ETAPA 3: PREFERÊNCIAS ================= -->
             <div id="cadastro-passo-3" class="cadastro-passo" hidden>
+              <h3>Acessibilidade e preferências</h3>
+              <p>As preferências acompanham sua navegação. Recursos futuros aparecem desabilitados.</p>
+              <!-- data-preferencia conecta os controles às preferências globais -->
+              <div class="campo-grupo">
+                <label for="pref-tamanho">Tamanho das letras</label>
+                <select id="pref-tamanho" data-preferencia="fonte"><option value="100">100%</option><option value="115">115%</option><option value="125">125%</option><option value="130">130%</option><option value="150">150%</option><option value="175">175%</option><option value="200">200%</option></select>
+              </div>
+              <div class="cadastro-opcoes-lista">
+                <label class="opcao-check-card"><input type="checkbox" id="pref-contraste" data-preferencia="contraste" /> <span>Alto contraste</span></label>
+                <label class="opcao-check-card"><input type="checkbox" id="pref-tema" data-preferencia="temaEscuro" /> <span>Tema escuro</span></label>
+                <label class="opcao-check-card"><input type="checkbox" id="pref-fonte" data-preferencia="fonteLegivel" /> <span>Fonte de alta legibilidade</span></label>
+                <label class="opcao-check-card"><input type="checkbox" id="pref-orientacoes" data-preferencia="orientacoesVoz" /> <span>Orientações por voz</span></label>
+                <label class="opcao-check-card"><input type="checkbox" id="pref-voz" data-preferencia="vozIara" disabled /> <span>Respostas por voz da IARA (integração futura)</span></label>
+                <label class="opcao-check-card"><input type="checkbox" id="pref-som" data-preferencia="somTravessia" /> <span>Guia sonoro da travessia</span></label>
+                <label class="opcao-check-card"><input type="checkbox" id="pref-vibracao" data-preferencia="vibracao" /> <span>Alertas vibratórios (dependem do dispositivo)</span></label>
+              </div>
               <p style="font-size: 0.92rem; margin-bottom: 16px;">
                 Quais recursos você pretende usar com mais frequência no dia a dia?
               </p>
 
               <div class="cadastro-opcoes-lista">
                 <label class="opcao-check-card">
-                  <input type="checkbox" name="uso" value="travessia" checked />
+                  <input type="checkbox" name="uso" value="travessia" />
                   <div>
                     <strong>Travessia com tempo estendido</strong>
                     <span>Solicitação de tempo adicional em cruzamentos semafóricos (CET).</span>
@@ -268,7 +307,7 @@
                 </label>
 
                 <label class="opcao-check-card">
-                  <input type="checkbox" name="uso" value="metro" checked />
+                  <input type="checkbox" name="uso" value="metro" />
                   <div>
                     <strong>Apoio geolocalizado no Metrô e CPTM</strong>
                     <span>Acompanhamento de agentes da estação desde o bloqueio até o embarque.</span>
@@ -284,13 +323,36 @@
                 </label>
               </div>
 
+              <label class="opcao-check-card"><input type="checkbox" name="uso" value="equipamentos" /> <span>Consulta de equipamentos</span></label>
+              <label class="opcao-check-card"><input type="checkbox" name="uso" value="pedidos" /> <span>Acompanhamento de pedidos</span></label>
+
               <div class="cadastro-botoes-linha">
                 <button type="button" id="btn-cad-voltar-2" class="btn btn-contorno">
                   &larr; Voltar
                 </button>
-                <button type="submit" class="btn">
-                  Concluir cadastro &rarr;
+                <button type="button" id="btn-cad-ir-passo4" class="btn">
+                  Revisar cadastro &rarr;
                 </button>
+              </div>
+            </div>
+
+            <!-- ================= ETAPA 4: REVISÃO E CONCLUSÃO ================= -->
+            <!-- o resumo nunca inclui a senha ou imagens -->
+            <div id="cadastro-passo-4" class="cadastro-passo" hidden>
+              <h3 tabindex="-1" id="titulo-revisao-cidadao">Revise seus dados fictícios</h3>
+              <div id="resumo-cadastro-cidadao"></div>
+                <label class="checkbox-termos" for="cad-termos">
+                  <input type="checkbox" id="cad-termos" required />
+                  <span>
+                    Li os <a href="termos.html" target="_blank" rel="noopener noreferrer">termos de uso</a> e as
+                    <a href="privacidade.html">informações de privacidade</a>.
+                  </span>
+                </label>
+
+              <p>Autenticação apenas demonstrativa neste navegador. Use dados e documentos fictícios. O resumo da senha não substitui autenticação segura.</p>
+              <div class="cadastro-botoes-linha">
+                <button type="button" id="btn-cad-voltar-3" class="btn btn-contorno">&larr; Corrigir informações</button>
+                <button type="submit" id="concluir-cadastro-cidadao" class="btn">Concluir cadastro &rarr;</button>
               </div>
             </div>
 
@@ -339,7 +401,7 @@
         </div>
         <div>
           <h3>Outros caminhos</h3>
-          <a href="solucao01.html">Plataforma do cidadão</a>
+          <a href="login.html">Plataforma do cidadão</a>
           <a href="admin/login.html">Acesso administrativo</a>
           <a href="privacidade.html">Privacidade e termos</a>
         </div>

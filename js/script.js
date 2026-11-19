@@ -10,144 +10,304 @@ if (btnMenu && menu) {
   });
 }
 
-// =====================================================
-// 2. BARRA DE ACESSIBILIDADE E CONTROLES VISUAIS
-// =====================================================
-const btnAbrirAcess = document.getElementById("btn-abrir-acess");
-const painelAcess = document.getElementById("painel-acess-rapido");
+// =================================================================
+// PREFERÊNCIAS GLOBAIS DE ACESSIBILIDADE
+// =================================================================
 
-if (btnAbrirAcess && painelAcess) {
-  btnAbrirAcess.addEventListener("click", function () {
-    painelAcess.classList.toggle("aberto");
-  });
+// fornece os valores iniciais sem ativar preferências por uma condição presumida
+function preferenciasIniciaisAcessibilidade() {
+  return {fonte: "100", contraste: false, temaEscuro: false, fonteLegivel: false, orientacoesVoz: false, vozIara: false, somTravessia: false, vibracao: false};
 }
 
-const botoesAumentar = document.querySelectorAll(".acao-aumentar");
-const botoesDiminuir = document.querySelectorAll(".acao-diminuir");
-const botoesContraste = document.querySelectorAll(".acao-contraste");
-const botoesTema = document.querySelectorAll(".acao-tema");
-const botoesFonteLegivel = document.querySelectorAll(".acao-fonte-legivel");
-const btnResetarAcess = document.getElementById("btn-resetar-acess");
-const feedbackAcess = document.getElementById("feedback-acess");
+// recupera as escolhas já utilizadas em todas as áreas do projeto
+function buscarPreferenciasAcessibilidade() {
+  // prepara o padrão e consulta a chave compartilhada
+  const preferencias = preferenciasIniciaisAcessibilidade();
+  const texto = localStorage.getItem("meu-tempo-acessibilidade");
+  // recupera somente o formato esperado
+  if (texto !== null) {
+    try {
+      const salvas = JSON.parse(texto);
+      // copia apenas as preferências conhecidas
+      const chaves = ["contraste", "temaEscuro", "fonteLegivel", "orientacoesVoz", "vozIara", "somTravessia", "vibracao"];
+      if (salvas && typeof salvas === "object") {
+        for (let i = 0; i < chaves.length; i++) preferencias[chaves[i]] = salvas[chaves[i]] === true;
+        if (Number(salvas.fonte) >= 100 && Number(salvas.fonte) <= 200) preferencias.fonte = String(salvas.fonte);
+      }
+    } catch (erro) {
+      // erro indica preferências antigas que não podem ser interpretadas
+      return preferencias;
+    }
+    return preferencias;
+  }
+  // aproveita as chaves antigas uma única vez, sem apagar dados de contas ou pedidos
+  const fonteAntiga = localStorage.getItem("admin-tamanho-texto") || localStorage.getItem("meuTempoAdminFonte");
+  if (Number(fonteAntiga) >= 100 && Number(fonteAntiga) <= 200) preferencias.fonte = String(fonteAntiga);
+  preferencias.temaEscuro = localStorage.getItem("admin-tema") === "tema-escuro" || localStorage.getItem("temaEscuro") === "ativo";
+  preferencias.contraste = localStorage.getItem("admin-tema") === "alto-contraste" || localStorage.getItem("altoContraste") === "ativo";
+  preferencias.fonteLegivel = localStorage.getItem("fonteLegivel") === "ativo";
+  preferencias.vibracao = localStorage.getItem("meuTempoVibrar") === "ativo" || localStorage.getItem("alertaVibracao") === "ativo";
+  return preferencias;
+}
 
-let escalaFonte = 100;
+// aplica as escolhas e mantém os controles do modal e do perfil sincronizados
+function aplicarPreferenciasAcessibilidade() {
+  // recupera a mesma configuração para todos os componentes
+  const preferencias = buscarPreferenciasAcessibilidade();
+  document.documentElement.style.fontSize = preferencias.fonte + "%";
+  document.body.classList.toggle("alto-contraste", preferencias.contraste);
+  document.body.classList.toggle("tema-escuro", preferencias.temaEscuro);
+  document.body.classList.toggle("fonte-legivel", preferencias.fonteLegivel);
+  // atualiza cada campo que representa uma preferência
+  const controles = document.querySelectorAll("[data-preferencia]");
+  for (let i = 0; i < controles.length; i++) {
+    const chave = controles[i].getAttribute("data-preferencia");
+    if (chave === "fonte") controles[i].value = preferencias.fonte;
+    else controles[i].checked = preferencias[chave] === true;
+  }
+  // atualiza os controles da página institucional de acessibilidade
+  const botoes = document.querySelectorAll(".switch-toggle");
+  for (let i = 0; i < botoes.length; i++) {
+    let ativo = false;
+    if (botoes[i].classList.contains("acao-contraste")) ativo = preferencias.contraste;
+    else if (botoes[i].classList.contains("acao-musical")) ativo = preferencias.somTravessia;
+    else if (botoes[i].classList.contains("acao-vibracao")) ativo = preferencias.vibracao;
+    botoes[i].classList.toggle("ativo", ativo);
+    botoes[i].setAttribute("aria-pressed", String(ativo));
+    // a voz do webchat não está conectada nesta etapa
+    if (botoes[i].classList.contains("acao-voz")) {
+      botoes[i].disabled = true;
+      botoes[i].title = "O webchat da IARA será configurado em outra etapa.";
+    }
+  }
+  atualizarStatusAcessibilidade();
+}
 
+// armazena somente as preferências visuais e de interação
+// preferencias representa as escolhas do modal, cadastro ou perfil
+function salvarPreferenciasAcessibilidade(preferencias) {
+  localStorage.setItem("meu-tempo-acessibilidade", JSON.stringify(preferencias));
+  // retira chaves antigas para impedir que outro script aplique uma configuração divergente
+  const antigas = ["admin-tamanho-texto", "admin-tema", "meuTempoAdminFonte", "altoContraste", "temaEscuro", "fonteLegivel", "vozIara", "meuTempoIaraVoz", "meuTempoVibrar", "alertaVibracao"];
+  for (let i = 0; i < antigas.length; i++) localStorage.removeItem(antigas[i]);
+  // guarda também as preferências do cidadão que já está conectado
+  if (typeof buscarCidadaoConectado === "function") {
+    const cidadao = buscarCidadaoConectado();
+    if (cidadao !== null) {
+      cidadao.preferencias = preferencias;
+      salvarDadosCidadao(cidadao);
+    }
+  }
+  aplicarPreferenciasAcessibilidade();
+}
+
+// apresenta um resumo curto na página que permite experimentar os ajustes
 function atualizarStatusAcessibilidade() {
-  if (!feedbackAcess) {
-    return;
-  }
-
-  const ativos = [];
-
-  if (escalaFonte > 100) {
-    ativos.push("Texto ampliado (" + escalaFonte + "%)");
-  }
-  if (document.body.classList.contains("fonte-legivel")) {
-    ativos.push("Tipografia de alta legibilidade");
-  }
-  if (document.body.classList.contains("alto-contraste")) {
-    ativos.push("Alto contraste");
-  }
-  if (document.body.classList.contains("tema-escuro")) {
-    ativos.push("Tema escuro");
-  }
-
-  if (ativos.length === 0) {
-    feedbackAcess.textContent = "Configuração atual: Leitura padrão ativada (100%).";
-  } else {
-    feedbackAcess.textContent = "Filtros ativos agora: " + ativos.join(" • ") + ".";
+  const feedback = document.getElementById("feedback-acess");
+  if (feedback) {
+    const preferencias = buscarPreferenciasAcessibilidade();
+    feedback.textContent = "Tamanho das letras: " + preferencias.fonte + "%. As preferências acompanham sua navegação.";
   }
 }
 
-for (let i = 0; i < botoesAumentar.length; i++) {
-  botoesAumentar[i].addEventListener("click", function () {
-    if (escalaFonte < 145) {
-      escalaFonte += 15;
-      document.documentElement.style.fontSize = escalaFonte + "%";
+// utiliza a leitura nativa somente quando a pessoa escolheu orientações por voz
+// texto representa a orientação curta do controle ou serviço
+function falarOrientacaoAcessivel(texto) {
+  const preferencias = buscarPreferenciasAcessibilidade();
+  if (preferencias.orientacoesVoz && "speechSynthesis" in window && "SpeechSynthesisUtterance" in window) {
+    const fala = new SpeechSynthesisUtterance(texto);
+    fala.lang = "pt-BR";
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(fala);
+  }
+}
+
+// salva a preferência representada pelo campo alterado
+// event identifica o campo do modal, cadastro ou perfil
+function alterarPreferenciaAcessibilidade(event) {
+  const campo = event.currentTarget;
+  const chave = campo.getAttribute("data-preferencia");
+  const preferencias = buscarPreferenciasAcessibilidade();
+  if (chave === "fonte") preferencias.fonte = campo.value;
+  else preferencias[chave] = campo.checked;
+  // mantém contraste e tema como alternativas que não se sobrepõem
+  if (chave === "contraste" && campo.checked) preferencias.temaEscuro = false;
+  if (chave === "temaEscuro" && campo.checked) preferencias.contraste = false;
+  salvarPreferenciasAcessibilidade(preferencias);
+  falarOrientacaoAcessivel("Preferência atualizada.");
+}
+
+// conecta uma única vez os controles existentes ou acrescentados ao perfil
+function conectarControlesAcessibilidade() {
+  const controles = document.querySelectorAll("[data-preferencia]");
+  for (let i = 0; i < controles.length; i++) {
+    if (!controles[i].hasAttribute("data-preferencia-conectada")) {
+      controles[i].setAttribute("data-preferencia-conectada", "true");
+      controles[i].addEventListener("change", alterarPreferenciaAcessibilidade);
     }
-    atualizarStatusAcessibilidade();
-  });
+  }
+  aplicarPreferenciasAcessibilidade();
 }
 
-for (let i = 0; i < botoesDiminuir.length; i++) {
-  botoesDiminuir[i].addEventListener("click", function () {
-    if (escalaFonte > 100) {
-      escalaFonte -= 15;
-      document.documentElement.style.fontSize = escalaFonte + "%";
+// cria um campo básico para o mesmo modal utilizado em todas as páginas
+// destino recebe o campo, titulo apresenta a escolha e chave identifica a preferência
+function criarCampoAcessibilidade(destino, titulo, chave) {
+  const rotulo = document.createElement("label");
+  rotulo.className = "opcao-acessibilidade-global";
+  const nome = document.createElement("span");
+  nome.textContent = titulo;
+  rotulo.appendChild(nome);
+  let campo = document.createElement("input");
+  // a escala utiliza as opções já presentes nos protótipos
+  if (chave === "fonte") {
+    campo = document.createElement("select");
+    const escalas = [100, 115, 125, 130, 150, 175, 200];
+    for (let i = 0; i < escalas.length; i++) {
+      const opcao = document.createElement("option");
+      opcao.value = String(escalas[i]);
+      opcao.textContent = escalas[i] + "%";
+      campo.appendChild(opcao);
     }
-    atualizarStatusAcessibilidade();
-  });
+  } else campo.type = "checkbox";
+  campo.setAttribute("data-preferencia", chave);
+  // não apresenta funções de voz externa ou vibração ausente como disponíveis
+  if (chave === "vozIara" || (chave === "vibracao" && typeof navigator.vibrate !== "function")) campo.disabled = true;
+  if (chave === "orientacoesVoz" && !("speechSynthesis" in window)) campo.disabled = true;
+  rotulo.appendChild(campo);
+  destino.appendChild(rotulo);
 }
 
-for (let i = 0; i < botoesFonteLegivel.length; i++) {
-  botoesFonteLegivel[i].addEventListener("click", function () {
-    document.body.classList.toggle("fonte-legivel");
-    atualizarStatusAcessibilidade();
-  });
-}
-
-for (let i = 0; i < botoesContraste.length; i++) {
-  botoesContraste[i].addEventListener("click", function () {
-    document.body.classList.remove("tema-escuro");
-    document.body.classList.toggle("alto-contraste");
-    atualizarStatusAcessibilidade();
-  });
-}
-
-for (let i = 0; i < botoesTema.length; i++) {
-  botoesTema[i].addEventListener("click", function () {
-    document.body.classList.remove("alto-contraste");
-    document.body.classList.toggle("tema-escuro");
-    atualizarStatusAcessibilidade();
-  });
-}
-
-if (btnResetarAcess) {
-  btnResetarAcess.addEventListener("click", function () {
-    escalaFonte = 100;
-    document.documentElement.style.fontSize = "100%";
-    document.body.classList.remove("fonte-grande", "fonte-legivel", "alto-contraste", "tema-escuro");
-    atualizarStatusAcessibilidade();
-  });
-}
-
-// =====================================================
-// CONTROLE DOS TOGGLES DE ACESSIBILIDADE
-// =====================================================
-const switchesToggle = document.querySelectorAll(".switch-toggle");
-
-for (let i = 0; i < switchesToggle.length; i++) {
-  switchesToggle[i].addEventListener("click", function (event) {
-    // Garante que o alvo seja sempre o botão .switch-toggle, mesmo clicando na bolinha interna
-    const botao = event.currentTarget;
-    
-    botao.classList.toggle("ativo");
-    const ligado = botao.classList.contains("ativo");
-    botao.setAttribute("aria-pressed", ligado);
-
-    if (botao.classList.contains("acao-contraste")) {
-      document.body.classList.toggle("alto-contraste", ligado);
-    } else if (botao.classList.contains("acao-voz")) {
-      document.body.classList.toggle("voz-iara-ativa", ligado);
-    } else if (botao.classList.contains("acao-vibracao")) {
-      document.body.classList.toggle("vibracao-ativa", ligado);
-    } else if (botao.classList.contains("acao-musical")) {
-      document.body.classList.toggle("musical-ativo", ligado);
+// substitui os controles redundantes sem manter dois sistemas de acessibilidade
+function iniciarAcessibilidadeGlobal() {
+  // remove somente as barras e a antiga janela de recursos
+  const antigos = document.querySelectorAll(".barra-acessibilidade, .barra-util, .painel-acess-rapido");
+  for (let i = 0; i < antigos.length; i++) antigos[i].remove();
+  const modalAntigo = document.getElementById("modal-admin-acessibilidade");
+  if (modalAntigo) modalAntigo.remove();
+  const botaoAntigo = document.getElementById("btn-admin-acessibilidade");
+  if (botaoAntigo) botaoAntigo.remove();
+  // cria o botão flutuante com nome acessível e o ícone local
+  const botao = document.createElement("button");
+  botao.type = "button";
+  botao.id = "abrir-acessibilidade-global";
+  botao.className = "botao-acessibilidade-global";
+  botao.setAttribute("aria-label", "Abrir recursos de acessibilidade");
+  botao.setAttribute("aria-controls", "modal-acessibilidade-global");
+  const icone = document.createElement("img");
+  let caminho = "../assets/icones/disabled-2.svg";
+  if (document.body.classList.contains("app") || location.pathname.indexOf("/admin/") !== -1) caminho = "../../assets/icones/disabled-2.svg";
+  icone.src = caminho;
+  icone.alt = "";
+  botao.appendChild(icone);
+  document.body.appendChild(botao);
+  document.body.classList.add("com-acessibilidade");
+  // usa dialog para manter o foco dentro da janela e permitir o fechamento por escape
+  const modal = document.createElement("dialog");
+  modal.id = "modal-acessibilidade-global";
+  modal.className = "modal-acessibilidade-global";
+  modal.setAttribute("aria-labelledby", "titulo-acessibilidade-global");
+  const titulo = document.createElement("h2");
+  titulo.id = "titulo-acessibilidade-global";
+  titulo.textContent = "Uma experiência do seu jeito";
+  modal.appendChild(titulo);
+  const fechar = document.createElement("button");
+  fechar.type = "button";
+  fechar.className = "fechar-acessibilidade-global";
+  fechar.textContent = "Fechar";
+  fechar.setAttribute("aria-label", "Fechar recursos de acessibilidade");
+  modal.appendChild(fechar);
+  // mantém voz da iara separada das orientações e dos alertas da travessia
+  criarCampoAcessibilidade(modal, "Tamanho das letras", "fonte");
+  criarCampoAcessibilidade(modal, "Alto contraste", "contraste");
+  criarCampoAcessibilidade(modal, "Tema escuro", "temaEscuro");
+  criarCampoAcessibilidade(modal, "Fonte de alta legibilidade", "fonteLegivel");
+  criarCampoAcessibilidade(modal, "Orientações por voz", "orientacoesVoz");
+  criarCampoAcessibilidade(modal, "Voz da IARA · webchat ainda não configurado", "vozIara");
+  criarCampoAcessibilidade(modal, "Guia sonoro da travessia", "somTravessia");
+  criarCampoAcessibilidade(modal, "Vibração · quando o dispositivo permitir", "vibracao");
+  const restaurar = document.createElement("button");
+  restaurar.type = "button";
+  restaurar.className = "btn";
+  restaurar.textContent = "Restaurar configurações";
+  modal.appendChild(restaurar);
+  document.body.appendChild(modal);
+  // abre e fecha a mesma janela por meio dos controles visíveis
+  botao.addEventListener("click", function () { modal.showModal(); });
+  fechar.addEventListener("click", function () { modal.close(); });
+  restaurar.addEventListener("click", function () { salvarPreferenciasAcessibilidade(preferenciasIniciaisAcessibilidade()); });
+  // recupera o foco no botão que abriu a janela
+  modal.addEventListener("close", function () { botao.focus(); });
+  // conecta os campos conhecidos do perfil sem criar outro sistema
+  const camposPerfil = [["tamanho-fonte", "fonte"], ["alto-contraste", "contraste"], ["tema-escuro", "temaEscuro"], ["fonte-legivel", "fonteLegivel"], ["ouvir-iara", "vozIara"], ["vibrar-avisos", "vibracao"]];
+  for (let i = 0; i < camposPerfil.length; i++) {
+    const campo = document.getElementById(camposPerfil[i][0]);
+    if (campo) {
+      campo.setAttribute("data-preferencia", camposPerfil[i][1]);
+      if (camposPerfil[i][1] === "vozIara") campo.disabled = true;
     }
+  }
+  // migra as preferências antes que os outros scripts antigos sejam executados
+  salvarPreferenciasAcessibilidade(buscarPreferenciasAcessibilidade());
+  conectarControlesAcessibilidade();
+  prepararVLibrasGlobal();
+}
 
-    if (typeof atualizarStatusAcessibilidade === "function") {
-      atualizarStatusAcessibilidade();
+// reaproveita a integração oficial já utilizada pelo site
+function prepararVLibrasGlobal() {
+  // preserva o widget existente, sem carregar o plugin duas vezes
+  if (document.querySelector("[vw]")) return;
+  const widget = document.createElement("div");
+  widget.setAttribute("vw", "");
+  widget.className = "enabled";
+  const acesso = document.createElement("div");
+  acesso.setAttribute("vw-access-button", "");
+  acesso.className = "active";
+  const painel = document.createElement("div");
+  painel.setAttribute("vw-plugin-wrapper", "");
+  const topo = document.createElement("div");
+  topo.className = "vw-plugin-top-wrapper";
+  painel.appendChild(topo);
+  widget.appendChild(acesso);
+  widget.appendChild(painel);
+  document.body.appendChild(widget);
+  // carrega apenas o plugin oficial, sem novas bibliotecas
+  const plugin = document.createElement("script");
+  plugin.src = "https://vlibras.gov.br/app/vlibras-plugin.js";
+  plugin.addEventListener("load", function () {
+    if (window.VLibras) new window.VLibras.Widget("https://vlibras.gov.br/app");
+  });
+  plugin.addEventListener("error", function () { widget.title = "VLibras indisponível nesta conexão."; });
+  document.body.appendChild(plugin);
+}
+
+// conecta os botões de demonstração da página de acessibilidade ao mesmo armazenamento
+// event representa o controle que a pessoa escolheu
+function alterarControleInstitucional(event) {
+  const botao = event.currentTarget;
+  const preferencias = buscarPreferenciasAcessibilidade();
+  if (botao.classList.contains("acao-aumentar")) {
+    const escalas = [100, 115, 125, 130, 150, 175, 200];
+    for (let i = 0; i < escalas.length; i++) {
+      if (escalas[i] > Number(preferencias.fonte)) { preferencias.fonte = String(escalas[i]); break; }
     }
-  });
+  } else if (botao.classList.contains("acao-diminuir")) preferencias.fonte = "100";
+  else if (botao.classList.contains("acao-contraste")) { preferencias.contraste = !preferencias.contraste; preferencias.temaEscuro = false; }
+  else if (botao.classList.contains("acao-tema")) { preferencias.temaEscuro = !preferencias.temaEscuro; preferencias.contraste = false; }
+  else if (botao.classList.contains("acao-fonte-legivel")) preferencias.fonteLegivel = !preferencias.fonteLegivel;
+  else if (botao.classList.contains("acao-musical")) preferencias.somTravessia = !preferencias.somTravessia;
+  else if (botao.classList.contains("acao-vibracao")) preferencias.vibracao = !preferencias.vibracao;
+  else if (botao.id === "btn-resetar-acess") { salvarPreferenciasAcessibilidade(preferenciasIniciaisAcessibilidade()); return; }
+  salvarPreferenciasAcessibilidade(preferencias);
 }
 
-// Botão flutuante de Libras
-const btnLibras = document.getElementById("btn-libras");
-if (btnLibras) {
-  btnLibras.addEventListener("click", function () {
-    alert("Conteúdo em Libras: os vídeos com intérprete estão em fase de revisão.");
-  });
-}
+// inicializa os recursos compartilhados depois que o html já foi interpretado
+iniciarAcessibilidadeGlobal();
+// conecta cada botão institucional uma única vez
+const controlesInstitucionais = document.querySelectorAll(".acao-aumentar, .acao-diminuir, .acao-contraste, .acao-tema, .acao-fonte-legivel, .acao-musical, .acao-vibracao, #btn-resetar-acess");
+for (let i = 0; i < controlesInstitucionais.length; i++) controlesInstitucionais[i].addEventListener("click", alterarControleInstitucional);
+// aplica mudanças feitas em outra aba sem regravá-las
+window.addEventListener("storage", function (event) { if (event.key === "meu-tempo-acessibilidade") aplicarPreferenciasAcessibilidade(); });
+
 
 // =====================================================
 // 3. CHAT INTERATIVO DA IARA (index.html)
@@ -165,7 +325,11 @@ if (formIara) {
       return;
     }
 
-    listaChat.innerHTML += '<div class="msg-usuario">' + textoDigitado + "</div>";
+    // apresenta a mensagem digitada sem interpretar seu conteúdo como html
+    const mensagemUsuario = document.createElement("div");
+    mensagemUsuario.className = "msg-usuario";
+    mensagemUsuario.textContent = textoDigitado;
+    listaChat.appendChild(mensagemUsuario);
 
     const minusculo = textoDigitado.toLowerCase();
     let resposta =
@@ -182,7 +346,11 @@ if (formIara) {
         "Em Zeladoria urbana você pode registrar o endereço da barreira para orientar outros cidadãos.";
     }
 
-    listaChat.innerHTML += '<div class="msg-iara">' + resposta + "</div>";
+    // informa que esta orientação local não é uma resposta do futuro webchat
+    const mensagemIara = document.createElement("div");
+    mensagemIara.className = "msg-iara";
+    mensagemIara.textContent = "Orientação do protótipo: " + resposta;
+    listaChat.appendChild(mensagemIara);
     listaChat.scrollTop = listaChat.scrollHeight;
     inputIara.value = "";
   });
@@ -435,8 +603,8 @@ const avisoPrivacidade = document.getElementById("aviso-privacidade");
 
 if (btnApagarPreferencias) {
   btnApagarPreferencias.addEventListener("click", function () {
-    localStorage.clear();
-    sessionStorage.clear();
+    // restaura somente os ajustes, preservando contas e solicitações
+    salvarPreferenciasAcessibilidade(preferenciasIniciaisAcessibilidade());
 
     document.body.classList.remove(
       "alto-contraste",
@@ -458,229 +626,8 @@ if (btnApagarPreferencias) {
 // =====================================================
 // FLUXO DE CADASTRO REALISTA COM PERFIL DO CARLOS (cadastro.html)
 // =====================================================
-const formCadastro = document.getElementById("form-cadastro");
+// os formulários do cidadão são controlados por autenticacao.js
 
-if (formCadastro) {
-  let qrCodeValidado = false;
-
-  const boxQrCode = document.getElementById("box-qrcode-cadastro");
-  const btnSimularQr = document.getElementById("btn-simular-qrcode");
-  const statusQrCode = document.getElementById("status-qrcode-cadastro");
-  const resumoPerfilQr = document.getElementById("resumo-perfil-qrcode");
-  const avisoCadastro = document.getElementById("aviso-cadastro");
-
-  const passo1 = document.getElementById("cadastro-passo-1");
-  const passo2 = document.getElementById("cadastro-passo-2");
-  const passo3 = document.getElementById("cadastro-passo-3");
-  const indicadoresEtapa = document.querySelectorAll("[data-indicador-etapa]");
-
-  function irParaEtapaCadastro(numero) {
-    if (passo1) passo1.hidden = numero !== 1;
-    if (passo2) passo2.hidden = numero !== 2;
-    if (passo3) passo3.hidden = numero !== 3;
-
-    for (let i = 0; i < indicadoresEtapa.length; i++) {
-      const etapaNum = Number(indicadoresEtapa[i].getAttribute("data-indicador-etapa"));
-      indicadoresEtapa[i].classList.toggle("ativa", etapaNum === numero);
-      indicadoresEtapa[i].classList.toggle("concluida", etapaNum < numero);
-    }
-
-    if (avisoCadastro) {
-      avisoCadastro.textContent = "";
-    }
-  }
-
-  function aplicarPerfilDoCarlos() {
-    // 1. Preenche dados da credencial e nome completo
-    if (boxQrCode) {
-      boxQrCode.classList.add("validado");
-    }
-    if (statusQrCode) {
-      statusQrCode.innerHTML =
-        "<strong>Credencial validada:</strong> CIPCD · Carlos Eduardo Mendes (Mobilidade reduzida — uso de muletas).";
-    }
-
-    const campoNome = document.getElementById("cad-nome");
-    const campoEmail = document.getElementById("cad-email");
-    if (campoNome) {
-      campoNome.value = "Carlos Eduardo Mendes";
-    }
-    if (campoEmail && campoEmail.value.trim() === "") {
-      campoEmail.focus();
-    }
-
-    // 2. Pré-define acessibilidade ideal para quem usa muletas (pode desativar se quiser)
-    const prefContraste = document.getElementById("pref-contraste");
-    const prefFonte = document.getElementById("pref-fonte");
-    const prefVoz = document.getElementById("pref-voz");
-    const prefVibracao = document.getElementById("pref-vibracao");
-
-    if (prefContraste) prefContraste.checked = false;
-    if (prefFonte) prefFonte.checked = true;
-    if (prefVoz) prefVoz.checked = true;
-    if (prefVibracao) prefVibracao.checked = true;
-
-    if (resumoPerfilQr) {
-      resumoPerfilQr.innerHTML =
-        "<strong>CIPCD · Mobilidade reduzida (uso de muletas).</strong><br />" +
-        "Como suas mãos ficam ocupadas durante o deslocamento, pré-ativamos os comandos de voz da IARA, alertas vibratórios e fonte de alta legibilidade. Você pode ativar ou desativar qualquer opção abaixo.";
-    }
-
-    // 3. Pré-seleciona os usos mais importantes para mobilidade reduzida
-    const checkZeladoria = document.querySelector('input[name="uso"][value="zeladoria"]');
-    if (checkZeladoria) {
-      checkZeladoria.checked = true;
-    }
-  }
-
-  if (btnSimularQr) {
-    btnSimularQr.addEventListener("click", function () {
-      qrCodeValidado = true;
-      aplicarPerfilDoCarlos();
-
-      if (avisoCadastro) {
-        avisoCadastro.textContent = "";
-      }
-    });
-  }
-
-  const btnIrPasso2 = document.getElementById("btn-cad-ir-passo2");
-  if (btnIrPasso2) {
-    btnIrPasso2.addEventListener("click", function () {
-      const nome = document.getElementById("cad-nome").value.trim();
-      const email = document.getElementById("cad-email").value.trim();
-      const senha = document.getElementById("cad-senha").value;
-      const confirma = document.getElementById("cad-confirma-senha").value;
-      const aceitouTermos = document.getElementById("cad-termos").checked;
-
-      if (!qrCodeValidado) {
-        avisoCadastro.textContent =
-          "Valide primeiro sua credencial oficial por QR Code para prosseguir.";
-        return;
-      }
-      if (!nome || !email || !senha || !confirma) {
-        avisoCadastro.textContent =
-          "Preencha seu e-mail e crie uma senha para continuar.";
-        return;
-      }
-      if (senha.length < 8) {
-        avisoCadastro.textContent =
-          "A senha precisa ter pelo menos 8 caracteres.";
-        return;
-      }
-      if (senha !== confirma) {
-        avisoCadastro.textContent =
-          "A confirmação de senha não confere com a senha digitada.";
-        return;
-      }
-      if (!aceitouTermos) {
-        avisoCadastro.textContent =
-          "Aceite os termos de uso e as informações de privacidade para continuar.";
-        return;
-      }
-
-      irParaEtapaCadastro(2);
-    });
-  }
-
-  const btnVoltar1 = document.getElementById("btn-cad-voltar-1");
-  if (btnVoltar1) {
-    btnVoltar1.addEventListener("click", function () {
-      irParaEtapaCadastro(1);
-    });
-  }
-
-  const btnIrPasso3 = document.getElementById("btn-cad-ir-passo3");
-  if (btnIrPasso3) {
-    btnIrPasso3.addEventListener("click", function () {
-      irParaEtapaCadastro(3);
-    });
-  }
-
-  const btnVoltar2 = document.getElementById("btn-cad-voltar-2");
-  if (btnVoltar2) {
-    btnVoltar2.addEventListener("click", function () {
-      irParaEtapaCadastro(2);
-    });
-  }
-
-  formCadastro.addEventListener("submit", function (evento) {
-    evento.preventDefault();
-
-    const usarContraste = document.getElementById("pref-contraste").checked;
-    const usarFonte = document.getElementById("pref-fonte").checked;
-
-    if (usarContraste) {
-      document.body.classList.add("alto-contraste");
-    }
-    if (usarFonte) {
-      document.body.classList.add("fonte-legivel");
-    }
-
-    const btnConcluir = formCadastro.querySelector('button[type="submit"]');
-    if (btnConcluir) {
-      btnConcluir.disabled = true;
-    }
-
-    avisoCadastro.innerHTML =
-      "Cadastro de <strong>Carlos Eduardo Mendes</strong> concluído com sucesso! Abrindo a plataforma...";
-
-    setTimeout(function () {
-      document.body.classList.remove("alto-contraste", "fonte-legivel", "tema-escuro");
-      document.documentElement.style.fontSize = "";
-      localStorage.removeItem("altoContraste");
-      localStorage.removeItem("fonteLegivel");
-      localStorage.removeItem("temaEscuro");
-      localStorage.removeItem("vozIara");
-      localStorage.removeItem("alertaVibracao");
-
-      formCadastro.reset();
-      qrCodeValidado = false;
-
-      if (boxQrCode) {
-        boxQrCode.classList.remove("validado");
-      }
-      if (statusQrCode) {
-        statusQrCode.textContent =
-          "Após validar o QR Code, confira ou complete seus dados básicos abaixo.";
-      }
-      if (btnConcluir) {
-        btnConcluir.disabled = false;
-      }
-
-      window.location.assign("app/inicio.html");
-    }, 3300);
-  });
-}
-
-// =====================================================
-// INTERAÇÕES DA PÁGINA LOGIN (login.html)
-// =====================================================
-const formLogin = document.getElementById("form-login");
-
-if (formLogin) {
-  const inputSenhaLogin = document.getElementById("login-senha");
-  const avisoLogin = document.getElementById("aviso-login");
-
-  formLogin.addEventListener("submit", function (evento) {
-    evento.preventDefault();
-
-    const email = document.getElementById("login-email").value.trim();
-    const senha = inputSenhaLogin ? inputSenhaLogin.value : "";
-
-    if (!email || !senha) {
-      avisoLogin.textContent = "Informe seu e-mail e sua senha para entrar.";
-      return;
-    }
-
-    avisoLogin.textContent = "Acesso demonstrativo validado! Abrindo a plataforma...";
-    window.location.assign("app/inicio.html");
-  });
-}
-
-// =====================================================
-// MOSTRAR / OCULTAR SENHA (login.html e cadastro.html)
-// =====================================================
 const botoesToggleSenha = document.querySelectorAll(".btn-toggle-senha");
 
 for (let i = 0; i < botoesToggleSenha.length; i++) {

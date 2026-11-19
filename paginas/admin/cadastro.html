@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="../../css/style.css" />
     <!-- importa as funções das páginas de acesso administrativo -->
     <script src="../../js/dados.js" defer></script>
+    <script src="../../js/script.js" defer></script>
     <script src="../../js/autenticacao.js" defer></script>
 
     <!-- importa os estilos específicos da área administrativa -->
@@ -19,51 +20,11 @@
   <!-- identifica a página para aplicar somente os estilos do cadastro administrativo -->
   <body class="cadastro-administrativo">
     <!-- barra-util reaproveita os estilos da barra superior do site -->
-    <div class="barra-acessibilidade barra-util">
-      <div class="container">
-        <span>Uma cidade para todas as pessoas. Um caminho de cada vez.</span>
 
-        <!-- o id permite localizar o botão pelo javascript.
-                 aria-controls identifica qual painel será aberto.
-                 aria-expanded informa se o painel está aberto ou fechado -->
-        <button
-          type="button"
-          id="abrir-painel-acessibilidade"
-          class="botao-acessibilidade btn-acess-topo"
-          aria-controls="painel-acessibilidade"
-          aria-expanded="false"
-        >
-          Recursos de acessibilidade &rsaquo;
-        </button>
-      </div>
-    </div>
 
     <!-- painel-acess-rapido reaproveita a aparência do painel de acessibilidade.
          o javascript será responsável por abrir e fechar esse painel -->
-    <div
-      id="painel-acessibilidade"
-      class="painel-acessibilidade painel-acess-rapido"
-    >
-      <div class="container">
-        <strong>Ajustes rápidos de leitura:</strong>
 
-        <!-- botoes-acess organiza os botões de acessibilidade -->
-        <div class="botoes-acessibilidade botoes-acess">
-          <!-- cada classe identifica uma ação diferente no javascript -->
-          <button type="button" class="aumentar-texto">
-            A+ Aumentar texto
-          </button>
-
-          <button type="button" class="restaurar-texto">A- Texto normal</button>
-
-          <button type="button" class="alternar-contraste">
-            Alto contraste
-          </button>
-
-          <button type="button" class="alternar-tema">Tema escuro</button>
-        </div>
-      </div>
-    </div>
 
     <header class="cabecalho">
       <div class="container">

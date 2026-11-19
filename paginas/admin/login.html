@@ -9,9 +9,10 @@
     <!-- importa os estilos gerais do site -->
     <link rel="stylesheet" href="../../css/style.css" />
     <!-- importa as funções das páginas de acesso administrativo -->
+    <script src="../../js/dados.js" defer></script>
+    <script src="../../js/script.js" defer></script>
     <script src="../../js/autenticacao.js" defer></script>
     <!-- importa as contas administrativas demonstrativas -->
-    <script src="../../js/dados.js" defer></script>
 
     <!-- importa os estilos compartilhados do cadastro e login administrativo -->
     <link rel="stylesheet" href="../../css/admin.css" />
@@ -20,55 +21,12 @@
   <!-- identifica a página de login para aplicar seus estilos específicos -->
   <body class="login-administrativo">
     <!-- reaproveita a estrutura da barra superior do site institucional -->
-    <div class="barra-acessibilidade barra-util">
-      <div class="container">
-        <span>Uma cidade para todas as pessoas. Um caminho de cada vez.</span>
 
-        <!-- o id identifica o botão no javascript.
-                 aria-controls indica qual painel será controlado.
-                 aria-expanded informa se o painel está aberto ou fechado -->
-        <button
-          type="button"
-          id="abrir-painel-acessibilidade"
-          class="botao-acessibilidade btn-acess-topo"
-          aria-controls="painel-acessibilidade"
-          aria-expanded="false"
-        >
-          Recursos de acessibilidade &rsaquo;
-        </button>
-      </div>
-    </div>
 
     <!-- painel de acessibilidade compartilhado com o cadastro.
          utiliza os mesmos ids e classes para reaproveitar
          as funções que serão desenvolvidas no javascript -->
-    <div
-      id="painel-acessibilidade"
-      class="painel-acessibilidade painel-acess-rapido"
-    >
-      <div class="container">
-        <strong>Ajustes rápidos de leitura:</strong>
 
-        <!-- organiza os botões de acessibilidade -->
-        <div class="botoes-acessibilidade botoes-acess">
-          <!-- esta classe identifica o botão que aumentará os textos -->
-          <button type="button" class="aumentar-texto">
-            A+ Aumentar texto
-          </button>
-
-          <!-- restaura o tamanho original dos textos -->
-          <button type="button" class="restaurar-texto">A- Texto normal</button>
-
-          <!-- ativa ou desativa o modo de alto contraste -->
-          <button type="button" class="alternar-contraste">
-            Alto contraste
-          </button>
-
-          <!-- ativa ou desativa o tema escuro -->
-          <button type="button" class="alternar-tema">Tema escuro</button>
-        </div>
-      </div>
-    </div>
 
     <header class="cabecalho">
       <!-- container limita a largura do conteúdo do cabeçalho -->

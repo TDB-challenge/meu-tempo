@@ -1,226 +1,4 @@
-// =================================================================
-// PAINEL DE ACESSIBILIDADE
-// =================================================================
-
-// seleciona o botão responsável por abrir o painel
-const botaoAcessibilidade = document.getElementById(
-  "abrir-painel-acessibilidade",
-);
-
-// seleciona o painel com os recursos de acessibilidade
-const painelAcessibilidade = document.getElementById("painel-acessibilidade");
-
-// função que abre e fecha o painel
-function alternarPainelAcessibilidade() {
-  // verifica se o painel está escondido
-  if (painelAcessibilidade.hidden === true) {
-    painelAcessibilidade.hidden = false; // mostra o painel
-
-    // informa que o painel está aberto
-    botaoAcessibilidade.setAttribute("aria-expanded", "true");
-  } else {
-    painelAcessibilidade.hidden = true; // esconde o painel
-
-    // informa que o painel está fechado
-    botaoAcessibilidade.setAttribute("aria-expanded", "false");
-  }
-}
-
-// verifica se os elementos existem no html
-if (botaoAcessibilidade && painelAcessibilidade) {
-  painelAcessibilidade.hidden = true; // inicia com o painel fechado
-
-  // executa a função ao clicar no botão
-  botaoAcessibilidade.addEventListener("click", alternarPainelAcessibilidade);
-}
-
-// =================================================================
-// TAMANHO DOS TEXTOS
-// =================================================================
-
-// seleciona o botão de aumentar texto
-const botaoAumentarTexto = document.querySelector(".aumentar-texto");
-
-// seleciona o botão de restaurar texto
-const botaoRestaurarTexto = document.querySelector(".restaurar-texto");
-
-// guarda o tamanho atual da fonte em porcentagem
-let tamanhoTexto = 100;
-
-// função que aumenta o tamanho dos textos
-function aumentarTexto() {
-  // verifica se o tamanho ainda não atingiu o limite
-  if (tamanhoTexto < 200) {
-    tamanhoTexto = tamanhoTexto + 25; // aumenta 25 pontos percentuais
-
-    // altera o tamanho da fonte da tag html
-    document.documentElement.style.fontSize = tamanhoTexto + "%";
-
-    // salva o tamanho escolhido no navegador
-    localStorage.setItem("admin-tamanho-texto", tamanhoTexto);
-  }
-}
-
-// função que restaura o tamanho original
-function restaurarTexto() {
-  tamanhoTexto = 100; // retorna ao tamanho inicial
-
-  // aplica novamente o tamanho original
-  document.documentElement.style.fontSize = "100%";
-
-  // atualiza o tamanho armazenado no navegador
-  localStorage.setItem("admin-tamanho-texto", tamanhoTexto);
-}
-
-// verifica se o botão de aumentar existe
-if (botaoAumentarTexto) {
-  // executa a função ao clicar no botão
-  botaoAumentarTexto.addEventListener("click", aumentarTexto);
-}
-
-// verifica se o botão de restaurar existe
-if (botaoRestaurarTexto) {
-  // executa a função ao clicar no botão
-  botaoRestaurarTexto.addEventListener("click", restaurarTexto);
-}
-
-// =================================================================
-// TEMA ESCURO E ALTO CONTRASTE
-// =================================================================
-
-// seleciona o corpo da página
-const corpoPagina = document.body;
-
-// seleciona o botão de tema escuro
-const botaoTemaEscuro = document.querySelector(".alternar-tema");
-
-// seleciona o botão de alto contraste
-const botaoAltoContraste = document.querySelector(".alternar-contraste");
-
-// função que ativa e desativa o tema escuro
-function alternarTemaEscuro() {
-  // verifica se o tema escuro está ativo
-  if (corpoPagina.classList.contains("tema-escuro")) {
-    // remove o tema escuro
-    corpoPagina.classList.remove("tema-escuro");
-
-    // informa que o botão está desativado
-    botaoTemaEscuro.setAttribute("aria-pressed", "false");
-
-    // salva o tema normal no navegador
-    localStorage.setItem("admin-tema", "normal");
-  } else {
-    // remove o alto contraste para evitar conflito
-    corpoPagina.classList.remove("alto-contraste");
-
-    // adiciona a classe do tema escuro
-    corpoPagina.classList.add("tema-escuro");
-
-    // informa que o tema escuro está ativo
-    botaoTemaEscuro.setAttribute("aria-pressed", "true");
-
-    // informa que o alto contraste está desativado
-    botaoAltoContraste.setAttribute("aria-pressed", "false");
-
-    // salva o tema escuro no navegador
-    localStorage.setItem("admin-tema", "tema-escuro");
-  }
-}
-
-// função que ativa e desativa o alto contraste
-function alternarAltoContraste() {
-  // verifica se o alto contraste está ativo
-  if (corpoPagina.classList.contains("alto-contraste")) {
-    // remove o alto contraste
-    corpoPagina.classList.remove("alto-contraste");
-
-    // informa que o botão está desativado
-    botaoAltoContraste.setAttribute("aria-pressed", "false");
-
-    // salva o tema normal no navegador
-    localStorage.setItem("admin-tema", "normal");
-  } else {
-    // remove o tema escuro para evitar conflito
-    corpoPagina.classList.remove("tema-escuro");
-
-    // adiciona a classe de alto contraste
-    corpoPagina.classList.add("alto-contraste");
-
-    // informa que o alto contraste está ativo
-    botaoAltoContraste.setAttribute("aria-pressed", "true");
-
-    // informa que o tema escuro está desativado
-    botaoTemaEscuro.setAttribute("aria-pressed", "false");
-
-    // salva o alto contraste no navegador
-    localStorage.setItem("admin-tema", "alto-contraste");
-  }
-}
-
-// verifica se os dois botões existem
-if (botaoTemaEscuro && botaoAltoContraste) {
-  // define o estado inicial dos botões
-  botaoTemaEscuro.setAttribute("aria-pressed", "false");
-  botaoAltoContraste.setAttribute("aria-pressed", "false");
-
-  // executa a função ao clicar no tema escuro
-  botaoTemaEscuro.addEventListener("click", alternarTemaEscuro);
-
-  // executa a função ao clicar no alto contraste
-  botaoAltoContraste.addEventListener("click", alternarAltoContraste);
-}
-
-// =================================================================
-// PREFERÊNCIAS DE ACESSIBILIDADE
-// =================================================================
-
-// função que recupera as preferências salvas no navegador
-function carregarPreferencias() {
-  // recupera o tamanho de texto salvo anteriormente
-  const tamanhoSalvo = localStorage.getItem("admin-tamanho-texto");
-
-  // recupera o tema escolhido anteriormente
-  const temaSalvo = localStorage.getItem("admin-tema");
-
-  // verifica se existe um tamanho de texto salvo
-  if (tamanhoSalvo !== null) {
-    // transforma o valor armazenado de texto para número
-    const tamanhoRecuperado = Number(tamanhoSalvo);
-
-    // verifica se o tamanho está dentro dos limites permitidos
-    if (tamanhoRecuperado >= 100 && tamanhoRecuperado <= 200) {
-      // atualiza a variável com o tamanho recuperado
-      tamanhoTexto = tamanhoRecuperado;
-
-      // aplica o tamanho salvo na página
-      document.documentElement.style.fontSize = tamanhoTexto + "%";
-    }
-  }
-
-  // verifica se os botões de tema existem na página
-  if (botaoTemaEscuro && botaoAltoContraste) {
-    // verifica se o tema salvo é o tema escuro
-    if (temaSalvo === "tema-escuro") {
-      // aplica o tema escuro
-      corpoPagina.classList.add("tema-escuro");
-
-      // informa que o botão está ativo
-      botaoTemaEscuro.setAttribute("aria-pressed", "true");
-    }
-
-    // verifica se o tema salvo é o alto contraste
-    if (temaSalvo === "alto-contraste") {
-      // aplica o alto contraste
-      corpoPagina.classList.add("alto-contraste");
-
-      // informa que o botão está ativo
-      botaoAltoContraste.setAttribute("aria-pressed", "true");
-    }
-  }
-}
-
-// executa a função quando o javascript é carregado
-carregarPreferencias();
+// a acessibilidade compartilhada é inicializada por script.js
 
 // =================================================================
 // MENU RESPONSIVO
@@ -235,10 +13,10 @@ const menuNavegacao = document.getElementById("menu-navegacao");
 // função que abre e fecha o menu
 function alternarMenu() {
   // adiciona ou remove a classe que mostra o menu
-  menuNavegacao.classList.toggle("menu-aberto");
+  menuNavegacao.classList.toggle("ativo");
 
   // verifica se o menu está aberto
-  if (menuNavegacao.classList.contains("menu-aberto")) {
+  if (menuNavegacao.classList.contains("ativo")) {
     // informa que o menu está aberto
     botaoMenu.setAttribute("aria-expanded", "true");
   } else {
@@ -1290,4 +1068,401 @@ function salvarSessao(usuario) {
 
   // transforma o objeto em texto e salva na sessão
   sessionStorage.setItem("admin-sessao", JSON.stringify(profissionalConectado));
+}
+
+// =================================================================
+// CADASTRO DEMONSTRATIVO DO CIDADÃO
+// =================================================================
+
+// seleciona formulários e mensagens sem usar as contas administrativas
+const formularioCidadao = document.getElementById("form-cadastro");
+// seleciona o formulário de entrada do cidadão
+const formularioEntradaCidadao = document.getElementById("form-login");
+// seleciona a mensagem das etapas e da conclusão
+const avisoCadastroCidadao = document.getElementById("aviso-cadastro");
+// guarda o passo atual para impedir envio antes da revisão
+let passoAtualCidadao = 1;
+
+// calcula a idade considerando o aniversário e recusa datas inválidas ou futuras
+// nascimento representa uma data no formato ano-mês-dia
+function calcularIdadeCidadao(nascimento) {
+  // separa os números da data e recupera a data atual
+  const partes = nascimento.split("-");
+  // recupera o dia atual para conferir o aniversário
+  const hoje = new Date();
+  // monta a data com os valores informados pelo cidadão
+  const dataNascimento = new Date(Number(partes[0]), Number(partes[1]) - 1, Number(partes[2]));
+  // verifica se a data foi preenchida corretamente e já aconteceu
+  if (partes.length !== 3 || isNaN(dataNascimento.getTime()) || dataNascimento > hoje || dataNascimento.getFullYear() !== Number(partes[0]) || dataNascimento.getMonth() !== Number(partes[1]) - 1 || dataNascimento.getDate() !== Number(partes[2])) {
+    return -1;
+  }
+  // inicia a idade pela diferença entre os anos
+  let idade = hoje.getFullYear() - dataNascimento.getFullYear();
+  // desconta um ano quando o aniversário ainda não chegou
+  if (hoje.getMonth() < dataNascimento.getMonth() || (hoje.getMonth() === dataNascimento.getMonth() && hoje.getDate() < dataNascimento.getDate())) {
+    idade = idade - 1;
+  }
+  // devolve a idade completa em anos
+  return idade;
+}
+
+// cria um resumo da senha apenas para a demonstração local, sem guardar a senha
+// senha representa a credencial fictícia escolhida no formulário
+async function resumirSenhaCidadao(senha) {
+  // exige o recurso nativo disponível em localhost ou conexão segura
+  if (!window.crypto || !window.crypto.subtle) {
+    throw new Error("Abra a demonstração em localhost ou HTTPS para usar o resumo nativo da senha.");
+  }
+  // converte a senha fictícia em bytes e calcula o resumo sha-256
+  const bytesSenha = new TextEncoder().encode(senha);
+  // aguarda o cálculo nativo sem guardar a senha original
+  const resumo = await window.crypto.subtle.digest("SHA-256", bytesSenha);
+  // permite percorrer os bytes do resumo em um laço básico
+  const bytesResumo = new Uint8Array(resumo);
+  // reúne os bytes em texto hexadecimal para comparação demonstrativa
+  let textoResumo = "";
+  // percorre cada byte do resumo nativo
+  for (let i = 0; i < bytesResumo.length; i++) {
+    textoResumo = textoResumo + bytesResumo[i].toString(16).padStart(2, "0");
+  }
+  // retorna somente o resumo; isto não equivale a autenticação segura de servidor
+  return textoResumo;
+}
+
+// verifica os campos e a senha antes de avançar ou concluir
+function validarIdentificacaoCidadao() {
+  // seleciona os campos obrigatórios da primeira etapa
+  const campos = document.querySelectorAll("#cadastro-passo-1 [required]");
+  // percorre os campos e apresenta a validação nativa no primeiro erro
+  for (let i = 0; i < campos.length; i++) {
+    // recusa campos vazios ou formatos inválidos
+    if (!campos[i].checkValidity() || campos[i].value.trim() === "") {
+      mostrarPassoCidadao(1);
+      campos[i].reportValidity();
+      campos[i].focus();
+      avisoCadastroCidadao.textContent = "Preencha os campos obrigatórios da identificação.";
+      return false;
+    }
+  }
+  // recupera a senha fictícia escolhida e sua confirmação
+  const senha = document.getElementById("cad-senha").value;
+  // recupera a repetição da senha para comparação
+  const confirmacao = document.getElementById("cad-confirma-senha").value;
+  // aplica os mesmos requisitos básicos já usados no cadastro administrativo
+  if (senha.length < 8 || !/[A-Z]/.test(senha) || !/[a-z]/.test(senha) || !/[0-9]/.test(senha) || !/[!@#$%&*()+?_=.,:;/-]/.test(senha)) {
+    mostrarPassoCidadao(1);
+    avisoCadastroCidadao.textContent = "A senha precisa de 8 caracteres, maiúscula, minúscula, número e símbolo indicado.";
+    document.getElementById("cad-senha").focus();
+    return false;
+  }
+  // exige confirmação idêntica sem expor a senha na revisão
+  if (senha !== confirmacao) {
+    mostrarPassoCidadao(1);
+    avisoCadastroCidadao.textContent = "As senhas precisam ser iguais.";
+    document.getElementById("cad-confirma-senha").focus();
+    return false;
+  }
+  // calcula a idade com base na data preenchida
+  const idade = calcularIdadeCidadao(document.getElementById("cad-nascimento").value);
+  // recusa nascimento futuro ou incompatível com a categoria idosa
+  if (idade < 0 || (document.getElementById("cad-categoria").value === "idosa" && idade < 60)) {
+    mostrarPassoCidadao(1);
+    avisoCadastroCidadao.textContent = "Confira o nascimento. A categoria de pessoa idosa exige 60 anos completos; corrija a data ou selecione outra categoria. Serviços gerais continuam disponíveis.";
+    document.getElementById("cad-nascimento").focus();
+    return false;
+  }
+  // libera as demais categorias sem exigir comprovação para serviços gerais
+  return true;
+}
+
+// recupera as escolhas de uma lista de checkboxes sem criar dados automáticos
+// nome representa o atributo name dos campos da lista
+function coletarEscolhasCidadao(nome) {
+  // seleciona as opções e cria uma lista de respostas
+  const opcoes = formularioCidadao.querySelectorAll('input[name="' + nome + '"]');
+  // começa a lista de escolhas sem preencher condições automaticamente
+  const escolhas = [];
+  // percorre somente as opções deste grupo
+  for (let i = 0; i < opcoes.length; i++) {
+    // adiciona apenas as opções selecionadas pelo cidadão
+    if (opcoes[i].checked) {
+      escolhas.push(opcoes[i].value);
+    }
+  }
+  // devolve as escolhas autodeclaradas
+  return escolhas;
+}
+
+// recusa combinar a opção de não informar com necessidades específicas
+function validarNecessidadesCidadao() {
+  // recupera as escolhas do cidadão
+  const escolhas = coletarEscolhasCidadao("necessidade");
+  // verifica cada escolha para manter a declaração coerente
+  for (let i = 0; i < escolhas.length; i++) {
+    // pede uma correção sem selecionar condições pelo cidadão
+    if (escolhas[i] === "Prefiro não informar" && escolhas.length > 1) {
+      mostrarPassoCidadao(2);
+      avisoCadastroCidadao.textContent = "Selecione apenas ‘Prefiro não informar’ ou as necessidades que deseja declarar.";
+      return false;
+    }
+  }
+  // aceita inclusive quem não deseja informar necessidades
+  return true;
+}
+
+// apresenta um passo e atualiza os indicadores acessíveis
+// numero representa a etapa de 1 a 4
+function mostrarPassoCidadao(numero) {
+  // recupera todos os passos e indicadores do cadastro do cidadão
+  const passos = formularioCidadao.querySelectorAll(".cadastro-passo");
+  // seleciona as barras que indicam o progresso do formulário
+  const indicadores = document.querySelectorAll("[data-indicador-etapa]");
+  passoAtualCidadao = numero;
+  avisoCadastroCidadao.textContent = "";
+  // exibe apenas a etapa escolhida
+  for (let i = 0; i < passos.length; i++) {
+    passos[i].hidden = i + 1 !== numero;
+  }
+  // indica o passo atual visualmente e para leitores de tela
+  for (let i = 0; i < indicadores.length; i++) {
+    indicadores[i].classList.remove("ativa");
+    indicadores[i].removeAttribute("aria-current");
+    // aria-current com step identifica a etapa atual do cadastro
+    if (i + 1 === numero) {
+      indicadores[i].classList.add("ativa");
+      indicadores[i].setAttribute("aria-current", "step");
+    }
+  }
+  // leva o foco ao primeiro controle ou título disponível na etapa aberta
+  const foco = passos[numero - 1].querySelector("h3, input, select, button");
+  // permite focalizar o título sem inseri-lo na navegação por tabulação
+  if (foco) {
+    // os títulos precisam de tabindex para receber o foco programático
+    if (foco.tagName === "H3") {
+      foco.setAttribute("tabindex", "-1");
+    }
+    foco.focus();
+  }
+}
+
+// monta os dados sem incluir senha original, imagens ou texto médico livre
+function coletarCadastroCidadao() {
+  // recupera as preferências globais atuais
+  const preferencias = buscarPreferenciasAcessibilidade();
+  // reúne somente os dados fictícios necessários ao protótipo
+  const cadastro = {
+    id: "CID-" + Date.now(),
+    nome: document.getElementById("cad-nome").value.trim(),
+    nascimento: document.getElementById("cad-nascimento").value,
+    email: document.getElementById("cad-email").value.trim().toLowerCase(),
+    telefone: document.getElementById("cad-telefone").value.trim(),
+    municipio: document.getElementById("cad-municipio").value.trim(),
+    estado: document.getElementById("cad-estado").value,
+    bairro: document.getElementById("cad-bairro").value.trim(),
+    categoria: document.getElementById("cad-categoria").value,
+    idade: calcularIdadeCidadao(document.getElementById("cad-nascimento").value),
+    documentos: {identificacao: identificacaoCidadao, complementar: complementarCidadao},
+    necessidades: coletarEscolhasCidadao("necessidade"),
+    preferencias: preferencias,
+    servicos: coletarEscolhasCidadao("uso"),
+    termosAceitos: document.getElementById("cad-termos").checked
+  };
+  // mantém a iara futura desabilitada mesmo se uma preferência antiga existir
+  cadastro.preferencias.vozIara = false;
+  // retorna o objeto sem guardar arquivos nem texto complementar livre
+  return cadastro;
+}
+
+// adiciona uma linha segura ao resumo sem interpretar os dados como html
+// titulo descreve a informação; texto representa o valor a apresentar
+function acrescentarResumoCidadao(titulo, texto) {
+  // cria um parágrafo para o dado informado
+  const linha = document.createElement("p");
+  linha.textContent = titulo + ": " + texto;
+  document.getElementById("resumo-cadastro-cidadao").appendChild(linha);
+}
+
+// apresenta os dados editáveis na etapa final sem mostrar senha ou imagem
+function revisarCadastroCidadao() {
+  // reúne os valores atuais e seleciona as preferências com nomes visíveis
+  const cadastro = coletarCadastroCidadao();
+  // seleciona os controles de acessibilidade para descrever a revisão
+  const controles = formularioCidadao.querySelectorAll("[data-preferencia]");
+  // reúne os nomes das preferências habilitadas
+  const preferenciasTexto = [];
+  document.getElementById("resumo-cadastro-cidadao").textContent = "";
+  // lista somente recursos escolhidos e disponíveis
+  for (let i = 0; i < controles.length; i++) {
+    // os checkboxes ativos possuem o nome em um span no mesmo cartão
+    if (controles[i].type === "checkbox" && controles[i].checked && !controles[i].disabled) {
+      preferenciasTexto.push(controles[i].parentElement.querySelector("span").textContent);
+    }
+  }
+  acrescentarResumoCidadao("Identificação", cadastro.nome + " · " + cadastro.nascimento + " · " + cadastro.idade + " anos");
+  acrescentarResumoCidadao("Contato", cadastro.email + " · " + cadastro.telefone);
+  acrescentarResumoCidadao("Localização", cadastro.municipio + "/" + cadastro.estado + " · " + cadastro.bairro);
+  acrescentarResumoCidadao("Categoria autodeclarada", document.getElementById("cad-categoria").selectedOptions[0].textContent);
+  acrescentarResumoCidadao("Identificação documental", cadastro.documentos.identificacao);
+  acrescentarResumoCidadao("Documento complementar", cadastro.documentos.complementar);
+  acrescentarResumoCidadao("Necessidades autodeclaradas", cadastro.necessidades.join(", "));
+  acrescentarResumoCidadao("Preferências", "Fonte " + cadastro.preferencias.fonte + "% · " + preferenciasTexto.join(", "));
+  acrescentarResumoCidadao("Serviços de interesse", cadastro.servicos.join(", "));
+}
+
+// trata a navegação pelo identificador do botão acionado
+// evento representa o clique em um botão do formulário
+function navegarCadastroCidadao(evento) {
+  // recupera o botão acionado para decidir a etapa
+  const id = evento.currentTarget.id;
+  // valida a identificação antes de continuar
+  if (id === "btn-cad-ir-passo2" && validarIdentificacaoCidadao()) {
+    mostrarPassoCidadao(2);
+  } else if (id === "btn-cad-ir-passo3" && validarNecessidadesCidadao()) {
+    mostrarPassoCidadao(3);
+  } else if (id === "btn-cad-ir-passo4" && validarIdentificacaoCidadao() && validarNecessidadesCidadao()) {
+    revisarCadastroCidadao();
+    mostrarPassoCidadao(4);
+  } else if (id === "btn-cad-voltar-1") {
+    mostrarPassoCidadao(1);
+  } else if (id === "btn-cad-voltar-2") {
+    mostrarPassoCidadao(2);
+  } else if (id === "btn-cad-voltar-3") {
+    mostrarPassoCidadao(3);
+  }
+}
+
+// registra a conta local apenas depois da revisão e aceite dos termos
+// evento representa o envio do formulário do cidadão
+async function registrarCadastroCidadao(evento) {
+  evento.preventDefault();
+  // impede concluir por enter nas etapas anteriores
+  if (passoAtualCidadao !== 4) {
+    avisoCadastroCidadao.textContent = "Use Continuar para revisar as quatro etapas antes de concluir.";
+    return;
+  }
+  // repete a validação antes de gravar os dados
+  if (!validarIdentificacaoCidadao() || !validarNecessidadesCidadao()) {
+    return;
+  }
+  // exige consentimento dos termos ao finalizar
+  if (!document.getElementById("cad-termos").checked) {
+    avisoCadastroCidadao.textContent = "Leia e aceite os termos de uso para concluir.";
+    document.getElementById("cad-termos").focus();
+    return;
+  }
+  // impede envios repetidos enquanto o navegador calcula o resumo da senha
+  const botao = document.getElementById("concluir-cadastro-cidadao");
+  // interrompe um segundo envio durante a operação
+  if (botao.disabled) {
+    return;
+  }
+  botao.disabled = true;
+  try {
+    // reúne os dados fictícios e substitui a senha por seu resumo demonstrativo
+    const cadastro = coletarCadastroCidadao();
+    cadastro.senhaResumo = await resumirSenhaCidadao(document.getElementById("cad-senha").value);
+    // recupera as contas locais somente após o cálculo assíncrono
+    const cidadaos = buscarCidadaos();
+    // recusa cadastrar novamente o mesmo e-mail
+    for (let i = 0; i < cidadaos.length; i++) {
+      // compara os e-mails já normalizados
+      if (cidadaos[i].email === cadastro.email) {
+        avisoCadastroCidadao.textContent = "Este e-mail já possui cadastro. Acesse a página de login.";
+        return;
+      }
+    }
+    cidadaos.push(cadastro);
+    // salva somente dados fictícios e resumo, sem arquivos ou senha em texto
+    salvarCidadaos(cidadaos);
+    document.getElementById("cad-senha").value = "";
+    document.getElementById("cad-confirma-senha").value = "";
+    document.getElementById("cad-complemento").value = "";
+    limparDocumentosCadastro();
+    formularioCidadao.reset();
+    avisoCadastroCidadao.textContent = "Cadastro demonstrativo concluído. ";
+    // oferece um destino explícito para o login sem reutilizar a leitura de documentos
+    const linkEntrada = document.createElement("a");
+    linkEntrada.href = "login.html";
+    linkEntrada.textContent = "Entrar com sua conta";
+    avisoCadastroCidadao.appendChild(linkEntrada);
+    linkEntrada.focus();
+    document.getElementById("cadastro-passo-4").hidden = true;
+  } catch (erro) {
+    // informa indisponibilidade do recurso nativo ou armazenamento local
+    avisoCadastroCidadao.textContent = "Não foi possível concluir o cadastro. " + erro.message;
+  } finally {
+    botao.disabled = false;
+  }
+}
+
+// ativa a navegação apenas quando existe o cadastro do cidadão
+if (formularioCidadao) {
+  // seleciona os botões existentes das quatro etapas
+  const navegacaoCidadao = formularioCidadao.querySelectorAll(".cadastro-botoes-linha button[type='button'], #btn-cad-ir-passo2");
+  // associa cada botão à navegação do cadastro
+  for (let i = 0; i < navegacaoCidadao.length; i++) {
+    navegacaoCidadao[i].addEventListener("click", navegarCadastroCidadao);
+  }
+  // registra a conclusão após as validações da demonstração
+  formularioCidadao.addEventListener("submit", registrarCadastroCidadao);
+}
+
+// =================================================================
+// LOGIN E SESSÃO SEPARADA DO CIDADÃO
+// =================================================================
+
+// compara credenciais fictícias sem solicitar novamente a leitura do documento
+// evento representa o envio do formulário de login do cidadão
+async function entrarCidadao(evento) {
+  evento.preventDefault();
+  // seleciona a mensagem e os campos do cidadão
+  const aviso = document.getElementById("aviso-login");
+  // seleciona a credencial de e-mail do cidadão
+  const email = document.getElementById("login-email");
+  // seleciona a senha fictícia digitada para comparação
+  const senha = document.getElementById("login-senha");
+  // seleciona o botão para impedir envios simultâneos
+  const botao = formularioEntradaCidadao.querySelector("button[type='submit']");
+  aviso.textContent = "";
+  // exige e-mail válido e senha preenchida sem impor domínio administrativo
+  if (!email.checkValidity() || senha.value === "") {
+    aviso.textContent = "Informe um e-mail válido e a senha escolhida no cadastro.";
+    formularioEntradaCidadao.reportValidity();
+    return;
+  }
+  // evita autenticações simultâneas
+  if (botao.disabled) {
+    return;
+  }
+  botao.disabled = true;
+  try {
+    // compara apenas resumos de senhas das contas demonstrativas
+    const resumo = await resumirSenhaCidadao(senha.value);
+    // recupera somente contas do cidadão, separadas dos profissionais
+    const cidadaos = buscarCidadaos();
+    // procura o cidadão pelas duas credenciais informadas
+    for (let i = 0; i < cidadaos.length; i++) {
+      // exige a correspondência do e-mail e do resumo
+      if (cidadaos[i].email === email.value.trim().toLowerCase() && cidadaos[i].senhaResumo === resumo) {
+        // identifica a conta antes de recuperar suas preferências, preservando a conta anterior
+        sessionStorage.setItem("cidadao-sessao", JSON.stringify({id: cidadaos[i].id}));
+        // recupera as preferências da conta que acabou de entrar
+        salvarPreferenciasAcessibilidade(cidadaos[i].preferencias);
+        senha.value = "";
+        window.location.href = "app/inicio.html";
+        return;
+      }
+    }
+    aviso.textContent = "E-mail ou senha incorretos.";
+  } catch (erro) {
+    // mantém uma mensagem clara caso o navegador impeça a demonstração
+    aviso.textContent = "Não foi possível entrar. " + erro.message;
+  } finally {
+    botao.disabled = false;
+  }
+}
+
+// registra o evento somente na página de login do cidadão
+if (formularioEntradaCidadao) {
+  formularioEntradaCidadao.addEventListener("submit", entrarCidadao);
 }

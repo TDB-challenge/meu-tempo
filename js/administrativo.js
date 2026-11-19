@@ -61,13 +61,6 @@ function fecharTodosModaisAdmin() {
   }
 }
 
-const btnAdminAcess = document.getElementById("btn-admin-acessibilidade");
-if (btnAdminAcess) {
-  btnAdminAcess.addEventListener("click", function () {
-    abrirModalAdmin("modal-admin-acessibilidade");
-  });
-}
-
 const btnAdminNotificacoes = document.getElementById("btn-admin-notificacoes");
 if (btnAdminNotificacoes) {
   btnAdminNotificacoes.addEventListener("click", function () {
@@ -102,109 +95,7 @@ document.addEventListener("keydown", function (evento) {
   }
 });
 
-// Controles reais dentro do pop-up "Uma experiência do seu jeito"
-const selectFonteModal = document.getElementById("modal-select-fonte");
-const toggleContrasteModal = document.getElementById("modal-toggle-contraste");
-const toggleIaraModal = document.getElementById("modal-toggle-iara");
-const toggleVibrarModal = document.getElementById("modal-toggle-vibrar");
-const toggleFonteLegivelModal = document.getElementById(
-  "modal-toggle-fonte-legivel",
-);
-const toggleTemaEscuroModal = document.getElementById(
-  "modal-toggle-tema-escuro",
-);
-const btnMaisLeitura = document.getElementById("btn-mais-opcoes-leitura");
-const painelMaisLeitura = document.getElementById("painel-mais-leitura");
-const btnRestaurarAcess = document.getElementById("btn-restaurar-acess");
-
-if (btnMaisLeitura && painelMaisLeitura) {
-  btnMaisLeitura.addEventListener("click", function () {
-    const aberto = !painelMaisLeitura.hidden;
-    painelMaisLeitura.hidden = aberto;
-    this.setAttribute("aria-expanded", String(!aberto));
-  });
-}
-
-if (selectFonteModal) {
-  const fonteSalva = localStorage.getItem("meuTempoAdminFonte") || "100";
-  selectFonteModal.value = fonteSalva;
-  document.documentElement.style.fontSize = fonteSalva + "%";
-
-  selectFonteModal.addEventListener("change", function () {
-    document.documentElement.style.fontSize = this.value + "%";
-    localStorage.setItem("meuTempoAdminFonte", this.value);
-  });
-}
-
-if (toggleContrasteModal) {
-  toggleContrasteModal.checked =
-    document.body.classList.contains("alto-contraste");
-  toggleContrasteModal.addEventListener("change", function () {
-    document.body.classList.toggle("alto-contraste", this.checked);
-    localStorage.setItem("altoContraste", this.checked ? "ativo" : "inativo");
-  });
-}
-
-if (toggleIaraModal) {
-  toggleIaraModal.checked = localStorage.getItem("meuTempoIaraVoz") === "ativo";
-  toggleIaraModal.addEventListener("change", function () {
-    localStorage.setItem("meuTempoIaraVoz", this.checked ? "ativo" : "inativo");
-  });
-}
-
-if (toggleVibrarModal) {
-  toggleVibrarModal.checked =
-    localStorage.getItem("meuTempoVibrar") === "ativo";
-  toggleVibrarModal.addEventListener("change", function () {
-    localStorage.setItem("meuTempoVibrar", this.checked ? "ativo" : "inativo");
-    if (this.checked && navigator.vibrate) {
-      navigator.vibrate(120);
-    }
-  });
-}
-
-if (toggleFonteLegivelModal) {
-  toggleFonteLegivelModal.checked =
-    document.body.classList.contains("fonte-legivel");
-  toggleFonteLegivelModal.addEventListener("change", function () {
-    document.body.classList.toggle("fonte-legivel", this.checked);
-    localStorage.setItem("fonteLegivel", this.checked ? "ativo" : "inativo");
-  });
-}
-
-if (toggleTemaEscuroModal) {
-  toggleTemaEscuroModal.checked =
-    document.body.classList.contains("tema-escuro");
-  toggleTemaEscuroModal.addEventListener("change", function () {
-    document.body.classList.toggle("tema-escuro", this.checked);
-    localStorage.setItem("temaEscuro", this.checked ? "ativo" : "inativo");
-  });
-}
-
-if (btnRestaurarAcess) {
-  btnRestaurarAcess.addEventListener("click", function () {
-    document.documentElement.style.fontSize = "100%";
-    document.body.classList.remove(
-      "alto-contraste",
-      "fonte-legivel",
-      "tema-escuro",
-    );
-
-    localStorage.setItem("meuTempoAdminFonte", "100");
-    localStorage.setItem("altoContraste", "inativo");
-    localStorage.setItem("meuTempoIaraVoz", "inativo");
-    localStorage.setItem("meuTempoVibrar", "inativo");
-    localStorage.setItem("fonteLegivel", "inativo");
-    localStorage.setItem("temaEscuro", "inativo");
-
-    if (selectFonteModal) selectFonteModal.value = "100";
-    if (toggleContrasteModal) toggleContrasteModal.checked = false;
-    if (toggleIaraModal) toggleIaraModal.checked = false;
-    if (toggleVibrarModal) toggleVibrarModal.checked = false;
-    if (toggleFonteLegivelModal) toggleFonteLegivelModal.checked = false;
-    if (toggleTemaEscuroModal) toggleTemaEscuroModal.checked = false;
-  });
-}
+// os ajustes visuais utilizam o modal compartilhado de script.js
 
 // =================================================================
 // FILA E ATENDIMENTOS DO TRANSPORTE
