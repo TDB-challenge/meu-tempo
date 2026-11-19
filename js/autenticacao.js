@@ -1111,10 +1111,43 @@ function validarLogin() {
   }
 }
 
-// função temporária que impede o envio tradicional do formulário
+// função que verifica as credenciais do profissional
 function prepararLogin(event) {
   // impede o recarregamento da página
   event.preventDefault();
+
+  // recupera o e-mail digitado
+  const email = emailLogin.value.trim().toLowerCase();
+
+  // recupera a senha digitada
+  const senha = senhaLogin.value;
+
+  // percorre a lista de profissionais cadastrados
+  for (let i = 0; i < usuariosAdministrativos.length; i++) {
+    // recupera o profissional da posição atual
+    const usuario = usuariosAdministrativos[i];
+
+    // verifica se o e-mail e a senha estão corretos
+    if (usuario.email === email && usuario.senha === senha) {
+      // verifica se o profissional está autorizado
+      if (usuario.status === "aprovado") {
+        // direciona o profissional ao painel correspondente
+        direcionarPainel(usuario);
+
+        // encerra a função após encontrar a conta
+        return;
+      }
+    }
+  }
+
+  // apresenta uma mensagem caso nenhuma conta seja encontrada
+  mensagemLogin.textContent = "E-mail ou senha incorretos.";
+
+  // aplica a aparência de mensagem de erro
+  mensagemLogin.classList.add("mensagem-erro");
+
+  // mostra a mensagem na página
+  mensagemLogin.hidden = false;
 }
 
 // verifica se estamos na página de login administrativo
@@ -1130,4 +1163,24 @@ if (formularioLoginAdmin) {
 
   // verifica os campos quando a página é carregada
   validarLogin();
+}
+
+// =================================================================
+// REDIRECIONAMENTO ADMINISTRATIVO
+// =================================================================
+
+// função que direciona o profissional conforme sua função
+// usuario representa a conta encontrada durante o login
+function direcionarPainel(usuario) {
+  // verifica se o profissional é um coordenador
+  if (usuario.funcao === "Coordenador") {
+    // abre o painel da coordenação
+    window.location.href = "coordenacao.html";
+  } else if (usuario.funcao === "Operador CET") {
+    // abre o painel da cet
+    window.location.href = "cet.html";
+  } else if (usuario.funcao === "Agente de transporte") {
+    // abre o painel de transporte ferroviário
+    window.location.href = "metro.html";
+  }
 }
