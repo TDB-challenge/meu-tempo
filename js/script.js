@@ -55,6 +55,8 @@ function aplicarPreferenciasAcessibilidade() {
   // recupera a mesma configuração para todos os componentes
   const preferencias = buscarPreferenciasAcessibilidade();
   document.documentElement.style.fontSize = preferencias.fonte + "%";
+  // interrompe imediatamente uma orientação ao desativar a voz ou restaurar as preferências
+  if (!preferencias.orientacoesVoz && "speechSynthesis" in window) window.speechSynthesis.cancel();
   document.body.classList.toggle("alto-contraste", preferencias.contraste);
   document.body.classList.toggle("tema-escuro", preferencias.temaEscuro);
   document.body.classList.toggle("fonte-legivel", preferencias.fonteLegivel);
@@ -115,17 +117,35 @@ function atualizarStatusAcessibilidade() {
   }
 }
 
-// prepara a leitura nativa para uma futura integração das orientações
+// reproduz orientações curtas usando a voz disponível no próprio navegador
 // texto representa a orientação curta do controle ou serviço
 function falarOrientacaoAcessivel(texto) {
   const preferencias = buscarPreferenciasAcessibilidade();
   if (preferencias.orientacoesVoz && "speechSynthesis" in window && "SpeechSynthesisUtterance" in window) {
-    // devolve a mensagem preparada sem iniciar uma narração nesta etapa
-    // o objeto descreve uma fala para o sintetizador nativo; criá-lo não inicia áudio sem uma chamada de reprodução
+    // cancela a orientação anterior para não acumular uma fila durante a navegação
+    window.speechSynthesis.cancel();
+    // cria a mensagem em português e solicita sua reprodução ao navegador
     const fala = new SpeechSynthesisUtterance(texto);
     fala.lang = "pt-BR";
+    window.speechSynthesis.speak(fala);
     return fala;
   }
+}
+
+// lê o nome do controle ao navegar pelo teclado ou focalizar um campo
+// evento identifica o elemento que recebeu o foco
+function orientarFocoAcessivel(evento) {
+  // considera apenas os controles da página, sem ler valores digitados ou senhas
+  const controle = evento.target.closest("button, a, input, select, textarea, summary");
+  if (!controle) return;
+  // prioriza o nome acessível dos botões com ícones e o rótulo dos campos
+  let texto = controle.getAttribute("aria-label") || "";
+  if (!texto && controle.labels && controle.labels.length > 0) texto = controle.labels[0].textContent;
+  // links e botões textuais podem fornecer o próprio nome quando não possuem rótulo
+  if (!texto && (controle.tagName === "BUTTON" || controle.tagName === "A" || controle.tagName === "SUMMARY")) texto = controle.textContent;
+  // remove espaços repetidos e limita a orientação para não narrar cartões inteiros
+  texto = texto.replace(/\s+/g, " ").trim().slice(0, 180);
+  if (texto) falarOrientacaoAcessivel(texto);
 }
 
 // salva a preferência representada pelo campo alterado
@@ -140,7 +160,9 @@ function alterarPreferenciaAcessibilidade(event) {
   if (chave === "contraste" && campo.checked) preferencias.temaEscuro = false;
   if (chave === "temaEscuro" && campo.checked) preferencias.contraste = false;
   salvarPreferenciasAcessibilidade(preferencias);
-  falarOrientacaoAcessivel("Preferência atualizada.");
+  // a confirmação ao ativar a voz também oferece uma primeira interação para o navegador
+  if (chave === "orientacoesVoz" && campo.checked) falarOrientacaoAcessivel("Orientações por voz ativadas.");
+  else falarOrientacaoAcessivel("Preferência atualizada.");
 }
 
 // conecta uma única vez os controles existentes ou acrescentados ao perfil
@@ -317,6 +339,12 @@ function alterarControleInstitucional(event) {
 
 // inicializa os recursos compartilhados depois que o html já foi interpretado
 iniciarAcessibilidadeGlobal();
+// um único evento atende os controles existentes e os acrescentados pelos painéis
+document.addEventListener("focusin", orientarFocoAcessivel);
+// evita continuar narrando a página anterior depois de sair dela
+window.addEventListener("pagehide", function () {
+  if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+});
 // conecta cada botão institucional uma única vez
 const controlesInstitucionais = document.querySelectorAll(".acao-aumentar, .acao-diminuir, .acao-contraste, .acao-tema, .acao-fonte-legivel, .acao-musical, .acao-voz, .acao-vibracao, #btn-resetar-acess");
 for (let i = 0; i < controlesInstitucionais.length; i++) controlesInstitucionais[i].addEventListener("click", alterarControleInstitucional);

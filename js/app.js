@@ -766,6 +766,8 @@ function tocarSomTravessia(nome, repetir) {
 // mensagem indica o aviso de início ou término
 function alertarTravessiaApp(mensagem) {
   // o título da tela anuncia a fase; esta função controla apenas os avisos
+  // anuncia somente as mudanças de fase, sem narrar cada segundo da contagem
+  if (typeof falarOrientacaoAcessivel === 'function') falarOrientacaoAcessivel(mensagem + '.');
 
   // interrompe os sons anteriores e apresenta um único aviso de encerramento
   if (mensagem === 'Simulação concluída' || mensagem === 'Simulação encerrada pelo cidadão') {
