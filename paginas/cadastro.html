@@ -108,41 +108,50 @@
               <div id="box-qrcode-cadastro" class="cadastro-qrcode-box">
                 <div class="qrcode-box-topo">
                   <img src="../assets/icones/scan-traces.svg" alt="" class="icone" />
-                  <div>
-                    <strong>Como deseja informar seus dados?</strong>
-                    <p>Não há OCR configurado nem validação de autenticidade. Nenhuma imagem é enviada ou salva. Serviços gerais continuam disponíveis sem comprovação.</p>
+                  <strong>Escaneamento de documentos fictício</strong>
+                </div>
+                <div class="campo-grupo">
+                  <label for="cad-categoria">Perfil do cidadão *</label>
+                  <select id="cad-categoria" required>
+                    <option value="geral">Demais cidadãos</option>
+                    <option value="idosa">Pessoa idosa (a partir de 60 anos)</option>
+                    <option value="pcd">Pessoa com deficiência</option>
+                    <option value="mobilidade">Pessoa com mobilidade reduzida</option>
+                    <option value="temporaria">Necessidade temporária de apoio</option>
+                  </select>
+                </div>
+                <!-- câmera e arquivo utilizam o mesmo preenchimento do cadastro -->
+                <div id="arquivos-cadastro">
+                  <p id="rotulo-identificacao">Documento de identificação</p>
+                  <div class="cadastro-leitura-acoes">
+                    <label class="btn btn-contorno cadastro-arquivo">Usar câmera
+                      <input type="file" id="camera-identificacao" accept="image/*" capture="environment" aria-label="Fotografar documento de identificação" />
+                    </label>
+                    <label class="btn btn-contorno cadastro-arquivo">Abrir arquivo
+                      <input type="file" id="documento-identificacao" accept="image/jpeg,image/png,image/webp,application/pdf" aria-label="Abrir documento de identificação" />
+                    </label>
                   </div>
-                </div>
-                <!-- a escolha manual dispensa anexos e a leitura mantém arquivos apenas na memória -->
-                <div class="cadastro-botoes-linha">
-                  <button type="button" id="escolher-scan" class="btn btn-contorno" aria-expanded="false" aria-controls="arquivos-cadastro">Escanear meu documento</button>
-                  <button type="button" id="escolher-manual" class="btn btn-contorno">Preencher meus dados manualmente</button>
-                </div>
-                <div id="arquivos-cadastro" hidden>
-                  <label class="checkbox-termos"><input type="checkbox" id="consentimento-documentos" /> Autorizo visualizar arquivos fictícios apenas durante este cadastro.</label>
-                  <label for="documento-identificacao">Identificação fictícia: foto, imagem ou PDF (até 5 MB)</label>
-                  <input type="file" id="documento-identificacao" accept="image/jpeg,image/png,image/webp,application/pdf" disabled />
-                  <p id="nome-identificacao" role="status"></p>
-                  <img id="previa-identificacao" alt="Prévia local do documento fictício" width="200" hidden />
-                  <button type="button" id="remover-identificacao" class="btn btn-contorno" hidden>Remover identificação</button>
+                  <p id="nome-identificacao" class="qrcode-nota" hidden></p>
+                  <img id="previa-identificacao" alt="Prévia do documento selecionado" width="200" hidden />
+                  <button type="button" id="remover-identificacao" class="btn btn-contorno" hidden>Remover</button>
                   <!-- complemento opcional é apresentado somente para a categoria pcd -->
-                  <div id="complementar-cadastro" hidden>
-                    <label for="documento-complementar">Documento complementar fictício (opcional, imagem ou PDF, até 5 MB)</label>
-                    <p>Se a identificação já contiver as informações necessárias, não é preciso outro arquivo.</p>
-                    <input type="file" id="documento-complementar" accept="image/jpeg,image/png,image/webp,application/pdf" disabled />
-                    <p id="nome-complementar" role="status"></p>
-                    <img id="previa-complementar" alt="Prévia local do documento complementar fictício" width="200" hidden />
-                    <button type="button" id="remover-complementar" class="btn btn-contorno" hidden>Remover complemento</button>
-                  </div>
+                  <details id="complementar-cadastro" hidden>
+                    <summary>Adicionar comprovante (opcional)</summary>
+                    <div class="cadastro-leitura-acoes">
+                      <label class="btn btn-contorno cadastro-arquivo">Usar câmera
+                        <input type="file" id="camera-complementar" accept="image/*" capture="environment" aria-label="Fotografar comprovante complementar" />
+                      </label>
+                      <label class="btn btn-contorno cadastro-arquivo">Abrir arquivo
+                        <input type="file" id="documento-complementar" accept="image/jpeg,image/png,image/webp,application/pdf" aria-label="Abrir comprovante complementar" />
+                      </label>
+                    </div>
+                    <p id="nome-complementar" class="qrcode-nota" hidden></p>
+                    <img id="previa-complementar" alt="Prévia do comprovante selecionado" width="200" hidden />
+                    <button type="button" id="remover-complementar" class="btn btn-contorno" hidden>Remover</button>
+                  </details>
                 </div>
-                <p id="status-qrcode-cadastro" class="qrcode-nota" role="status">Sem OCR: preencha os dados e confira manualmente a prévia, se desejar.</p>
-                <div id="conferencia-documento" hidden>
-                  <label for="documento-nome">Nome que você lê no documento fictício</label>
-                  <input type="text" id="documento-nome" autocomplete="off" />
-                  <label for="documento-nascimento">Nascimento que você lê no documento fictício</label>
-                  <input type="date" id="documento-nascimento" />
-                  <button type="button" id="btn-simular-qrcode" class="btn-qrcode-ler">Conferir os dados digitados manualmente</button>
-                </div>
+                <p id="status-qrcode-cadastro" class="qrcode-nota" role="status"></p>
+                <a href="#cad-nome" id="escolher-manual" class="link-seta">Preencher manualmente</a>
               </div>
 
               <div class="form-contato">
@@ -215,17 +224,7 @@
                   <label for="cad-telefone">Telefone (opcional)</label>
                   <input type="tel" id="cad-telefone" name="telefone-cidadao" autocomplete="tel" />
                 </div>
-                <div class="campo-grupo">
-                  <label for="cad-categoria">Categoria autodeclarada *</label>
-                  <select id="cad-categoria" required>
-                    <option value="geral">Demais cidadãos</option>
-                    <option value="idosa">Pessoa idosa (a partir de 60 anos)</option>
-                    <option value="pcd">Pessoa com deficiência</option>
-                    <option value="mobilidade">Pessoa com mobilidade reduzida</option>
-                    <option value="temporaria">Necessidade temporária de apoio</option>
-                  </select>
-                  <small>Benefícios específicos dependem de comprovação. Documentação complementar fica aguardando análise na demonstração.</small>
-                </div>
+
                 <div class="campo-grupo">
                   <label for="cad-email">E-mail <span class="asterisco">*</span></label>
                   <input type="email" id="cad-email" name="email-cidadao" autocomplete="email" required />

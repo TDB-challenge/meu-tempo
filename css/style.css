@@ -3311,3 +3311,69 @@ body.alto-contraste .logo-circulo img {
     top: calc(40vh - 222px); /* compensa o centro interno e posiciona o botão acima dos ajustes */
   }
 }
+
+/* =========================================================
+   ESCANEAMENTO DO CADASTRO
+   ========================================================= */
+
+/* apresenta câmera e arquivo lado a lado sem acumular instruções */
+.cadastro-leitura-acoes {
+  display: flex; /* reúne as opções de seleção */
+  flex-wrap: wrap; /* acomoda os botões no celular */
+  gap: 10px; /* separa cada ação */
+  margin: 12px 0; /* diferencia a seleção do nome do arquivo */
+}
+
+/* reaproveita o botão existente como área do seletor nativo */
+.cadastro-arquivo {
+  position: relative; /* mantém o seletor sobre seu rótulo */
+  overflow: hidden; /* limita a área clicável ao botão */
+  cursor: pointer; /* identifica a seleção disponível */
+}
+
+/* mantém o campo acessível sem mostrar duas vezes o nome do arquivo */
+.cadastro-arquivo input[type="file"] {
+  position: absolute; /* permite acionar a seleção pela área inteira */
+  top: 0; /* alinha o campo ao botão */
+  left: 0; /* utiliza a mesma margem do rótulo */
+  width: 100%; /* oferece toda a área de interação */
+  height: 100%; /* acompanha a altura do botão */
+  opacity: 0; /* preserva o seletor nativo com aparência do projeto */
+  cursor: pointer; /* mantém a indicação de seleção */
+}
+
+/* indica o foco de teclado no botão que contém o seletor */
+.cadastro-arquivo:focus-within {
+  outline: 3px solid var(--terracota); /* destaca a opção em foco */
+  outline-offset: 3px; /* separa a indicação da borda */
+}
+
+/* limita a prévia para que o documento não ocupe o formulário inteiro */
+#arquivos-cadastro img {
+  display: block; /* mantém a prévia em uma linha própria */
+  width: auto; /* preserva a proporção original */
+  max-width: 100%; /* impede que a imagem ultrapasse o cartão */
+  max-height: 180px; /* mantém a prévia compacta */
+  object-fit: contain; /* apresenta a imagem sem cortar o documento */
+  margin: 12px 0; /* separa a prévia das ações */
+  border-radius: 8px; /* acompanha o arredondamento dos campos */
+}
+
+/* separa o comprovante opcional sem criar outro formulário */
+#complementar-cadastro {
+  margin-top: 16px; /* diferencia o documento complementar */
+  padding-top: 12px; /* separa o título do divisor */
+  border-top: 1px solid var(--borda); /* delimita a opção adicional */
+}
+
+/* mantém a identificação do documento curta e alinhada */
+#rotulo-identificacao {
+  margin-top: 14px; /* afasta o documento da escolha de perfil */
+  margin-bottom: 0; /* aproxima o rótulo das ações */
+  font-weight: 700; /* destaca o documento solicitado */
+}
+
+/* respeita os elementos recolhidos durante a seleção do documento */
+#form-cadastro [hidden] {
+  display: none !important; /* evita prévias vazias e ações antes da seleção */
+}
