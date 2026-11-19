@@ -416,6 +416,8 @@ function registrarZeladoriaApp(evento) {
 const sonsTravessia = {};
 // registra o ritmo atual para não reiniciar o mesmo áudio a cada segundo
 let ritmoTravessia = "";
+// guarda a próxima troca de áudio ou a parada no instante final do pedido
+let temporizadorSomTravessia = null;
 // registra a última situação anunciada para evitar repetições no leitor de tela
 let estadoAnunciadoTravessia = "";
 
@@ -433,6 +435,8 @@ function prepararTravessia() {
     sonsTravessia[nomes[i]] = new Audio('../../assets/audios/' + arquivos[i]);
     sonsTravessia[nomes[i]].volume = 0.3;
     sonsTravessia[nomes[i]].preload = 'auto';
+    // aguarda a duração real do mp3 antes de ajustar sua velocidade
+    sonsTravessia[nomes[i]].addEventListener('loadedmetadata', atualizarAvisosTravessia);
   }
   // inicia somente após pedido explícito
   formulario.addEventListener('submit', iniciarTravessiaApp);
@@ -697,12 +701,17 @@ function pararAvisosTravessia() {
 
 // pausa apenas os áudios sem interferir nos alertas vibratórios
 function pararSonsTravessia() {
+  // cancela uma troca programada quando o cidadão sai, cancela ou desliga o som
+  clearTimeout(temporizadorSomTravessia);
+  temporizadorSomTravessia = null;
   // percorre os dois sons conhecidos sem carregar recursos externos
   const nomes = ['travessia', 'encerramento'];
   for (let i = 0; i < nomes.length; i++) {
     if (sonsTravessia[nomes[i]]) {
       sonsTravessia[nomes[i]].pause();
       sonsTravessia[nomes[i]].currentTime = 0;
+      // restaura a velocidade normal para o botão de teste
+      sonsTravessia[nomes[i]].playbackRate = 1;
     }
   }
   ritmoTravessia = '';
@@ -731,8 +740,7 @@ function alertarTravessiaApp(mensagem) {
   // interrompe os sons anteriores e apresenta um único aviso de encerramento
   if (mensagem === 'Simulação concluída' || mensagem === 'Simulação encerrada pelo cidadão') {
     pararAvisosTravessia();
-    // sinaliza o fim do tempo somente na conclusão automática, sem tocar ao cancelar
-    if (mensagem === 'Simulação concluída' && buscarPreferenciasAcessibilidade().somTravessia) tocarSomTravessia('encerramento', false);
+    // o aviso final já toca nos últimos segundos e não continua depois do zero
   }
   // emite padrões curtos conforme o evento, quando o dispositivo oferecer suporte
   if (buscarPreferenciasAcessibilidade().vibracao && navigator.vibrate) {
@@ -754,16 +762,45 @@ function atualizarAvisosTravessia() {
     pararSonsTravessia();
     return;
   }
-  if (!pedidoTravessia || pedidoTravessia.simulacaoEncerrada) return;
+  if (!pedidoTravessia) return;
+  if (pedidoTravessia.simulacaoEncerrada) {
+    pararSonsTravessia();
+    return;
+  }
+  // utiliza o mesmo prazo do contador, inclusive quando a situação ainda não foi atualizada
+  const agora = Date.now();
+  if (agora >= pedidoTravessia.fimSimulacao) {
+    pararSonsTravessia();
+    return;
+  }
   // mantém a espera silenciosa e inicia o áudio somente na fase de travessia
   if (pedidoTravessia.situacao !== 'Travessia liberada na simulação' && pedidoTravessia.situacao !== 'Tempo próximo do fim') {
     pararSonsTravessia();
     return;
   }
-  // continua o mesmo áudio durante toda a travessia, inclusive no aviso de atenção
-  const ritmo = 'travessia';
-  // retoma a repetição mesmo quando o mesmo som foi testado uma única vez
-  if (ritmoTravessia !== ritmo || !sonsTravessia[ritmo].loop) tocarSomTravessia(ritmo, true);
+  // reserva os três últimos segundos para o segundo mp3, dentro do tempo concedido
+  const inicioAvisoFinal = Math.max(pedidoTravessia.aberturaSimulacao, pedidoTravessia.fimSimulacao - 3000);
+  let ritmo = 'travessia';
+  let inicio = pedidoTravessia.aberturaSimulacao;
+  let fim = inicioAvisoFinal;
+  if (agora >= inicioAvisoFinal) {
+    ritmo = 'encerramento';
+    inicio = inicioAvisoFinal;
+    fim = pedidoTravessia.fimSimulacao;
+  }
+  // a duração vem do próprio arquivo; antes de carregá-la, o evento de metadados aguarda
+  const audio = sonsTravessia[ritmo];
+  if (!Number.isFinite(audio.duration) || audio.duration <= 0 || fim <= inicio) return;
+  // ajusta a velocidade ao tempo total realmente concedido, sem alterar o pedido
+  const duracaoTrecho = (fim - inicio) / 1000;
+  const posicao = Math.max(0, (agora - inicio) / 1000) * audio.duration / duracaoTrecho;
+  if (ritmoTravessia !== ritmo || audio.paused || audio.loop) tocarSomTravessia(ritmo, false);
+  audio.playbackRate = audio.duration / duracaoTrecho;
+  // ao recarregar ou voltar à aba, recupera o ponto correspondente à contagem
+  if (Math.abs(audio.currentTime - posicao) > 0.3) audio.currentTime = Math.min(posicao, audio.duration);
+  // programa a mudança de fase pelo relógio salvo, além da atualização visual por segundo
+  clearTimeout(temporizadorSomTravessia);
+  temporizadorSomTravessia = setTimeout(atualizarContagemApp, Math.max(0, fim - agora));
 }
 
 // =================================================================
