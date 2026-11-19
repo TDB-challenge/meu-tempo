@@ -236,3 +236,47 @@ const estacoesLinhas = {
     ]
 
 };
+
+
+// =================================================================
+// CONTAS ADMINISTRATIVAS DEMONSTRATIVAS
+// =================================================================
+
+// lista de profissionais fictícios autorizados para testes
+const usuariosAdministrativos = [
+
+    {
+        nome: "Mariana Silva",
+        matricula: "1001",
+        email: "agente@meutempo.org.br",
+        senha: "MeuTempo123!",
+        orgao: "metro",
+        funcao: "Agente de transporte",
+        linha: "Linha 2 - Verde",
+        estacao: "Consolação",
+        status: "aprovado"
+    },
+
+    {
+        nome: "Pedro Santos",
+        matricula: "2001",
+        email: "operador@meutempo.org.br",
+        senha: "MeuTempo123!",
+        orgao: "cet",
+        funcao: "Operador CET",
+        regiao: "Zona Norte",
+        status: "aprovado"
+    },
+
+    {
+        nome: "Ana Oliveira",
+        matricula: "3001",
+        email: "coordenacao@meutempo.org.br",
+        senha: "MeuTempo123!",
+        orgao: "metro",
+        funcao: "Coordenador",
+        regiao: "Unidade central",
+        status: "aprovado"
+    }
+
+];
