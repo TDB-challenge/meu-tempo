@@ -1,14 +1,889 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Metrô | Administração | Meu Tempo</title>
-    <link rel="stylesheet" href="../../css/style.css">
-    <!-- importa as funcionalidades dos painéis administrativos -->
+    <link rel="stylesheet" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/admin.css" />
+    <!-- carrega os dados antes das funcionalidades dos painéis administrativos -->
+    <script src="../../js/script.js" defer></script>
+    <script src="../../js/dados.js" defer></script>
     <script src="../../js/administrativo.js" defer></script>
-</head>
-<body>
+  </head>
+  <body class="pagina-admin">
+    <div class="admin-shell">
+      <!-- navegação do ambiente de transporte, sem troca de função profissional -->
+      <aside
+        id="admin-sidebar"
+        class="admin-sidebar"
+        aria-label="Navegação administrativa de transporte"
+      >
+        <div class="admin-sidebar-topo">
+          <a href="../index.html" class="admin-logo">
+            <span class="admin-logo-circulo">
+              <img
+                src="../../assets/icones/clock-three.png"
+                alt=""
+                class="icone"
+              />
+            </span>
+            <div>
+              <span class="admin-logo-titulo">meu tempo</span>
+              <span class="admin-logo-sub">A cidade no seu ritmo.</span>
+            </div>
+          </a>
+          <div class="admin-ambiente-label">AMBIENTE DE TRANSPORTE</div>
+          <nav class="admin-nav" aria-label="Seções do painel de transporte">
+            <button
+              type="button"
+              id="menu-visao-geral"
+              class="admin-nav-item ativo"
+              data-admin-aba="visao-geral"
+              aria-controls="aba-visao-geral"
+            >
+              <img src="../../assets/icones/casa.png" alt="" class="icone" />
+              <span>Visão geral</span>
+            </button>
+            <button
+              type="button"
+              id="menu-chamados"
+              class="admin-nav-item"
+              data-admin-aba="chamados"
+              aria-controls="aba-chamados"
+            >
+              <img src="../../assets/icones/papel.png" alt="" class="icone" />
+              <span>Chamados de apoio</span>
+            </button>
+            <button
+              type="button"
+              id="menu-equipamentos"
+              class="admin-nav-item"
+              data-admin-aba="equipamentos"
+              aria-controls="aba-equipamentos"
+            >
+              <img
+                src="../../assets/icones/elevador.png"
+                alt=""
+                class="icone"
+              />
+              <span>Equipamentos</span>
+            </button>
+            <button
+              type="button"
+              id="menu-ocorrencias"
+              class="admin-nav-item"
+              data-admin-aba="ocorrencias"
+              aria-controls="aba-ocorrencias"
+            >
+              <img src="../../assets/icones/marker.png" alt="" class="icone" />
+              <span>Ocorrências</span>
+            </button>
+            <button
+              type="button"
+              id="menu-historico"
+              class="admin-nav-item"
+              data-admin-aba="historico"
+              aria-controls="aba-historico"
+            >
+              <img src="../../assets/icones/clock.png" alt="" class="icone" />
+              <span>Histórico</span>
+            </button>
+            <button
+              type="button"
+              id="menu-notificacoes"
+              class="admin-nav-item"
+              data-admin-aba="notificacoes"
+              aria-controls="aba-notificacoes"
+            >
+              <img src="../../assets/icones/sino.png" alt="" class="icone" />
+              <span>Notificações</span>
+            </button>
+            <button
+              type="button"
+              id="menu-perfil"
+              class="admin-nav-item"
+              data-admin-aba="perfil"
+              aria-controls="aba-perfil"
+            >
+              <img src="../../assets/icones/user.png" alt="" class="icone" />
+              <span>Perfil do operador</span>
+            </button>
+          </nav>
+        </div>
+        <div class="admin-sidebar-rodape">
+          <a href="../index.html" class="admin-link-secundario"
+            >Voltar ao site</a
+          >
+          <!-- identifica a saída para encerrar a sessão administrativa -->
+          <a href="login.html" class="admin-link-sair" data-sair>
+            <img src="../../assets/icones/sair.png" alt="" class="icone" />
+            <span>Sair</span>
+          </a>
+        </div>
+      </aside>
 
-</body>
+      <div class="admin-conteudo-coluna">
+        <!-- reaproveita os controles do cabeçalho dos demais painéis -->
+        <header class="admin-topbar">
+          <div class="admin-topbar-esquerda">
+            <button
+              type="button"
+              id="btn-admin-menu-mobile"
+              class="btn-menu"
+              aria-controls="admin-sidebar"
+            >
+              Menu
+            </button>
+            <div>
+              <span class="admin-breadcrumb"
+                >MEU TEMPO / TRANSPORTE FERROVIÁRIO</span
+              >
+              <strong class="admin-estacao-titulo" data-local-profissional
+                >Consolação</strong
+              >
+            </div>
+          </div>
+          <div class="admin-topbar-direita">
+            <button
+              type="button"
+              id="btn-admin-acessibilidade"
+              class="admin-icon-btn"
+              aria-label="Abrir recursos de acessibilidade"
+              aria-controls="modal-admin-acessibilidade"
+              title="Recursos de acessibilidade"
+            >
+              <img src="../../assets/icones/homem.png" alt="" class="icone" />
+            </button>
+            <button
+              type="button"
+              id="btn-admin-notificacoes"
+              class="admin-icon-btn"
+              aria-label="Abrir notificações"
+              aria-controls="modal-admin-notificacoes"
+              title="Notificações"
+            >
+              <img src="../../assets/icones/sino.png" alt="" class="icone" />
+            </button>
+            <button
+              type="button"
+              id="btn-admin-perfil"
+              class="admin-operador-chip admin-operador-btn"
+              aria-label="Abrir perfil do operador"
+              aria-controls="modal-admin-perfil"
+            >
+              <span class="admin-operador-avatar">
+                <img src="../../assets/icones/user.png" alt="" class="icone" />
+              </span>
+              <div>
+                <strong data-nome-profissional>Mariana Silva</strong>
+                <span data-matricula-profissional>1001</span>
+              </div>
+            </button>
+          </div>
+        </header>
+
+        <main id="conteudo-principal" class="admin-main">
+          <!-- resumo ilustrativo da operação da estação -->
+          <section
+            id="aba-visao-geral"
+            class="admin-aba-painel"
+            aria-labelledby="titulo-visao-geral"
+          >
+            <div class="admin-cabecalho-secao">
+              <div>
+                <div class="etiqueta">CUIDANDO DOS CAMINHOS DA CIDADE</div>
+                <h1 id="titulo-visao-geral">Visão geral</h1>
+              </div>
+              <div class="admin-badge-status">
+                <img src="../../assets/icones/wifi.png" alt="" class="icone" />
+                <span>Ambiente demonstrativo</span>
+              </div>
+            </div>
+            <div class="admin-kpis-grid">
+              <article class="card-branco admin-kpi-card">
+                <h2 class="admin-kpi-titulo">Chamados pendentes</h2>
+                <strong id="indicador-pendentes" class="admin-kpi-valor"
+                  >1</strong
+                >
+              </article>
+              <article class="card-branco admin-kpi-card">
+                <h2 class="admin-kpi-titulo">Em atendimento</h2>
+                <strong id="indicador-andamento" class="admin-kpi-valor"
+                  >1</strong
+                >
+              </article>
+              <article class="card-branco admin-kpi-card">
+                <h2 class="admin-kpi-titulo">Atendimentos concluídos</h2>
+                <strong id="indicador-concluidos" class="admin-kpi-valor"
+                  >1</strong
+                >
+              </article>
+              <article class="card-branco admin-kpi-card">
+                <h2 class="admin-kpi-titulo">Equipamentos disponíveis</h2>
+                <strong id="indicador-equipamentos" class="admin-kpi-valor"
+                  >1</strong
+                >
+              </article>
+            </div>
+            <section
+              class="card-branco admin-fila-card"
+              aria-labelledby="titulo-chamados-recentes"
+            >
+              <div class="admin-fila-topo">
+                <div>
+                  <h2 id="titulo-chamados-recentes">Chamados recentes</h2>
+                  <p>Dados fictícios para apresentar o apoio ao passageiro.</p>
+                </div>
+              </div>
+              <div id="lista-chamados-recentes" class="admin-chamados-lista">
+                <article class="admin-chamado-item" data-protocolo="MT-1042">
+                  <div class="admin-chamado-meta">
+                    <span>MT-1042 · Apoio no embarque</span>
+                    <span class="admin-status-pill">Aguardando agente</span>
+                  </div>
+                  <h3>Acompanhamento até a plataforma</h3>
+                  <p class="admin-chamado-local">
+                    Consolação · Linha 2 — Verde · Bloqueio sul
+                  </p>
+                </article>
+                <article class="admin-chamado-item" data-protocolo="MT-1041">
+                  <div class="admin-chamado-meta">
+                    <span>MT-1041 · Apoio com elevador</span>
+                    <span class="admin-status-pill">Em atendimento</span>
+                  </div>
+                  <h3>Orientação no acesso ao elevador</h3>
+                  <p class="admin-chamado-local">Consolação · Mezanino</p>
+                </article>
+              </div>
+            </section>
+          </section>
+
+          <!-- os botões operacionais ficam preparados para integração posterior -->
+          <section
+            id="aba-chamados"
+            class="admin-aba-painel"
+            aria-labelledby="titulo-chamados"
+            hidden
+          >
+            <div class="admin-cabecalho-secao">
+              <h1 id="titulo-chamados">Chamados de apoio</h1>
+            </div>
+            <div class="card-branco admin-fila-card">
+              <p>As ações de atendimento são ilustrativas nesta etapa.</p>
+              <div class="coord-tabela-wrapper">
+                <table
+                  id="tabela-chamados"
+                  class="coord-tabela"
+                  aria-labelledby="titulo-chamados"
+                >
+                  <thead>
+                    <tr>
+                      <th scope="col">Protocolo</th>
+                      <th scope="col">Tipo de apoio</th>
+                      <th scope="col">Local</th>
+                      <th scope="col">Situação</th>
+                      <th scope="col">Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody id="corpo-chamados">
+                    <tr data-protocolo="MT-1042">
+                      <th scope="row" class="coord-td-proto">MT-1042</th>
+                      <td>Apoio no embarque</td>
+                      <td>Consolação · Bloqueio sul</td>
+                      <td>
+                        <span id="situacao-mt1042" class="admin-status-pill"
+                          >Aguardando agente</span
+                        >
+                      </td>
+                      <td>
+                        <div class="admin-chamado-acoes">
+                          <button
+                            type="button"
+                            id="aceitar-mt1042"
+                            class="btn"
+                            data-acao-chamado="aceitar"
+                            data-protocolo="MT-1042"
+                            aria-label="Aceitar chamado MT-1042"
+                          >
+                            Aceitar
+                          </button>
+                          <button
+                            type="button"
+                            id="recusar-mt1042"
+                            class="btn btn-contorno"
+                            data-acao-chamado="recusar"
+                            data-protocolo="MT-1042"
+                            aria-label="Recusar chamado MT-1042"
+                          >
+                            Recusar
+                          </button>
+                          <button
+                            type="button"
+                            id="concluir-mt1042"
+                            class="btn btn-contorno"
+                            data-acao-chamado="concluir"
+                            data-protocolo="MT-1042"
+                            aria-label="Concluir chamado MT-1042"
+                            disabled
+                          >
+                            Concluir
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr data-protocolo="MT-1041">
+                      <th scope="row" class="coord-td-proto">MT-1041</th>
+                      <td>Apoio com elevador</td>
+                      <td>Consolação · Mezanino</td>
+                      <td>
+                        <span id="situacao-mt1041" class="admin-status-pill"
+                          >Em atendimento</span
+                        >
+                      </td>
+                      <td>
+                        <div class="admin-chamado-acoes">
+                          <button
+                            type="button"
+                            id="aceitar-mt1041"
+                            class="btn"
+                            data-acao-chamado="aceitar"
+                            data-protocolo="MT-1041"
+                            aria-label="Aceitar chamado MT-1041"
+                            disabled
+                          >
+                            Aceitar
+                          </button>
+                          <button
+                            type="button"
+                            id="recusar-mt1041"
+                            class="btn btn-contorno"
+                            data-acao-chamado="recusar"
+                            data-protocolo="MT-1041"
+                            aria-label="Recusar chamado MT-1041"
+                            disabled
+                          >
+                            Recusar
+                          </button>
+                          <button
+                            type="button"
+                            id="concluir-mt1041"
+                            class="btn"
+                            data-acao-chamado="concluir"
+                            data-protocolo="MT-1041"
+                            aria-label="Concluir chamado MT-1041"
+                          >
+                            Concluir
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <!-- equipamentos fictícios com pontos de integração para alterar a situação -->
+          <section
+            id="aba-equipamentos"
+            class="admin-aba-painel"
+            aria-labelledby="titulo-equipamentos"
+            hidden
+          >
+            <div class="admin-cabecalho-secao">
+              <h1 id="titulo-equipamentos">Equipamentos</h1>
+            </div>
+            <div class="card-branco admin-fila-card">
+              <div class="coord-tabela-wrapper">
+                <table
+                  id="tabela-equipamentos"
+                  class="coord-tabela"
+                  aria-labelledby="titulo-equipamentos"
+                >
+                  <thead>
+                    <tr>
+                      <th scope="col">Equipamento</th>
+                      <th scope="col">Local</th>
+                      <th scope="col">Situação</th>
+                      <th scope="col">Ação</th>
+                    </tr>
+                  </thead>
+                  <tbody id="corpo-equipamentos">
+                    <tr data-equipamento="EL-01">
+                      <th scope="row" class="coord-td-proto">Elevador EL-01</th>
+                      <td>Consolação · Mezanino</td>
+                      <td>
+                        <span id="situacao-el01" class="admin-status-pill"
+                          >Disponível</span
+                        >
+                      </td>
+                      <td>
+                        <button
+                          type="button"
+                          id="alterar-el01"
+                          class="btn btn-contorno"
+                          data-alterar-equipamento="EL-01"
+                          aria-label="Alterar situação do elevador EL-01"
+                        >
+                          Alterar situação
+                        </button>
+                      </td>
+                    </tr>
+                    <tr data-equipamento="ER-02">
+                      <th scope="row" class="coord-td-proto">
+                        Escada rolante ER-02
+                      </th>
+                      <td>Consolação · Plataforma</td>
+                      <td>
+                        <span id="situacao-er02" class="admin-status-pill"
+                          >Em manutenção</span
+                        >
+                      </td>
+                      <td>
+                        <button
+                          type="button"
+                          id="alterar-er02"
+                          class="btn btn-contorno"
+                          data-alterar-equipamento="ER-02"
+                          aria-label="Alterar situação da escada rolante ER-02"
+                        >
+                          Alterar situação
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <!-- formulário ilustrativo, sem envio ou gravação nesta etapa -->
+          <section
+            id="aba-ocorrencias"
+            class="admin-aba-painel"
+            aria-labelledby="titulo-ocorrencias"
+            hidden
+          >
+            <div class="admin-cabecalho-secao">
+              <h1 id="titulo-ocorrencias">Ocorrências</h1>
+            </div>
+            <div class="card-branco admin-fila-card">
+              <form
+                id="formulario-ocorrencia"
+                class="form-contato"
+                aria-describedby="aviso-ocorrencia"
+              >
+                <div class="campo-grupo">
+                  <label for="tipo-ocorrencia">Tipo de ocorrência</label>
+                  <select id="tipo-ocorrencia" name="tipo" required>
+                    <option value="">Selecione o tipo</option>
+                    <option value="equipamento">
+                      Equipamento indisponível
+                    </option>
+                    <option value="acessibilidade">
+                      Barreira de acessibilidade
+                    </option>
+                    <option value="apoio">Necessidade de apoio</option>
+                  </select>
+                </div>
+                <div class="campo-grupo">
+                  <label for="local-ocorrencia">Local</label>
+                  <input
+                    type="text"
+                    id="local-ocorrencia"
+                    name="local"
+                    placeholder="Ex.: Consolação, acesso ao mezanino"
+                    required
+                  />
+                </div>
+                <div class="campo-grupo">
+                  <label for="descricao-ocorrencia">Descrição</label>
+                  <textarea
+                    id="descricao-ocorrencia"
+                    name="descricao"
+                    rows="4"
+                    placeholder="Descreva a situação observada."
+                    required
+                  ></textarea>
+                </div>
+                <p id="aviso-ocorrencia" class="painel-status">
+                  Formulário ilustrativo. Nenhuma ocorrência será registrada
+                  nesta demonstração.
+                </p>
+                <div class="admin-chamado-acoes">
+                  <button type="button" id="registrar-ocorrencia" class="btn">
+                    Registrar ocorrência
+                  </button>
+                  <button
+                    type="reset"
+                    id="limpar-ocorrencia"
+                    class="btn btn-contorno"
+                  >
+                    Limpar campos
+                  </button>
+                </div>
+              </form>
+            </div>
+          </section>
+
+          <!-- histórico com um atendimento fictício concluído -->
+          <section
+            id="aba-historico"
+            class="admin-aba-painel"
+            aria-labelledby="titulo-historico"
+            hidden
+          >
+            <div class="admin-cabecalho-secao">
+              <h1 id="titulo-historico">Histórico</h1>
+            </div>
+            <div class="card-branco admin-fila-card">
+              <div class="coord-tabela-wrapper">
+                <table
+                  id="tabela-historico"
+                  class="coord-tabela"
+                  aria-labelledby="titulo-historico"
+                >
+                  <thead>
+                    <tr>
+                      <th scope="col">Protocolo</th>
+                      <th scope="col">Atendimento</th>
+                      <th scope="col">Local</th>
+                      <th scope="col">Conclusão</th>
+                      <th scope="col">Situação</th>
+                    </tr>
+                  </thead>
+                  <tbody id="corpo-historico">
+                    <tr>
+                      <th scope="row" class="coord-td-proto">MT-1040</th>
+                      <td>Acompanhamento no desembarque</td>
+                      <td>Consolação · Plataforma</td>
+                      <td>
+                        <time datetime="2026-11-18T09:20"
+                          >18/11/2026 · 09h20</time
+                        >
+                      </td>
+                      <td><span class="admin-status-pill">Concluído</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <!-- avisos ilustrativos da estação -->
+          <section
+            id="aba-notificacoes"
+            class="admin-aba-painel"
+            aria-labelledby="titulo-notificacoes"
+            hidden
+          >
+            <div class="admin-cabecalho-secao">
+              <h1 id="titulo-notificacoes">Notificações</h1>
+            </div>
+            <div class="card-branco admin-fila-card">
+              <ul id="lista-notificacoes" class="cet-timeline">
+                <li>
+                  <span class="cet-timeline-icone"
+                    ><img
+                      src="../../assets/icones/sino.png"
+                      alt=""
+                      class="icone"
+                  /></span>
+                  <div>
+                    <strong>Novo chamado de apoio</strong>
+                    <p>MT-1042 aguarda um agente no bloqueio sul.</p>
+                  </div>
+                </li>
+                <li>
+                  <span class="cet-timeline-icone"
+                    ><img
+                      src="../../assets/icones/elevador.png"
+                      alt=""
+                      class="icone"
+                  /></span>
+                  <div>
+                    <strong>Manutenção de equipamento</strong>
+                    <p>A escada rolante ER-02 está em manutenção.</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+
+          <!-- os atributos recebem os dados da sessão administrativa existente -->
+          <section
+            id="aba-perfil"
+            class="admin-aba-painel"
+            aria-labelledby="titulo-perfil"
+            hidden
+          >
+            <div class="admin-cabecalho-secao">
+              <h1 id="titulo-perfil">Perfil do operador</h1>
+            </div>
+            <div class="card-branco admin-fila-card">
+              <div class="cet-perfil-topo">
+                <span class="cet-perfil-avatar"
+                  ><img src="../../assets/icones/user.png" alt="" class="icone"
+                /></span>
+                <div>
+                  <h2 data-nome-profissional>Mariana Silva</h2>
+                  <p>
+                    Matrícula: <span data-matricula-profissional>1001</span>
+                  </p>
+                  <p>
+                    Função:
+                    <span data-funcao-profissional>Agente de transporte</span>
+                  </p>
+                  <p>
+                    Local de atuação:
+                    <span data-local-profissional>Consolação</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- mantém o rodapé operacional utilizado nos outros painéis -->
+          <footer class="admin-rodape">
+            <img
+              src="../../assets/icones/shield-check.png"
+              alt=""
+              class="icone"
+            />
+            <span>Transporte ferroviário · Apoio acessível ao passageiro.</span>
+          </footer>
+        </main>
+      </div>
+    </div>
+
+    <!-- reaproveita o modal e os controles de acessibilidade existentes -->
+    <div id="modal-admin-acessibilidade" class="admin-modal-overlay" hidden>
+      <div
+        class="admin-modal-caixa"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="titulo-modal-acess"
+      >
+        <div class="admin-modal-topo">
+          <h2 id="titulo-modal-acess">Uma experiência do seu jeito</h2>
+          <button
+            type="button"
+            class="admin-modal-fechar"
+            data-fechar-modal
+            aria-label="Fechar janela de acessibilidade"
+          >
+            &times;
+          </button>
+        </div>
+
+        <div class="admin-modal-grupo-select">
+          <label for="modal-select-fonte">Tamanho das letras</label>
+          <select id="modal-select-fonte" class="admin-modal-select">
+            <option value="100" selected>100% — padrão</option>
+            <option value="115">115% — médio</option>
+            <option value="130">130% — grande</option>
+            <option value="150">150% — extra grande</option>
+          </select>
+        </div>
+
+        <div class="admin-modal-opcoes-lista">
+          <label class="admin-modal-opcao-item" for="modal-toggle-contraste">
+            <div class="admin-modal-opcao-info">
+              <img src="../../assets/icones/eye.png" alt="" class="icone" />
+              <div>
+                <strong>Alto contraste</strong>
+                <span>Textos e botões mais destacados.</span>
+              </div>
+            </div>
+            <span class="admin-switch">
+              <input type="checkbox" id="modal-toggle-contraste" />
+              <span class="admin-switch-trilho"></span>
+            </span>
+          </label>
+
+          <label class="admin-modal-opcao-item" for="modal-toggle-iara">
+            <div class="admin-modal-opcao-info">
+              <img
+                src="../../assets/icones/artificial-intelligence.png"
+                alt=""
+                class="icone"
+              />
+              <div>
+                <strong>Ouvir a IARA</strong>
+                <span>Respostas por voz e por texto.</span>
+              </div>
+            </div>
+            <span class="admin-switch">
+              <input type="checkbox" id="modal-toggle-iara" />
+              <span class="admin-switch-trilho"></span>
+            </span>
+          </label>
+
+          <label class="admin-modal-opcao-item" for="modal-toggle-vibrar">
+            <div class="admin-modal-opcao-info">
+              <img
+                src="../../assets/icones/watch-smart.png"
+                alt=""
+                class="icone"
+              />
+              <div>
+                <strong>Vibrar nos avisos</strong>
+                <span>Quando o dispositivo permitir.</span>
+              </div>
+            </div>
+            <span class="admin-switch">
+              <input type="checkbox" id="modal-toggle-vibrar" />
+              <span class="admin-switch-trilho"></span>
+            </span>
+          </label>
+        </div>
+
+        <div class="admin-modal-mais-leitura">
+          <button
+            type="button"
+            id="btn-mais-opcoes-leitura"
+            class="admin-modal-mais-btn"
+            aria-expanded="false"
+          >
+            <span class="admin-modal-mais-esquerda">
+              <img src="../../assets/icones/filtro.png" alt="" class="icone" />
+              <strong>Mais opções de leitura</strong>
+            </span>
+            <span class="admin-modal-seta">&rsaquo;</span>
+          </button>
+
+          <div
+            id="painel-mais-leitura"
+            class="admin-modal-mais-conteudo"
+            hidden
+          >
+            <label
+              class="admin-modal-opcao-item"
+              for="modal-toggle-fonte-legivel"
+            >
+              <div class="admin-modal-opcao-info">
+                <div>
+                  <strong>Fonte Alta Legibilidade</strong>
+                  <span>Espaçamento ampliado entre letras e linhas.</span>
+                </div>
+              </div>
+              <span class="admin-switch">
+                <input type="checkbox" id="modal-toggle-fonte-legivel" />
+                <span class="admin-switch-trilho"></span>
+              </span>
+            </label>
+
+            <label
+              class="admin-modal-opcao-item"
+              for="modal-toggle-tema-escuro"
+            >
+              <div class="admin-modal-opcao-info">
+                <div>
+                  <strong>Tema escuro</strong>
+                  <span>Reduz o brilho da tela em ambientes escuros.</span>
+                </div>
+              </div>
+              <span class="admin-switch">
+                <input type="checkbox" id="modal-toggle-tema-escuro" />
+                <span class="admin-switch-trilho"></span>
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <div class="admin-modal-rodape">
+          <button
+            type="button"
+            id="btn-restaurar-acess"
+            class="btn btn-contorno"
+          >
+            Restaurar padrão
+          </button>
+          <a href="../acessibilidade.html" class="link-seta"
+            >Conhecer todos os recursos &rarr;</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- avisos acessados pelo botão de notificações do cabeçalho -->
+    <div id="modal-admin-notificacoes" class="admin-modal-overlay" hidden>
+      <div
+        class="admin-modal-caixa"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="titulo-modal-notif"
+      >
+        <div class="admin-modal-topo">
+          <h2 id="titulo-modal-notif">Últimas atualizações</h2>
+          <button
+            type="button"
+            class="admin-modal-fechar"
+            data-fechar-modal
+            aria-label="Fechar notificações"
+          >
+            &times;
+          </button>
+        </div>
+        <ul class="cet-timeline">
+          <li>
+            <span class="cet-timeline-icone"
+              ><img src="../../assets/icones/sino.png" alt="" class="icone"
+            /></span>
+            <div>
+              <strong>MT-1042 aguarda apoio</strong>
+              <p>Chamado de embarque no bloqueio sul.</p>
+            </div>
+          </li>
+          <li>
+            <span class="cet-timeline-icone"
+              ><img src="../../assets/icones/elevador.png" alt="" class="icone"
+            /></span>
+            <div>
+              <strong>Escada rolante em manutenção</strong>
+              <p>ER-02 indisponível na plataforma.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- perfil acessado pelo botão de identificação do profissional -->
+    <div id="modal-admin-perfil" class="admin-modal-overlay" hidden>
+      <div
+        class="admin-modal-caixa"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="titulo-modal-perfil"
+      >
+        <div class="admin-modal-topo">
+          <h2 id="titulo-modal-perfil">Perfil do operador</h2>
+          <button
+            type="button"
+            class="admin-modal-fechar"
+            data-fechar-modal
+            aria-label="Fechar perfil do operador"
+          >
+            &times;
+          </button>
+        </div>
+        <div class="cet-perfil-topo">
+          <span class="cet-perfil-avatar"
+            ><img src="../../assets/icones/user.png" alt="" class="icone"
+          /></span>
+          <div>
+            <h3 data-nome-profissional>Mariana Silva</h3>
+            <p>Matrícula: <span data-matricula-profissional>1001</span></p>
+            <p>
+              Função: <span data-funcao-profissional>Agente de transporte</span>
+            </p>
+            <p>
+              Local de atuação: <span data-local-profissional>Consolação</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
