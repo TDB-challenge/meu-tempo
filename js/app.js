@@ -412,7 +412,7 @@ function registrarZeladoriaApp(evento) {
 // SIMULAÇÃO DE TRAVESSIA
 // =================================================================
 
-// guarda os quatro áudios próprios gerados para esta demonstração
+// guarda os dois áudios compartilhados na main
 const sonsTravessia = {};
 // registra o ritmo atual para não reiniciar o mesmo áudio a cada segundo
 let ritmoTravessia = "";
@@ -425,10 +425,12 @@ function prepararTravessia() {
   const formulario = document.getElementById('formulario-travessia');
   // ignora páginas sem o serviço
   if (!formulario) return;
-  // recupera os áudios locais de autoria do próprio projeto
-  const nomes = ['aguardando', 'travessia', 'atencao', 'encerramento'];
+  // relaciona cada fase ao arquivo de áudio compartilhado pelo grupo
+  const nomes = ['travessia', 'encerramento'];
+  // conserva os nomes originais dos dois arquivos recebidos da main
+  const arquivos = ['travessia_semaforo.mp3', 'sinalizacao_semaforo.mp3'];
   for (let i = 0; i < nomes.length; i++) {
-    sonsTravessia[nomes[i]] = new Audio('../../assets/audios/' + nomes[i] + '.wav');
+    sonsTravessia[nomes[i]] = new Audio('../../assets/audios/' + arquivos[i]);
     sonsTravessia[nomes[i]].volume = 0.3;
     sonsTravessia[nomes[i]].preload = 'auto';
   }
@@ -442,9 +444,9 @@ function prepararTravessia() {
   // permite testar o áudio por uma interação explícita do cidadão
   document.getElementById('testar-som-travessia').addEventListener('click', function (evento) {
     evento.stopPropagation();
-    tocarSomTravessia('aguardando', false);
+    tocarSomTravessia('travessia', false);
   });
-  // ajusta o volume moderado dos quatro sons sem criar outra preferência global
+  // ajusta o volume moderado dos dois sons sem criar outra preferência global
   document.getElementById('volume-travessia').addEventListener('input', function (evento) {
     for (let i = 0; i < nomes.length; i++) sonsTravessia[nomes[i]].volume = Number(evento.currentTarget.value);
   });
@@ -647,8 +649,8 @@ function pararAvisosTravessia() {
 
 // pausa apenas os áudios sem interferir nos alertas vibratórios
 function pararSonsTravessia() {
-  // percorre os quatro sons conhecidos sem carregar recursos externos
-  const nomes = ['aguardando', 'travessia', 'atencao', 'encerramento'];
+  // percorre os dois sons conhecidos sem carregar recursos externos
+  const nomes = ['travessia', 'encerramento'];
   for (let i = 0; i < nomes.length; i++) {
     if (sonsTravessia[nomes[i]]) {
       sonsTravessia[nomes[i]].pause();
@@ -679,7 +681,8 @@ function alertarTravessiaApp(mensagem) {
   // interrompe os sons anteriores e apresenta um único aviso de encerramento
   if (mensagem === 'Simulação concluída' || mensagem === 'Simulação encerrada pelo cidadão') {
     pararAvisosTravessia();
-    if (buscarPreferenciasAcessibilidade().somTravessia) tocarSomTravessia('encerramento', false);
+    // sinaliza o fim do tempo somente na conclusão automática, sem tocar ao cancelar
+    if (mensagem === 'Simulação concluída' && buscarPreferenciasAcessibilidade().somTravessia) tocarSomTravessia('encerramento', false);
   }
   // emite padrões curtos conforme o evento, quando o dispositivo oferecer suporte
   if (buscarPreferenciasAcessibilidade().vibracao && navigator.vibrate) {
@@ -702,10 +705,13 @@ function atualizarAvisosTravessia() {
     return;
   }
   if (!pedidoTravessia || pedidoTravessia.simulacaoEncerrada) return;
-  // escolhe um único ritmo para a fase atual sem utilizar fala sintetizada
-  let ritmo = 'aguardando';
-  if (pedidoTravessia.situacao === 'Travessia liberada na simulação') ritmo = 'travessia';
-  else if (pedidoTravessia.situacao === 'Tempo próximo do fim') ritmo = 'atencao';
+  // mantém a espera silenciosa e inicia o áudio somente na fase de travessia
+  if (pedidoTravessia.situacao !== 'Travessia liberada na simulação' && pedidoTravessia.situacao !== 'Tempo próximo do fim') {
+    pararSonsTravessia();
+    return;
+  }
+  // continua o mesmo áudio durante toda a travessia, inclusive no aviso de atenção
+  const ritmo = 'travessia';
   // retoma a repetição mesmo quando o mesmo som foi testado uma única vez
   if (ritmoTravessia !== ritmo || !sonsTravessia[ritmo].loop) tocarSomTravessia(ritmo, true);
 }
