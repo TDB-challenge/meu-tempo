@@ -603,6 +603,10 @@ function validarVinculo() {
   ) {
     mensagemVinculo.textContent = "Informe sua região de atuação.";
   } else {
+    // preenche o resumo com os dados atualizados
+    preencherResumo();
+
+    // avança para a etapa de revisão
     mostrarEtapa(3); // avança para a revisão
 
     return; // encerra a função
@@ -817,4 +821,68 @@ if (orgaoCadastro && funcaoCadastro && linhaCadastro) {
 
   // prepara os campos ao carregar a página
   carregarFuncoes();
+}
+
+// =================================================================
+// REVISÃO DOS DADOS DO CADASTRO
+// =================================================================
+
+// seleciona os elementos que receberão os dados de identificação
+const resumoNome = document.getElementById("resumo-nome");
+const resumoMatricula = document.getElementById("resumo-matricula");
+const resumoEmail = document.getElementById("resumo-email");
+
+// seleciona os elementos que receberão os dados profissionais
+const resumoOrgao = document.getElementById("resumo-orgao");
+const resumoFuncao = document.getElementById("resumo-funcao");
+const resumoLinha = document.getElementById("resumo-linha");
+const resumoEstacao = document.getElementById("resumo-estacao");
+const resumoRegiao = document.getElementById("resumo-regiao");
+
+// seleciona os grupos que podem ser mostrados ou escondidos
+const itemResumoLinha = document.getElementById("item-resumo-linha");
+const itemResumoEstacao = document.getElementById("item-resumo-estacao");
+const itemResumoRegiao = document.getElementById("item-resumo-regiao");
+
+// seleciona o botão de enviar a solicitação
+const enviarSolicitacao = document.getElementById("enviar-solicitacao");
+
+// função que preenche o resumo com os dados informados
+function preencherResumo() {
+  // copia os dados de identificação para a revisão
+  resumoNome.textContent = nomeCompleto.value;
+  resumoMatricula.textContent = matriculaFuncional.value;
+  resumoEmail.textContent = emailInstitucional.value;
+
+  // recupera o nome da instituição selecionada
+  resumoOrgao.textContent =
+    orgaoCadastro.options[orgaoCadastro.selectedIndex].text;
+
+  // copia a função selecionada
+  resumoFuncao.textContent = funcaoCadastro.value;
+
+  // esconde inicialmente os dados de atuação
+  itemResumoLinha.hidden = true;
+  itemResumoEstacao.hidden = true;
+  itemResumoRegiao.hidden = true;
+
+  // verifica se o profissional atua no transporte ferroviário
+  if (camposTransporte.hidden === false) {
+    // copia a linha e a estação selecionadas
+    resumoLinha.textContent = linhaCadastro.value;
+    resumoEstacao.textContent = estacaoCadastro.value;
+
+    // mostra essas informações na revisão
+    itemResumoLinha.hidden = false;
+    itemResumoEstacao.hidden = false;
+  }
+
+  // verifica se o profissional informou uma região
+  if (campoRegiao.hidden === false) {
+    // copia a região informada
+    resumoRegiao.textContent = regiaoCadastro.value;
+
+    // mostra a região na revisão
+    itemResumoRegiao.hidden = false;
+  }
 }
