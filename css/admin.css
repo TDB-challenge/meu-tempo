@@ -2625,3 +2625,199 @@ body.tema-escuro .coord-estacao-icone img.icone {
     font-size: 0.9rem; /* tamanho do texto */
     overflow-wrap: break-word; /* permite quebrar textos longos */
 }
+/* =========================================================
+   PADRONIZAÇÃO DOS PAINÉIS ADMINISTRATIVOS
+   ========================================================= */
+
+.pagina-admin .admin-conteudo-coluna {
+  min-width: 0; /* permite que o conteúdo caiba na coluna */
+}
+
+.pagina-admin .admin-main {
+  min-width: 0; /* evita que as tabelas ampliem a página */
+}
+
+.pagina-admin .admin-cabecalho-secao h1 {
+  font-size: 1.8rem; /* mantém o título proporcional ao conteúdo */
+}
+
+.pagina-admin .admin-fila-card {
+  padding: 24px; /* uniformiza o espaço interno dos cartões */
+}
+
+.pagina-admin .admin-kpi-card {
+  padding: 20px; /* organiza os indicadores */
+}
+
+.pagina-admin .admin-kpi-titulo {
+  font-family: inherit; /* usa a fonte dos textos do painel */
+  font-size: 0.86rem; /* mantém a descrição dos indicadores discreta */
+  font-weight: 600; /* destaca o título sem aumentar seu tamanho */
+}
+
+.pagina-admin .coord-tabela-wrapper {
+  min-width: 0; /* permite a rolagem dentro do cartão */
+  max-width: 100%; /* limita a tabela ao espaço disponível */
+  overflow-x: auto; /* permite consultar as colunas no celular */
+}
+
+.pagina-admin .coord-tabela {
+  min-width: 640px; /* mantém as colunas legíveis */
+}
+
+.pagina-admin .coord-tabela th,
+.pagina-admin .coord-tabela td {
+  padding: 16px 18px; /* afasta os dados das bordas */
+  text-align: left; /* alinha cabeçalhos e conteúdo */
+  vertical-align: middle; /* centraliza os dados na altura da linha */
+  border-bottom: 1px solid var(--borda); /* completa as divisórias */
+}
+
+.pagina-admin .admin-status-pill {
+  display: inline-block; /* mantém a etiqueta como uma unidade */
+  min-width: 96px; /* aproxima a largura das etiquetas */
+  max-width: 100%; /* respeita o espaço disponível */
+  padding: 6px 10px; /* organiza o texto dentro da etiqueta */
+  border-radius: 12px; /* padroniza os cantos arredondados */
+  text-align: center; /* centraliza a situação */
+  white-space: normal; /* permite quebrar somente entre palavras */
+  word-break: normal; /* preserva as palavras completas */
+  line-height: 1.4; /* separa linhas quando necessário */
+}
+
+.pagina-admin .btn {
+  min-height: 40px; /* mantém uma área de toque confortável */
+  padding: 10px 16px; /* padroniza o espaço dos botões */
+  font-family: inherit; /* preserva a fonte do projeto */
+  font-size: 0.86rem; /* aproxima os tamanhos dos botões */
+  text-align: center; /* centraliza o texto das ações */
+}
+
+.pagina-admin .admin-chamado-acoes {
+  gap: 10px; /* separa as ações sem afastá-las demais */
+  margin-top: 16px; /* separa os botões dos dados do cartão */
+}
+
+.pagina-admin .admin-chamado-item {
+  padding: 18px 0; /* afasta os dados das linhas divisórias */
+}
+
+.pagina-admin .admin-chamado-item h3 {
+  font-size: 1.05rem; /* organiza a hierarquia dos cartões */
+  margin-bottom: 10px; /* separa o nome dos demais dados */
+}
+
+.pagina-admin .admin-chamado-local {
+  overflow-wrap: anywhere; /* permite acomodar e-mails e textos compridos */
+}
+
+.pagina-admin .admin-rodape {
+  flex-wrap: wrap; /* acomoda a identificação acadêmica */
+  font-size: 0.76rem; /* mantém o rodapé discreto */
+}
+
+.pagina-admin #aba-ocorrencias h2 {
+  font-size: 1.2rem; /* mantém o subtítulo abaixo do título da seção */
+  margin-top: 28px; /* separa os registros do formulário */
+  margin-bottom: 16px; /* separa o subtítulo da lista */
+}
+
+.pagina-admin #lista-ocorrencias-metro li {
+  padding: 16px; /* organiza os dados de cada ocorrência */
+  margin-bottom: 12px; /* separa os registros */
+  border: 1px solid var(--borda); /* delimita cada ocorrência */
+  border-radius: 12px; /* acompanha os cartões existentes */
+}
+
+.pagina-admin #lista-ocorrencias-metro {
+  padding-left: 0; /* alinha os registros com o formulário */
+  list-style: none; /* apresenta os registros como cartões simples */
+}
+
+.pagina-admin #btn-admin-menu-mobile {
+  display: none; /* mantém a navegação disponível sem abrir outro menu */
+}
+
+/* =========================================================
+   NAVEGAÇÃO HORIZONTAL EM TELAS MENORES
+   ========================================================= */
+
+@media (max-width: 980px) {
+  .pagina-admin .admin-shell {
+    grid-template-columns: 1fr; /* organiza o painel em uma coluna */
+  }
+
+  .pagina-admin .admin-sidebar {
+    display: flex; /* mantém as opções acessíveis sem abrir o menu */
+    padding: 12px 16px; /* reduz a altura da navegação */
+    gap: 10px; /* separa a navegação dos links de saída */
+    min-width: 0; /* evita que a barra amplie a página */
+  }
+
+  .pagina-admin .admin-sidebar-topo {
+    min-width: 0; /* limita a largura das opções */
+  }
+
+  .pagina-admin .admin-logo {
+    margin-bottom: 10px; /* aproxima a marca da navegação */
+  }
+
+  .pagina-admin .admin-logo-sub,
+  .pagina-admin .admin-ambiente-label {
+    display: none; /* deixa a barra compacta no celular */
+  }
+
+  .pagina-admin .admin-nav {
+    flex-direction: row; /* apresenta as opções lado a lado */
+    overflow-x: auto; /* permite percorrer as opções horizontalmente */
+    padding-bottom: 6px; /* separa a rolagem dos botões */
+    max-width: 100%; /* mantém a rolagem dentro da barra */
+  }
+
+  .pagina-admin .admin-nav-item {
+    width: auto; /* ajusta cada opção ao texto */
+    flex-shrink: 0; /* preserva a área de toque de cada botão */
+    white-space: nowrap; /* mantém o nome da seção em uma linha */
+  }
+
+  .pagina-admin .admin-sidebar-rodape {
+    flex-direction: row; /* mantém os links de saída na mesma linha */
+    padding-top: 8px; /* reduz o espaço após a navegação */
+    gap: 18px; /* separa os links do rodapé */
+    flex-wrap: wrap; /* acomoda os links em telas estreitas */
+  }
+
+  .pagina-admin .admin-topbar {
+    flex-wrap: wrap; /* preserva os dados do profissional no celular */
+    padding: 16px; /* mantém o conteúdo longe das bordas */
+  }
+
+  .pagina-admin .admin-topbar-direita {
+    flex-wrap: wrap; /* permite acomodar os controles */
+    min-width: 0; /* respeita a largura disponível */
+  }
+
+  .pagina-admin .admin-kpis-grid {
+    grid-template-columns: repeat(2, 1fr); /* mostra dois indicadores por linha */
+    gap: 12px; /* organiza os indicadores em telas menores */
+  }
+
+  .pagina-admin .admin-main {
+    padding: 24px 16px; /* ajusta o espaço da área principal */
+  }
+
+  .pagina-admin .admin-fila-card {
+    padding: 18px; /* mantém o conteúdo legível no celular */
+  }
+
+  .pagina-admin .admin-chamado-acoes {
+    flex-direction: row; /* permite distribuir as ações entre linhas */
+    align-items: center; /* alinha os botões pela altura */
+  }
+}
+
+@media (max-width: 360px) {
+  .pagina-admin .admin-kpis-grid {
+    grid-template-columns: 1fr; /* mostra um indicador em telas muito pequenas */
+  }
+}
