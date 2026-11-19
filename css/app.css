@@ -630,7 +630,7 @@ button {
     height: 100dvh; /* considera a altura real disponível */
     padding: 32px 24px 24px; /* espaço interno superior, lateral e inferior */
     background-color: var(--app-menu); /* fundo verde escuro do menu */
-    color: var(--branco); /* cor padrão dos textos */
+    color: #ffffff; /* preserva a marca clara sobre o menu escuro */
     overflow-y: auto; /* permite rolar o menu caso falte espaço na vertical */
 }
 
@@ -651,6 +651,11 @@ button {
     width: 42px; /* largura do relógio */
     height: 42px; /* altura do relógio */
     filter: brightness(0) invert(1); /* deixa o svg branco para aparecer no fundo escuro */
+}
+
+/* preserva o relógio local claro sobre o menu escuro em todos os temas */
+.app .menu-lateral .marca-icone {
+    filter: brightness(0) invert(1); /* mantém o relógio visível sobre o verde escuro */
 }
 
 
@@ -706,7 +711,7 @@ button {
     gap: 14px; /* espaço entre o ícone e o texto */
     min-height: 50px; /* mantém uma área confortável para clicar */
     padding: 12px 16px; /* espaço interno de cada link */
-    color: var(--branco); /* cor dos textos */
+    color: #ffffff; /* mantém os links claros sobre o menu escuro */
     font-weight: 600; /* deixa os textos mais destacados */
     border-radius: var(--raio-medio); /* arredonda os cantos dos links */
     transition: background-color 0.2s ease; /* deixa a mudança de fundo mais suave */
@@ -963,7 +968,7 @@ button {
     padding: 8px 12px; /* espaço interno da navegação */
     padding-bottom: calc(8px + env(safe-area-inset-bottom, 0px)); /* considera a área inferior de alguns celulares */
     background-color: var(--app-menu); /* fundo verde escuro */
-    color: var(--branco); /* cor dos textos */
+    color: #ffffff; /* mantém a navegação clara em todos os temas */
     border-top: 1px solid var(--app-menu-ativo); /* separa o menu do conteúdo */
 }
 
@@ -992,7 +997,7 @@ button {
     min-height: 56px; /* mantém uma área adequada para o toque */
     padding: 6px 2px; /* espaço interno de cada link */
     border-radius: var(--raio-medio); /* arredonda os cantos das opções */
-    color: var(--branco); /* cor dos textos */
+    color: #ffffff; /* mantém os links claros sobre o menu inferior */
     font-size: 0.75rem; /* tamanho dos nomes das opções */
     font-weight: 600; /* deixa os nomes mais destacados */
     text-align: center; /* centraliza os textos */
@@ -4898,7 +4903,8 @@ button {
 
 /* mantém os ícones dos botões claros na cor escura. */
 .app.tema-escuro .conteudo-app .botao-principal img.icone,
-.app.tema-escuro .conteudo-app .botao-enviar img.icone {
+.app.tema-escuro .conteudo-app .botao-enviar img.icone,
+.app.tema-escuro .conteudo-app .icone-banner-iara img.icone {
     filter: brightness(0); /* mantém o contraste com o fundo claro */
 }
 
@@ -4993,7 +4999,8 @@ button {
 .app.alto-contraste .botao-principal img.icone,
 .app.alto-contraste .botao-ajuda img.icone,
 .app.alto-contraste .botao-enviar img.icone,
-.app.alto-contraste .ajuda-iara img.icone {
+.app.alto-contraste .ajuda-iara img.icone,
+.app.alto-contraste .icone-banner-iara img.icone {
     filter: brightness(0); /* deixa os svg pretos */
 }
 
@@ -5894,4 +5901,118 @@ button {
         cursor: pointer; /* indica que pode ser clicado */
     }
 
+}
+/* =========================================================
+   CONTROLES E ACOMPANHAMENTO DA TRAVESSIA
+   ========================================================= */
+
+/* organiza a escolha de segundos sem alterar o ciclo automático */
+.app .controle-tempo {
+    display: flex; /* apresenta menos, quantidade e mais na mesma linha */
+    align-items: center; /* alinha os controles pela altura */
+    gap: 10px; /* separa cada ação */
+    flex-wrap: wrap; /* acomoda a ampliação dos textos */
+}
+
+/* mantém o valor solicitado legível e proporcional */
+.app #tempo-adicional {
+    width: 52px; /* reserva espaço para dois algarismos */
+    padding: 10px; /* acompanha os campos do formulário */
+    text-align: center; /* destaca o número escolhido */
+    border: 1px solid var(--borda); /* delimita o valor */
+    border-radius: var(--raio-pequeno); /* reaproveita o arredondamento da interface */
+    background-color: var(--branco); /* acompanha o tema selecionado */
+    color: var(--texto-principal); /* mantém o contraste do número */
+}
+
+/* reutiliza os botões do mapa dentro do seletor de tempo */
+.app .controle-tempo .botao-mapa {
+    position: static; /* mantém os botões no fluxo do formulário */
+    color: var(--texto-principal); /* garante a leitura dos sinais */
+    font-size: 1.2rem; /* facilita identificar mais e menos */
+}
+
+/* apresenta o resultado dentro do próprio painel lateral */
+.app .confirmacao-travessia .resultado-servico {
+    margin: 0; /* evita um segundo cartão separado */
+    padding: 16px 0; /* separa o acompanhamento dos controles */
+    border: 0; /* reaproveita o contorno do painel existente */
+    border-top: 1px solid var(--borda); /* divide solicitação e preferências */
+    border-radius: 0; /* mantém o resultado integrado ao painel */
+    text-align: left; /* alinha os dados com os demais campos */
+    align-items: stretch; /* permite que os detalhes ocupem a coluna */
+    gap: 12px; /* separa os dados sem criar espaços excessivos */
+}
+
+/* mantém a linha do tempo proporcional ao painel lateral */
+.app .confirmacao-travessia .historico-solicitacao {
+    margin: 0; /* utiliza toda a largura interna */
+    padding: 12px 0; /* separa o resumo das etapas */
+}
+
+/* destaca a contagem sem anúncios a cada segundo */
+.app #contagem-travessia,
+.app #contagem-ciclo {
+    font-variant-numeric: tabular-nums; /* mantém os algarismos alinhados */
+}
+
+/* permite protocolos antigos longos sem alargar os cartões */
+.app .dados-solicitacao,
+.app .historico-solicitacao {
+    overflow-wrap: anywhere; /* quebra informações longas somente quando necessário */
+}
+
+/* =========================================================
+   REPRESENTAÇÃO DEMONSTRATIVA DOS CRUZAMENTOS
+   ========================================================= */
+
+/* permite consultar todos os marcadores sem cortar nomes ou controles */
+.app #mapa-travessia {
+    height: auto; /* acompanha a quantidade e a altura dos nomes */
+    min-height: 300px; /* preserva a área visual da representação */
+    background-color: var(--verde-claro); /* reaproveita o fundo da identidade visual */
+}
+
+/* organiza o diagrama sem inventar coordenadas geográficas */
+.app #mapa-base-travessia {
+    position: relative; /* mantém os marcadores no fluxo da página */
+    display: grid; /* organiza os cruzamentos como pontos do diagrama */
+    gap: 12px; /* separa cada opção de seleção */
+    padding: 18px; /* afasta os pontos das bordas */
+}
+
+/* reaproveita os marcadores existentes com texto acessível */
+.app #mapa-travessia .marcador-semaforo {
+    position: static; /* evita posições geográficas fictícias */
+    transform: none; /* mantém nomes e símbolos na posição de leitura */
+    width: 100%; /* ocupa a faixa disponível no diagrama */
+    height: auto; /* acompanha nomes e textos ampliados */
+    min-height: 48px; /* oferece área confortável de seleção */
+    padding: 12px; /* separa o texto do contorno */
+    border-radius: var(--raio-medio); /* acompanha os outros cartões */
+    gap: 10px; /* separa símbolo e nome */
+    text-align: left; /* mantém os nomes alinhados */
+    color: #ffffff; /* contrasta com as superfícies escuras dos marcadores */
+}
+
+/* preserva o contraste e a orientação do semáforo local */
+.app #mapa-travessia .marcador-semaforo .icone {
+    transform: none; /* retira a rotação usada pelo marcador antigo */
+    filter: brightness(0) invert(1); /* mantém o símbolo claro sobre o ponto escuro */
+    flex-shrink: 0; /* evita reduzir o símbolo junto de nomes longos */
+}
+
+/* mantém o marcador com suporte escuro também no alto contraste */
+.app.alto-contraste #mapa-travessia .marcador-semaforo.com-suporte {
+    background-color: #000000; /* garante contraste com nomes e ícones claros */
+    border-color: #ffffff; /* delimita o ponto sobre a superfície escura */
+}
+/* mantém uma superfície verde escura por trás dos nomes claros dos marcadores */
+.app #mapa-travessia .marcador-semaforo.com-suporte {
+    background-color: #203d2e; /* preserva a leitura em qualquer tema */
+}
+
+/* diferencia os locais sem suporte sem depender apenas da cor */
+.app #mapa-travessia .marcador-semaforo.sem-suporte {
+    background-color: #535b58; /* contrasta com o nome e o símbolo brancos */
 }

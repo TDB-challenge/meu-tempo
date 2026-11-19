@@ -47,6 +47,8 @@
   <!-- LEMBRETE: ESSA PÁGINA SSERÁ ALTERADA E TERÁ CONECTIVIDADE COM A DEMONSTRAÇÃO DO APP-->
 
   <main>
+    <!-- identifica a demonstração sem alterar os textos da proposta -->
+    <p class="container aviso-cobertura">Demonstração acadêmica local, sem conexão com equipamentos ou instituições reais. Não registra solicitações administrativas e não autoriza atravessar uma rua real.</p>
     <!-- 1. Topo -->
     <section class="container solucao-topo">
       <div class="etiqueta">NOSSA SOLUÇÃO · TRAVESSIA ACESSÍVEL</div>
@@ -93,8 +95,8 @@
             O sistema verifica automaticamente o ciclo do semáforo: se faltarem menos de 8 segundos, ele reserva o tempo estendido para o próximo fluxo verde, mantendo a segurança e a fluidez do trânsito sem precisar de aprovação manual.
           </p>
           <div style="display: flex; gap: 14px; flex-wrap: wrap;">
-            <button type="button" class="btn btn-abrir-simulador" data-alvo="simulador-travessia">
-              Usar este serviço &rarr;
+            <button type="button" class="btn btn-abrir-simulador" data-alvo="simulador-travessia" aria-controls="simulador-travessia" aria-expanded="true">
+              Como seria na prática?
             </button>
             <a href="solucao02.html" class="btn btn-contorno">Ir para Apoio e Zeladoria &rarr;</a>
           </div>
@@ -134,7 +136,7 @@
             <button type="submit" class="btn">Solicitar tempo estendido &rarr;</button>
           </form>
 
-          <div id="status-travessia" class="painel-status">
+          <div id="status-travessia" class="painel-status" role="status">
             <h3>Regra automática dos 8 segundos</h3>
             <p>
               <strong>Acima de 8 segundos:</strong> o semáforo estende o tempo imediatamente e inicia o sinal musical e a vibração no seu celular.
@@ -156,8 +158,8 @@
           Fale ou escreva o que precisa. A assistente ajuda a confirmar o local por GPS e os detalhes sem exigir digitação.
         </p>
 
-        <button type="button" id="btn-demo-iara" class="btn btn-contorno">
-          Conversar com a IARA &rarr;
+        <button type="button" id="btn-demo-iara" class="btn btn-contorno" aria-controls="demo-iara-box" aria-expanded="false">
+          Como seria na prática?
         </button>
 
         <div id="demo-iara-box" class="caixa-simulador" style="margin-top: 28px;">
@@ -172,7 +174,7 @@
               </div>
             </div>
 
-            <div id="demo-iara-mensagens" class="chat-lista" style="max-height: 300px;">
+            <div id="demo-iara-mensagens" class="chat-lista" style="max-height: 300px;" aria-live="polite" aria-relevant="additions">
               <div class="msg-usuario">
                 “IARA, estou aqui na Paulista e quero solicitar mais tempo para a minha travessia.”
               </div>

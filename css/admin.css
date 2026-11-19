@@ -2452,7 +2452,7 @@ body.tema-escuro .coord-estacao-icone img.icone {
 .alto-contraste dd,
 .alto-contraste strong,
 .alto-contraste span {
-  color: white; /* texto branco */
+  color: inherit; /* respeita a cor definida para cada superfície */
 }
 
 /* campos dos formulários */
@@ -2860,4 +2860,63 @@ body.tema-escuro .coord-estacao-icone img.icone {
 
 .pagina-admin .admin-topbar-direita {
   max-width: 100%; /* evita que os controles ampliem a página */
+}
+
+/* =========================================================
+   SUPERFÍCIES ADMINISTRATIVAS EM ALTO CONTRASTE
+   ========================================================= */
+
+/* mantém as variáveis antigas alinhadas à paleta compartilhada */
+body.tema-escuro,
+body.alto-contraste {
+  --fundo-creme: var(--creme); /* acompanha o fundo definido pelo tema */
+}
+
+/* mantém o menu e o cabeçalho escuros com textos claros */
+body.alto-contraste .admin-sidebar,
+body.alto-contraste .admin-topbar,
+body.alto-contraste .admin-modal-select,
+body.alto-contraste .coord-tabela thead th,
+body.alto-contraste .coord-tabela tbody td,
+body.alto-contraste .coord-estado-vazio {
+  background-color: #000000; /* evita superfícies claras com texto branco */
+  color: #ffffff; /* mantém a leitura sobre o preto */
+  border-color: #ffffff; /* delimita os componentes escuros */
+}
+
+/* preserva a leitura dos seletores do menu */
+body.alto-contraste .admin-select-area,
+body.alto-contraste .admin-select-area option {
+  background-color: #000000; /* mantém o seletor no mesmo tema do menu */
+  color: #ffffff; /* evita texto escuro sobre preto */
+  border-color: #ffffff; /* destaca o limite do campo */
+}
+
+/* conserva as situações identificáveis sem depender somente de cor */
+body.alto-contraste .admin-badge-status,
+body.alto-contraste .admin-status-pill,
+body.alto-contraste .cet-pill-neutro,
+body.alto-contraste .cet-pill-aprovado,
+body.alto-contraste .cet-pill-recusado {
+  background-color: #000000; /* elimina o conflito com as etiquetas claras */
+  color: #ffffff; /* preserva os textos de situação */
+  border: 1px solid #ffffff; /* delimita a etiqueta */
+}
+
+/* mantém os ícones dos componentes escuros identificáveis */
+body.alto-contraste .admin-topbar .icone,
+body.alto-contraste .admin-badge-status .icone,
+body.alto-contraste .admin-status-pill .icone,
+body.alto-contraste .cet-pill-aprovado .icone,
+body.alto-contraste .cet-pill-recusado .icone,
+body.alto-contraste .cet-timeline-icone .icone,
+body.alto-contraste .admin-rodape .icone {
+  filter: brightness(0) invert(1); /* preserva o símbolo claro sobre preto */
+}
+
+/* mantém os links de fundo escuro claros durante a navegação */
+body.alto-contraste .admin-nav-item:hover,
+body.alto-contraste .admin-nav-item.ativo {
+  background-color: #303030; /* diferencia o item apontado ou selecionado */
+  color: #ffffff; /* mantém a leitura sobre o destaque escuro */
 }

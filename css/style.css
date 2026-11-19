@@ -92,6 +92,7 @@ body.fonte-legivel p {
 }
 
 body.tema-escuro {
+  color-scheme: dark; /* adapta os controles nativos ao fundo escuro */
   --creme: #141d18;
   --branco: #1c2822;
   --verde-claro: #213028;
@@ -100,17 +101,24 @@ body.tema-escuro {
   --texto-principal: #f2f5f3;
   --texto-secundario: #c5d1c9;
   --borda: #34473d;
+  --app-card-terracota: #493127; /* mantém textos claros sobre o cartão de apoio */
+  --app-iara: #2b4031; /* mantém a área da iara no tema escolhido */
 }
 
 body.alto-contraste {
-  --creme: #ffffff;
-  --branco: #ffffff;
-  --verde-claro: #f0f0f0;
-  --verde-floresta: #000000;
-  --verde-natural: #000000;
-  --texto-principal: #000000;
-  --texto-secundario: #000000;
-  --borda: #000000;
+  color-scheme: dark; /* adapta os controles nativos ao alto contraste */
+  --creme: #000000; /* mantém o fundo principal preto */
+  --branco: #000000; /* mantém cartões e janelas pretos */
+  --verde-claro: #202020; /* diferencia superfícies selecionadas */
+  --verde-floresta: #ffffff; /* destaca títulos sobre superfícies escuras */
+  --verde-natural: #ffffff; /* preserva os destaques de texto */
+  --texto-principal: #ffffff; /* mantém a leitura sobre o preto */
+  --texto-secundario: #ffffff; /* mantém descrições legíveis */
+  --borda: #ffffff; /* delimita os componentes escuros */
+  --borda-input: #ffffff; /* destaca os limites dos campos */
+  --app-card-verde: #202020; /* mantém cartões institucionais escuros */
+  --app-card-terracota: #202020; /* mantém o cartão de serviços legível */
+  --app-iara: #202020; /* preserva o contraste da área da iara */
 }
 
 /* Tipografia */
@@ -2889,7 +2897,7 @@ CSS
   padding: 8px; /* afasta o símbolo das bordas */
   border: 1px solid var(--verde-floresta); /* acompanha a paleta existente */
   border-radius: 10px; /* suaviza os cantos do botão */
-  background-color: var(--verde-floresta); /* mantém a identidade verde */
+  background-color: #203d2e; /* mantém o símbolo branco visível em todos os temas */
   cursor: pointer; /* identifica a ação disponível */
   z-index: 9999; /* mantém o acesso acima dos cartões */
 }
@@ -2903,7 +2911,39 @@ CSS
 
 /* mantém o widget oficial alinhado ao botão compartilhado */
 [vw].enabled {
-  right: 16px; /* utiliza o mesmo alinhamento lateral */
+  position: fixed !important; /* preserva a posição durante o carregamento oficial */
+  right: 16px !important; /* utiliza o mesmo alinhamento lateral do botão de ajustes */
+  top: 50% !important; /* posiciona o acesso oficial acima dos ajustes */
+  width: 48px !important; /* iguala a largura visível dos dois acessos */
+  height: 48px !important; /* iguala a altura visível dos dois acessos */
+  transform: none !important; /* mantém a distância previsível entre os botões */
+}
+
+/* ajusta somente a apresentação do acesso oficial de libras */
+[vw] [vw-access-button] {
+  width: 48px !important; /* iguala a área visível ao botão de acessibilidade */
+  height: 48px !important; /* preserva o formato quadrado */
+  border-radius: 10px !important; /* acompanha os cantos dos ajustes */
+  overflow: hidden; /* mantém a imagem dentro dos cantos */
+  background-size: 48px 48px !important; /* iguala a imagem de fundo oficial à área visível */
+}
+
+/* preserva o símbolo oficial dentro da área reservada */
+[vw] [vw-access-button] img {
+  width: 48px !important; /* adapta a imagem à área de acesso */
+  height: 48px !important; /* preserva o mesmo tamanho visual */
+  object-fit: contain; /* mantém a imagem inteira */
+}
+
+/* reserva a faixa lateral dos acessos em todas as larguras */
+.com-acessibilidade main {
+  padding-right: 80px; /* mantém o conteúdo fora dos botões fixos */
+}
+
+/* preserva a faixa mesmo nas áreas com estilos próprios */
+.app.com-acessibilidade .conteudo-app,
+.pagina-admin.com-acessibilidade .admin-main {
+  padding-right: 80px; /* protege cartões e ações no computador */
 }
 
 /* reaproveita a aparência dos cartões administrativos no diálogo nativo */
@@ -2958,9 +2998,72 @@ CSS
 
 /* mantém as opções de ativação fáceis de selecionar */
 .opcao-acessibilidade-global input {
-  width: 22px; /* oferece uma área confortável para marcar */
-  min-width: 22px; /* evita reduzir o controle junto a textos longos */
-  height: 22px; /* preserva a proporção da seleção */
+  width: 48px; /* reaproveita a largura dos interruptores do perfil */
+  min-width: 48px; /* evita reduzir o controle junto a textos longos */
+  height: 28px; /* reaproveita a altura dos interruptores do perfil */
+}
+
+/* reaproveita os interruptores do perfil nos controles compartilhados */
+.interruptor {
+  appearance: none; /* retira somente a aparência visual nativa */
+  position: relative; /* posiciona a indicação dentro do controle */
+  width: 48px; /* mantém a mesma largura do perfil */
+  min-width: 48px; /* preserva a área de ativação */
+  height: 28px; /* mantém a mesma altura do perfil */
+  flex-shrink: 0; /* impede a compressão ao lado de textos */
+  margin: 0; /* evita desalinhamento com o rótulo */
+  border: 1px solid var(--borda-input); /* delimita o estado desligado */
+  border-radius: 24px; /* mantém as pontas arredondadas */
+  background-color: #737d73; /* identifica o estado desligado */
+  cursor: pointer; /* indica que o campo pode ser ativado */
+}
+
+/* representa a posição do interruptor sem alterar seu nome acessível */
+.interruptor::before {
+  content: ""; /* cria a indicação decorativa */
+  position: absolute; /* permite deslocar a indicação */
+  top: 3px; /* centraliza a indicação na altura */
+  left: 3px; /* indica inicialmente o estado desligado */
+  width: 20px; /* mantém a indicação visível */
+  height: 20px; /* preserva o formato circular */
+  border-radius: 50%; /* arredonda a indicação */
+  background-color: #ffffff; /* contrasta com o trilho escuro */
+}
+
+/* distingue a ativação pela cor e pela posição */
+.interruptor:checked {
+  background-color: #203d2e; /* identifica a preferência ativada */
+}
+
+/* desloca a indicação quando a preferência está ativada */
+.interruptor:checked::before {
+  transform: translateX(20px); /* indica o estado ligado à direita */
+}
+
+/* mantém o tamanho do interruptor dentro dos cartões de preferências */
+.opcao-check-card .interruptor {
+  width: 48px; /* preserva a largura compartilhada do controle */
+  height: 28px; /* evita a redução aplicada aos checkboxes comuns */
+}
+
+/* mantém a posição e o contorno identificáveis em alto contraste */
+.alto-contraste .interruptor:checked {
+  background-color: #ffff00; /* destaca a escolha ativada */
+}
+
+/* preserva a bolinha sobre o trilho amarelo */
+.alto-contraste .interruptor:checked::before {
+  background-color: #000000; /* evita branco sobre amarelo */
+}
+
+/* mantém os recursos nativos no contraste imposto pelo sistema */
+@media (forced-colors: active) {
+  .interruptor {
+    appearance: auto; /* recupera a apresentação nativa acessível */
+  }
+  .interruptor::before {
+    display: none; /* evita duplicar o indicador nativo */
+  }
 }
 
 /* mantém a seleção de escala compacta */
@@ -3007,9 +3110,9 @@ CSS
     margin-top: 0; /* retira o deslocamento usado no computador */
   }
   [vw].enabled {
-    top: auto; /* utiliza o mesmo alinhamento do botão de ajustes */
-    bottom: 180px; /* mantém libras acima da acessibilidade */
-    right: 10px; /* acompanha a lateral escolhida */
+    top: auto !important; /* utiliza o mesmo alinhamento do botão de ajustes */
+    bottom: 178px !important; /* mantém dez pixels entre os dois acessos */
+    right: 10px !important; /* acompanha a lateral escolhida */
     transform: none; /* preserva a separação entre os controles */
   }
   .com-acessibilidade main {
@@ -3049,4 +3152,128 @@ CSS
   .etiqueta {
     max-width: 100%; /* permite acomodar a etiqueta com fonte ampliada */
   }
+}
+
+/* =========================================================
+   CONTRASTE DAS SUPERFÍCIES INSTITUCIONAIS
+   ========================================================= */
+
+/* mantém os textos do protótipo de celular sobre seu fundo atual */
+.tema-escuro .celular-status,
+.tema-escuro .celular-topo,
+.tema-escuro .celular-titulo,
+.tema-escuro .celular-opcao,
+.alto-contraste .celular-status,
+.alto-contraste .celular-topo,
+.alto-contraste .celular-titulo,
+.alto-contraste .celular-opcao {
+  color: var(--texto-principal); /* acompanha o fundo escuro do protótipo */
+}
+
+/* mantém legendas legíveis nas ilustrações com fundos claros preservados */
+.tema-escuro .arte-metro .arte-legenda,
+.tema-escuro .arte-metro .arte-tag-topo,
+.alto-contraste .arte-metro .arte-legenda,
+.alto-contraste .arte-metro .arte-tag-topo {
+  color: var(--texto-principal); /* acompanha a superfície temática do cartão */
+}
+
+/* mantém os símbolos escuros legíveis sobre as superfícies dos temas */
+.tema-escuro .cabecalho .icone,
+.tema-escuro .campo-senha-wrap .icone,
+.tema-escuro .card-recurso .icone,
+.alto-contraste .cabecalho .icone,
+.alto-contraste .campo-senha-wrap .icone,
+.alto-contraste .card-recurso .icone {
+  filter: brightness(0) invert(1); /* destaca os símbolos sobre o fundo escuro */
+}
+
+/* mantém os textos do rodapé claros ao ativar a fonte de leitura */
+body.fonte-legivel .rodape p,
+body.fonte-legivel .faixa-cta p {
+  color: #d7e2d5; /* preserva a leitura sobre o verde escuro */
+}
+
+/* mantém links de conteúdo identificáveis por foco e passagem do ponteiro */
+.link-seta:hover,
+.link-seta:focus-visible,
+.checkbox-termos a:hover,
+.checkbox-termos a:focus-visible,
+.cadastro-login a:hover,
+.cadastro-login a:focus-visible {
+  text-decoration: underline; /* diferencia o link sem depender apenas da cor */
+}
+
+/* mantém os campos obrigatórios identificáveis sobre superfícies escuras */
+.tema-escuro .asterisco,
+.alto-contraste .asterisco {
+  color: #ffb6a7; /* preserva o contraste do sinal de obrigatoriedade */
+}
+
+/* =========================================================
+   CAMPOS E PREFERÊNCIAS COMPARTILHADOS
+   ========================================================= */
+
+/* organiza os dados de identificação sem alterar a estrutura das etapas */
+.cadastro-passo .form-contato {
+  display: grid; /* distribui os campos na largura disponível */
+  grid-template-columns: repeat(2, minmax(0, 1fr)); /* mantém duas colunas no computador */
+  gap: 16px; /* separa os campos do formulário */
+}
+
+/* mantém a seleção de arquivo alinhada aos demais controles */
+input[type="file"]::file-selector-button {
+  padding: 10px 14px; /* oferece uma área de seleção confortável */
+  margin-right: 12px; /* separa o botão do nome do arquivo */
+  border: 1px solid var(--borda-input); /* mantém o contorno dos formulários */
+  border-radius: 8px; /* acompanha os campos existentes */
+  background-color: #203d2e; /* preserva a identidade dos botões */
+  color: #ffffff; /* mantém a leitura sobre o fundo verde */
+  font: inherit; /* acompanha a preferência de tamanho das letras */
+  cursor: pointer; /* indica a possibilidade de selecionar um arquivo */
+}
+
+/* separa a lista de arquivos dos botões de seleção */
+#arquivos-cadastro {
+  margin-top: 12px; /* diferencia a seleção do resumo dos arquivos */
+}
+
+/* separa os blocos de leitura dos dados e de revisão */
+.resumo-cadastro .cadastro-qrcode-box {
+  margin-top: 16px; /* mantém o resumo distante do bloco anterior */
+}
+
+/* reutiliza os cartões do cadastro na edição dos dados do perfil */
+.app #formulario-perfil fieldset.cadastro-opcoes-lista {
+  display: grid; /* organiza as opções de mobilidade */
+  grid-template-columns: repeat(2, minmax(0, 1fr)); /* utiliza duas colunas no computador */
+  gap: 12px; /* separa as opções de preenchimento */
+}
+
+/* mantém texto e seleção alinhados nas opções do perfil */
+.app #formulario-perfil .opcao-check-card {
+  display: flex; /* posiciona o controle junto ao texto */
+  align-items: center; /* centraliza os elementos na altura */
+  gap: 10px; /* separa o texto da seleção */
+  padding: 12px; /* oferece uma área confortável de seleção */
+}
+
+/* acomoda os formulários e as opções em telas pequenas */
+@media (max-width: 600px) {
+  .cadastro-passo .form-contato,
+  .app #formulario-perfil fieldset.cadastro-opcoes-lista {
+    grid-template-columns: 1fr; /* mantém os campos legíveis no celular */
+  }
+}
+
+/* preserva o relógio escuro sobre o círculo claro já existente */
+body.tema-escuro .logo-circulo img,
+body.alto-contraste .logo-circulo img {
+  filter: brightness(0); /* mantém o símbolo visível sobre o fundo claro da marca */
+}
+
+/* mantém o relógio do cabeçalho móvel visível nas superfícies escuras */
+.app.tema-escuro .logo-mobile .marca-icone,
+.app.alto-contraste .logo-mobile .marca-icone {
+  filter: brightness(0) invert(1); /* acompanha o texto claro da marca no aplicativo */
 }

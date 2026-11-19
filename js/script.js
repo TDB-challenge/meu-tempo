@@ -74,10 +74,12 @@ function aplicarPreferenciasAcessibilidade() {
     else if (botoes[i].classList.contains("acao-vibracao")) ativo = preferencias.vibracao;
     botoes[i].classList.toggle("ativo", ativo);
     botoes[i].setAttribute("aria-pressed", String(ativo));
-    // a voz do webchat não está conectada nesta etapa
+    // permite guardar a escolha antes da futura integração de voz
     if (botoes[i].classList.contains("acao-voz")) {
-      botoes[i].disabled = true;
-      botoes[i].title = "O webchat da IARA será configurado em outra etapa.";
+      botoes[i].disabled = false;
+      botoes[i].classList.toggle("ativo", preferencias.vozIara);
+      botoes[i].setAttribute("aria-pressed", String(preferencias.vozIara));
+      botoes[i].removeAttribute("title");
     }
   }
   atualizarStatusAcessibilidade();
@@ -110,15 +112,15 @@ function atualizarStatusAcessibilidade() {
   }
 }
 
-// utiliza a leitura nativa somente quando a pessoa escolheu orientações por voz
+// prepara a leitura nativa para uma futura integração das orientações
 // texto representa a orientação curta do controle ou serviço
 function falarOrientacaoAcessivel(texto) {
   const preferencias = buscarPreferenciasAcessibilidade();
   if (preferencias.orientacoesVoz && "speechSynthesis" in window && "SpeechSynthesisUtterance" in window) {
+    // devolve a mensagem preparada sem iniciar uma narração nesta etapa
     const fala = new SpeechSynthesisUtterance(texto);
     fala.lang = "pt-BR";
-    window.speechSynthesis.cancel();
-    window.speechSynthesis.speak(fala);
+    return fala;
   }
 }
 
@@ -141,6 +143,10 @@ function alterarPreferenciaAcessibilidade(event) {
 function conectarControlesAcessibilidade() {
   const controles = document.querySelectorAll("[data-preferencia]");
   for (let i = 0; i < controles.length; i++) {
+    // reaproveita o interruptor do perfil em todas as escolhas de ativação
+    if (controles[i].type === "checkbox") controles[i].classList.add("interruptor");
+    // a escolha de voz permanece disponível mesmo sem a integração do webchat
+    if (controles[i].getAttribute("data-preferencia") === "vozIara") controles[i].disabled = false;
     if (!controles[i].hasAttribute("data-preferencia-conectada")) {
       controles[i].setAttribute("data-preferencia-conectada", "true");
       controles[i].addEventListener("change", alterarPreferenciaAcessibilidade);
@@ -170,9 +176,8 @@ function criarCampoAcessibilidade(destino, titulo, chave) {
     }
   } else campo.type = "checkbox";
   campo.setAttribute("data-preferencia", chave);
-  // não apresenta funções de voz externa ou vibração ausente como disponíveis
-  if (chave === "vozIara" || (chave === "vibracao" && typeof navigator.vibrate !== "function")) campo.disabled = true;
-  if (chave === "orientacoesVoz" && !("speechSynthesis" in window)) campo.disabled = true;
+  // guarda a preferência mesmo quando o dispositivo não oferece o recurso
+  if (chave !== "fonte") campo.className = "interruptor";
   rotulo.appendChild(campo);
   destino.appendChild(rotulo);
 }
@@ -222,7 +227,7 @@ function iniciarAcessibilidadeGlobal() {
   criarCampoAcessibilidade(modal, "Tema escuro", "temaEscuro");
   criarCampoAcessibilidade(modal, "Fonte de alta legibilidade", "fonteLegivel");
   criarCampoAcessibilidade(modal, "Orientações por voz", "orientacoesVoz");
-  criarCampoAcessibilidade(modal, "Voz da IARA · webchat ainda não configurado", "vozIara");
+  criarCampoAcessibilidade(modal, "Ouvir a IARA", "vozIara");
   criarCampoAcessibilidade(modal, "Guia sonoro da travessia", "somTravessia");
   criarCampoAcessibilidade(modal, "Vibração · quando o dispositivo permitir", "vibracao");
   const restaurar = document.createElement("button");
@@ -243,7 +248,8 @@ function iniciarAcessibilidadeGlobal() {
     const campo = document.getElementById(camposPerfil[i][0]);
     if (campo) {
       campo.setAttribute("data-preferencia", camposPerfil[i][1]);
-      if (camposPerfil[i][1] === "vozIara") campo.disabled = true;
+      // permite salvar a escolha para a futura integração de voz
+      if (camposPerfil[i][1] === "vozIara") campo.disabled = false;
     }
   }
   // migra as preferências antes que os outros scripts antigos sejam executados
@@ -295,6 +301,8 @@ function alterarControleInstitucional(event) {
   else if (botao.classList.contains("acao-tema")) { preferencias.temaEscuro = !preferencias.temaEscuro; preferencias.contraste = false; }
   else if (botao.classList.contains("acao-fonte-legivel")) preferencias.fonteLegivel = !preferencias.fonteLegivel;
   else if (botao.classList.contains("acao-musical")) preferencias.somTravessia = !preferencias.somTravessia;
+  // salva a voz da iara separadamente do guia sonoro da travessia
+  else if (botao.classList.contains("acao-voz")) preferencias.vozIara = !preferencias.vozIara;
   else if (botao.classList.contains("acao-vibracao")) preferencias.vibracao = !preferencias.vibracao;
   else if (botao.id === "btn-resetar-acess") { salvarPreferenciasAcessibilidade(preferenciasIniciaisAcessibilidade()); return; }
   salvarPreferenciasAcessibilidade(preferencias);
@@ -303,7 +311,7 @@ function alterarControleInstitucional(event) {
 // inicializa os recursos compartilhados depois que o html já foi interpretado
 iniciarAcessibilidadeGlobal();
 // conecta cada botão institucional uma única vez
-const controlesInstitucionais = document.querySelectorAll(".acao-aumentar, .acao-diminuir, .acao-contraste, .acao-tema, .acao-fonte-legivel, .acao-musical, .acao-vibracao, #btn-resetar-acess");
+const controlesInstitucionais = document.querySelectorAll(".acao-aumentar, .acao-diminuir, .acao-contraste, .acao-tema, .acao-fonte-legivel, .acao-musical, .acao-voz, .acao-vibracao, #btn-resetar-acess");
 for (let i = 0; i < controlesInstitucionais.length; i++) controlesInstitucionais[i].addEventListener("click", alterarControleInstitucional);
 // aplica mudanças feitas em outra aba sem regravá-las
 window.addEventListener("storage", function (event) { if (event.key === "meu-tempo-acessibilidade") aplicarPreferenciasAcessibilidade(); });
@@ -367,6 +375,8 @@ for (let i = 0; i < botoesSimulador.length; i++) {
     const caixa = document.getElementById(idAlvo);
     if (caixa) {
       caixa.classList.toggle("aberto");
+      // informa se a demonstração está aberta ao leitor de tela
+      botoesSimulador[i].setAttribute("aria-expanded", String(caixa.classList.contains("aberto")));
     }
   });
 }
@@ -383,16 +393,16 @@ if (formTravessia) {
 
     if (tempoRestante < 8) {
       statusTravessia.innerHTML =
-        "<h3>Ciclo atual com menos de 8 segundos (" + tempoRestante + "s)</h3>" +
+        "<h3>Ciclo demonstrativo com menos de 8 segundos (" + tempoRestante + "s)</h3>" +
         "<p><strong>Local:</strong> " + cruzamento + "</p>" +
         "<p><strong>Guia ativado:</strong> " + guia + "</p>" +
-        '<p class="aviso-erro">Para não travar o fluxo de veículos, o sistema programou automaticamente o tempo estendido para o <strong>próximo sinal verde</strong>. Aguarde o aviso sonoro e a vibração no celular.</p>';
+        '<p class="aviso-erro">Na demonstração, o tempo estendido fica programado para o <strong>próximo ciclo simulado</strong>. Este exemplo não controla semáforos reais e não autoriza atravessar uma rua.</p>';
     } else {
       statusTravessia.innerHTML =
-        "<h3>Tempo estendido ativado agora! (" + tempoRestante + "s + 12s extras)</h3>" +
+        "<h3>Tempo estendido na demonstração! (" + tempoRestante + "s + 12s extras)</h3>" +
         "<p><strong>Local:</strong> " + cruzamento + "</p>" +
         "<p><strong>Guia ativado:</strong> " + guia + "</p>" +
-        '<p class="aviso-ok">Semáforo sincronizado automaticamente sem intermediários. Pode iniciar a travessia seguindo o sinal musical e a vibração do seu celular.</p>';
+        '<p class="aviso-ok">O exemplo representa a extensão no ciclo simulado. Não há conexão com semáforos reais, emissão de sons ou vibração nesta demonstração. Não utilize este resultado como autorização para atravessar uma rua.</p>';
     }
   });
 }
@@ -408,11 +418,11 @@ if (formMetro) {
     const apoio = document.getElementById("apoio").value;
 
     statusMetro.innerHTML =
-      "<h3>Chamado enviado ao painel da estação!</h3>" +
+      "<h3>Exemplo de chamado de apoio na estação</h3>" +
       "<p><strong>Estação:</strong> " + estacao + "</p>" +
       "<p><strong>Localização exata:</strong> " + ponto + "</p>" +
       "<p><strong>Atendimento:</strong> " + apoio + "</p>" +
-      '<p class="aviso-ok">O administrador da estação aceitou o chamado e designou um agente para ir até você. Previsão de chegada: 2 minutos.</p>';
+      '<p class="aviso-ok">Na demonstração, este seria o retorno de um atendimento aceito. Nenhum chamado foi enviado e nenhuma equipe foi acionada.</p>';
   });
 }
 
@@ -432,10 +442,10 @@ if (formZeladoria) {
     }
 
     statusZeladoria.innerHTML =
-      "<h3>Relato registrado com sucesso!</h3>" +
+      "<h3>Exemplo de relato de zeladoria</h3>" +
       "<p><strong>Ocorrência:</strong> " + tipo + "</p>" +
       "<p><strong>Local:</strong> " + local + "</p>" +
-      '<p class="aviso-ok">Alerta publicado para os cidadãos na região e enviado aos indicadores da CET / Metrô.</p>';
+      '<p class="aviso-ok">Este resultado é apenas uma demonstração local. Nenhum relato foi armazenado ou enviado aos painéis administrativos.</p>';
     formZeladoria.reset();
   });
 }
@@ -450,6 +460,8 @@ const demoIaraAcoes = document.getElementById("demo-iara-acoes");
 if (btnDemoIara && demoIaraBox) {
   btnDemoIara.addEventListener("click", function () {
     demoIaraBox.classList.toggle("aberto");
+    // informa se a conversa demonstrativa está aberta ao leitor de tela
+    btnDemoIara.setAttribute("aria-expanded", String(demoIaraBox.classList.contains("aberto")));
   });
 }
 
@@ -457,7 +469,7 @@ if (btnIaraSim && demoIaraMensagens) {
   btnIaraSim.addEventListener("click", function () {
     demoIaraMensagens.innerHTML +=
       '<div class="msg-usuario">“Sim, estou na Avenida Paulista, 5502.”</div>' +
-      '<div class="msg-iara">Local confirmado! Conectei ao semáforo do cruzamento: o ciclo atual tem menos de 8 segundos, então já reservei seu <strong>tempo estendido + sinal musical e vibração</strong> para o próximo sinal verde. Avisarei por voz assim que abrir!</div>';
+      '<div class="msg-iara">Local confirmado neste exemplo! Na demonstração, um ciclo com menos de 8 segundos reservaria o <strong>tempo estendido para o próximo ciclo simulado</strong>. Este exemplo não consulta GPS, não controla semáforos e não ativa voz, som ou vibração.</div>';
     demoIaraAcoes.style.display = "none";
   });
 }
@@ -471,7 +483,7 @@ if (btnIaraNao && demoIaraMensagens) {
   });
 }
 
-// =====================================================
+
 // 5. FILTRO DE ASSUNTOS, BUSCA E ACORDEÃO NO FAQ (faq.html)
 // =====================================================
 const campoBuscaFaq = document.getElementById("busca-faq");
@@ -642,6 +654,13 @@ for (let i = 0; i < botoesToggleSenha.length; i++) {
       "aria-label",
       estaOculta ? "Ocultar senha" : "Mostrar senha"
     );
+    // identifica o pin do cidadão sem alterar os controles administrativos
+    if (inputAlvo.id === "cad-senha" || inputAlvo.id === "cad-confirma-senha" || inputAlvo.id === "login-senha") {
+      // acompanha o estado de visibilidade usando o nome correto da credencial
+      let rotulo = "Mostrar PIN";
+      if (estaOculta) rotulo = "Ocultar PIN";
+      this.setAttribute("aria-label", rotulo);
+    }
   });
 }
 

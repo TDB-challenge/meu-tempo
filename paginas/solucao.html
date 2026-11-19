@@ -95,7 +95,10 @@
           <p>
             O sistema se comunica automaticamente com o semáforo: se o ciclo atual tiver menos de 8 segundos restantes, ele programa sua travessia para o próximo fluxo sem travar o trânsito e sem precisar de aprovação humana.
           </p>
-          <a href="app/travessia.html" class="btn">Simular este serviço &rarr;</a>
+          <!-- abre a demonstração local sem cadastrar uma solicitação -->
+          <button type="button" class="btn btn-abrir-simulador" data-alvo="simulador-travessia" aria-controls="simulador-travessia" aria-expanded="false">
+            Como seria na prática?
+          </button>
         </div>
       </div>
 
@@ -132,7 +135,7 @@
             <button type="submit" class="btn">Solicitar tempo estendido &rarr;</button>
           </form>
 
-          <div id="status-travessia" class="painel-status">
+          <div id="status-travessia" class="painel-status" role="status">
             <h3>Como funciona a regra dos 8 segundos</h3>
             <p>
               <strong>Acima de 8 segundos:</strong> o semáforo estende o tempo imediatamente e inicia o sinal musical e a vibração no seu celular.
@@ -181,7 +184,10 @@
           <p>
             A situação dos elevadores e escadas rolantes aparece no mesmo formulário, sem precisar sair da tarefa.
           </p>
-          <a href="app/apoio-metro.html" class="btn">Simular este serviço &rarr;</a>
+          <!-- abre a demonstração local sem cadastrar uma solicitação -->
+          <button type="button" class="btn btn-abrir-simulador" data-alvo="simulador-metro" aria-controls="simulador-metro" aria-expanded="false">
+            Como seria na prática?
+          </button>
         </div>
       </div>
 
@@ -220,7 +226,7 @@
             <button type="submit" class="btn">Enviar chamado geolocalizado &rarr;</button>
           </form>
 
-          <div id="status-metro" class="painel-status">
+          <div id="status-metro" class="painel-status" role="status">
             <h3>Status operacional da estação</h3>
             <p><strong>Elevadores:</strong> 2 em operação normal · 0 em manutenção.</p>
             <p><strong>Escadas rolantes:</strong> Operação normal no acesso principal.</p>
@@ -266,7 +272,10 @@
           <p>
             Registre o problema por voz ou texto. Cada relato orienta outros cidadãos em tempo real e alimenta os indicadores de planejamento da CET e do Metrô.
           </p>
-          <a href="app/zeladoria.html" class="btn">Simular este serviço &rarr;</a>
+          <!-- abre a demonstração local sem cadastrar uma solicitação -->
+          <button type="button" class="btn btn-abrir-simulador" data-alvo="simulador-zeladoria" aria-controls="simulador-zeladoria" aria-expanded="false">
+            Como seria na prática?
+          </button>
         </div>
       </div>
 
@@ -297,7 +306,7 @@
             <button type="submit" class="btn">Registrar relato &rarr;</button>
           </form>
 
-          <div id="status-zeladoria" class="painel-status">
+          <div id="status-zeladoria" class="painel-status" role="status">
             <h3>Impacto do seu relato</h3>
             <p>
               <strong>Alerta imediato:</strong> outros usuários que passam pelo mesmo trajeto recebem aviso antecipado pela IARA.
@@ -372,8 +381,8 @@
           Fale ou escreva o que precisa. A assistente ajuda a confirmar o local por GPS e prepara o pedido sem exigir digitação — ideal para pessoas cegas, idosas ou em movimento.
         </p>
 
-        <button type="button" id="btn-demo-iara" class="btn btn-contorno">
-          Conversar com a IARA &rarr;
+        <button type="button" id="btn-demo-iara" class="btn btn-contorno" aria-controls="demo-iara-box" aria-expanded="false">
+          Como seria na prática?
         </button>
 
         <!-- Demonstração guiada do fluxo por voz da Av. Paulista -->
@@ -389,7 +398,7 @@
               </div>
             </div>
 
-            <div id="demo-iara-mensagens" class="chat-lista" style="max-height: 300px;">
+            <div id="demo-iara-mensagens" class="chat-lista" style="max-height: 300px;" aria-live="polite" aria-relevant="additions">
               <div class="msg-usuario">
                 “IARA, estou aqui na Paulista e quero solicitar mais tempo para a minha travessia.”
               </div>
