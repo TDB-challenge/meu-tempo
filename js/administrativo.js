@@ -10,9 +10,11 @@ if (btnAdminMenuMobile && adminSidebar) {
   });
 }
 
+// os atributos data-admin-aba identificam os botões; a classe admin-aba-painel identifica as áreas alternadas por eles
 const botoesAbaAdmin = document.querySelectorAll("[data-admin-aba]");
 const paineisAbaAdmin = document.querySelectorAll(".admin-aba-painel");
 
+// nomeaba é a chave da aba solicitada; o mesmo identificador relaciona seu botão ao painel correspondente
 function abrirAbaAdmin(nomeAba) {
   for (let i = 0; i < paineisAbaAdmin.length; i++) {
     paineisAbaAdmin[i].hidden = paineisAbaAdmin[i].id !== "aba-" + nomeAba;
@@ -80,6 +82,7 @@ for (let i = 0; i < botoesFecharModal.length; i++) {
   botoesFecharModal[i].addEventListener("click", fecharTodosModaisAdmin);
 }
 
+// a classe admin-modal-overlay marca o fundo que envolve a janela; os cliques são recebidos também ao clicar nos elementos internos
 const overlaysModais = document.querySelectorAll(".admin-modal-overlay");
 for (let i = 0; i < overlaysModais.length; i++) {
   overlaysModais[i].addEventListener("click", function (evento) {
@@ -119,6 +122,7 @@ const motivoRecusaMetro = document.getElementById("motivo-recusa-metro");
 
 // cria conteúdo seguro utilizando somente texto
 // destino recebe o elemento, tag define a estrutura, texto define o conteúdo e classe define o estilo existente
+// destino recebe o novo elemento, tag define sua marcação e classe aplica o estilo; o conteúdo é inserido como texto
 function adicionarTextoOperacional(destino, tag, texto, classe) {
   // cria o elemento que será apresentado
   const elemento = document.createElement(tag);
@@ -672,6 +676,7 @@ if (listaDecisoesCet) {
 // =====================================================
 // PAINEL COORDENAÇÃO OPERACIONAL (admin/coordenacao.html)
 // =====================================================
+// mensagem é o aviso temporário mostrado ao usuário; o temporizador evita manter o aviso aberto indefinidamente
 function mostrarToastAdmin(mensagem) {
   const toast = document.getElementById("admin-toast");
   if (!toast) return;
@@ -793,14 +798,18 @@ if (btnExportarCsv) {
       }
     }
 
+    // blob transforma o texto montado em um arquivo em memória e informa seu formato csv ao navegador
     const blob = new Blob([conteudoCsv], { type: "text/csv;charset=utf-8;" });
+    // o endereço temporário aponta para esse arquivo local e permite que o link inicie o download
     const url = URL.createObjectURL(blob);
     const linkDownload = document.createElement("a");
     linkDownload.href = url;
+    // download sugere o nome do arquivo salvo pelo navegador, sem enviar o relatório para um servidor
     linkDownload.download = "relatorio-atendimentos-meu-tempo.csv";
     document.body.appendChild(linkDownload);
     linkDownload.click();
     document.body.removeChild(linkDownload);
+    // libera a referência temporária depois de acionar o link para evitar reter o arquivo em memória
     URL.revokeObjectURL(url);
 
     mostrarToastAdmin(
@@ -846,6 +855,7 @@ function exibirSolicitacoesCadastro() {
 
   for (var i = 0; i < solicitacoes.length; i++) {
     var cadastro = solicitacoes[i];
+    // true copia também os elementos internos do cartão modelo, permitindo preencher cada solicitação separadamente
     var cartao = modeloSolicitacaoCadastro.cloneNode(true);
     cartao.removeAttribute("id");
     cartao.hidden = false;
@@ -944,6 +954,7 @@ let profissionalAdmin = null;
 const paginaAdmin = window.location.pathname;
 
 // função que verifica a sessão e a permissão do profissional
+// esta checagem organiza a demonstração no navegador; dados de sessão editáveis localmente não substituem autorização em servidor
 function verificarSessaoAdmin() {
   // verifica se existe uma sessão
   if (sessaoAdmin === null) {
@@ -1354,6 +1365,7 @@ function sincronizarTransporteAdministrativo() {
       tabelas[i].appendChild(linha);
     }
     // atualiza a contagem associada à tabela atual
+    // closest sobe pelos elementos ancestrais até encontrar o cartão que contém a tabela atual
     const cartao = tabelas[i].closest(".admin-fila-card");
     const contagem = cartao.querySelector(".coord-contagem-texto");
     if (contagem) contagem.textContent = tabelas[i].rows.length + " solicitações encontradas";
@@ -1507,6 +1519,7 @@ function receberAtualizacaoAdministrativa(event) {
 }
 
 // recebe o evento emitido pelo navegador quando outra aba altera os dados
+// storage informa alterações feitas por outras páginas da mesma origem; a própria página que gravou não recebe esse evento
 window.addEventListener("storage", receberAtualizacaoAdministrativa);
 
 // =================================================================
@@ -1651,13 +1664,16 @@ function atualizarCiclosAdministrativos() {
 
 // inicia a consulta apenas nas páginas que acompanham as travessias
 if (profissionalAdmin !== null && (profissionalAdmin.funcao === "Operador CET" || profissionalAdmin.funcao === "Coordenador")) {
+  // o intervalo solicita uma atualização por segundo, mas abas em segundo plano podem executar os chamados com atraso
   temporizadorCiclosAdmin = setInterval(atualizarCiclosAdministrativos, 1000);
   // encerra a consulta ao sair do painel
+  // pagehide permite interromper o intervalo quando a página sai da visualização, inclusive ao entrar no cache de navegação
   window.addEventListener("pagehide", function () {
     clearInterval(temporizadorCiclosAdmin);
     temporizadorCiclosAdmin = null;
   });
   // retoma somente a consulta interrompida pelo histórico do navegador
+  // persisted indica retorno pelo cache de navegação; nesse caso o intervalo precisa ser reativado
   window.addEventListener("pageshow", function (evento) {
     if (evento.persisted && temporizadorCiclosAdmin === null) {
       atualizarCiclosAdministrativos();

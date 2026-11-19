@@ -1,7 +1,7 @@
-@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&family=Fraunces:wght@400;500;600&family=Atkinson+Hyperlegible:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&family=Fraunces:wght@400;500;600&family=Atkinson+Hyperlegible:wght@400;700&display=swap");/* carrega as fontes externas usadas pela base e pelos componentes do aplicativo */
 
 /* Variáveis globais */
-:root {
+:root {/* mantem os valores globais disponiveis mesmo fora de um elemento com a classe app */
   /* Cores principais */
   --verde-floresta: #203d2e;
   --verde-escuro: #0c201a;
@@ -50,7 +50,7 @@
 }
 
 html {
-  font-size: 100%;
+  font-size: 100%;/* preserva a referencia de tamanho escolhida nas configuracoes do navegador */
 }
 
 /* Estilos gerais */
@@ -61,7 +61,7 @@ body {
   line-height: 1.5;
   background-color: var(--creme);
   color: var(--texto-principal);
-  min-height: 100vh;
+  min-height: 100vh;/* garante que o fundo da pagina cubra pelo menos a altura da tela */
 }
 
 /* Tipografia */
@@ -109,7 +109,7 @@ button,
 input,
 select,
 textarea {
-  font: inherit;
+  font: inherit;/* faz os controles herdarem tambem tamanho e familia de fonte do contexto */
   color: inherit;
 }
 
@@ -122,7 +122,7 @@ button {
 /* Destaca o elemento em foco durante a navegação pelo teclado */
 :focus-visible {
   outline: 2px solid var(--verde-natural);
-  outline-offset: 3px;
+  outline-offset: 3px;/* afasta o contorno de foco da borda para facilitar sua identificacao */
 }
 
 /* Personaliza as cores ao selecionar um texto */
@@ -337,7 +337,7 @@ button {
 
 /* a classe app fica no body dos oito htmls, assim os estilos
    não interferem nas outras páginas do site */
-.app {
+.app {/* as variaveis declaradas aqui ficam no escopo do aplicativo e de seus descendentes */
   /* paleta de cores do protótipo */
   --verde-floresta: #203d2e;
   --verde-escuro: #0c201a;
@@ -369,7 +369,7 @@ button {
   --cor-sem-suporte: #626c64;
 
   /* fontes dos textos, títulos e opção de acessibilidade */
-  --fonte-principal: "Nunito Sans", Arial, sans-serif;
+  --fonte-principal: "Nunito Sans", Arial, sans-serif;/* as familias seguintes sao alternativas locais caso a fonte externa nao carregue */
   --fonte-titulo: "Fraunces", Georgia, serif;
   --fonte-acessivel: "Atkinson Hyperlegible", Arial, sans-serif;
 
@@ -385,15 +385,15 @@ button {
   --sombra-modal: 0 20px 60px rgba(12, 32, 26, 0.2);
 
   /* medidas dos menus, cabeçalho e conteúdo */
-  --largura-menu: 286px;
+  --largura-menu: 286px;/* centraliza a medida reutilizada no posicionamento do menu lateral */
   --altura-cabecalho: 80px;
   --altura-menu-inferior: 76px;
   --espacamento-conteudo: 44px;
 
   /* configurações do body */
   margin: 0;
-  min-height: 100vh;
-  min-height: 100dvh;
+  min-height: 100vh;/* oferece a altura minima de referencia para navegadores sem suporte a dvh */
+  min-height: 100dvh;/* acompanha a altura visivel quando as barras do navegador movel mudam de tamanho */
   background-color: var(--app-fundo);
   color: var(--texto-principal);
   font-family: var(--fonte-principal);
@@ -454,7 +454,7 @@ button {
 
 /* remove a borda dos fieldsets usados nos formulários */
 .app fieldset {
-  min-width: 0;
+  min-width: 0;/* permite que o fieldset encolha sem forcar a largura minima de seu conteudo */
   padding: 0;
   margin: 0;
   border: none;
@@ -482,7 +482,7 @@ button {
 
 /* mantém escondidos os elementos que dependem do js para aparecer */
 .app [hidden] {
-  display: none !important;
+  display: none !important;/* a prioridade preserva hidden mesmo diante de outras regras de exibicao */
 }
 
 /* remove a seta padrão do summary, pois já temos os ícones svg */
@@ -490,7 +490,7 @@ button {
   list-style: none;
 }
 
-.app summary::-webkit-details-marker {
+.app summary::-webkit-details-marker {/* atinge o marcador nativo somente nos navegadores que oferecem este pseudo-elemento */
   display: none;
 }
 
@@ -521,7 +521,7 @@ button {
   border-radius: var(--raio-medio);
   font-weight: 700;
 
-  transform: translateY(-200%);
+  transform: translateY(-200%);/* desloca o link para fora da area visivel ate ele receber foco */
 }
 
 /* mostra o link quando ele recebe o foco pelo teclado */
@@ -531,7 +531,7 @@ button {
 
 /* id do main de cada página, onde o link acima direciona */
 .app #conteudo-principal {
-  scroll-margin-top: 24px;
+  scroll-margin-top: 24px;/* reserva espaco acima do destino ao navegar pelo link de salto */
 }
 
 /* ícones */
@@ -558,18 +558,18 @@ button {
 .app .seta-expansao {
   width: 18px;
   height: 18px;
-  margin-left: auto;
+  margin-left: auto;/* ocupa o espaco livre antes da seta para alinha-la ao fim da linha */
   flex-shrink: 0;
   transition: transform 0.2s ease;
 }
 
 /* gira a seta para cima quando o details estiver aberto */
-.app details[open] > summary .seta-expansao[src$="expandir.svg"] {
+.app details[open] > summary .seta-expansao[src$="expandir.svg"] {/* o sinal maior exige um summary filho direto e o atributo termina no nome deste icone */
   transform: rotate(180deg);
 }
 
 /* gira a seta lateral para baixo quando o details estiver aberto */
-.app details[open] > summary .seta-expansao[src$="avancar.svg"] {
+.app details[open] > summary .seta-expansao[src$="avancar.svg"] {/* combina o estado aberto do details com o arquivo especifico da seta lateral */
   transform: rotate(90deg);
 }
 
@@ -578,7 +578,7 @@ button {
   .app *,
   .app *::before,
   .app *::after {
-    animation: none !important;
+    animation: none !important;/* a prioridade evita que efeitos declarados depois reativem a animacao nesta preferencia */
     transition: none !important;
     scroll-behavior: auto !important;
   }
@@ -3224,7 +3224,7 @@ button {
 
 
 /* mantém o estado do interruptor visível no modo de contraste do sistema. */
-@media (forced-colors: active) {
+@media (forced-colors: active) {/* esta consulta responde as cores impostas pelo sistema, independentemente do tema da pagina */
 
     .app .interruptor {
         appearance: auto; /* recupera o checkbox nativo do navegador */
@@ -3328,7 +3328,7 @@ button {
 
 
 /* campos de texto do perfil, incluindo o id nome-completo. */
-.app .formulario-perfil input:not([type="checkbox"]):not([type="file"]) {
+.app .formulario-perfil input:not([type="checkbox"]):not([type="file"]) {/* as duas exclusoes deixam de fora os controles de selecao e de arquivo */
     width: 100%; /* ocupa toda a largura disponível */
     min-height: 48px; /* altura mínima do campo */
     padding: 12px 14px; /* espaço interno */
@@ -3783,7 +3783,7 @@ button {
 
 
 /* destaca o label que possui um radio selecionado. */
-.app .opcao-cruzamento:has(input:checked) {
+.app .opcao-cruzamento:has(input:checked) {/* seleciona o cartao a partir do estado marcado de um campo dentro dele */
     background-color: var(--verde-claro); /* fundo da opção escolhida */
     border-color: var(--verde-natural); /* destaca o contorno */
 }
@@ -4499,7 +4499,7 @@ button {
 
 
 /* destaca a categoria durante a navegação pelo teclado. */
-.app .opcao-problema:has(input:focus-visible) {
+.app .opcao-problema:has(input:focus-visible) {/* propaga o foco visivel do campo interno para o contorno da opcao inteira */
     outline: 3px solid var(--terracota); /* contorno de acessibilidade */
     outline-offset: 3px; /* distância do contorno */
 }
@@ -4702,7 +4702,7 @@ button {
 
 
 /* mostra o foco no label quando o input invisível recebe o foco. */
-.app .anexo-relato:has(.campo-anexo:focus-visible) .botao-anexo {
+.app .anexo-relato:has(.campo-anexo:focus-visible) .botao-anexo {/* realca o botao visual quando o seletor de arquivo interno recebe foco pelo teclado */
     outline: 3px solid var(--terracota); /* contorno de acessibilidade */
     outline-offset: 3px; /* distância do contorno */
 }
@@ -5868,7 +5868,7 @@ button {
 
 /* evita perder a identificação dos campos durante o foco pelo teclado. */
 .app.alto-contraste .botao-camera:has(+ #foto-documento:focus-visible),
-.app.alto-contraste .enviar-imagem:has(+ #imagem-documento:focus-visible) {
+.app.alto-contraste .enviar-imagem:has(+ #imagem-documento:focus-visible) {/* mantem a mesma relacao entre rotulo e campo com o tema de alto contraste */
     outline: 3px solid #ffff00; /* destaca o campo com contorno amarelo */
     outline-offset: 3px; /* distancia o contorno do elemento */
 }
@@ -6069,7 +6069,7 @@ button {
 }
 
 /* mantém o marcador com suporte escuro também no alto contraste */
-.app.alto-contraste #mapa-travessia .marcador-semaforo.com-suporte {
+.app.alto-contraste #mapa-travessia .marcador-semaforo.com-suporte {/* este seletor inclui a classe de alto contraste e tem prioridade sobre a regra comum seguinte */
     background-color: #000000; /* garante contraste com nomes e ícones claros */
     border-color: #ffffff; /* delimita o ponto sobre a superfície escura */
 }
@@ -6380,7 +6380,7 @@ button {
 
 /* mantém o contador e a etiqueta claros no tema escuro e no alto contraste */
 .app.alto-contraste .mostrador-segundos,
-.app.alto-contraste .contagem-travessia[data-fase] .mostrador-segundos {
+.app.alto-contraste .contagem-travessia[data-fase] .mostrador-segundos {/* o atributo data-fase cobre qualquer valor presente e mantem o mostrador com o tema escolhido */
     background-color: #000000; /* respeita o fundo preto escolhido */
     color: #ffffff; /* destaca os segundos em qualquer fase */
     border: 1px solid #ffffff; /* delimita o mostrador sem depender da cor */

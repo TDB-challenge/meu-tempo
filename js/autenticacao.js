@@ -36,6 +36,7 @@ if (botaoMenu && menuNavegacao) {
 // =================================================================
 
 // seleciona todos os botões de visualizar senha
+// a classe botao-visualizar-senha reúne os controles que alternam a exibição do campo associado
 const botoesSenha = document.querySelectorAll(".botao-visualizar-senha");
 
 // função que mostra ou esconde a senha
@@ -101,6 +102,7 @@ let senhaValida = false;
 // função que altera a aparência de um requisito
 // requisito representa o elemento da lista
 // atendido representa o resultado da condição
+// requisito é o elemento do indicador e atendido é o resultado booleano usado para aplicar ou remover seu destaque
 function marcarRequisito(requisito, atendido) {
   // verifica se a regra foi cumprida
   if (atendido) {
@@ -247,6 +249,7 @@ const mensagemVinculo = document.getElementById("mensagem-vinculo");
 // =================================================================
 
 // numero representa a etapa que será exibida
+// numero identifica a etapa do cadastro administrativo que deve ficar visível após a navegação
 function mostrarEtapa(numero) {
   // esconde todas as etapas
   etapaIdentificacao.hidden = true;
@@ -454,6 +457,7 @@ const regiaoCadastro = document.getElementById("regiao");
 // campo representa o select que receberá as opções
 // lista representa os valores que serão adicionados
 // texto representa a primeira opção do select
+// as opções são elementos criados no navegador; apagar o conteúdo anterior evita repetir escolhas a cada mudança de vínculo
 function preencherOpcoes(campo, lista, texto) {
   // limpa as opções anteriores
   campo.innerHTML = "";
@@ -1053,6 +1057,7 @@ if (abrirRecuperacao && modalRecuperacao && formularioRecuperacao) {
 
 // função que registra o profissional conectado
 // usuario representa a conta encontrada no login
+// a sessão fica vinculada à aba e pode sobreviver ao recarregamento; não representa um token validado por servidor
 function salvarSessao(usuario) {
   // cria um objeto com as informações do profissional
   const profissionalConectado = {
@@ -1114,12 +1119,16 @@ async function resumirSenhaCidadao(senha) {
     throw new Error("Abra a demonstração em localhost ou HTTPS para usar o resumo nativo da senha.");
   }
   // converte a senha fictícia em bytes e calcula o resumo sha-256
+  // textencoder transforma os caracteres em bytes utf-8, formato exigido pela operação criptográfica nativa
   const bytesSenha = new TextEncoder().encode(senha);
   // aguarda o cálculo nativo sem guardar a senha original
+  // digest devolve uma promessa; await espera o cálculo sha-256 antes de continuar a comparação
   const resumo = await window.crypto.subtle.digest("SHA-256", bytesSenha);
   // permite percorrer os bytes do resumo em um laço básico
+  // uint8array permite ler cada posição do resultado como um número inteiro entre zero e 255
   const bytesResumo = new Uint8Array(resumo);
   // reúne os bytes em texto hexadecimal para comparação demonstrativa
+  // a representação hexadecimal usa dois caracteres por byte; esse resumo local não oferece a proteção de armazenamento de senhas em servidor
   let textoResumo = "";
   // percorre cada byte do resumo nativo
   for (let i = 0; i < bytesResumo.length; i++) {
@@ -1189,6 +1198,7 @@ function validarIdentificacaoCidadao() {
 
 // recupera as escolhas de uma lista de checkboxes sem criar dados automáticos
 // nome representa o atributo name dos campos da lista
+// nome corresponde ao atributo name do grupo de campos cujas opções marcadas serão reunidas
 function coletarEscolhasCidadao(nome) {
   // seleciona as opções e cria uma lista de respostas
   const opcoes = formularioCidadao.querySelectorAll('input[name="' + nome + '"]');
@@ -1246,6 +1256,7 @@ function mostrarPassoCidadao(numero) {
     }
   }
   // leva o foco ao primeiro controle ou título disponível na etapa aberta
+  // o seletor procura o primeiro título ou controle da etapa para orientar o foco após a mudança de tela
   const foco = passos[numero - 1].querySelector("h3, input, select, button");
   // permite focalizar o título sem inseri-lo na navegação por tabulação
   if (foco) {
@@ -1395,6 +1406,7 @@ function navegarCadastroCidadao(evento) {
 
 // registra a conta local apenas depois da revisão e aceite dos termos
 // evento representa o envio do formulário do cidadão
+// evento é o envio do formulário; o processamento assíncrono aguarda o resumo da senha antes de salvar o cadastro local
 async function registrarCadastroCidadao(evento) {
   evento.preventDefault();
   // impede concluir por enter nas etapas anteriores
@@ -1493,6 +1505,7 @@ if (formularioCidadao) {
 
 // compara credenciais fictícias sem solicitar novamente a leitura do documento
 // evento representa o envio do formulário de login do cidadão
+// evento representa a tentativa de entrada; o resultado depende dos cadastros demonstrativos deste navegador
 async function entrarCidadao(evento) {
   evento.preventDefault();
   // seleciona a mensagem e os campos do cidadão

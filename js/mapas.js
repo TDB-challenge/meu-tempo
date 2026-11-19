@@ -5,6 +5,7 @@
 // atualiza mapa e informações usando a opção escolhida na lista
 function atualizarCruzamentoMapa() {
   // recupera o cruzamento escolhido na página atual
+  // o seletor checked encontra apenas o rádio selecionado dentro do grupo chamado cruzamento
   const escolha = document.querySelector('input[name="cruzamento"]:checked');
   // evita atualizar páginas sem lista de cruzamentos
   if (!escolha) {
@@ -34,6 +35,7 @@ function atualizarCruzamentoMapa() {
   // seleciona o iframe público sem inventar coordenadas
   const mapa = document.getElementById('mapa-base-' + tipo);
   // preserva o mapa público da zeladoria; a travessia utiliza o diagrama local
+  // encodeuricomponent protege o endereço como valor da consulta; a atribuição ao iframe carrega um mapa do serviço externo
   if (mapa.tagName === 'IFRAME') mapa.src = 'https://maps.google.com/maps?q=' + encodeURIComponent(nome + ', São Paulo, SP') + '&output=embed';
   // sincroniza a seleção dos marcadores com a lista textual
   const marcadores = document.querySelectorAll('[data-marcador-cruzamento]');
@@ -86,6 +88,7 @@ function solicitarLocalizacaoRelato() {
   }
   aviso.textContent = 'Aguardando sua autorização de localização no navegador.';
   // pede a posição sem iniciar rastreamento contínuo
+  // a chamada é assíncrona: o navegador pede permissão e depois aciona a função de sucesso ou a função de falha
   navigator.geolocation.getCurrentPosition(receberLocalizacaoRelato, falharLocalizacaoRelato);
 }
 
@@ -111,6 +114,7 @@ function prepararMarcadoresTravessia() {
   mapa.textContent = '';
   // desenha a avenida principal somente como referência visual do mapa esquemático
   const avenida = document.createElement('div');
+  // avenida-mapa fornece o estilo da via principal; os elementos decorativos são ocultados da leitura assistiva por aria-hidden
   avenida.className = 'avenida-mapa';
   avenida.setAttribute('aria-hidden', 'true');
   mapa.appendChild(avenida);
@@ -137,6 +141,7 @@ function prepararMarcadoresTravessia() {
     // cria um botão identificável por ícone, nome e situação de suporte
     const botao = document.createElement('button');
     botao.type = 'button';
+    // marcador-semaforo define o botão no diagrama e as classes com-suporte e sem-suporte distinguem sua situação visual
     botao.className = 'marcador-semaforo sem-suporte';
     if (cruzamentosMeuTempo[i].suporte) botao.className = 'marcador-semaforo com-suporte';
     botao.setAttribute('data-marcador-cruzamento', cruzamentosMeuTempo[i].id);
@@ -161,6 +166,7 @@ function prepararMarcadoresTravessia() {
       for (let j = 0; j < escolhas.length; j++) {
         if (escolhas[j].value === evento.currentTarget.getAttribute('data-marcador-cruzamento') && !escolhas[j].disabled) {
           escolhas[j].checked = true;
+          // alterar checked por código não dispara change; o evento criado avisa os ouvintes e bubbles permite que ele alcance os elementos ancestrais
           escolhas[j].dispatchEvent(new Event('change', {bubbles: true}));
         }
       }
@@ -222,6 +228,7 @@ function prepararMapas() {
       escolhas[0].focus();
     });
     // recupera o endereço enviado pelo link de cruzamento sem suporte
+    // urlsearchparams interpreta a consulta da página e recupera o valor de local sem separar os pares de parâmetros manualmente
     const parametros = new URLSearchParams(window.location.search);
     // preenche somente quando o link trouxer um endereço
     if (parametros.get('local')) {

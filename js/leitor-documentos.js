@@ -27,6 +27,7 @@ function removerPreviaDocumento(tipo) {
   const previa = document.getElementById("previa-" + tipo);
   // libera a referência temporária da identificação
   if (tipo === "identificacao") {
+    // revogar invalida o endereço temporário da prévia; isso não apaga o arquivo original do dispositivo
     URL.revokeObjectURL(previaIdentificacaoLocal);
     previaIdentificacaoLocal = "";
     arquivoIdentificacaoAtual = null;
@@ -67,8 +68,10 @@ function apresentarPreviaDocumento(evento) {
   if (campo.id.indexOf("complementar") !== -1) tipo = "complementar";
   // mantém a prévia atual quando o cidadão cancela a seleção
   if (campo.files.length === 0) return;
+  // files é a lista de arquivos autorizados pelo usuário; a primeira posição contém o anexo escolhido neste campo
   const arquivo = campo.files[0];
   // aceita somente imagens conhecidas ou pdf dentro do limite de cinco megabytes
+  // o tipo declarado e o tamanho limitam a seleção local; essa conferência não comprova a autenticidade nem substitui validação de conteúdo em servidor
   if ((arquivo.type !== "image/jpeg" && arquivo.type !== "image/png" && arquivo.type !== "image/webp" && arquivo.type !== "application/pdf") || arquivo.size > 5 * 1024 * 1024) {
     campo.value = "";
     statusDocumentos.textContent = "Escolha uma imagem ou PDF de até 5 MB.";
@@ -91,6 +94,7 @@ function apresentarPreviaDocumento(evento) {
   document.getElementById("remover-" + tipo).hidden = false;
   // pdf é identificado pelo nome e não recebe uma prévia de imagem
   if (arquivo.type !== "application/pdf") {
+    // createobjecturl cria um endereço temporário para ler o arquivo local sem enviá-lo à rede nem convertê-lo em texto
     const endereco = URL.createObjectURL(arquivo);
     const previa = document.getElementById("previa-" + tipo);
     previa.src = endereco;
@@ -113,6 +117,7 @@ async function lerDadosCadastro(arquivo, tipo) {
     // ignora respostas de arquivos removidos ou substituídos
     let atual = arquivoIdentificacaoAtual;
     if (tipo === "complementar") atual = arquivoComplementarAtual;
+    // a comparação usa a referência do objeto arquivo para descartar uma resposta antiga que terminou após outra seleção
     if (atual !== arquivo) return;
     // não interpreta textos de comprovantes como diagnóstico ou validação médica
     if (tipo === "complementar") {
@@ -223,6 +228,7 @@ if (arquivoIdentificacao) {
   document.getElementById("previa-identificacao").addEventListener("error", descartarImagemInvalida);
   document.getElementById("previa-complementar").addEventListener("error", descartarImagemInvalida);
   // descarta arquivos ao deixar a página, inclusive no histórico do navegador
+  // pagehide executa a limpeza quando a página deixa de ser exibida, inclusive em navegações que usam o cache do histórico
   window.addEventListener("pagehide", limparDocumentosCadastro);
 }
 
@@ -236,6 +242,7 @@ function abrirRevisaoDocumentoPerfil() {
   const modal = document.getElementById("modal-documento");
   // abre somente quando a janela ainda estiver fechada
   if (!modal.open) {
+    // o diálogo nativo assume a interação da página até ser fechado, mantendo a revisão concentrada na janela modal
     modal.showModal();
   }
   // recupera os dados salvos para facilitar a revisão sem alterar identidade

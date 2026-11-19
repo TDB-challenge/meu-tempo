@@ -59,6 +59,7 @@ function aplicarPreferenciasAcessibilidade() {
   document.body.classList.toggle("tema-escuro", preferencias.temaEscuro);
   document.body.classList.toggle("fonte-legivel", preferencias.fonteLegivel);
   // atualiza cada campo que representa uma preferência
+  // o seletor por atributo reúne os campos que declaram qual preferência alteram, sem depender de uma única página
   const controles = document.querySelectorAll("[data-preferencia]");
   for (let i = 0; i < controles.length; i++) {
     const chave = controles[i].getAttribute("data-preferencia");
@@ -66,6 +67,7 @@ function aplicarPreferenciasAcessibilidade() {
     else controles[i].checked = preferencias[chave] === true;
   }
   // atualiza os controles da página institucional de acessibilidade
+  // switch-toggle identifica os botões visuais; a classe ativo acompanha o estado anunciado por aria-pressed
   const botoes = document.querySelectorAll(".switch-toggle");
   for (let i = 0; i < botoes.length; i++) {
     let ativo = false;
@@ -87,6 +89,7 @@ function aplicarPreferenciasAcessibilidade() {
 
 // armazena somente as preferências visuais e de interação
 // preferencias representa as escolhas do modal, cadastro ou perfil
+// preferencias reúne as escolhas de exibição e avisos; o armazenamento local permite recuperá-las em visitas futuras nesta origem
 function salvarPreferenciasAcessibilidade(preferencias) {
   localStorage.setItem("meu-tempo-acessibilidade", JSON.stringify(preferencias));
   // retira chaves antigas para impedir que outro script aplique uma configuração divergente
@@ -118,6 +121,7 @@ function falarOrientacaoAcessivel(texto) {
   const preferencias = buscarPreferenciasAcessibilidade();
   if (preferencias.orientacoesVoz && "speechSynthesis" in window && "SpeechSynthesisUtterance" in window) {
     // devolve a mensagem preparada sem iniciar uma narração nesta etapa
+    // o objeto descreve uma fala para o sintetizador nativo; criá-lo não inicia áudio sem uma chamada de reprodução
     const fala = new SpeechSynthesisUtterance(texto);
     fala.lang = "pt-BR";
     return fala;
@@ -157,6 +161,7 @@ function conectarControlesAcessibilidade() {
 
 // cria um campo básico para o mesmo modal utilizado em todas as páginas
 // destino recebe o campo, titulo apresenta a escolha e chave identifica a preferência
+// destino é o contêiner do novo controle, titulo é seu rótulo e chave relaciona o campo à preferência salva
 function criarCampoAcessibilidade(destino, titulo, chave) {
   const rotulo = document.createElement("label");
   rotulo.className = "opcao-acessibilidade-global";
@@ -237,6 +242,7 @@ function iniciarAcessibilidadeGlobal() {
   modal.appendChild(restaurar);
   document.body.appendChild(modal);
   // abre e fecha a mesma janela por meio dos controles visíveis
+  // showmodal abre o diálogo nativo sobre a página e restringe a interação com o conteúdo ao fundo até seu fechamento
   botao.addEventListener("click", function () { modal.showModal(); });
   fechar.addEventListener("click", function () { modal.close(); });
   restaurar.addEventListener("click", function () { salvarPreferenciasAcessibilidade(preferenciasIniciaisAcessibilidade()); });
@@ -279,6 +285,7 @@ function prepararVLibrasGlobal() {
   // carrega apenas o plugin oficial, sem novas bibliotecas
   const plugin = document.createElement("script");
   plugin.src = "https://vlibras.gov.br/app/vlibras-plugin.js";
+  // load só é disparado depois que o script externo termina de carregar, quando seu objeto global pode ser utilizado
   plugin.addEventListener("load", function () {
     if (window.VLibras) new window.VLibras.Widget("https://vlibras.gov.br/app");
   });
@@ -314,6 +321,7 @@ iniciarAcessibilidadeGlobal();
 const controlesInstitucionais = document.querySelectorAll(".acao-aumentar, .acao-diminuir, .acao-contraste, .acao-tema, .acao-fonte-legivel, .acao-musical, .acao-voz, .acao-vibracao, #btn-resetar-acess");
 for (let i = 0; i < controlesInstitucionais.length; i++) controlesInstitucionais[i].addEventListener("click", alterarControleInstitucional);
 // aplica mudanças feitas em outra aba sem regravá-las
+// o evento de armazenamento sincroniza mudanças de acessibilidade realizadas em outras abas da mesma origem
 window.addEventListener("storage", function (event) { if (event.key === "meu-tempo-acessibilidade") aplicarPreferenciasAcessibilidade(); });
 
 
@@ -488,6 +496,7 @@ if (btnIaraNao && demoIaraMensagens) {
 // =====================================================
 const campoBuscaFaq = document.getElementById("busca-faq");
 const btnLimparFaq = document.getElementById("btn-limpar-faq");
+// faq-cat-btn identifica os filtros por categoria e faq-item identifica as perguntas avaliadas pela busca
 const botoesCategoriaFaq = document.querySelectorAll(".faq-cat-btn");
 const itensFaq = document.querySelectorAll(".faq-item");
 const contadorFaq = document.getElementById("contador-faq");
@@ -557,6 +566,7 @@ for (let i = 0; i < botoesCategoriaFaq.length; i++) {
 }
 
 // Abrir e fechar respostas ao clicar nas perguntas
+// faq-pergunta identifica os botões que expandem ou recolhem cada resposta e atualizam seu estado acessível
 const perguntasFaq = document.querySelectorAll(".faq-pergunta");
 
 for (let i = 0; i < perguntasFaq.length; i++) {
@@ -640,6 +650,7 @@ if (btnApagarPreferencias) {
 // =====================================================
 // os formulários do cidadão são controlados por autenticacao.js
 
+// btn-toggle-senha identifica os controles institucionais que mostram ou ocultam o campo de senha do mesmo grupo
 const botoesToggleSenha = document.querySelectorAll(".btn-toggle-senha");
 
 for (let i = 0; i < botoesToggleSenha.length; i++) {

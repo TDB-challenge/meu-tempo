@@ -252,6 +252,7 @@ const usuariosAdministrativos = [
 // =================================================================
 
 // função que recupera as solicitações cadastradas
+// as solicitações persistidas pertencem a esta origem do navegador e não são compartilhadas automaticamente entre dispositivos
 function buscarSolicitacoes() {
   // recupera os dados do navegador
   const dados = localStorage.getItem("admin-solicitacoes");
@@ -267,6 +268,7 @@ function buscarSolicitacoes() {
 }
 
 // função que salva a lista atualizada de solicitações
+// solicitacoes é a lista completa a persistir; a serialização json converte os objetos em texto aceito pelo armazenamento
 function salvarSolicitacoes(solicitacoes) {
   // transforma a lista em texto e salva no navegador
   localStorage.setItem("admin-solicitacoes", JSON.stringify(solicitacoes));
@@ -357,6 +359,7 @@ function buscarUsuariosAutorizados() {
 
 // recupera uma lista local e mantém o painel utilizável se o texto estiver inválido
 // chave identifica o registro que será consultado no navegador
+// a leitura aceita somente listas; interpretar json válido não garante por si só a validade de cada registro interno
 function lerListaOperacional(chave) {
   // recupera o conteúdo salvo
   const texto = localStorage.getItem(chave);
@@ -385,12 +388,14 @@ function lerListaOperacional(chave) {
 
 // cria horários iniciais anteriores ao momento de abrir a simulação
 // hora e minuto representam a posição do atendimento na sequência inicial
+// hora e minuto posicionam cada exemplo em relação ao horário de referência, mantendo a diferença entre os chamados
 function horarioInicialMetro(hora, minuto) {
   // prepara a data do exemplo
   const data = new Date();
   // calcula a diferença em minutos para manter a ordem dos exemplos
   const minutosAnteriores = 14 * 60 + 40 - (hora * 60 + minuto);
   data.setMinutes(data.getMinutes() - minutosAnteriores);
+  // tolocalestring formata a data e a hora segundo a convenção brasileira para apresentação na tela
   return data.toLocaleString("pt-BR");
 }
 
@@ -530,11 +535,13 @@ function buscarCidadaos() {
 
 // salva os dados informados na demonstração
 // cidadaos representa a lista de cadastros já conferida pelo formulário
+// cidadaos contém os cadastros locais; limpar os dados do site também pode remover essa lista
 function salvarCidadaos(cidadaos) {
   localStorage.setItem("meu-tempo-cidadaos", JSON.stringify(cidadaos));
 }
 
 // procura o cadastro relacionado à sessão do cidadão
+// o identificador da sessão é relacionado ao cadastro salvo; o navegador não consulta um serviço de autenticação externo
 function buscarCidadaoConectado() {
   // recupera a identificação da sessão sem misturar contas administrativas
   const texto = sessionStorage.getItem("cidadao-sessao");
@@ -608,6 +615,7 @@ function salvarPedidoCidadao(pedido) {
 
 // gera um número anual por serviço sem modificar protocolos já registrados
 // tipoServico identifica travessia, metro ou zeladoria
+// o contador é local e não possui uma reserva atômica entre abas; seus números servem à demonstração
 function gerarProtocoloPedido(tipoServico) {
   // relaciona o serviço à sigla apresentada ao cidadão
   let sigla = "ZU";
@@ -645,6 +653,7 @@ function gerarProtocoloPedido(tipoServico) {
 
 // consulta um ciclo que existe independentemente de qualquer solicitação
 // cruzamento identifica o local; numero permite consultar uma reserva futura
+// os horários são calculados no navegador para a simulação e não representam leitura de um controlador de trânsito real
 function consultarCicloTravessia(cruzamento, numero) {
   // procura o local no catálogo já utilizado pelo aplicativo
   let indice = -1;
@@ -705,6 +714,7 @@ function consultarCicloTravessia(cruzamento, numero) {
 
 // analisa uma solicitação e reserva a extensão no ciclo apropriado
 // cruzamento indica o local; adicional contém somente os segundos solicitados
+// adicional é medido em segundos; o retorno nulo sinaliza que a solicitação não pôde ser registrada pelas regras locais
 function registrarTravessiaSimulada(cruzamento, adicional) {
   // exige sessão e um valor inteiro dentro do limite acadêmico de quinze segundos
   const cidadao = buscarCidadaoConectado();
@@ -857,6 +867,7 @@ function buscarPedidosOperacionais() {
 }
 
 // reúne somente as solicitações do cidadão conectado
+// a seleção usa o cidadão da sessão atual para apresentar os pedidos associados ao seu cadastro demonstrativo
 function buscarPedidosCidadao() {
   // recupera a sessão e inicia a lista de resultados
   const cidadao = buscarCidadaoConectado();

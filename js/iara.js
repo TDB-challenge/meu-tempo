@@ -5,6 +5,7 @@
 // apresenta a limitação real sem inventar respostas de um serviço externo
 function prepararIara() {
   // seleciona o aviso já existente da conversa
+  // aviso-chat identifica a área textual que explica a indisponibilidade do serviço de conversa
   const aviso = document.getElementById('aviso-chat');
   // protege páginas sem a assistente
   if (!aviso) {
@@ -15,6 +16,7 @@ function prepararIara() {
   // impede coleta de mensagens enquanto não existir destino configurado
   document.getElementById('campo-mensagem').disabled = true;
   // mantém o formulário sem envio ou comunicação fictícia
+  // o envio do formulário é interceptado para impedir a navegação padrão enquanto o serviço está indisponível
   document.getElementById('formulario-chat').addEventListener('submit', function (evento) {
     evento.preventDefault();
   });
@@ -30,6 +32,7 @@ function prepararIara() {
     // data-destino identifica a página aberta pelo atalho
     botao.setAttribute('data-destino', paginas[i]);
     botao.addEventListener('click', function (evento) {
+      // currenttarget é o botão que recebeu o ouvinte, mesmo quando o clique começa em um ícone ou texto dentro dele
       window.location.href = evento.currentTarget.getAttribute('data-destino');
     });
   }
@@ -38,6 +41,7 @@ function prepararIara() {
   // guarda a escolha de voz sem inventar uma conexão com o serviço
   if (ouvir) {
     ouvir.disabled = false;
+    // aria-pressed comunica a preferência ativada aos leitores de tela; o atributo espera um valor textual
     ouvir.setAttribute('aria-pressed', String(buscarPreferenciasAcessibilidade().vozIara));
     ouvir.addEventListener('click', function () {
       // sincroniza a mesma preferência utilizada no cadastro e no perfil

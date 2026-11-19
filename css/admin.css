@@ -2,9 +2,9 @@
    ESTILOS DO AMBIENTE ADMINISTRATIVO (css/admin.css)
    ===================================================== */
 
-.admin-shell {
+.admin-shell {/* divide o painel entre a navegacao lateral e o conteudo operacional */
   display: grid;
-  grid-template-columns: 260px 1fr;
+  grid-template-columns: 260px 1fr;/* reserva 260 pixels para o menu e entrega o restante ao conteudo */
   min-height: 100vh;
 }
 
@@ -19,7 +19,7 @@
   gap: 28px;
 }
 
-.admin-logo {
+.admin-logo {/* alinha o simbolo da marca e os textos como um unico link */
   display: flex;
   align-items: center;
   gap: 10px;
@@ -36,13 +36,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
+  flex-shrink: 0;/* impede que este item seja comprimido pelos outros elementos da linha */
 }
 
 .admin-logo-circulo img.icone {
   width: 22px;
   height: 22px;
-  filter: brightness(0) invert(1);
+  filter: brightness(0) invert(1);/* converte os pixels visiveis do icone em branco */
 }
 
 .admin-logo-titulo {
@@ -61,7 +61,7 @@
 .admin-ambiente-label {
   font-size: 0.68rem;
   letter-spacing: 0.08em;
-  text-transform: uppercase;
+  text-transform: uppercase;/* mostra o texto em maiusculas sem alterar seu conteudo no html */
   opacity: 0.65;
   margin-bottom: 12px;
 }
@@ -77,20 +77,20 @@
   margin-bottom: 6px;
 }
 
-.admin-select-area {
+.admin-select-area {/* estiliza a escolha da area administrativa na barra lateral */
   width: 100%;
   padding: 10px 12px;
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.25);
   background-color: rgba(255, 255, 255, 0.08);
   color: #faf9f5;
-  font-family: inherit;
+  font-family: inherit;/* herda a familia de fonte do elemento que contem este controle */
   font-size: 0.85rem;
   font-weight: 600;
   cursor: pointer;
 }
 
-.admin-select-area option {
+.admin-select-area option {/* define cores proprias para as opcoes abertas do seletor */
   color: #183a2a;
   background-color: #faf9f5;
 }
@@ -101,7 +101,7 @@
   gap: 4px;
 }
 
-.admin-nav-item {
+.admin-nav-item {/* compartilha a aparencia dos itens da navegacao administrativa */
   width: 100%;
   display: flex;
   align-items: center;
@@ -111,7 +111,7 @@
   border-radius: 10px;
   background: transparent;
   color: rgba(250, 249, 245, 0.85);
-  font-family: inherit;
+  font-family: inherit;/* herda a familia de fonte do elemento que contem este controle */
   font-size: 0.88rem;
   font-weight: 500;
   text-align: left;
@@ -119,7 +119,7 @@
   transition: background-color 0.2s ease;
 }
 
-a.admin-nav-item {
+a.admin-nav-item {/* aplica esta regra somente aos links que tambem usam a classe do item */
   text-decoration: none;
 }
 
@@ -127,7 +127,7 @@ a.admin-nav-item {
   background-color: rgba(255, 255, 255, 0.1);
 }
 
-.admin-nav-item.ativo {
+.admin-nav-item.ativo {/* exige as duas classes no mesmo elemento para destacar a pagina atual */
   background-color: rgba(255, 255, 255, 0.18);
   color: #ffffff;
   font-weight: 700;
@@ -136,7 +136,7 @@ a.admin-nav-item {
 .admin-nav-item img.icone {
   width: 17px;
   height: 17px;
-  filter: brightness(0) invert(1);
+  filter: brightness(0) invert(1);/* converte os pixels visiveis do icone em branco */
   opacity: 0.9;
 }
 
@@ -176,9 +176,9 @@ a.admin-nav-item {
   background-color: var(--fundo-creme);
 }
 
-.admin-container {
+.admin-container {/* limita a largura interna e centraliza o conteudo no painel */
   max-width: 1120px;
-  margin: 0 auto;
+  margin: 0 auto;/* centraliza horizontalmente quando ha largura livre nas laterais */
   padding: 0 28px;
 }
 
@@ -198,11 +198,11 @@ a.admin-nav-item {
   gap: 14px;
 }
 
-.admin-breadcrumb {
+.admin-breadcrumb {/* identifica o caminho da area exibida acima do titulo da estacao */
   display: block;
   font-size: 0.7rem;
   letter-spacing: 0.06em;
-  text-transform: uppercase;
+  text-transform: uppercase;/* mostra o texto em maiusculas sem alterar seu conteudo no html */
   color: var(--texto-secundario);
 }
 
@@ -238,7 +238,7 @@ a.admin-nav-item {
   height: 19px;
 }
 
-.admin-operador-chip {
+.admin-operador-chip {/* agrupa o avatar e os dados de identificacao do operador */
   display: flex;
   align-items: center;
   gap: 10px;
@@ -269,7 +269,7 @@ a.admin-nav-item {
   height: 38px;
   min-width: 38px;
   min-height: 38px;
-  flex-shrink: 0;
+  flex-shrink: 0;/* impede que este item seja comprimido pelos outros elementos da linha */
   border-radius: 50%;
   background-color: #e5f1e7;
   border: 1.5px solid rgba(24, 58, 42, 0.28);
@@ -283,7 +283,7 @@ a.admin-nav-item {
   height: 18px;
   display: block;
   margin: 0;
-  object-fit: contain;
+  object-fit: contain;/* mostra a imagem inteira preservando suas proporcoes */
 }
 
 .admin-operador-chip strong {
@@ -293,7 +293,7 @@ a.admin-nav-item {
   color: var(--texto-principal);
 }
 
-.admin-operador-chip > div span {
+.admin-operador-chip > div span {/* seleciona os textos dentro de divs que sao filhas diretas do chip */
   display: block;
   font-size: 0.74rem;
   color: var(--texto-secundario);
@@ -305,12 +305,12 @@ a.admin-nav-item {
   width: 100%;
 }
 
-.admin-cabecalho-secao {
+.admin-cabecalho-secao {/* permite que titulo e status ocupem linhas diferentes quando faltar espaco */
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
   gap: 16px;
-  flex-wrap: wrap;
+  flex-wrap: wrap;/* permite continuar os elementos na linha seguinte quando faltar largura */
   margin-bottom: 28px;
 }
 
@@ -338,9 +338,9 @@ a.admin-nav-item {
 }
 
 /* Grade de 4 KPIs */
-.admin-kpis-grid {
+.admin-kpis-grid {/* distribui os quatro indicadores em colunas de mesma largura */
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, 1fr);/* cria quatro colunas iguais na largura disponivel */
   gap: 20px;
   margin-bottom: 28px;
 }
@@ -374,7 +374,7 @@ a.admin-nav-item {
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  flex-wrap: wrap;
+  flex-wrap: wrap;/* permite continuar os elementos na linha seguinte quando faltar largura */
   padding-bottom: 22px;
   border-bottom: 1px solid var(--borda);
   margin-bottom: 22px;
@@ -397,7 +397,7 @@ a.admin-nav-item {
   gap: 20px;
 }
 
-.admin-chamado-item + .admin-chamado-item {
+.admin-chamado-item + .admin-chamado-item {/* o sinal de mais seleciona apenas um chamado que vem logo depois de outro */
   padding-top: 20px;
   border-top: 1px solid var(--borda);
 }
@@ -413,7 +413,7 @@ a.admin-nav-item {
   margin-bottom: 8px;
 }
 
-.admin-status-pill {
+.admin-status-pill {/* padroniza a etiqueta que resume o estado de cada chamado */
   padding: 6px 14px;
   border-radius: 8px;
   background-color: var(--verde-claro);
@@ -506,9 +506,9 @@ a.admin-nav-item {
   color: var(--texto-secundario);
 }
 
-.cet-ciclo-grid {
+.cet-ciclo-grid {/* organiza as tres informacoes do ciclo semaforico em colunas */
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, 1fr);/* cria tres colunas de mesma largura */
   gap: 16px;
   background-color: var(--fundo-creme);
   border: 1px solid var(--borda);
@@ -543,7 +543,7 @@ a.admin-nav-item {
   margin-bottom: 24px;
 }
 
-.cet-barra-linha {
+.cet-barra-linha {/* reserva uma coluna para o nome, outra flexivel para a barra e outra para o valor */
   display: grid;
   grid-template-columns: 96px 1fr 28px;
   align-items: center;
@@ -556,14 +556,14 @@ a.admin-nav-item {
   color: var(--texto-principal);
 }
 
-.cet-barra-trilha {
+.cet-barra-trilha {/* recorta o preenchimento para respeitar os cantos da trilha */
   height: 22px;
   background-color: #eef1ec;
   border-radius: 6px;
-  overflow: hidden;
+  overflow: hidden;/* recorta o conteudo que ultrapassa os limites desta caixa */
 }
 
-.cet-barra-preenchimento {
+.cet-barra-preenchimento {/* a altura acompanha a trilha; a largura do preenchimento representa o indicador */
   height: 100%;
   background-color: var(--verde-floresta);
   border-radius: 6px;
@@ -574,7 +574,7 @@ a.admin-nav-item {
   text-align: right;
 }
 
-.cet-dados-texto summary {
+.cet-dados-texto summary {/* o resumo e o controle nativo que abre os dados textuais dos indicadores */
   font-size: 0.86rem;
   font-weight: 700;
   color: var(--texto-principal);
@@ -608,7 +608,7 @@ a.admin-nav-item {
   border-bottom: 1px solid var(--borda);
 }
 
-.cet-timeline li:last-child {
+.cet-timeline li:last-child {/* retira o divisor apenas do ultimo evento da lista */
   border-bottom: none;
   padding-bottom: 0;
 }
@@ -622,7 +622,7 @@ a.admin-nav-item {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  position: relative;
+  position: relative;/* mantem o espaco no fluxo e serve de referencia aos filhos absolutos */
   z-index: 1;
 }
 
@@ -645,14 +645,14 @@ a.admin-nav-item {
 
 /* Linha vertical conectando os círculos no pop-up de Últimas atualizações */
 .cet-timeline-conectada li {
-  position: relative;
+  position: relative;/* mantem o espaco no fluxo e serve de referencia aos filhos absolutos */
   border-bottom: none;
   padding-bottom: 4px;
 }
 
-.cet-timeline-conectada li:not(:last-child)::before {
+.cet-timeline-conectada li:not(:last-child)::before {/* cria a ligacao visual antes de cada evento, exceto o ultimo */
   content: "";
-  position: absolute;
+  position: absolute;/* posiciona pela referencia ancestral sem reservar espaco no fluxo normal */
   left: 13px;
   top: 28px;
   bottom: -18px;
@@ -699,13 +699,13 @@ a.admin-nav-item {
 /* =====================================================
    JANELAS POP-UP DO TOPBAR (MODAIS)
    ===================================================== */
-.admin-modal-overlay[hidden] {
+.admin-modal-overlay[hidden] {/* mantem o modal oculto enquanto o atributo hidden estiver presente */
   display: none;
 }
 
-.admin-modal-overlay {
-  position: fixed;
-  inset: 0;
+.admin-modal-overlay {/* cobre a tela e centraliza a janela sobre o conteudo administrativo */
+  position: fixed;/* mantem o elemento ancorado na tela durante a rolagem */
+  inset: 0;/* encosta as quatro bordas no bloco usado como referencia */
   z-index: 999;
   background-color: rgba(20, 32, 25, 0.55);
   display: flex;
@@ -714,13 +714,13 @@ a.admin-nav-item {
   padding: 20px;
 }
 
-.admin-modal-caixa {
+.admin-modal-caixa {/* limita a janela e permite rolagem interna quando o conteudo ficar alto */
   background-color: #f7f6f0;
   color: #183a2a;
   width: 100%;
   max-width: 520px;
   max-height: 88vh;
-  overflow-y: auto;
+  overflow-y: auto;/* oferece rolagem vertical quando o conteudo ultrapassa a altura disponivel */
   border-radius: 18px;
   border: 1px solid #dcdad0;
   box-shadow: 0 24px 50px rgba(0, 0, 0, 0.28);
@@ -733,7 +733,7 @@ body.tema-escuro .admin-modal-caixa {
   border-color: #34443b;
 }
 
-body.alto-contraste .admin-modal-caixa {
+body.alto-contraste .admin-modal-caixa {/* a classe do corpo aplica o alto contraste especificamente a janela */
   background-color: #000000;
   color: #ffffff;
   border: 2px solid #ffff00;
@@ -850,7 +850,7 @@ body.alto-contraste .admin-modal-caixa {
 }
 
 /* Interruptor estilo pill */
-.admin-switch {
+.admin-switch {/* define a area de referencia do interruptor personalizado */
   position: relative;
   display: inline-block;
   width: 46px;
@@ -858,21 +858,21 @@ body.alto-contraste .admin-modal-caixa {
   flex-shrink: 0;
 }
 
-.admin-switch input {
+.admin-switch input {/* oculta a aparencia do campo usado para guardar o estado do interruptor */
   opacity: 0;
   width: 0;
   height: 0;
 }
 
 .admin-switch-trilho {
-  position: absolute;
-  inset: 0;
+  position: absolute;/* posiciona pela referencia ancestral sem reservar espaco no fluxo normal */
+  inset: 0;/* encosta as quatro bordas no bloco usado como referencia */
   background-color: #9aa29b;
   border-radius: 999px;
   transition: background-color 0.2s ease;
 }
 
-.admin-switch-trilho::before {
+.admin-switch-trilho::before {/* desenha a bolinha do interruptor sem acrescentar um elemento no html */
   content: "";
   position: absolute;
   width: 20px;
@@ -884,11 +884,11 @@ body.alto-contraste .admin-modal-caixa {
   transition: transform 0.2s ease;
 }
 
-.admin-switch input:checked + .admin-switch-trilho {
+.admin-switch input:checked + .admin-switch-trilho {/* o irmao imediatamente depois do campo muda de cor quando ele esta marcado */
   background-color: var(--verde-floresta);
 }
 
-.admin-switch input:checked + .admin-switch-trilho::before {
+.admin-switch input:checked + .admin-switch-trilho::before {/* desloca a bolinha do trilho quando a opcao esta ativada */
   transform: translateX(20px);
 }
 
@@ -898,7 +898,7 @@ body.alto-contraste .admin-modal-caixa {
   background-color: #ffffff;
   border: 1px solid var(--borda);
   border-radius: 12px;
-  overflow: hidden;
+  overflow: hidden;/* recorta o conteudo que ultrapassa os limites desta caixa */
 }
 
 .admin-modal-mais-btn {
@@ -937,7 +937,7 @@ body.alto-contraste .admin-modal-caixa {
   transition: transform 0.2s ease;
 }
 
-.admin-modal-mais-btn[aria-expanded="true"] .admin-modal-seta {
+.admin-modal-mais-btn[aria-expanded="true"] .admin-modal-seta {/* gira a seta conforme o estado de expansao informado pelo atributo acessivel */
   transform: rotate(90deg);
 }
 
@@ -959,32 +959,32 @@ body.alto-contraste .admin-modal-caixa {
 }
 
 /* Responsividade */
-@media (max-width: 980px) {
+@media (max-width: 980px) {/* estas regras passam a valer quando a largura da tela e de ate 980 pixels */
   .admin-shell {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr;/* empilha os elementos em uma unica coluna */
   }
 
   .admin-sidebar {
     display: none;
   }
 
-  .admin-sidebar.aberto {
+  .admin-sidebar.aberto {/* a classe aberto permite exibir a barra lateral recolhida nesta largura */
     display: flex;
   }
 
   .admin-kpis-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr);/* distribui os elementos em duas colunas iguais */
   }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 720px) {/* empilha os dados do ciclo em telas de ate 720 pixels */
   .cet-ciclo-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr;/* empilha os elementos em uma unica coluna */
     gap: 10px;
   }
 }
 
-@media (max-width: 560px) {
+@media (max-width: 560px) {/* reduz as grades e os recuos nas telas menores */
   .admin-kpis-grid {
     grid-template-columns: 1fr;
   }
@@ -1004,7 +1004,7 @@ body.alto-contraste .admin-modal-caixa {
    OTIMIZAÇÃO DO MODO ESCURO NO PAINEL (body.tema-escuro)
    ===================================================== */
 
-body.tema-escuro .admin-sidebar {
+body.tema-escuro .admin-sidebar {/* as regras com tema-escuro dependem dessa classe no corpo da pagina */
   background-color: #101b15;
   border-right: 1px solid #24362c;
 }
@@ -1125,7 +1125,7 @@ body.tema-escuro .cet-perfil-avatar {
   border-color: #395747;
 }
 
-body.tema-escuro .cet-timeline-conectada li:not(:last-child)::before {
+body.tema-escuro .cet-timeline-conectada li:not(:last-child)::before {/* adapta ao tema escuro a linha decorativa que conecta os eventos */
   background-color: #2c3e34;
 }
 
@@ -1171,9 +1171,9 @@ body.tema-escuro .admin-switch input:checked + .admin-switch-trilho {
 /* =====================================================
    COMPONENTES DA COORDENAÇÃO (coordenacao.html)
    ===================================================== */
-.coord-filtros-grid {
+.coord-filtros-grid {/* organiza os quatro filtros usados para consultar as solicitacoes */
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, 1fr);/* cria quatro colunas iguais na largura disponivel */
   gap: 16px;
   margin-bottom: 18px;
 }
@@ -1201,21 +1201,21 @@ body.tema-escuro .admin-switch input:checked + .admin-switch-trilho {
   margin-bottom: 14px;
 }
 
-.coord-tabela-wrapper {
+.coord-tabela-wrapper {/* permite rolar a tabela horizontalmente quando as colunas nao couberem */
   width: 100%;
-  overflow-x: auto;
+  overflow-x: auto;/* oferece rolagem horizontal apenas quando o conteudo ultrapassa a largura */
   border: 1px solid var(--borda);
   border-radius: 12px;
 }
 
-.coord-tabela {
+.coord-tabela {/* padroniza a tabela de acompanhamento da coordenacao */
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: collapse;/* une as bordas de celulas vizinhas na tabela */
   text-align: left;
   font-size: 0.9rem;
 }
 
-.coord-tabela thead th {
+.coord-tabela thead th {/* atinge as celulas de titulo do cabecalho da tabela */
   padding: 14px 18px;
   background-color: #f7f6f0;
   border-bottom: 1px solid var(--borda);
@@ -1224,20 +1224,20 @@ body.tema-escuro .admin-switch input:checked + .admin-switch-trilho {
   color: var(--texto-secundario);
 }
 
-.coord-tabela tbody td {
+.coord-tabela tbody td {/* atinge as celulas de dados do corpo da tabela */
   padding: 16px 18px;
   border-bottom: 1px solid var(--borda);
   vertical-align: middle;
 }
 
-.coord-tabela tbody tr:last-child td {
+.coord-tabela tbody tr:last-child td {/* retira o divisor inferior das celulas da ultima linha */
   border-bottom: none;
 }
 
-.coord-td-proto {
+.coord-td-proto {/* mantem a identificacao do protocolo inteira na mesma linha */
   font-weight: 700;
   color: var(--texto-principal);
-  white-space: nowrap;
+  white-space: nowrap;/* mantem o texto na mesma linha */
 }
 
 .coord-tabela tbody td strong {
@@ -1251,7 +1251,7 @@ body.tema-escuro .admin-switch input:checked + .admin-switch-trilho {
   color: var(--texto-secundario);
 }
 
-.coord-estado-vazio {
+.coord-estado-vazio {/* apresenta a mensagem exibida quando nao ha itens na consulta */
   padding: 40px 20px;
   text-align: center;
   border: 1px solid var(--borda);
@@ -1280,7 +1280,7 @@ body.tema-escuro .admin-switch input:checked + .admin-switch-trilho {
   flex-wrap: wrap;
 }
 
-.coord-estacao-linha + .coord-estacao-linha {
+.coord-estacao-linha + .coord-estacao-linha {/* adiciona um divisor somente entre estacoes consecutivas */
   padding-top: 20px;
   border-top: 1px solid var(--borda);
 }
@@ -1327,15 +1327,15 @@ body.tema-escuro .admin-switch input:checked + .admin-switch-trilho {
 }
 
 /* Toast flutuante inferior */
-.admin-toast[hidden] {
+.admin-toast[hidden] {/* impede que a mensagem flutuante apareca enquanto estiver marcada como oculta */
   display: none;
 }
 
-.admin-toast {
-  position: fixed;
+.admin-toast {/* fixa o aviso temporario junto da base da tela */
+  position: fixed;/* mantem o elemento ancorado na tela durante a rolagem */
   bottom: 28px;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-50%);/* compensa metade da propria largura para centralizar pela posicao horizontal */
   z-index: 1000;
   background-color: #18231c;
   color: #ffffff;
@@ -1381,13 +1381,13 @@ body.tema-escuro .coord-estacao-icone img.icone {
 }
 
 /* Estilos para impressão do relatório */
-@media print {
+@media print {/* aplica somente na impressao ou na visualizacao de impressao do relatorio */
   .admin-sidebar,
   .admin-topbar,
   .admin-badge-status,
   .admin-chamado-acoes,
   .admin-rodape,
-  [vw] {
+  [vw] {/* o seletor por atributo tambem inclui o recurso flutuante de libras na ocultacao */
     display: none !important;
   }
 
@@ -1401,13 +1401,13 @@ body.tema-escuro .coord-estacao-icone img.icone {
   }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 900px) {/* reduz os filtros para duas colunas em larguras intermediarias */
   .coord-filtros-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr);/* distribui os elementos em duas colunas iguais */
   }
 }
 
-@media (max-width: 560px) {
+@media (max-width: 560px) {/* coloca cada filtro em uma linha nas telas estreitas */
   .coord-filtros-grid {
     grid-template-columns: 1fr;
   }
@@ -1425,7 +1425,7 @@ body.tema-escuro .coord-estacao-icone img.icone {
 
 /* esconde os elementos que possuem o atributo hidden */
 .cadastro-administrativo [hidden],
-.login-administrativo [hidden] {
+.login-administrativo [hidden] {/* preserva a ocultacao dos elementos condicionais do login administrativo */
   display: none !important; /* mantém o elemento escondido */
 }
 
@@ -1606,12 +1606,12 @@ body.tema-escuro .coord-estacao-icone img.icone {
 }
 
 /* campo com erro de preenchimento */
-.campo-cadastro [aria-invalid="true"] {
+.campo-cadastro [aria-invalid="true"] {/* destaca o campo cujo atributo acessivel informa um valor invalido */
   border-color: #a64235; /* borda vermelha */
 }
 
 /* campo com erro selecionado */
-.campo-cadastro [aria-invalid="true"]:focus {
+.campo-cadastro [aria-invalid="true"]:focus {/* combina o estado invalido com o foco para manter a sinalizacao do erro */
   outline-color: #a64235; /* contorno vermelho */
 }
 
@@ -1655,7 +1655,7 @@ body.tema-escuro .coord-estacao-icone img.icone {
 }
 
 /* botão quando a senha estiver visível */
-.botao-visualizar-senha[aria-pressed="true"] {
+.botao-visualizar-senha[aria-pressed="true"] {/* relaciona a aparencia do botao ao estado pressionado informado no html */
   background-color: #e8eee4; /* indica que está ativo */
 }
 
@@ -2169,7 +2169,7 @@ body.tema-escuro .coord-estacao-icone img.icone {
 /* RESPONSIVIDADE INICIAL ========================================== */
 
 /* estilos para tablets e celulares */
-@media (max-width: 860px) {
+@media (max-width: 860px) {/* reorganiza a apresentacao e o formulario a partir desta largura */
   /* transforma as duas colunas em uma */
   .cadastro-administrativo .cadastro-layout,
   .login-administrativo .cadastro-layout {
@@ -2199,7 +2199,7 @@ body.tema-escuro .coord-estacao-icone img.icone {
 /* MODAL DE RECUPERAÇÃO DE SENHA ================================== */
 
 /* janela de recuperação de acesso */
-.modal-recuperacao {
+.modal-recuperacao {/* estiliza o dialogo nativo usado na recuperacao de acesso */
   width: 90%; /* largura da janela */
   max-width: 450px; /* largura máxima */
   background-color: white; /* fundo branco */
@@ -2212,7 +2212,7 @@ body.tema-escuro .coord-estacao-icone img.icone {
 }
 
 /* fundo atrás da janela */
-.modal-recuperacao::backdrop {
+.modal-recuperacao::backdrop {/* personaliza o fundo externo que o navegador cria ao abrir o dialogo modal */
   background-color: rgba(0, 0, 0, 0.5); /* escurece o fundo */
 }
 
@@ -2515,7 +2515,7 @@ body.tema-escuro .coord-estacao-icone img.icone {
 
 /* exibe o painel quando ele é aberto pelo javascript */
 .cadastro-administrativo .painel-acessibilidade,
-.login-administrativo .painel-acessibilidade {
+.login-administrativo .painel-acessibilidade {/* restringe este ajuste do painel de acessibilidade ao login administrativo */
   display: block; /* mostra o painel */
 }
 
@@ -2548,7 +2548,7 @@ body.tema-escuro .coord-estacao-icone img.icone {
 }
 
 /* mantém as seções escondidas */
-.pagina-metro .admin-aba-painel[hidden] {
+.pagina-metro .admin-aba-painel[hidden] {/* respeita a ocultacao das abas que nao estao selecionadas no painel do metro */
     display: none; /* esconde a seção */
 }
 
@@ -2629,7 +2629,7 @@ body.tema-escuro .coord-estacao-icone img.icone {
    PADRONIZAÇÃO DOS PAINÉIS ADMINISTRATIVOS
    ========================================================= */
 
-.pagina-admin .admin-conteudo-coluna {
+.pagina-admin .admin-conteudo-coluna {/* estas regras mais especificas ajustam os componentes dentro da pagina administrativa */
   min-width: 0; /* permite que o conteúdo caiba na coluna */
 }
 
@@ -2734,7 +2734,7 @@ body.tema-escuro .coord-estacao-icone img.icone {
   list-style: none; /* apresenta os registros como cartões simples */
 }
 
-.pagina-admin #btn-admin-menu-mobile {
+.pagina-admin #btn-admin-menu-mobile {/* identifica o botao do menu administrativo pelo seu id */
   display: none; /* mantém a navegação disponível sem abrir outro menu */
 }
 
@@ -2742,7 +2742,7 @@ body.tema-escuro .coord-estacao-icone img.icone {
    NAVEGAÇÃO HORIZONTAL EM TELAS MENORES
    ========================================================= */
 
-@media (max-width: 980px) {
+@media (max-width: 980px) {/* estas regras posteriores ajustam a navegacao administrativa nas telas menores */
   .pagina-admin .admin-shell {
     grid-template-columns: 1fr; /* organiza o painel em uma coluna */
   }
@@ -2825,7 +2825,7 @@ body.tema-escuro .coord-estacao-icone img.icone {
    ACOMPANHAMENTO E CONFIRMAÇÃO DAS AÇÕES
    ========================================================= */
 
-.pagina-admin [hidden] {
+.pagina-admin [hidden] {/* reforca a ocultacao por atributo dentro da pagina administrativa */
   display: none !important; /* preserva o fechamento de formulários e janelas */
 }
 
@@ -2868,7 +2868,7 @@ body.tema-escuro .coord-estacao-icone img.icone {
 
 /* mantém as variáveis antigas alinhadas à paleta compartilhada */
 body.tema-escuro,
-body.alto-contraste {
+body.alto-contraste {/* esta regra agrupada compartilha a variavel de fundo entre o tema escuro e o alto contraste */
   --fundo-creme: var(--creme); /* acompanha o fundo definido pelo tema */
 }
 
@@ -2922,7 +2922,7 @@ body.alto-contraste .admin-nav-item.ativo {
 }
 
 /* permite ampliar as letras dos indicadores sem alargar a grade */
-.pagina-admin .admin-kpi-card {
+.pagina-admin .admin-kpi-card {/* permite que os cartoes de indicadores encolham e acomodem os textos ampliados */
   min-width: 0; /* permite que o cartão acompanhe sua coluna */
   overflow-wrap: anywhere; /* mantém os títulos ampliados dentro do cartão */
 }

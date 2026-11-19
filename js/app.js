@@ -1,3 +1,21 @@
+/*
+  funcionamento deste arquivo:
+  dados.js fornece cadastros, sessões e pedidos; script.js compartilha as preferências.
+  este arquivo conecta esses dados aos controles das páginas do aplicativo.
+  cada função de preparação verifica se seu formulário existe antes de executar.
+  assim, o mesmo arquivo pode ser importado em várias páginas sem exigir todos os ids.
+
+  leitura dos seletores utilizados:
+  getelementbyid procura um id único, como formulario-perfil ou formulario-travessia.
+  queryselector encontra a primeira opção; queryselectorall reúne todas as opções.
+  seletores com :checked procuram apenas os campos marcados pelo cidadão.
+  atributos data-* guardam identificadores nos elementos, sem apresentar esses valores na tela.
+
+  os dados digitados são apresentados com textcontent, que não interpreta texto como html.
+  criar elementos com createelement e reuni-los com appendchild preserva essa separação.
+  as classes dos cartões e das etapas reaproveitam o visual definido em app.css.
+*/
+
 // =================================================================
 // SESSÃO E PERFIL
 // =================================================================
@@ -60,9 +78,11 @@ function iniciarApp() {
   }
   // revalida a sessão quando o navegador restaura uma tela após o logout
   window.addEventListener('pageshow', function (evento) {
+    // persisted distingue uma tela recuperada do histórico de uma abertura normal
     if (evento.persisted && buscarCidadaoConectado() === null) window.location.replace('../login.html');
   });
   prepararPerfil();
+  // os próximos preparadores também retornam sem agir quando seu formulário não existe
   prepararMetro();
   prepararZeladoria();
   prepararTravessia();
@@ -80,6 +100,7 @@ function prepararPerfil() {
   document.getElementById('nome-completo').value = cidadaoApp.nome;
   document.getElementById('data-nascimento').value = cidadaoApp.nascimento;
   document.getElementById('telefone-perfil').value = cidadaoApp.telefone || '';
+  // o operador || utiliza um campo vazio quando um cadastro antigo não possui a informação
   document.getElementById('municipio-perfil').value = cidadaoApp.municipio || '';
   document.getElementById('bairro-perfil').value = cidadaoApp.bairro || '';
   // recupera identidade, contato e localização sem liberar edição documental
@@ -155,6 +176,7 @@ function estadoDocumento(documento) {
 function escolhasPerfil(nome, anteriores) {
   // seleciona os controles do grupo
   const controles = document.querySelectorAll('input[name="' + nome + '"]');
+  // name identifica um grupo de escolhas; cada valor marcado continua sendo independente
   // reúne as escolhas que serão armazenadas
   const valores = [];
   // preserva escolhas anteriores que não aparecem neste formulário
@@ -559,6 +581,7 @@ function mostrarTelaTravessia(contagem) {
   const formulario = document.getElementById('formulario-travessia');
   const resultado = document.getElementById('resultado-travessia');
   const primeiraAbertura = contagem && !formulario.hidden;
+  // hidden oculta a área inteira, incluindo seus controles na navegação por teclado
   formulario.hidden = contagem;
   document.getElementById('apresentacao-travessia').hidden = contagem;
   resultado.hidden = !contagem;
@@ -567,6 +590,7 @@ function mostrarTelaTravessia(contagem) {
   if (contagem) destino = document.getElementById('ajustes-contagem');
   const ajustes = document.getElementById('ajustes-travessia');
   if (ajustes.parentElement !== destino) destino.appendChild(ajustes);
+  // appendchild move o mesmo elemento; os eventos de som e vibração continuam conectados
   // direciona o foco uma única vez, sem interromper a navegação a cada segundo
   if (primeiraAbertura) {
     ajustes.open = false;
@@ -587,6 +611,7 @@ function formatarTempoTravessia(segundos) {
 
 // calcula o tempo pelo instante final salvo
 function atualizarContagemApp() {
+  // o prazo salvo é a referência: o intervalo apenas redesenha a tela, não soma segundos
   // consulta o ciclo automático mesmo enquanto a tela mostra a escolha do local
   const selecionado = document.querySelector('input[name="cruzamento"]:checked');
   if (!selecionado) return;
@@ -595,6 +620,7 @@ function atualizarContagemApp() {
   if (!pedidoTravessia) return;
   // recupera o mesmo protocolo com as etapas conciliadas, inclusive após recarregar
   const pedidos = buscarPedidosOperacionais();
+  // o protocolo identifica o pedido original e evita criar outro registro ao atualizar
   for (let i = 0; i < pedidos.length; i++) {
     if (pedidos[i].protocolo === pedidoTravessia.protocolo) pedidoTravessia = pedidos[i];
   }
@@ -627,9 +653,11 @@ function atualizarContagemApp() {
   }
   // evita anunciar o mesmo título novamente a cada atualização da contagem
   if (document.getElementById('titulo-resultado-travessia').textContent !== titulo) textoApp('titulo-resultado-travessia', titulo);
+  // aria-live do título anuncia a fase; o número muda em uma área sem anúncios por segundo
   textoApp('orientacao-contagem', orientacao);
   textoApp('contagem-travessia', formatarTempoTravessia((fim - Date.now()) / 1000));
   document.getElementById('resultado-travessia').setAttribute('data-fase', fase);
+  // data-fase seleciona no css as cores de espera, travessia, atenção e encerramento
   // mantém protocolo, valores e etapas nos detalhes recolhidos do pedido
   textoApp('dados-travessia', pedidoTravessia.protocolo + ' · Adicional solicitado: ' + (pedidoTravessia.tempoAdicionalSolicitado || 0) + ' s.');
   textoApp('estado-pedido-travessia', 'Tempo total: ' + (pedidoTravessia.tempoTotalSimulado || 28) + ' s. Adicional concedido: ' + (pedidoTravessia.tempoAdicionalConcedido || 0) + ' s.');
@@ -707,6 +735,7 @@ function pararSonsTravessia() {
   // percorre os dois sons conhecidos sem carregar recursos externos
   const nomes = ['travessia', 'encerramento'];
   for (let i = 0; i < nomes.length; i++) {
+    // verifica a existência porque nem todas as páginas carregam os arquivos de áudio
     if (sonsTravessia[nomes[i]]) {
       sonsTravessia[nomes[i]].pause();
       sonsTravessia[nomes[i]].currentTime = 0;
@@ -728,6 +757,7 @@ function tocarSomTravessia(nome, repetir) {
   som.loop = repetir;
   // mantém as outras funções operando quando o navegador bloquear o áudio
   som.play().catch(function () {
+    // play devolve uma promessa; catch recebe uma recusa do navegador ao iniciar o som
     textoApp('aviso-travessia', 'O navegador bloqueou o som. Utilize Testar som para autorizar a reprodução.');
   });
 }
@@ -762,6 +792,7 @@ function atualizarAvisosTravessia() {
     pararSonsTravessia();
     return;
   }
+  // sem pedido, o botão de teste continua disponível; um pedido encerrado interrompe os sons
   if (!pedidoTravessia) return;
   if (pedidoTravessia.simulacaoEncerrada) {
     pararSonsTravessia();
@@ -796,6 +827,7 @@ function atualizarAvisosTravessia() {
   const posicao = Math.max(0, (agora - inicio) / 1000) * audio.duration / duracaoTrecho;
   if (ritmoTravessia !== ritmo || audio.paused || audio.loop) tocarSomTravessia(ritmo, false);
   audio.playbackRate = audio.duration / duracaoTrecho;
+  // playbackrate maior que um acelera; menor que um desacelera, usando o mesmo mp3
   // ao recarregar ou voltar à aba, recupera o ponto correspondente à contagem
   if (Math.abs(audio.currentTime - posicao) > 0.3) audio.currentTime = Math.min(posicao, audio.duration);
   // programa a mudança de fase pelo relógio salvo, além da atualização visual por segundo
@@ -871,10 +903,12 @@ function apresentarPedidosApp(filtro) {
   const lista = document.getElementById('lista-solicitacoes');
   // preserva o acompanhamento aberto e o foco durante atualizações de situação
   const abertos = lista.querySelectorAll('.card-solicitacao[open]');
+  // .card-solicitacao[open] combina a classe visual com o atributo de cartão expandido
   const protocolosAbertos = [];
   for (let i = 0; i < abertos.length; i++) protocolosAbertos.push(abertos[i].getAttribute('data-protocolo'));
   // identifica somente o foco que pertence à lista, mantendo os filtros independentes
   const focoAnterior = document.activeElement.closest('.card-solicitacao');
+  // closest sobe pelos elementos para localizar o cartão que contém o controle em foco
   let protocoloFoco = '';
   if (focoAnterior && lista.contains(focoAnterior)) protocoloFoco = focoAnterior.getAttribute('data-protocolo');
   lista.textContent = '';
@@ -904,6 +938,7 @@ function apresentarPedidosApp(filtro) {
         if (protocolosAbertos[j] === pedido.protocolo) cartao.open = true;
       }
       const resumo = document.createElement('summary');
+      // summary é o controle nativo que abre e fecha o cartão details pelo mouse ou teclado
       resumo.setAttribute('aria-expanded', 'false');
       resumo.setAttribute('aria-label', 'Ver acompanhamento: ' + nomeServico + ', ' + pedido.protocolo);
       cartao.appendChild(resumo);
@@ -936,6 +971,7 @@ function apresentarPedidosApp(filtro) {
       resumo.appendChild(informacoes);
       // mantém a etiqueta de situação com a aparência dos cartões originais
       const situacao = document.createElement('span');
+      // status-andamento e status-finalizada mudam apenas a apresentação da etiqueta
       situacao.className = 'status-solicitacao status-andamento';
       if (finalizado) situacao.className = 'status-solicitacao status-finalizada';
       situacao.textContent = pedido.situacao;
@@ -947,6 +983,7 @@ function apresentarPedidosApp(filtro) {
       resumo.appendChild(seta);
       // agrupa os detalhes dentro da área recolhida que já possui espaçamento
       const historico = document.createElement('div');
+      // historico-solicitacao agrupa os detalhes; linha-tempo organiza as etapas abaixo
       historico.className = 'historico-solicitacao';
       const detalhes = document.createElement('p');
       detalhes.className = 'protocolo-solicitacao';
@@ -988,6 +1025,7 @@ function apresentarPedidosApp(filtro) {
       cartao.appendChild(historico);
       // informa a expansão e o recolhimento também para tecnologias assistivas
       cartao.addEventListener('toggle', function (evento) {
+        // currenttarget é o cartão que recebeu o evento, mesmo se o clique veio de um filho
         evento.currentTarget.querySelector('summary').setAttribute('aria-expanded', String(evento.currentTarget.open));
       });
       lista.appendChild(cartao);
