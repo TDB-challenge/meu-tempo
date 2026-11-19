@@ -3025,3 +3025,28 @@ CSS
     grid-template-columns: repeat(2, 1fr); /* mantém os quatro passos legíveis no celular */
   }
 }
+/* permite que o formulário acompanhe a largura disponível em telas pequenas */
+.cadastro-layout > div {
+  min-width: 0; /* evita que o conteúdo force a largura das colunas */
+}
+
+/* mantém os seletores de arquivo dentro do cartão de cadastro */
+.cadastro-qrcode-box input[type="file"] {
+  max-width: 100%; /* limita o controle nativo à largura do formulário */
+}
+
+/* permite ampliar os textos sem alargar a página no celular */
+@media (max-width: 600px) {
+  .container {
+    overflow-wrap: anywhere; /* quebra palavras longas somente quando necessário */
+  }
+  .grid-2 > div,
+  .cabecalho-secao > div,
+  .chat-cabecalho > div {
+    min-width: 0; /* permite reduzir os filhos das grades e linhas flexíveis */
+    max-width: 100%; /* mantém os blocos dentro da largura disponível */
+  }
+  .etiqueta {
+    max-width: 100%; /* permite acomodar a etiqueta com fonte ampliada */
+  }
+}
