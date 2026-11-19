@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="../../css/style.css">
     <link rel="stylesheet" href="../../css/admin.css" />
     <script src="../../js/script.js" defer></script>
+    <!-- carrega os dados antes das funcionalidades do painel -->
+    <script src="../../js/dados.js" defer></script>
     <script src="../../js/administrativo.js" defer></script>
 </head>
 <body class="pagina-admin">
@@ -15,7 +17,7 @@
       <div class="admin-sidebar-topo">
         <a href="../index.html" class="admin-logo">
           <span class="admin-logo-circulo">
-            <img src="../../assets/icones/clock-three.png" alt="" class="icone" />
+            <img src="../../assets/icones/relogio-contorno.png" alt="" class="icone" />
           </span>
           <div>
             <span class="admin-logo-titulo">meu tempo</span>
@@ -24,15 +26,6 @@
         </a>
 
         <div class="admin-ambiente-label">AMBIENTE ADMINISTRATIVO</div>
-
-        <div class="admin-area-select-grupo">
-          <label for="seletor-area-trabalho">Área de trabalho <span class="asterisco">*</span></label>
-          <select id="seletor-area-trabalho" class="admin-select-area">
-            <option value="metro.html">Agente Metrô / CPTM</option>
-            <option value="cet.html">Operador CET</option>
-            <option value="coordenacao.html" selected>Coordenador</option>
-          </select>
-        </div>
 
         <nav class="admin-nav" aria-label="Seções do painel de Coordenação">
           <button type="button" class="admin-nav-item ativo" data-admin-aba="visao-geral">
@@ -46,12 +39,12 @@
           </button>
 
           <button type="button" class="admin-nav-item" data-admin-aba="estacoes">
-            <img src="../../assets/icones/subway.png" alt="" class="icone" />
+            <img src="../../assets/icones/metro.png" alt="" class="icone" />
             <span>Estações</span>
           </button>
 
           <button type="button" class="admin-nav-item" data-admin-aba="cruzamentos">
-            <img src="../../assets/icones/marker.png" alt="" class="icone" />
+            <img src="../../assets/icones/marcador.png" alt="" class="icone" />
             <span>Cruzamentos</span>
           </button>
 
@@ -61,22 +54,22 @@
           </button>
 
           <button type="button" class="admin-nav-item" data-admin-aba="indicadores">
-            <img src="../../assets/icones/gráfico.png" alt="" class="icone" />
+            <img src="../../assets/icones/grafico.png" alt="" class="icone" />
             <span>Indicadores</span>
           </button>
 
           <button type="button" class="admin-nav-item" data-admin-aba="relatorios">
-            <img src="../../assets/icones/relatório.png" alt="" class="icone" />
+            <img src="../../assets/icones/relatorio.png" alt="" class="icone" />
             <span>Relatórios</span>
           </button>
 
           <button type="button" class="admin-nav-item" data-admin-aba="gestao-acessos">
-            <img src="../../assets/icones/shield-check.png" alt="" class="icone" />
+            <img src="../../assets/icones/seguranca.png" alt="" class="icone" />
             <span>Gestão de acessos</span>
           </button>
 
           <button type="button" class="admin-nav-item" data-admin-aba="historico">
-            <img src="../../assets/icones/clock.png" alt="" class="icone" />
+            <img src="../../assets/icones/relogio-inteligente.png" alt="" class="icone" />
             <span>Histórico</span>
           </button>
 
@@ -86,7 +79,7 @@
           </button>
 
           <button type="button" class="admin-nav-item" data-admin-aba="perfil">
-            <img src="../../assets/icones/user.png" alt="" class="icone" />
+            <img src="../../assets/icones/usuario.png" alt="" class="icone" />
             <span>Perfil do operador</span>
           </button>
         </nav>
@@ -95,7 +88,8 @@
       <div class="admin-sidebar-rodape">
         <a href="../solucao01.html" class="admin-link-secundario">Ver área do cidadão</a>
         <a href="../index.html" class="admin-link-secundario">Voltar ao site</a>
-        <a href="../solucao02.html" class="admin-link-sair">
+        <!-- direciona ao login e identifica a saída para encerrar a sessão administrativa -->
+        <a href="login.html" class="admin-link-sair" data-sair>
           <img src="../../assets/icones/sair.png" alt="" class="icone" />
           <span>Sair</span>
         </a>
@@ -106,7 +100,7 @@
       <!-- Topbar -->
       <header class="admin-topbar">
         <div class="admin-topbar-esquerda">
-          <button type="button" id="btn-admin-menu-mobile" class="btn-menu">Menu</button>
+          <button type="button" id="btn-admin-menu-mobile" aria-controls="admin-sidebar" aria-expanded="false" class="btn-menu">Menu</button>
           <div>
             <span class="admin-breadcrumb">MEU TEMPO / COORDENAÇÃO</span>
             <strong class="admin-estacao-titulo">Visão consolidada</strong>
@@ -114,15 +108,7 @@
         </div>
 
         <div class="admin-topbar-direita">
-          <button
-            type="button"
-            id="btn-admin-acessibilidade"
-            class="admin-icon-btn"
-            aria-label="Abrir recursos de acessibilidade"
-            title="Recursos de acessibilidade"
-          >
-            <img src="../../assets/icones/homem.png" alt="" class="icone" />
-          </button>
+
 
           <button
             type="button"
@@ -141,11 +127,12 @@
             aria-label="Abrir perfil do operador"
           >
             <span class="admin-operador-avatar">
-              <img src="../../assets/icones/user.png" alt="" class="icone" />
+              <img src="../../assets/icones/usuario.png" alt="" class="icone" />
             </span>
             <div>
-              <strong>Carlos Oliveira</strong>
-              <span>Matrícula 48217</span>
+              <!-- identifica o profissional conectado -->
+              <strong data-nome-profissional>Carlos Oliveira</strong>
+              <span data-matricula-profissional>Matrícula 48217</span>
             </div>
           </button>
         </div>
@@ -169,23 +156,23 @@
           <!-- 4 KPIs -->
           <div class="admin-kpis-grid">
             <article class="card-branco admin-kpi-card">
-              <span class="admin-kpi-titulo">Solicitações hoje</span>
-              <strong class="admin-kpi-valor">2</strong>
+              <span class="admin-kpi-titulo">Solicitações registradas</span>
+              <strong data-total-pedidos class="admin-kpi-valor">2</strong>
             </article>
 
             <article class="card-branco admin-kpi-card">
               <span class="admin-kpi-titulo">Atendimentos concluídos</span>
-              <strong class="admin-kpi-valor">0</strong>
+              <strong data-concluidos-pedidos class="admin-kpi-valor">0</strong>
             </article>
 
             <article class="card-branco admin-kpi-card">
               <span class="admin-kpi-titulo">Travessias aprovadas</span>
-              <strong class="admin-kpi-valor">1</strong>
+              <strong data-travessias-aprovadas class="admin-kpi-valor">1</strong>
             </article>
 
             <article class="card-branco admin-kpi-card">
               <span class="admin-kpi-titulo">Elevadores inoperantes</span>
-              <strong class="admin-kpi-valor">0</strong>
+              <strong data-elevadores-inoperantes class="admin-kpi-valor">0</strong>
             </article>
           </div>
 
@@ -262,9 +249,9 @@
                     <th>Horário</th>
                   </tr>
                 </thead>
-                <tbody id="tbody-coord-pedidos">
+                <tbody data-pedidos-operacionais id="tbody-coord-pedidos">
                   <tr data-orgao="zeladoria" data-local="paulista" data-situacao="concluido">
-                    <td class="coord-td-proto">MT-1041</td>
+                    <td class="coord-td-proto">ZEL-1041</td>
                     <td>
                       <strong>Piso tátil danificado</strong>
                       <span>Zeladoria</span>
@@ -273,16 +260,7 @@
                     <td><span class="admin-status-pill cet-pill-aprovado">Concluído</span></td>
                     <td>Hoje · 09:15</td>
                   </tr>
-                  <tr data-orgao="metro" data-local="consolacao" data-situacao="caminho">
-                    <td class="coord-td-proto">MT-1042</td>
-                    <td>
-                      <strong>Acompanhamento até a plataforma</strong>
-                      <span>Metrô</span>
-                    </td>
-                    <td>Consolação · Linha 2 — Verde · Entrada principal</td>
-                    <td><span class="admin-status-pill">Funcionário a caminho</span></td>
-                    <td>Hoje · 14:32</td>
-                  </tr>
+
                 </tbody>
               </table>
             </div>
@@ -331,9 +309,9 @@
             <details class="cet-dados-texto">
               <summary>Ver os dados em texto</summary>
               <ul>
-                <li>Metrô: 1 solicitações.</li>
-                <li>Travessia: 2 solicitações.</li>
-                <li>Zeladoria: 1 solicitações.</li>
+                <li data-resumo-transporte>Metrô: 1 solicitações.</li>
+                <li data-resumo-servico="travessia">Travessia: 0 solicitações.</li>
+                <li data-resumo-servico="zeladoria">Zeladoria: 1 solicitações.</li>
               </ul>
             </details>
 
@@ -381,9 +359,9 @@
                     <th>Horário</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody data-pedidos-operacionais>
                   <tr>
-                    <td class="coord-td-proto">MT-1041</td>
+                    <td class="coord-td-proto">ZEL-1041</td>
                     <td>
                       <strong>Piso tátil danificado</strong>
                       <span>Zeladoria</span>
@@ -392,16 +370,7 @@
                     <td><span class="admin-status-pill cet-pill-aprovado">Concluído</span></td>
                     <td>Hoje · 09:15</td>
                   </tr>
-                  <tr>
-                    <td class="coord-td-proto">MT-1042</td>
-                    <td>
-                      <strong>Acompanhamento até a plataforma</strong>
-                      <span>Metrô</span>
-                    </td>
-                    <td>Consolação · Linha 2 — Verde · Entrada principal</td>
-                    <td><span class="admin-status-pill">Funcionário a caminho</span></td>
-                    <td>Hoje · 14:32</td>
-                  </tr>
+
                 </tbody>
               </table>
             </div>
@@ -433,7 +402,7 @@
               <article class="coord-estacao-linha">
                 <div class="coord-estacao-info">
                   <span class="coord-estacao-icone">
-                    <img src="../../assets/icones/subway.png" alt="" class="icone" />
+                    <img src="../../assets/icones/metro.png" alt="" class="icone" />
                   </span>
                   <div>
                     <h3>Consolação</h3>
@@ -448,7 +417,7 @@
               <article class="coord-estacao-linha">
                 <div class="coord-estacao-info">
                   <span class="coord-estacao-icone">
-                    <img src="../../assets/icones/subway.png" alt="" class="icone" />
+                    <img src="../../assets/icones/metro.png" alt="" class="icone" />
                   </span>
                   <div>
                     <h3>Paulista-Pernambucanas</h3>
@@ -463,7 +432,7 @@
               <article class="coord-estacao-linha">
                 <div class="coord-estacao-info">
                   <span class="coord-estacao-icone">
-                    <img src="../../assets/icones/subway.png" alt="" class="icone" />
+                    <img src="../../assets/icones/metro.png" alt="" class="icone" />
                   </span>
                   <div>
                     <h3>Sé</h3>
@@ -581,35 +550,8 @@
             </div>
           </div>
 
-          <div class="termos-grid">
-            <article class="card-branco">
-              <div class="admin-chamado-meta">
-                <h3>Elevador 01</h3>
-                <span class="admin-status-pill cet-pill-aprovado">&check; Operando</span>
-              </div>
-              <p class="admin-chamado-local">Acesso Rua &rarr; Mezanino</p>
-              <p style="font-size: 0.84rem; color: var(--texto-secundario); margin-bottom: 10px;">
-                Código ELV-01 · Consolação
-              </p>
-              <p style="font-size: 0.8rem; color: var(--texto-secundario); margin-bottom: 0;">
-                Última atualização: Hoje, 14:30
-              </p>
-            </article>
-
-            <article class="card-branco">
-              <div class="admin-chamado-meta">
-                <h3>Elevador 02</h3>
-                <span class="admin-status-pill cet-pill-aprovado">&check; Operando</span>
-              </div>
-              <p class="admin-chamado-local">Mezanino &rarr; Plataforma</p>
-              <p style="font-size: 0.84rem; color: var(--texto-secundario); margin-bottom: 10px;">
-                Código ELV-02 · Consolação
-              </p>
-              <p style="font-size: 0.8rem; color: var(--texto-secundario); margin-bottom: 0;">
-                Última atualização: Hoje, 14:30
-              </p>
-            </article>
-          </div>
+          <!-- utiliza os mesmos equipamentos e situações do painel de transporte -->
+          <div id="lista-equipamentos-coordenacao" class="termos-grid"></div>
         </section>
 
         <!-- Indicadores -->
@@ -663,9 +605,9 @@
             <details class="cet-dados-texto" open>
               <summary>Ver os dados em texto</summary>
               <ul>
-                <li>Metrô: 1 solicitações.</li>
-                <li>Travessia: 2 solicitações.</li>
-                <li>Zeladoria: 1 solicitações.</li>
+                <li data-resumo-transporte>Metrô: 1 solicitações.</li>
+                <li data-resumo-servico="travessia">Travessia: 0 solicitações.</li>
+                <li data-resumo-servico="zeladoria">Zeladoria: 1 solicitações.</li>
               </ul>
             </details>
 
@@ -749,9 +691,9 @@
                     <th>Horário</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody data-pedidos-operacionais>
                   <tr>
-                    <td class="coord-td-proto">MT-1041</td>
+                    <td class="coord-td-proto">ZEL-1041</td>
                     <td>
                       <strong>Piso tátil danificado</strong>
                       <span>Zeladoria</span>
@@ -760,16 +702,7 @@
                     <td><span class="admin-status-pill cet-pill-aprovado">Concluído</span></td>
                     <td>Hoje · 09:15</td>
                   </tr>
-                  <tr>
-                    <td class="coord-td-proto">MT-1042</td>
-                    <td>
-                      <strong>Acompanhamento até a plataforma</strong>
-                      <span>Metrô</span>
-                    </td>
-                    <td>Consolação · Linha 2 — Verde · Entrada principal</td>
-                    <td><span class="admin-status-pill">Funcionário a caminho</span></td>
-                    <td>Hoje · 14:32</td>
-                  </tr>
+
                 </tbody>
               </table>
             </div>
@@ -806,7 +739,10 @@
               </div>
             </div>
 
-            <article class="admin-chamado-item">
+            <!-- lista os cadastros e reaproveita o cartao como modelo -->
+            <div id="lista-solicitacoes-cadastro"></div>
+            <p id="aviso-solicitacoes-cadastro" class="painel-status" hidden>Nenhuma solicitação de cadastro encontrada.</p>
+            <article id="modelo-solicitacao-cadastro" class="admin-chamado-item" hidden>
               <div class="admin-chamado-meta">
                 <span>CAD-2048 · Metrô de São Paulo</span>
               </div>
@@ -816,11 +752,15 @@
                 Escala vinculada: Consolação · Linha 2 — Verde
               </p>
 
+              <p class="admin-chamado-local" data-dados-solicitacao></p>
+
               <div style="margin: 12px 0 20px;">
                 <span id="status-cadastro-cad2048" class="admin-status-pill cet-pill-recusado">
                   Aguardando aprovação
                 </span>
               </div>
+
+              <div class="painel-status" data-credenciais-cadastro hidden></div>
 
               <div class="admin-chamado-acoes">
                 <button type="button" id="btn-aprovar-cadastro" class="btn">
@@ -859,46 +799,28 @@
               </div>
             </div>
 
-            <ul class="cet-timeline cet-timeline-conectada">
+            <ul data-etapas-operacionais class="cet-timeline cet-timeline-conectada">
+
+
+
               <li>
-                <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
+                <span class="cet-timeline-icone"><img src="../../assets/icones/confirmacao.png" alt="" class="icone" /></span>
                 <div>
-                  <strong>MT-1042 · Funcionário a caminho</strong>
-                  <p>14:35 · Aguarde próximo à entrada principal.</p>
-                </div>
-              </li>
-              <li>
-                <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
-                <div>
-                  <strong>MT-1042 · Aprovado</strong>
-                  <p>14:33</p>
-                </div>
-              </li>
-              <li>
-                <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
-                <div>
-                  <strong>MT-1042 · Pedido recebido</strong>
-                  <p>14:32</p>
-                </div>
-              </li>
-              <li>
-                <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
-                <div>
-                  <strong>MT-1041 · Concluído</strong>
+                  <strong>ZEL-1041 · Concluído</strong>
                   <p>11:40 · Passagem desobstruída.</p>
                 </div>
               </li>
               <li>
-                <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
+                <span class="cet-timeline-icone"><img src="../../assets/icones/confirmacao.png" alt="" class="icone" /></span>
                 <div>
-                  <strong>MT-1041 · Em análise</strong>
+                  <strong>ZEL-1041 · Em análise</strong>
                   <p>09:22</p>
                 </div>
               </li>
               <li>
-                <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
+                <span class="cet-timeline-icone"><img src="../../assets/icones/confirmacao.png" alt="" class="icone" /></span>
                 <div>
-                  <strong>MT-1041 · Pedido recebido</strong>
+                  <strong>ZEL-1041 · Pedido recebido</strong>
                   <p>09:15</p>
                 </div>
               </li>
@@ -927,25 +849,19 @@
               </div>
             </div>
 
-            <ul class="cet-timeline cet-timeline-conectada">
+            <ul data-etapas-operacionais class="cet-timeline cet-timeline-conectada">
+
               <li>
-                <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
-                <div>
-                  <strong>MT-1042 · Funcionário a caminho</strong>
-                  <p>14:35 · Aguarde próximo à entrada principal.</p>
-                </div>
-              </li>
-              <li>
-                <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
+                <span class="cet-timeline-icone"><img src="../../assets/icones/confirmacao.png" alt="" class="icone" /></span>
                 <div>
                   <strong>CAD-2048 · Novo vínculo para revisão</strong>
                   <p>14:10 · Escala Consolação · Linha 2 — Verde aguardando aprovação.</p>
                 </div>
               </li>
               <li>
-                <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
+                <span class="cet-timeline-icone"><img src="../../assets/icones/confirmacao.png" alt="" class="icone" /></span>
                 <div>
-                  <strong>MT-1041 · Concluído</strong>
+                  <strong>ZEL-1041 · Concluído</strong>
                   <p>11:40 · Passagem desobstruída na Av. Paulista &times; Rua Pamplona.</p>
                 </div>
               </li>
@@ -969,12 +885,16 @@
           <section class="card-branco admin-fila-card">
             <div class="cet-perfil-topo">
               <span class="cet-perfil-avatar">
-                <img src="../../assets/icones/user.png" alt="" class="icone" />
+                <img src="../../assets/icones/usuario.png" alt="" class="icone" />
               </span>
               <div>
-                <h2>Carlos Oliveira</h2>
-                <p>Matrícula 48217 · Coordenação</p>
-                <p>Vínculo: Área de coordenação</p>
+                <!-- identifica os dados do profissional conectado -->
+                <h2 data-nome-profissional>Carlos Oliveira</h2>
+                <p>Matrícula <span data-matricula-profissional>48217</span> · <span data-funcao-profissional>Coordenação</span></p>
+                <p>Vínculo: <span data-local-profissional>Área de coordenação</span></p>
+                <!-- apresenta a instituição e a linha da sessão -->
+                <p>Instituição: <span data-orgao-profissional></span></p>
+                <p>Linha: <span data-linha-profissional></span></p>
               </div>
             </div>
 
@@ -983,16 +903,17 @@
             </div>
 
             <div class="admin-chamado-acoes">
-              <a href="../solucao02.html" class="btn btn-contorno">Trocar perfil &rarr;</a>
-              <a href="../solucao02.html" class="btn">Sair &rarr;</a>
+              <!-- direciona ao login e identifica a saída para encerrar a sessão administrativa -->
+              <a href="login.html" class="btn" data-sair>Sair &rarr;</a>
             </div>
           </section>
         </section>
 
         <!-- Rodapé -->
         <footer class="admin-rodape">
-          <img src="../../assets/icones/shield-check.png" alt="" class="icone" />
+          <img src="../../assets/icones/seguranca.png" alt="" class="icone" />
           <span>Visão consolidada · Área de coordenação operacional · Meu Tempo.</span>
+          <span>Projeto acadêmico · FIAP · Sem integração com operadoras.</span>
         </footer>
       </main>
     </div>
@@ -1002,111 +923,7 @@
   <div id="admin-toast" class="admin-toast" role="status" aria-live="polite" hidden></div>
 
   <!-- pop-up acessibilidade -->
-  <div id="modal-admin-acessibilidade" class="admin-modal-overlay" hidden>
-    <div class="admin-modal-caixa" role="dialog" aria-modal="true" aria-labelledby="titulo-modal-acess">
-      <div class="admin-modal-topo">
-        <h2 id="titulo-modal-acess">Uma experiência do seu jeito</h2>
-        <button type="button" class="admin-modal-fechar" data-fechar-modal aria-label="Fechar janela de acessibilidade">&times;</button>
-      </div>
 
-      <div class="admin-modal-grupo-select">
-        <label for="modal-select-fonte">Tamanho das letras</label>
-        <select id="modal-select-fonte" class="admin-modal-select">
-          <option value="100" selected>100% — padrão</option>
-          <option value="115">115% — médio</option>
-          <option value="130">130% — grande</option>
-          <option value="150">150% — extra grande</option>
-        </select>
-      </div>
-
-      <div class="admin-modal-opcoes-lista">
-        <label class="admin-modal-opcao-item" for="modal-toggle-contraste">
-          <div class="admin-modal-opcao-info">
-            <img src="../../assets/icones/eye.png" alt="" class="icone" />
-            <div>
-              <strong>Alto contraste</strong>
-              <span>Textos e botões mais destacados.</span>
-            </div>
-          </div>
-          <span class="admin-switch">
-            <input type="checkbox" id="modal-toggle-contraste" />
-            <span class="admin-switch-trilho"></span>
-          </span>
-        </label>
-
-        <label class="admin-modal-opcao-item" for="modal-toggle-iara">
-          <div class="admin-modal-opcao-info">
-            <img src="../../assets/icones/artificial-intelligence.png" alt="" class="icone" />
-            <div>
-              <strong>Ouvir a IARA</strong>
-              <span>Respostas por voz e por texto.</span>
-            </div>
-          </div>
-          <span class="admin-switch">
-            <input type="checkbox" id="modal-toggle-iara" />
-            <span class="admin-switch-trilho"></span>
-          </span>
-        </label>
-
-        <label class="admin-modal-opcao-item" for="modal-toggle-vibrar">
-          <div class="admin-modal-opcao-info">
-            <img src="../../assets/icones/watch-smart.png" alt="" class="icone" />
-            <div>
-              <strong>Vibrar nos avisos</strong>
-              <span>Quando o dispositivo permitir.</span>
-            </div>
-          </div>
-          <span class="admin-switch">
-            <input type="checkbox" id="modal-toggle-vibrar" />
-            <span class="admin-switch-trilho"></span>
-          </span>
-        </label>
-      </div>
-
-      <div class="admin-modal-mais-leitura">
-        <button type="button" id="btn-mais-opcoes-leitura" class="admin-modal-mais-btn" aria-expanded="false">
-          <span class="admin-modal-mais-esquerda">
-            <img src="../../assets/icones/filtro.png" alt="" class="icone" />
-            <strong>Mais opções de leitura</strong>
-          </span>
-          <span class="admin-modal-seta">&rsaquo;</span>
-        </button>
-
-        <div id="painel-mais-leitura" class="admin-modal-mais-conteudo" hidden>
-          <label class="admin-modal-opcao-item" for="modal-toggle-fonte-legivel">
-            <div class="admin-modal-opcao-info">
-              <div>
-                <strong>Fonte Alta Legibilidade</strong>
-                <span>Espaçamento ampliado entre letras e linhas.</span>
-              </div>
-            </div>
-            <span class="admin-switch">
-              <input type="checkbox" id="modal-toggle-fonte-legivel" />
-              <span class="admin-switch-trilho"></span>
-            </span>
-          </label>
-
-          <label class="admin-modal-opcao-item" for="modal-toggle-tema-escuro">
-            <div class="admin-modal-opcao-info">
-              <div>
-                <strong>Tema escuro</strong>
-                <span>Reduz o brilho da tela em ambientes escuros.</span>
-              </div>
-            </div>
-            <span class="admin-switch">
-              <input type="checkbox" id="modal-toggle-tema-escuro" />
-              <span class="admin-switch-trilho"></span>
-            </span>
-          </label>
-        </div>
-      </div>
-
-      <div class="admin-modal-rodape">
-        <button type="button" id="btn-restaurar-acess" class="btn btn-contorno">Restaurar padrão</button>
-        <a href="../acessibilidade.html" class="link-seta">Conhecer todos os recursos &rarr;</a>
-      </div>
-    </div>
-  </div>
 
   <!-- pop-up notificações -->
   <div id="modal-admin-notificacoes" class="admin-modal-overlay" hidden>
@@ -1118,39 +935,21 @@
 
       <div class="card-branco admin-modal-card-interno">
         <h3>Histórico de atividades</h3>
-        <ul class="cet-timeline cet-timeline-conectada">
+        <ul data-etapas-operacionais class="cet-timeline cet-timeline-conectada">
+
+
+
           <li>
-            <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
+            <span class="cet-timeline-icone"><img src="../../assets/icones/confirmacao.png" alt="" class="icone" /></span>
             <div>
-              <strong>MT-1042 · Funcionário a caminho</strong>
-              <p>14:35 · Aguarde próximo à entrada principal.</p>
-            </div>
-          </li>
-          <li>
-            <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
-            <div>
-              <strong>MT-1042 · Aprovado</strong>
-              <p>14:33</p>
-            </div>
-          </li>
-          <li>
-            <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
-            <div>
-              <strong>MT-1042 · Pedido recebido</strong>
-              <p>14:32</p>
-            </div>
-          </li>
-          <li>
-            <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
-            <div>
-              <strong>MT-1041 · Concluído</strong>
+              <strong>ZEL-1041 · Concluído</strong>
               <p>11:40 · Passagem desobstruída.</p>
             </div>
           </li>
           <li>
-            <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
+            <span class="cet-timeline-icone"><img src="../../assets/icones/confirmacao.png" alt="" class="icone" /></span>
             <div>
-              <strong>MT-1041 · Em análise</strong>
+              <strong>ZEL-1041 · Em análise</strong>
               <p>09:22</p>
             </div>
           </li>
@@ -1170,12 +969,16 @@
       <div class="card-branco admin-modal-card-interno">
         <div class="cet-perfil-topo">
           <span class="cet-perfil-avatar">
-            <img src="../../assets/icones/user.png" alt="" class="icone" />
+            <img src="../../assets/icones/usuario.png" alt="" class="icone" />
           </span>
           <div>
-            <h3>Carlos Oliveira</h3>
-            <p>Matrícula 48217 · Coordenação</p>
-            <p>Vínculo: Área de coordenação</p>
+            <!-- identifica os dados do profissional conectado -->
+            <h3 data-nome-profissional>Carlos Oliveira</h3>
+            <p>Matrícula <span data-matricula-profissional>48217</span> · <span data-funcao-profissional>Coordenação</span></p>
+            <p>Vínculo: <span data-local-profissional>Área de coordenação</span></p>
+                <!-- apresenta a instituição e a linha da sessão -->
+                <p>Instituição: <span data-orgao-profissional></span></p>
+                <p>Linha: <span data-linha-profissional></span></p>
           </div>
         </div>
 
@@ -1184,23 +987,12 @@
         </div>
 
         <div class="admin-chamado-acoes">
-          <a href="../solucao02.html" class="btn btn-contorno">Trocar perfil &rarr;</a>
-          <a href="../solucao02.html" class="btn">Sair &rarr;</a>
+          <!-- direciona ao login e identifica a saída para encerrar a sessão administrativa -->
+          <a href="login.html" class="btn" data-sair>Sair &rarr;</a>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Integração oficial do VLibras -->
-  <div vw class="enabled">
-    <div vw-access-button class="active"></div>
-    <div vw-plugin-wrapper>
-      <div class="vw-plugin-top-wrapper"></div>
-    </div>
-  </div>
-  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
-  <script>
-    new window.VLibras.Widget('https://vlibras.gov.br/app');
-  </script>
 </body>
 </html>

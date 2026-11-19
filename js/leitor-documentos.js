@@ -1,11 +1,260 @@
-// Captura de documentos, revisão e preenchimento dos dados do perfil.
-// Implementação futura; nenhuma funcionalidade está ativa neste arquivo.
-//
-// A futura leitura por OCR usará uma API REST do backend seguro.
-// O backend fará a integração com o Azure AI Document Intelligence.
-// Credenciais e chaves devem permanecer exclusivamente no servidor.
-// A imagem só poderá ser enviada após autorização explícita, sem seleção prévia.
-// Validar a imagem e o tipo de documento e conferir a autorização antes do envio.
-// Uma nova imagem ou retirada da autorização deve invalidar a permissão de envio.
-// Exibir uma prévia local e permitir revisar e corrigir os dados antes de confirmá-los.
-// Em caso de falha, manter disponível o preenchimento manual, sem envio de imagem.
+/*
+  documentos fictícios do cadastro e do perfil:
+  câmera e seletor de arquivo fornecem uma prévia local, sem envio a um servidor.
+  a conferência de formato não extrai texto nem comprova identidade, idade ou deficiência.
+
+  documento-identificacao e camera-identificacao representam duas formas de escolher o mesmo anexo.
+  os campos terminados em complementar mantêm um documento opcional separado para a categoria pcd.
+  previa-identificacao e previa-complementar exibem imagens temporárias; pdfs são identificados pelo nome.
+  remover-identificacao e remover-complementar descartam as prévias sem alterar os dados digitados.
+  os endereços temporários são liberados ao substituir, remover ou deixar a página.
+  o perfil reutiliza uma janela nativa de diálogo para revisar os documentos locais.
+*/
+
+// =================================================================
+// prévia local dos documentos
+// =================================================================
+
+// guarda somente endereços temporários na memória, nunca no armazenamento
+let previaIdentificacaoLocal = "";
+// guarda separadamente o endereço temporário do complemento
+let previaComplementarLocal = "";
+// a prévia local não confere a identidade do documento
+const identificacaoCidadao = "Não conferida";
+// mantém a documentação complementar sem diagnóstico automático
+let complementarCidadao = "Não informado";
+// seleciona o arquivo de identificação fictício
+const arquivoIdentificacao = document.getElementById("documento-identificacao");
+// seleciona o arquivo complementar fictício
+const arquivoComplementar = document.getElementById("documento-complementar");
+// seleciona a mensagem acessível da leitura
+const statusDocumentos = document.getElementById("status-qrcode-cadastro");
+
+// remove uma prévia e libera a imagem da memória
+// tipo representa identificacao ou complementar
+function removerPreviaDocumento(tipo) {
+  // seleciona a prévia correspondente
+  const previa = document.getElementById("previa-" + tipo);
+  // libera a referência temporária da identificação
+  if (tipo === "identificacao") {
+    // revogar invalida o endereço temporário da prévia; isso não apaga o arquivo original do dispositivo
+    URL.revokeObjectURL(previaIdentificacaoLocal);
+    previaIdentificacaoLocal = "";
+  } else {
+    // libera a referência temporária do complemento
+    URL.revokeObjectURL(previaComplementarLocal);
+    previaComplementarLocal = "";
+    complementarCidadao = "Não informado";
+  }
+  previa.removeAttribute("src");
+  previa.hidden = true;
+  document.getElementById("nome-" + tipo).textContent = "";
+  document.getElementById("nome-" + tipo).hidden = true;
+  document.getElementById("remover-" + tipo).hidden = true;
+}
+
+// apaga as imagens e os campos após conclusão ou saída
+function limparDocumentosCadastro() {
+  // executa apenas quando os campos existem nesta página
+  if (arquivoIdentificacao && arquivoComplementar) {
+    removerPreviaDocumento("identificacao");
+    removerPreviaDocumento("complementar");
+    // limpa câmera e arquivo sem apagar os dados já digitados
+    const campos = document.querySelectorAll("#arquivos-cadastro input[type='file']");
+    for (let i = 0; i < campos.length; i++) campos[i].value = "";
+    statusDocumentos.textContent = "";
+  }
+}
+
+// apresenta a imagem selecionada apenas na memória da página
+// evento identifica o campo de arquivo alterado pelo cidadão
+function apresentarPreviaDocumento(evento) {
+  // identifica o campo e o tipo de documento escolhido
+  const campo = evento.currentTarget;
+  let tipo = "identificacao";
+  if (campo.id.indexOf("complementar") !== -1) tipo = "complementar";
+  // mantém a prévia atual quando o cidadão cancela a seleção
+  if (campo.files.length === 0) return;
+  // files é a lista de arquivos autorizados pelo usuário; a primeira posição contém o anexo escolhido neste campo
+  const arquivo = campo.files[0];
+  // aceita somente imagens conhecidas ou pdf dentro do limite de cinco megabytes
+  // o tipo declarado e o tamanho limitam a seleção local; essa conferência não comprova a autenticidade nem substitui validação de conteúdo em servidor
+  if ((arquivo.type !== "image/jpeg" && arquivo.type !== "image/png" && arquivo.type !== "image/webp" && arquivo.type !== "application/pdf") || arquivo.size > 5 * 1024 * 1024) {
+    campo.value = "";
+    statusDocumentos.textContent = "Escolha uma imagem ou PDF de até 5 MB.";
+    return;
+  }
+  removerPreviaDocumento(tipo);
+  // descarta a seleção anterior do mesmo documento, seja câmera ou arquivo
+  const campos = document.querySelectorAll("#arquivos-cadastro input[type='file']");
+  for (let i = 0; i < campos.length; i++) {
+    if (campos[i] !== campo && campos[i].id.indexOf(tipo) !== -1) campos[i].value = "";
+  }
+  // selecionado não significa que o comprovante foi conferido
+  if (tipo === "complementar") complementarCidadao = "Selecionado, sem comprovação automática";
+  document.getElementById("nome-" + tipo).textContent = arquivo.name;
+  document.getElementById("nome-" + tipo).hidden = false;
+  document.getElementById("remover-" + tipo).hidden = false;
+  // pdf é identificado pelo nome e não recebe uma prévia de imagem
+  if (arquivo.type !== "application/pdf") {
+    // createobjecturl cria um endereço temporário para ler o arquivo local sem enviá-lo à rede nem convertê-lo em texto
+    const endereco = URL.createObjectURL(arquivo);
+    const previa = document.getElementById("previa-" + tipo);
+    previa.src = endereco;
+    previa.hidden = false;
+    if (tipo === "identificacao") previaIdentificacaoLocal = endereco;
+    else previaComplementarLocal = endereco;
+  }
+  // a prévia é local; os dados de identificação continuam sendo preenchidos manualmente
+  statusDocumentos.textContent = "Preencha os dados abaixo.";
+}
+
+// descarta um arquivo cujo conteúdo o navegador não consegue exibir como imagem
+// evento representa uma falha ao carregar a prévia local
+function descartarImagemInvalida(evento) {
+  // identifica qual prévia não pôde ser apresentada
+  let tipo = "identificacao";
+  if (evento.currentTarget.id === "previa-complementar") tipo = "complementar";
+  removerPreviaDocumento(tipo);
+  document.getElementById("documento-" + tipo).value = "";
+  document.getElementById("camera-" + tipo).value = "";
+  statusDocumentos.textContent = "Não foi possível abrir a imagem. Escolha outro arquivo.";
+}
+
+// alterna o tipo de documento sem apagar os dados já digitados
+function atualizarTipoCadastro() {
+  // identifica se a cin utiliza somente o cpf
+  const cin = document.getElementById("cad-tipo-documento").value === "cin";
+  document.getElementById("grupo-cad-rg").hidden = cin;
+  document.getElementById("cad-rg").required = !cin;
+}
+
+// apresenta complemento opcional apenas para pessoa com deficiência
+// evento indica uma mudança explícita de categoria
+function atualizarComplementarCadastro(evento) {
+  // recupera a categoria autodeclarada
+  const pcd = document.getElementById("cad-categoria").value === "pcd";
+  document.getElementById("complementar-cadastro").hidden = !pcd;
+  document.getElementById("rotulo-identificacao").textContent = "Documento de identificação";
+  if (pcd) {
+    document.getElementById("rotulo-identificacao").textContent = "CIN ou documento de identificação";
+    // sugere cin sem impedir a escolha manual de outro documento
+    if (evento) {
+      document.getElementById("cad-tipo-documento").value = "cin";
+      atualizarTipoCadastro();
+    }
+  } else {
+    // descarta arquivos complementares quando deixam de ser pertinentes
+    removerPreviaDocumento("complementar");
+    arquivoComplementar.value = "";
+    document.getElementById("camera-complementar").value = "";
+    document.getElementById("complementar-cadastro").open = false;
+  }
+}
+
+// permite preencher manualmente e descarta anexos da opção anterior
+function escolherManualCadastro() {
+  limparDocumentosCadastro();
+  document.getElementById("cad-nome").focus();
+}
+
+// remove o arquivo escolhido sem alterar os dados preenchidos no cadastro
+// evento representa o botão correspondente ao anexo
+function removerArquivoCadastro(evento) {
+  // identifica o tipo pelo nome do botão
+  const tipo = evento.currentTarget.id.replace("remover-", "");
+  removerPreviaDocumento(tipo);
+  document.getElementById("documento-" + tipo).value = "";
+  document.getElementById("camera-" + tipo).value = "";
+  statusDocumentos.textContent = "";
+}
+
+// registra os eventos apenas no cadastro que possui o leitor
+if (arquivoIdentificacao) {
+  // conecta as escolhas e mantém tipo e categoria coerentes
+  document.getElementById("cad-tipo-documento").addEventListener("change", atualizarTipoCadastro);
+  document.getElementById("cad-categoria").addEventListener("change", atualizarComplementarCadastro);
+  document.getElementById("escolher-manual").addEventListener("click", escolherManualCadastro);
+  document.getElementById("remover-identificacao").addEventListener("click", removerArquivoCadastro);
+  document.getElementById("remover-complementar").addEventListener("click", removerArquivoCadastro);
+  atualizarTipoCadastro();
+  atualizarComplementarCadastro();
+  // utiliza o mesmo fluxo de leitura para câmera e arquivo
+  const campos = document.querySelectorAll("#arquivos-cadastro input[type='file']");
+  for (let i = 0; i < campos.length; i++) campos[i].addEventListener("change", apresentarPreviaDocumento);
+  // descarta conteúdo inválido mesmo quando o arquivo informa um tipo permitido
+  document.getElementById("previa-identificacao").addEventListener("error", descartarImagemInvalida);
+  document.getElementById("previa-complementar").addEventListener("error", descartarImagemInvalida);
+  // descarta arquivos ao deixar a página, inclusive no histórico do navegador
+  // pagehide executa a limpeza quando a página deixa de ser exibida, inclusive em navegações que usam o cache do histórico
+  window.addEventListener("pagehide", limparDocumentosCadastro);
+}
+
+// =================================================================
+// revisão local dos dados no perfil
+// =================================================================
+
+// abre a revisão manual sem oferecer alteração livre de identidade
+function abrirRevisaoDocumentoPerfil() {
+  // seleciona a janela existente no perfil
+  const modal = document.getElementById("modal-documento");
+  // abre somente quando a janela ainda estiver fechada
+  if (!modal.open) {
+    // o diálogo nativo assume a interação da página até ser fechado, mantendo a revisão concentrada na janela modal
+    modal.showModal();
+  }
+  // recupera os dados salvos para facilitar a revisão sem alterar identidade
+  const cidadao = buscarCidadaoConectado();
+  // preenche somente quando a sessão está disponível
+  if (cidadao) {
+    document.getElementById("manual-nome-completo").value = cidadao.nome;
+    document.getElementById("manual-data-nascimento").value = cidadao.nascimento;
+    document.getElementById("manual-tipo-documento").value = cidadao.tipoDocumento || "";
+  }
+  document.getElementById("preenchimento-manual-documento").open = true;
+  document.getElementById("manual-nome-completo").focus();
+}
+
+// compara a transcrição manual com o cadastro sem salvar mudanças de identidade
+function conferirDadosDocumentoPerfil() {
+  // recupera o cadastro atual para impedir comparação com dados antigos
+  const cidadao = buscarCidadaoConectado();
+  // seleciona a mensagem de retorno da revisão
+  const mensagem = document.getElementById("mensagem-leitura-documento");
+  // impede conferência quando a sessão não estiver disponível
+  if (!cidadao) {
+    mensagem.textContent = "Entre novamente para consultar seus dados.";
+    return;
+  }
+  // recupera o nome transcrito manualmente
+  const nome = document.getElementById("manual-nome-completo");
+  // recupera o nascimento transcrito manualmente
+  const nascimento = document.getElementById("manual-data-nascimento");
+  // recupera o tipo de documento declarado para esta revisão local
+  const tipo = document.getElementById("manual-tipo-documento");
+  // exige preenchimento dos campos antes de comparar
+  if (!nome.reportValidity() || !nascimento.reportValidity() || !tipo.reportValidity() || !nome.value.trim()) {
+    mensagem.textContent = "Informe o nome, o nascimento e o tipo de documento para comparar com o cadastro.";
+    return;
+  }
+  // informa divergências sem alterar dados ou estados documentais já cadastrados
+  if (nome.value.trim().toLowerCase() !== cidadao.nome.trim().toLowerCase() || nascimento.value !== cidadao.nascimento || (cidadao.tipoDocumento && tipo.value !== cidadao.tipoDocumento)) {
+    mensagem.textContent = "Nome ou nascimento divergem do cadastro. Esta revisão local não altera a identidade. A atualização de identidade depende de uma conferência documental ainda indisponível.";
+    return;
+  }
+  mensagem.textContent = "Os dados digitados coincidem com o cadastro nesta revisão manual. Isso não comprova identidade ou autenticidade documental. Nenhum dado ou estado documental foi alterado.";
+}
+
+// seleciona o botão apenas quando o leitor está na página de perfil
+const abrirDocumentoPerfil = document.getElementById("abrir-leitor-documentos");
+// conecta a janela existente sem modificar o fluxo de cadastro
+if (abrirDocumentoPerfil) {
+  abrirDocumentoPerfil.addEventListener("click", abrirRevisaoDocumentoPerfil);
+  // permite comparar os dados sem ocr, upload ou persistência de imagens
+  document.getElementById("confirmar-dados-manuais").disabled = false;
+  document.getElementById("confirmar-dados-manuais").addEventListener("click", conferirDadosDocumentoPerfil);
+  // recupera o foco no controle que abriu a revisão
+  document.getElementById("modal-documento").addEventListener("close", function () {
+    abrirDocumentoPerfil.focus();
+  });
+}

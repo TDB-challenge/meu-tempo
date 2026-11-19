@@ -6,6 +6,7 @@
 
     <title>Zeladoria urbana | Meu Tempo</title>
 
+    <link rel="stylesheet" href="../../css/style.css" />
     <link rel="stylesheet" href="../../css/app.css" />
   </head>
 
@@ -19,6 +20,7 @@
       <!-- Menu lateral para computadores -->
       <aside class="menu-lateral">
         <a href="inicio.html" class="logo">
+          <img src="../../assets/icones/relogio.png" class="marca-icone" alt="" />
           <div class="texto-logo">
             <strong>meu tempo</strong>
             <small class="slogan">A cidade no seu ritmo.</small>
@@ -41,12 +43,14 @@
 
             <li>
               <a href="servicos.html" aria-current="location">
+                <img src="../../assets/icones/lista.svg" class="icone" alt="" />
                 <span>Serviços</span>
               </a>
             </li>
 
             <li>
               <a href="solicitacoes.html">
+                <img src="../../assets/icones/lista.svg" class="icone" alt="" />
                 <span>Pedidos</span>
               </a>
             </li>
@@ -64,6 +68,7 @@
 
             <li>
               <a href="perfil.html">
+                <img src="../../assets/icones/usuario.png" class="icone" alt="" />
                 <span>Perfil</span>
               </a>
             </li>
@@ -98,6 +103,7 @@
 
           <!-- Logo exibida em tablets e celulares -->
           <a href="inicio.html" class="logo-mobile">
+          <img src="../../assets/icones/relogio.png" class="marca-icone" alt="" />
             <strong>meu tempo</strong>
           </a>
 
@@ -119,17 +125,19 @@
             </summary>
 
             <div class="opcoes-usuario">
+              <!-- encerra somente a sessão do cidadão -->
+              <a href="../login.html" id="sair-app"><img src="../../assets/icones/sair.png" class="icone" alt="" />Sair</a>
               <a href="perfil.html">
                 Meu perfil
               </a>
 
               <a href="perfil.html#abrir-leitor-documentos" id="identificar-documento">
                 <img
-                  src="../../assets/icones/camera.svg"
+                  src="../../assets/icones/escanear-documento.svg"
                   class="icone"
                   alt=""
                 />
-                Identificar meu documento
+                Meus documentos
               </a>
 
               <a href="../index.html">
@@ -357,7 +365,7 @@
                 <div class="cabecalho-mapa">
                   <h2>Onde está o problema?</h2>
 
-                  <p>Toque no mapa ou escolha na lista.</p>
+                  <p>Escolha na lista para consultar o mapa público.</p>
                 </div>
 
                 <!-- Legenda dos semáforos com e sem suporte -->
@@ -392,26 +400,14 @@
                   <div
                     class="mapa-cruzamentos"
                     id="mapa-zeladoria"
-                    aria-label="Mapa demonstrativo dos cruzamentos"
+                    aria-label="Mapa público por endereço dos cruzamentos"
                   >
-                    <div class="mapa-visual">
-                      <!-- As ruas serão desenhadas pelo mapas.js -->
-                      <div
-                        class="mapa-base"
-                        id="mapa-base-zeladoria"
-                        aria-hidden="true"
-                      ></div>
-
-                      <!-- Recebe os marcadores selecionáveis -->
-                      <div
-                        class="marcadores-mapa"
-                        id="marcadores-zeladoria"
-                      ></div>
-                    </div>
+                    <!-- iframe consulta o endereço escolhido; a lista permanece disponível -->
+                  <iframe id="mapa-base-zeladoria" title="Mapa público do endereço selecionado" width="100%" height="300" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                   </div>
 
-                  <!-- Controles de zoom -->
-                  <div class="controles-mapa">
+                  <!-- controles antigos preservados; o iframe oferece navegação própria -->
+                  <div class="controles-mapa" hidden>
                     <button
                       type="button"
                       class="botao-mapa"
@@ -441,7 +437,7 @@
                     </button>
                   </div>
 
-                  <small class="identificacao-mapa"> Mapa demonstrativo </small>
+                  <small class="identificacao-mapa"> Mapa público por endereço </small>
                 </div>
 
                 <!-- Avisos relacionados ao mapa -->
@@ -658,6 +654,7 @@
 
             <!-- Arquivos que podem complementar o relato -->
             <div class="anexos-relato">
+              <p>Os anexos permitem apenas prévia local e não são enviados nem guardados no pedido.</p>
               <!-- Envio opcional de uma foto -->
               <div class="anexo-relato">
                 <label class="botao-anexo" for="foto-relato">
@@ -823,12 +820,14 @@
 
           <li>
             <a href="servicos.html" aria-current="location">
+              <img src="../../assets/icones/lista.svg" class="icone" alt="" />
               <span>Serviços</span>
             </a>
           </li>
 
           <li>
             <a href="solicitacoes.html">
+              <img src="../../assets/icones/lista.svg" class="icone" alt="" />
               <span>Pedidos</span>
             </a>
           </li>
@@ -846,82 +845,24 @@
 
           <li>
             <a href="perfil.html">
+              <img src="../../assets/icones/usuario.png" class="icone" alt="" />
               <span>Perfil</span>
             </a>
           </li>
         </ul>
       </nav>
 
-      <!-- Botão flutuante de ajuda -->
-      <button
-        type="button"
-        class="botao-ajuda"
-        id="botao-ajuda"
-        aria-label="Preciso de ajuda"
-        aria-haspopup="dialog"
-        aria-controls="modal-ajuda"
-      >
-        <img src="../../assets/icones/ajuda.svg" class="icone" alt="" />
-      </button>
     </div>
 
     <!-- Janela de ajuda compartilhada entre as páginas -->
-    <dialog
-      class="modal-ajuda"
-      id="modal-ajuda"
-      aria-labelledby="titulo-modal-ajuda"
-    >
-      <header class="cabecalho-modal-ajuda">
-        <h2 id="titulo-modal-ajuda">Como podemos ajudar?</h2>
 
-        <form method="dialog">
-          <button
-            type="submit"
-            class="fechar-modal-ajuda"
-            aria-label="Fechar janela"
-          >
-            <img src="../../assets/icones/fechar.svg" class="icone" alt="" />
-          </button>
-        </form>
-      </header>
 
-      <p>
-        Escolha um serviço para pedir apoio. Em “Pedidos”, você acompanha cada
-        atualização.
-      </p>
 
-      <div class="opcoes-ajuda">
-        <a href="iara.html" class="ajuda-iara">
-          <img src="../../assets/icones/audio.svg" class="icone" alt="" />
-
-          <span>Conversar com a IARA</span>
-
-          <img
-            src="../../assets/icones/seta-direita.svg"
-            class="icone"
-            alt=""
-          />
-        </a>
-
-        <a
-          href="perfil.html#preferencias-acessibilidade"
-          class="ajuda-acessibilidade"
-        >
-          <img
-            src="../../assets/icones/libras.svg"
-            class="icone"
-            alt=""
-          />
-
-          <span>Ajustar acessibilidade</span>
-        </a>
-      </div>
-    </dialog>
-
-    <!-- Mapas interativos, marcadores dos semáforos, zoom e geolocalização. -->
-    <script src="../../js/mapas.js" defer></script>
+    <script src="../../js/dados.js" defer></script>
+    <script src="../../js/script.js" defer></script>
 
     <!-- Funcionalidades gerais, navegação, acessibilidade, preferências, formulários, solicitações e regras dos serviços. -->
+    <script src="../../js/mapas.js" defer></script>
     <script src="../../js/app.js" defer></script>
   </body>
 </html>

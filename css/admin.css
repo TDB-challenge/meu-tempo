@@ -1,14 +1,51 @@
-/* =====================================================
-   ESTILOS DO AMBIENTE ADMINISTRATIVO (css/admin.css)
-   ===================================================== */
-
+/* guia dos estilos administrativos: este arquivo complementa style.css.
+   estrutura do painel:
+   .admin-shell divide a navegacao lateral e a coluna de trabalho.
+   .admin-sidebar contem a marca, as abas e os links de saida.
+   .admin-logo agrupa simbolo e assinatura; .admin-logo-circulo recebe o icone.
+   .admin-nav organiza as abas; .admin-nav-item identifica cada opcao.
+   .ativo destaca a aba escolhida; .aberto mostra o menu recolhido no celular.
+   #admin-sidebar e o menu controlado por #btn-admin-menu-mobile.
+   .admin-sidebar-rodape reune retorno ao site, area do cidadao e saida.
+   cabecalho e conteudo:
+   .admin-conteudo-coluna envolve o cabecalho e a area principal.
+   .admin-topbar-esquerda identifica o local; .admin-topbar-direita reune os controles.
+   .admin-breadcrumb informa a area; .admin-estacao-titulo informa o local de atuacao.
+   .admin-operador-chip agrupa avatar, nome e matricula do profissional.
+   .admin-main recebe as abas; .admin-cabecalho-secao apresenta titulo e situacao.
+   .admin-badge-status resume a condicao de acompanhamento do painel.
+   indicadores e atendimento:
+   .admin-kpis-grid organiza indicadores; .admin-kpi-card apresenta cada total.
+   .admin-fila-card agrupa a fila; .admin-chamados-lista recebe os atendimentos.
+   .admin-chamado-meta apresenta protocolo e situacao de cada chamado.
+   .admin-chamado-local e .admin-chamado-credencial identificam local e solicitante.
+   .admin-chamado-acoes organiza os botoes; .admin-status-pill identifica a situacao.
+   componentes especificos:
+   .cet-ciclo-grid apresenta os tempos do semaforo.
+   .cet-barra-linha relaciona nome, barra proporcional e valor do indicador.
+   .cet-timeline organiza eventos; .cet-timeline-conectada liga os marcadores.
+   .coord-filtros-grid organiza filtros; .coord-select padroniza suas escolhas.
+   .coord-tabela-wrapper limita a rolagem; .coord-tabela conserva as colunas legiveis.
+   .coord-estado-vazio explica consultas sem resultado.
+   .coord-estacao-linha apresenta cada estacao; .coord-estacao-info agrupa seus dados.
+   janelas e formularios:
+   .admin-modal-overlay cobre a pagina; .admin-modal-caixa contem a janela.
+   .admin-modal-topo agrupa titulo e fechamento; .admin-modal-card-interno agrupa dados.
+   .admin-toast apresenta avisos temporarios; hidden mantem abas e janelas fechadas.
+   .cadastro-administrativo e .login-administrativo identificam as paginas de acesso.
+   .campos-etapa-cadastro agrupa campos; .etapas-cadastro apresenta o progresso.
+   .campo-cadastro associa rotulo, controle e orientacao de preenchimento.
+   .resumo-cadastro apresenta a revisao; .confirmacao-cadastro apresenta o resultado.
+   .modal-recuperacao contem a recuperacao demonstrativa do acesso.
+   os grupos finais tratam temas, ocorrencias, confirmacoes e adaptacao de tela. */
+/* estrutura e navegacao */
 .admin-shell {
   display: grid;
-  grid-template-columns: 260px 1fr;
+  grid-template-columns: 260px minmax(0, 1fr);
   min-height: 100vh;
 }
 
-/* Barra lateral verde-escura */
+/* a barra lateral usa os mesmos itens nos quatro paineis; o menu movel alterna a classe .aberto. */
 .admin-sidebar {
   background-color: var(--verde-floresta);
   color: #faf9f5;
@@ -19,6 +56,7 @@
   gap: 28px;
 }
 
+/* a marca e um unico link; titulo e assinatura acompanham o simbolo sem perder a identidade do site. */
 .admin-logo {
   display: flex;
   align-items: center;
@@ -66,35 +104,7 @@
   margin-bottom: 12px;
 }
 
-.admin-area-select-grupo {
-  margin-bottom: 22px;
-}
-
-.admin-area-select-grupo label {
-  display: block;
-  font-size: 0.78rem;
-  font-weight: 600;
-  margin-bottom: 6px;
-}
-
-.admin-select-area {
-  width: 100%;
-  padding: 10px 12px;
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  background-color: rgba(255, 255, 255, 0.08);
-  color: #faf9f5;
-  font-family: inherit;
-  font-size: 0.85rem;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.admin-select-area option {
-  color: #183a2a;
-  background-color: #faf9f5;
-}
-
+/* os botoes desta navegacao usam data-admin-aba para selecionar o painel correspondente no javascript. */
 .admin-nav {
   display: flex;
   flex-direction: column;
@@ -140,6 +150,7 @@ a.admin-nav-item {
   opacity: 0.9;
 }
 
+/* estes links deixam as abas administrativas e permitem encerrar a sessao demonstrativa. */
 .admin-sidebar-rodape {
   display: flex;
   flex-direction: column;
@@ -169,19 +180,15 @@ a.admin-nav-item {
   filter: brightness(0) invert(1);
 }
 
-/* Coluna principal */
+/* cabecalho e conteudo */
 .admin-conteudo-coluna {
   display: flex;
   flex-direction: column;
   background-color: var(--fundo-creme);
+  min-width: 0;
 }
 
-.admin-container {
-  max-width: 1120px;
-  margin: 0 auto;
-  padding: 0 28px;
-}
-
+/* o cabecalho mantem local de atuacao e identificacao profissional acessiveis em telas estreitas. */
 .admin-topbar {
   background-color: #ffffff;
   border-bottom: 1px solid var(--borda);
@@ -190,12 +197,15 @@ a.admin-nav-item {
   align-items: center;
   justify-content: space-between;
   gap: 16px;
+  flex-wrap: wrap;
 }
 
 .admin-topbar-esquerda {
   display: flex;
   align-items: center;
   gap: 14px;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .admin-breadcrumb {
@@ -215,6 +225,9 @@ a.admin-nav-item {
   display: flex;
   align-items: center;
   gap: 14px;
+  max-width: 100%;
+  flex-wrap: wrap;
+  min-width: 0;
 }
 
 .admin-icon-btn {
@@ -238,12 +251,15 @@ a.admin-nav-item {
   height: 19px;
 }
 
+/* o chip identifica quem esta conectado; quando usado como botao, abre o perfil do operador. */
 .admin-operador-chip {
   display: flex;
   align-items: center;
   gap: 10px;
   padding-left: 14px;
   border-left: 1px solid var(--borda);
+  min-width: 0;
+  max-width: 100%;
 }
 
 .admin-operador-btn {
@@ -291,6 +307,7 @@ a.admin-nav-item {
   font-size: 0.86rem;
   line-height: 1.2;
   color: var(--texto-principal);
+  overflow-wrap: anywhere;
 }
 
 .admin-operador-chip > div span {
@@ -299,10 +316,12 @@ a.admin-nav-item {
   color: var(--texto-secundario);
 }
 
+/* a area principal recebe os paineis de aba, preservando o atributo hidden dos que estao fechados. */
 .admin-main {
   padding: 36px 32px 48px;
   max-width: 1140px;
   width: 100%;
+  min-width: 0;
 }
 
 .admin-cabecalho-secao {
@@ -316,7 +335,7 @@ a.admin-nav-item {
 
 .admin-cabecalho-secao h1 {
   margin-bottom: 0;
-  font-size: 2.2rem;
+  font-size: 1.8rem;
 }
 
 .admin-badge-status {
@@ -330,6 +349,7 @@ a.admin-nav-item {
   font-size: 0.82rem;
   font-weight: 600;
   color: var(--texto-principal);
+  max-width: 100%;
 }
 
 .admin-badge-status img.icone {
@@ -337,23 +357,28 @@ a.admin-nav-item {
   height: 16px;
 }
 
-/* Grade de 4 KPIs */
+/* indicadores e chamados */
 .admin-kpis-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 20px;
   margin-bottom: 28px;
 }
 
+/* cada cartao de indicador relaciona um titulo ao total preenchido pelos dados do painel. */
 .admin-kpi-card {
-  padding: 22px 24px;
+  padding: 20px;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .admin-kpi-titulo {
   display: block;
-  font-size: 0.84rem;
+  font-size: 0.86rem;
   color: var(--texto-secundario);
   margin-bottom: 12px;
+  font-family: inherit;
+  font-weight: 600;
 }
 
 .admin-kpi-valor {
@@ -364,9 +389,9 @@ a.admin-nav-item {
   line-height: 1.1;
 }
 
-/* Fila e cards operacionais */
+/* a fila compartilha cartao, cabecalho e lista entre as areas de transporte e gestao viaria. */
 .admin-fila-card {
-  padding: 28px;
+  padding: 24px;
 }
 
 .admin-fila-topo {
@@ -413,6 +438,7 @@ a.admin-nav-item {
   margin-bottom: 8px;
 }
 
+/* a etiqueta apresenta a situacao por texto; as classes cet-pill distinguem os resultados das decisoes. */
 .admin-status-pill {
   padding: 6px 14px;
   border-radius: 8px;
@@ -424,14 +450,15 @@ a.admin-nav-item {
 }
 
 .admin-chamado-item h3 {
-  font-size: 1.12rem;
-  margin-bottom: 6px;
+  font-size: 1.05rem;
+  margin-bottom: 10px;
 }
 
 .admin-chamado-local {
   font-size: 0.9rem;
   color: var(--texto-secundario);
   margin-bottom: 6px;
+  overflow-wrap: anywhere;
 }
 
 .admin-chamado-credencial {
@@ -441,11 +468,13 @@ a.admin-nav-item {
   margin-bottom: 18px;
 }
 
+/* as acoes de um atendimento acompanham o estado do chamado e podem ocupar novas linhas. */
 .admin-chamado-acoes {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 10px;
   flex-wrap: wrap;
+  margin-top: 16px;
 }
 
 .admin-rodape {
@@ -453,8 +482,9 @@ a.admin-nav-item {
   align-items: center;
   gap: 8px;
   margin-top: 24px;
-  font-size: 0.82rem;
+  font-size: 0.76rem;
   color: var(--texto-secundario);
+  flex-wrap: wrap;
 }
 
 .admin-rodape img.icone {
@@ -462,9 +492,7 @@ a.admin-nav-item {
   height: 16px;
 }
 
-/* =====================================================
-   COMPONENTES DO PAINEL CET (cet.html)
-   ===================================================== */
+/* gestao viaria e historico */
 .cet-acoes-topo {
   display: flex;
   align-items: center;
@@ -506,9 +534,10 @@ a.admin-nav-item {
   color: var(--texto-secundario);
 }
 
+/* cada item do ciclo relaciona seu nome ao tempo exibido, mantendo os dados juntos no celular. */
 .cet-ciclo-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
   background-color: var(--fundo-creme);
   border: 1px solid var(--borda);
@@ -535,7 +564,7 @@ a.admin-nav-item {
   margin-bottom: 0;
 }
 
-/* Barras horizontais de indicadores */
+/* as barras comparam indicadores; nome e valor continuam disponiveis fora do preenchimento visual. */
 .cet-barras-lista {
   display: flex;
   flex-direction: column;
@@ -545,7 +574,7 @@ a.admin-nav-item {
 
 .cet-barra-linha {
   display: grid;
-  grid-template-columns: 96px 1fr 28px;
+  grid-template-columns: minmax(0, 6rem) minmax(0, 1fr) max-content;
   align-items: center;
   gap: 14px;
 }
@@ -574,6 +603,7 @@ a.admin-nav-item {
   text-align: right;
 }
 
+/* o resumo nativo abre os mesmos indicadores em formato textual. */
 .cet-dados-texto summary {
   font-size: 0.86rem;
   font-weight: 700;
@@ -590,7 +620,7 @@ a.admin-nav-item {
   line-height: 1.7;
 }
 
-/* Timeline de Histórico e Notificações */
+/* a linha do tempo apresenta eventos em ordem; os marcadores tambem identificam cada tipo de atualizacao. */
 .cet-timeline {
   list-style: none;
   margin: 0;
@@ -643,7 +673,6 @@ a.admin-nav-item {
   margin-bottom: 0;
 }
 
-/* Linha vertical conectando os círculos no pop-up de Últimas atualizações */
 .cet-timeline-conectada li {
   position: relative;
   border-bottom: none;
@@ -660,7 +689,7 @@ a.admin-nav-item {
   background-color: #d9e2da;
 }
 
-/* Perfil do operador */
+/* o perfil aproxima avatar e identificacao antes dos demais dados profissionais. */
 .cet-perfil-topo {
   display: flex;
   align-items: center;
@@ -696,13 +725,12 @@ a.admin-nav-item {
   margin-bottom: 2px;
 }
 
-/* =====================================================
-   JANELAS POP-UP DO TOPBAR (MODAIS)
-   ===================================================== */
+/* janelas administrativas */
 .admin-modal-overlay[hidden] {
   display: none;
 }
 
+/* o fundo da janela recebe o clique externo para fechar; hidden impede sua exibicao quando inativa. */
 .admin-modal-overlay {
   position: fixed;
   inset: 0;
@@ -714,6 +742,7 @@ a.admin-nav-item {
   padding: 20px;
 }
 
+/* a caixa conserva a leitura e a rolagem do conteudo de notificacoes, perfil e acompanhamento. */
 .admin-modal-caixa {
   background-color: #f7f6f0;
   color: #183a2a;
@@ -725,6 +754,8 @@ a.admin-nav-item {
   border: 1px solid #dcdad0;
   box-shadow: 0 24px 50px rgba(0, 0, 0, 0.28);
   padding: 30px;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 body.tema-escuro .admin-modal-caixa {
@@ -765,6 +796,7 @@ body.alto-contraste .admin-modal-caixa {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 
 .admin-modal-fechar:hover {
@@ -780,251 +812,16 @@ body.alto-contraste .admin-modal-caixa {
   margin-bottom: 20px;
 }
 
-/* Seletor Tamanho das letras */
-.admin-modal-grupo-select {
-  margin-bottom: 18px;
-}
-
-.admin-modal-grupo-select label {
-  display: block;
-  font-size: 0.86rem;
-  font-weight: 700;
-  margin-bottom: 8px;
-}
-
-.admin-modal-select {
-  width: 100%;
-  padding: 13px 16px;
-  border-radius: 10px;
-  border: 1px solid var(--borda);
-  background-color: #ffffff;
-  color: var(--texto-principal);
-  font-family: inherit;
-  font-size: 0.94rem;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-/* Lista de switches */
-.admin-modal-opcoes-lista {
-  display: flex;
-  flex-direction: column;
-}
-
-.admin-modal-opcao-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 16px 0;
-  border-bottom: 1px solid var(--borda);
-  cursor: pointer;
-}
-
-.admin-modal-opcoes-lista .admin-modal-opcao-item:last-child {
-  border-bottom: none;
-}
-
-.admin-modal-opcao-info {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.admin-modal-opcao-info img.icone {
-  width: 22px;
-  height: 22px;
-  flex-shrink: 0;
-}
-
-.admin-modal-opcao-info strong {
-  display: block;
-  font-size: 0.94rem;
-  margin-bottom: 2px;
-}
-
-.admin-modal-opcao-info span {
-  display: block;
-  font-size: 0.82rem;
-  color: var(--texto-secundario);
-}
-
-/* Interruptor estilo pill */
-.admin-switch {
-  position: relative;
-  display: inline-block;
-  width: 46px;
-  height: 26px;
-  flex-shrink: 0;
-}
-
-.admin-switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.admin-switch-trilho {
-  position: absolute;
-  inset: 0;
-  background-color: #9aa29b;
-  border-radius: 999px;
-  transition: background-color 0.2s ease;
-}
-
-.admin-switch-trilho::before {
-  content: "";
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  left: 3px;
-  top: 3px;
-  background-color: #ffffff;
-  border-radius: 50%;
-  transition: transform 0.2s ease;
-}
-
-.admin-switch input:checked + .admin-switch-trilho {
-  background-color: var(--verde-floresta);
-}
-
-.admin-switch input:checked + .admin-switch-trilho::before {
-  transform: translateX(20px);
-}
-
-/* Cartão expansível: Mais opções de leitura */
-.admin-modal-mais-leitura {
-  margin-top: 12px;
-  background-color: #ffffff;
-  border: 1px solid var(--borda);
-  border-radius: 12px;
-  overflow: hidden;
-}
-
-.admin-modal-mais-btn {
-  width: 100%;
-  padding: 15px 18px;
-  border: none;
-  background: transparent;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  font-family: inherit;
-  font-size: 0.92rem;
-  color: var(--texto-principal);
-  cursor: pointer;
-}
-
-.admin-modal-mais-btn:hover {
-  background-color: var(--verde-claro);
-}
-
-.admin-modal-mais-esquerda {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.admin-modal-mais-esquerda img.icone {
-  width: 18px;
-  height: 18px;
-}
-
-.admin-modal-seta {
-  font-size: 1.3rem;
-  line-height: 1;
-  transition: transform 0.2s ease;
-}
-
-.admin-modal-mais-btn[aria-expanded="true"] .admin-modal-seta {
-  transform: rotate(90deg);
-}
-
-.admin-modal-mais-conteudo {
-  padding: 0 18px 8px;
-  border-top: 1px solid var(--borda);
-}
-
-.admin-modal-mais-conteudo .admin-modal-opcao-item:last-child {
-  border-bottom: none;
-}
-
-.admin-modal-rodape {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  flex-wrap: wrap;
-  margin-top: 22px;
-}
-
-/* Responsividade */
-@media (max-width: 980px) {
-  .admin-shell {
-    grid-template-columns: 1fr;
-  }
-
-  .admin-sidebar {
-    display: none;
-  }
-
-  .admin-sidebar.aberto {
-    display: flex;
-  }
-
-  .admin-kpis-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 720px) {
-  .cet-ciclo-grid {
-    grid-template-columns: 1fr;
-    gap: 10px;
-  }
-}
-
-@media (max-width: 560px) {
-  .admin-kpis-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .admin-topbar,
-  .admin-main {
-    padding-left: 18px;
-    padding-right: 18px;
-  }
-
-  .admin-modal-caixa {
-    padding: 22px 18px;
-  }
-}
-
-/* =====================================================
-   OTIMIZAÇÃO DO MODO ESCURO NO PAINEL (body.tema-escuro)
-   ===================================================== */
-
+/* tema escuro dos paineis */
 body.tema-escuro .admin-sidebar {
   background-color: #101b15;
   border-right: 1px solid #24362c;
-}
-
-body.tema-escuro .admin-select-area {
-  background-color: #18271f;
-  border-color: #31493c;
-  color: #f4f3ee;
-}
-
-body.tema-escuro .admin-select-area option {
-  background-color: #18271f;
-  color: #f4f3ee;
 }
 
 body.tema-escuro .admin-conteudo-coluna {
   background-color: #131a16;
 }
 
-/* Barra superior escura com texto e ícones legíveis */
 body.tema-escuro .admin-topbar {
   background-color: #18221d;
   border-bottom-color: #293830;
@@ -1054,20 +851,16 @@ body.tema-escuro .admin-operador-btn:hover {
   background-color: #223229;
 }
 
-/* Inverte os ícones pretos para branco no modo escuro */
 body.tema-escuro .admin-icon-btn img.icone,
 body.tema-escuro .admin-operador-avatar img.icone,
 body.tema-escuro .admin-badge-status img.icone,
 body.tema-escuro .admin-rodape img.icone,
 body.tema-escuro .cet-timeline-icone img.icone,
-body.tema-escuro .cet-perfil-avatar img.icone,
-body.tema-escuro .admin-modal-opcao-info img.icone,
-body.tema-escuro .admin-modal-mais-esquerda img.icone {
+body.tema-escuro .cet-perfil-avatar img.icone{
   filter: brightness(0) invert(1);
   opacity: 0.9;
 }
 
-/* Badges, pílulas de status e blocos internos */
 body.tema-escuro .admin-badge-status,
 body.tema-escuro .admin-status-pill {
   background-color: #203128;
@@ -1110,7 +903,6 @@ body.tema-escuro .admin-chamado-credencial {
   color: #7cc499;
 }
 
-/* Barras de indicadores e timeline */
 body.tema-escuro .cet-barra-trilha {
   background-color: #222f28;
 }
@@ -1129,13 +921,6 @@ body.tema-escuro .cet-timeline-conectada li:not(:last-child)::before {
   background-color: #2c3e34;
 }
 
-/* Pop-ups (modais) no modo escuro */
-body.tema-escuro .admin-modal-caixa {
-  background-color: #18211c;
-  color: #f4f3ee;
-  border-color: #2d3e35;
-}
-
 body.tema-escuro .admin-modal-fechar {
   color: #f4f3ee;
 }
@@ -1144,36 +929,11 @@ body.tema-escuro .admin-modal-fechar:hover {
   background-color: #24332b;
 }
 
-body.tema-escuro .admin-modal-select,
-body.tema-escuro .admin-modal-mais-leitura {
-  background-color: #202c26;
-  color: #f4f3ee;
-  border-color: #33463c;
-}
-
-body.tema-escuro .admin-modal-mais-btn {
-  color: #f4f3ee;
-}
-
-body.tema-escuro .admin-modal-mais-btn:hover {
-  background-color: #26362e;
-}
-
-body.tema-escuro .admin-modal-opcao-item,
-body.tema-escuro .admin-modal-mais-conteudo {
-  border-color: #2a3a31;
-}
-
-body.tema-escuro .admin-switch input:checked + .admin-switch-trilho {
-  background-color: #5ea87d;
-}
-
-/* =====================================================
-   COMPONENTES DA COORDENAÇÃO (coordenacao.html)
-   ===================================================== */
+/* coordenacao: filtros, tabelas e estacoes */
+/* os filtros da coordenacao compartilham a grade e mantem cada rotulo junto ao seu seletor. */
 .coord-filtros-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 16px;
   margin-bottom: 18px;
 }
@@ -1201,11 +961,14 @@ body.tema-escuro .admin-switch input:checked + .admin-switch-trilho {
   margin-bottom: 14px;
 }
 
+/* este envoltorio recebe a rolagem horizontal, para a tabela nao ampliar a pagina inteira. */
 .coord-tabela-wrapper {
   width: 100%;
   overflow-x: auto;
   border: 1px solid var(--borda);
   border-radius: 12px;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .coord-tabela {
@@ -1213,6 +976,7 @@ body.tema-escuro .admin-switch input:checked + .admin-switch-trilho {
   border-collapse: collapse;
   text-align: left;
   font-size: 0.9rem;
+  min-width: 640px;
 }
 
 .coord-tabela thead th {
@@ -1271,7 +1035,7 @@ body.tema-escuro .admin-switch input:checked + .admin-switch-trilho {
   margin-bottom: 0;
 }
 
-/* Lista de Estações */
+/* cada linha reune os dados da estacao e a acao que abre seus detalhes. */
 .coord-estacao-linha {
   display: flex;
   align-items: center;
@@ -1326,11 +1090,11 @@ body.tema-escuro .admin-switch input:checked + .admin-switch-trilho {
   cursor: pointer;
 }
 
-/* Toast flutuante inferior */
 .admin-toast[hidden] {
   display: none;
 }
 
+/* a mensagem temporaria aparece sobre o painel e continua limitada a largura da tela. */
 .admin-toast {
   position: fixed;
   bottom: 28px;
@@ -1344,9 +1108,11 @@ body.tema-escuro .admin-switch input:checked + .admin-switch-trilho {
   font-size: 0.88rem;
   font-weight: 600;
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+  width: max-content;
+  max-width: calc(100% - 32px);
+  overflow-wrap: anywhere;
 }
 
-/* Modo escuro na Coordenação */
 body.tema-escuro .coord-select {
   background-color: #202c26;
   color: #f4f3ee;
@@ -1380,7 +1146,6 @@ body.tema-escuro .coord-estacao-icone img.icone {
   filter: brightness(0) invert(1);
 }
 
-/* Estilos para impressão do relatório */
 @media print {
   .admin-sidebar,
   .admin-topbar,
@@ -1401,14 +1166,1219 @@ body.tema-escuro .coord-estacao-icone img.icone {
   }
 }
 
-@media (max-width: 900px) {
-  .coord-filtros-grid {
-    grid-template-columns: repeat(2, 1fr);
+/* cadastro e login administrativo */
+.cadastro-administrativo,
+.login-administrativo {
+  background-color: #f4f1e8;
+  color: #203d2e;
+  min-height: 100vh;
+}
+
+.cadastro-administrativo [hidden],
+.login-administrativo [hidden] {
+  display: none !important;
+}
+
+.cadastro-administrativo .cadastro-layout,
+.login-administrativo .cadastro-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  align-items: start;
+}
+
+.cadastro-administrativo .cadastro-card,
+.login-administrativo .cadastro-card {
+  background-color: white;
+  border: 1px solid #d5ddd1;
+  border-radius: 16px;
+  padding: 30px;
+  min-width: 0;
+}
+
+.cadastro-area-tag .icone {
+  width: 18px;
+  height: 18px;
+}
+
+.formulario-cadastro-admin,
+.formulario-login-admin {
+  width: 100%;
+  margin-top: 20px;
+}
+
+/* o conjunto de campos e seu legend identificam a etapa atual sem mudar o funcionamento do formulario. */
+.campos-etapa-cadastro {
+  border: none;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+
+.campos-etapa-cadastro legend {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #203d2e;
+  margin-bottom: 12px;
+}
+
+.orientacao-etapa,
+.campos-obrigatorios {
+  font-size: 0.9rem;
+  color: #59645b;
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+/* as classes etapa-ativa e etapa-concluida acompanham a progressao controlada pelo javascript. */
+.etapas-cadastro {
+  display: flex;
+  gap: 12px;
+  list-style: none;
+  padding: 0;
+  margin: 24px 0;
+}
+
+.etapa-cadastro {
+  flex: 1;
+  min-width: 0;
+  font-size: 0.8rem;
+  color: #59645b;
+  overflow-wrap: anywhere;
+}
+
+.barra-etapa {
+  display: block;
+  height: 4px;
+  background-color: #d5ddd1;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.etapa-ativa {
+  color: #203d2e;
+  font-weight: bold;
+}
+
+.etapa-ativa .barra-etapa {
+  background-color: #203d2e;
+}
+
+.etapa-concluida {
+  color: #456b50;
+}
+
+.etapa-concluida .barra-etapa {
+  background-color: #8aa787;
+}
+
+/* cada campo agrupa rotulo, entrada e orientacoes; aria-invalid sinaliza os erros de preenchimento. */
+.campo-cadastro {
+  margin-bottom: 18px;
+}
+
+.campo-cadastro label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: bold;
+  margin-bottom: 7px;
+}
+
+.cadastro-administrativo .asterisco,
+.login-administrativo .asterisco {
+  color: #a64235;
+}
+
+.campo-cadastro input,
+.campo-cadastro select {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px;
+  border: 1px solid #bfc9be;
+  border-radius: 8px;
+  background-color: white;
+  color: #203d2e;
+  font-family: inherit;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.campo-cadastro input::placeholder {
+  color: #59645b;
+}
+
+.campo-cadastro input:focus,
+.campo-cadastro select:focus {
+  outline: 2px solid #456b50;
+  border-color: #456b50;
+}
+
+.campo-cadastro input:disabled,
+.campo-cadastro select:disabled {
+  background-color: #e8eee4;
+  cursor: not-allowed;
+}
+
+.orientacao-campo {
+  display: block;
+  font-size: 0.8rem;
+  color: #59645b;
+  line-height: 1.5;
+  margin-top: 6px;
+}
+
+.campos-transporte {
+  margin-bottom: 18px;
+}
+
+.campo-cadastro [aria-invalid="true"] {
+  border-color: #a64235;
+}
+
+.campo-cadastro [aria-invalid="true"]:focus {
+  outline-color: #a64235;
+}
+
+/* o grupo mantem a senha e seu botao de visualizacao relacionados no formulario. */
+.campo-senha {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.campo-senha input {
+  flex: 1;
+  min-width: 0;
+}
+
+.botao-visualizar-senha {
+  width: 44px;
+  height: 48px;
+  background-color: white;
+  border: 1px solid #bfc9be;
+  border-radius: 8px;
+  cursor: pointer;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.botao-visualizar-senha:hover {
+  background-color: #e8eee4;
+}
+
+.botao-visualizar-senha:focus {
+  outline: 2px solid #456b50;
+}
+
+.botao-visualizar-senha[aria-pressed="true"] {
+  background-color: #e8eee4;
+}
+
+.botao-visualizar-senha img {
+  width: 20px;
+  height: 20px;
+}
+
+/* a lista informa as regras da senha; requisito-atendido acompanha a validacao do valor digitado. */
+.requisitos-senha {
+  padding-left: 20px;
+  margin-bottom: 20px;
+  list-style: circle;
+}
+
+.requisitos-senha li {
+  color: #59645b;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  margin-bottom: 5px;
+}
+
+.requisitos-senha .requisito-atendido {
+  color: #456b50;
+  font-weight: bold;
+  list-style: disc;
+}
+
+.mensagem-campo {
+  font-size: 0.8rem;
+  margin-top: 5px;
+}
+
+.mensagem-campo.mensagem-sucesso {
+  color: #456b50;
+}
+
+.mensagem-campo.mensagem-erro {
+  color: #a64235;
+}
+
+/* a confirmacao dos termos mantem a caixa de selecao associada ao texto e ao link de consulta. */
+.aceite-termos {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.aceite-termos input {
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  accent-color: #203d2e;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.aceite-termos input:focus {
+  outline: 2px solid #456b50;
+}
+
+.aceite-termos label {
+  font-size: 0.85rem;
+  color: #59645b;
+  line-height: 1.5;
+}
+
+.aceite-termos a {
+  color: #203d2e;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+/* os botoes desta area avancam ou retornam as etapas do cadastro. */
+.acoes-etapa-cadastro {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.botao-avancar-etapa,
+.botao-voltar-etapa {
+  padding: 12px 20px;
+  border: 1px solid #203d2e;
+  border-radius: 25px;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  min-height: 48px;
+  box-sizing: border-box;
+  flex: 1;
+}
+
+.botao-avancar-etapa {
+  background-color: #203d2e;
+  color: white;
+}
+
+.botao-voltar-etapa {
+  background-color: transparent;
+  color: #203d2e;
+}
+
+.botao-avancar-etapa:hover {
+  background-color: #34533f;
+}
+
+.botao-voltar-etapa:hover {
+  background-color: #e8eee4;
+}
+
+.botao-avancar-etapa:focus,
+.botao-voltar-etapa:focus {
+  outline: 2px solid #456b50;
+  outline-offset: 3px;
+}
+
+.botao-avancar-etapa:disabled,
+.botao-voltar-etapa:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.botao-entrar {
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+/* mensagens de erro, sucesso e alerta compartilham a estrutura de retorno ao preenchimento. */
+.mensagem-formulario {
+  padding: 12px;
+  margin: 12px 0;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.mensagem-formulario.mensagem-erro {
+  background-color: #fbeae7;
+  color: #812c25;
+  border: 1px solid #d6a19a;
+}
+
+.mensagem-formulario.mensagem-sucesso {
+  background-color: #e6efe2;
+  color: #294c32;
+  border: 1px solid #9eb89a;
+}
+
+.mensagem-formulario.mensagem-alerta {
+  background-color: #faf1db;
+  color: #71501b;
+  border: 1px solid #d7bc79;
+}
+
+.estado-autenticacao {
+  font-size: 0.85rem;
+  color: #59645b;
+  text-align: center;
+  margin-top: 8px;
+}
+
+.aviso-vinculo,
+.aviso-aprovacao,
+.aviso-acesso-restrito {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px;
+  margin: 20px 0;
+  background-color: #e8eee4;
+  color: #203d2e;
+  border: 1px solid #d5ddd1;
+  border-radius: 12px;
+}
+
+.aviso-vinculo img,
+.aviso-aprovacao img,
+.aviso-acesso-restrito img {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.aviso-vinculo strong,
+.aviso-aprovacao strong,
+.aviso-acesso-restrito strong {
+  display: block;
+  font-size: 0.95rem;
+  margin-bottom: 5px;
+}
+
+.aviso-vinculo p,
+.aviso-aprovacao p,
+.aviso-acesso-restrito p {
+  font-size: 0.85rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* a revisao apresenta os valores antes do envio e permite voltar para edita-los. */
+.resumo-cadastro {
+  background-color: #f7f8f4;
+  border: 1px solid #d5ddd1;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.resumo-cadastro h3 {
+  color: #203d2e;
+  font-size: 1rem;
+  margin-bottom: 16px;
+}
+
+.lista-resumo-cadastro {
+  margin: 0;
+  padding: 0;
+}
+
+.item-resumo {
+  margin-bottom: 14px;
+}
+
+.item-resumo dt {
+  font-size: 0.85rem;
+  color: #59645b;
+  margin-bottom: 4px;
+}
+
+.item-resumo dd {
+  font-size: 0.95rem;
+  color: #203d2e;
+  font-weight: bold;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.botao-editar-dados {
+  background-color: transparent;
+  border: none;
+  color: #456b50;
+  font-size: 0.9rem;
+  font-weight: bold;
+  text-decoration: underline;
+  padding: 10px 0;
+  cursor: pointer;
+}
+
+.botao-editar-dados:focus {
+  outline: 2px solid #456b50;
+}
+
+/* a confirmacao apresenta o protocolo demonstrativo e as orientacoes depois do cadastro. */
+.confirmacao-cadastro {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.icone-confirmacao-cadastro {
+  width: 80px;
+  height: 80px;
+  background-color: #e8eee4;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+}
+
+.icone-confirmacao-cadastro img {
+  width: 40px;
+  height: 40px;
+}
+
+.confirmacao-cadastro h2 {
+  color: #203d2e;
+  margin-bottom: 12px;
+}
+
+.confirmacao-cadastro p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.dados-solicitacao-cadastro {
+  background-color: #f7f8f4;
+  border: 1px solid #d5ddd1;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 20px 0;
+  text-align: left;
+}
+
+.item-resumo .situacao-pendente {
+  color: #71501b;
+}
+
+.proximas-etapas-cadastro {
+  text-align: left;
+  margin: 20px 0;
+}
+
+.proximas-etapas-cadastro h3 {
+  font-size: 1rem;
+  margin-bottom: 12px;
+}
+
+.proximas-etapas-cadastro ol {
+  padding-left: 20px;
+}
+
+.proximas-etapas-cadastro li {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+
+.aviso-cadastro-demonstrativo {
+  background-color: #faf1db;
+  color: #71501b;
+  padding: 12px;
+  border-radius: 8px;
+}
+
+.acoes-confirmacao-cadastro {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.opcoes-login {
+  text-align: right;
+  margin-bottom: 20px;
+}
+
+.botao-recuperar-senha {
+  background-color: transparent;
+  border: none;
+  color: #456b50;
+  font-size: 0.85rem;
+  font-weight: bold;
+  text-decoration: underline;
+  padding: 8px 0;
+  cursor: pointer;
+}
+
+.botao-recuperar-senha:focus {
+  outline: 2px solid #456b50;
+}
+
+/* os cartoes explicam os ambientes profissionais disponiveis na pagina de acesso. */
+.areas-administrativas {
+  margin: 24px 0;
+}
+
+.areas-administrativas h3 {
+  color: #203d2e;
+  font-size: 1rem;
+  margin-bottom: 14px;
+}
+
+.lista-areas-administrativas {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.area-administrativa {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  margin-bottom: 10px;
+  background-color: #f7f8f4;
+  border: 1px solid #d5ddd1;
+  border-radius: 10px;
+}
+
+.area-administrativa img {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+}
+
+.area-administrativa strong {
+  font-size: 0.9rem;
+  color: #203d2e;
+}
+
+.area-administrativa p {
+  font-size: 0.85rem;
+  color: #59645b;
+  line-height: 1.5;
+  margin: 4px 0 0;
+}
+
+.links-login-admin {
+  border-top: 1px solid #d5ddd1;
+  padding-top: 20px;
+  text-align: center;
+}
+
+.cadastro-login {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #59645b;
+  margin-top: 20px;
+}
+
+.cadastro-login a {
+  color: #456b50;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.voltar-login-cidadao {
+  display: block;
+  color: #59645b;
+  font-size: 0.85rem;
+  text-decoration: underline;
+  margin-top: 16px;
+  padding: 8px;
+}
+
+@media (max-width: 860px) {
+  .cadastro-administrativo .cadastro-layout,
+  .login-administrativo .cadastro-layout {
+    grid-template-columns: 1fr;
   }
 }
 
-@media (max-width: 560px) {
+@media (max-width: 480px) {
+  .cadastro-administrativo .cadastro-card,
+  .login-administrativo .cadastro-card {
+    padding: 20px;
+  }
+
+  .etapas-cadastro {
+    gap: 8px;
+  }
+
+  .acoes-etapa-cadastro {
+    flex-direction: column;
+  }
+}
+
+/* este dialogo nativo recebe o formulario de recuperacao e o aviso sobre a simulacao de acesso. */
+.modal-recuperacao {
+  width: 90%;
+  max-width: 450px;
+  background-color: white;
+  color: #203d2e;
+  border: 1px solid #d5ddd1;
+  border-radius: 16px;
+  padding: 24px;
+  margin: auto;
+  box-sizing: border-box;
+}
+
+.modal-recuperacao::backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.cabecalho-modal-recuperacao {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.cabecalho-modal-recuperacao h2 {
+  font-size: 1.5rem;
+  color: #203d2e;
+  margin: 0;
+}
+
+.fechar-modal-recuperacao {
+  width: 44px;
+  height: 44px;
+  background-color: #f4f1e8;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.5rem;
+  color: #203d2e;
+  cursor: pointer;
+}
+
+.fechar-modal-recuperacao:hover {
+  background-color: #e8eee4;
+}
+
+#descricao-recuperacao {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.formulario-recuperacao {
+  margin-bottom: 12px;
+}
+
+.aviso-recuperacao {
+  background-color: #faf1db;
+  color: #71501b;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+.modal-recuperacao .botao-avancar-etapa,
+.modal-recuperacao .botao-voltar-etapa {
+  width: 100%;
+}
+
+.fechar-modal-recuperacao:focus {
+  outline: 2px solid #456b50;
+}
+
+@media (max-width: 600px) {
+  .cadastro-administrativo .cadastro-card,
+  .login-administrativo .cadastro-card {
+    padding: 20px;
+  }
+
+  .cadastro-administrativo .cadastro-apresentacao h1,
+  .login-administrativo .cadastro-apresentacao h1 {
+    font-size: 2rem;
+  }
+
+  .cadastro-administrativo .cadastro-foto-arco img,
+  .login-administrativo .cadastro-foto-arco img {
+    width: 100%;
+    height: auto;
+  }
+
+  .acoes-etapa-cadastro {
+    flex-direction: column;
+  }
+
+  .acoes-etapa-cadastro button {
+    width: 100%;
+  }
+
+  .modal-recuperacao {
+    padding: 20px;
+  }
+
+  .cabecalho-modal-recuperacao h2 {
+    font-size: 1.25rem;
+  }
+}
+
+.tema-escuro {
+  background-color: #15251e;
+  color: #ffffff;
+}
+
+.tema-escuro .cadastro-card,
+.tema-escuro .modal-recuperacao {
+  background-color: #24382e;
+  color: #ffffff;
+  border-color: #78917f;
+}
+
+.tema-escuro input,
+.tema-escuro select,
+.tema-escuro .botao-visualizar-senha {
+  background-color: #15251e;
+  color: #ffffff;
+  border-color: #a3b5a6;
+}
+
+.tema-escuro h1,
+.tema-escuro h2,
+.tema-escuro h3,
+.tema-escuro legend,
+.tema-escuro .campo-cadastro label {
+  color: #ffffff;
+}
+
+.tema-escuro .orientacao-campo,
+.tema-escuro .orientacao-etapa,
+.tema-escuro .campos-obrigatorios,
+.tema-escuro .cadastro-subtitulo,
+.tema-escuro .cadastro-lead,
+.tema-escuro .cadastro-login,
+.tema-escuro .requisitos-senha li,
+.tema-escuro .aceite-termos label {
+  color: #d5ddd1;
+}
+
+.tema-escuro .resumo-cadastro,
+.tema-escuro .area-administrativa,
+.tema-escuro .dados-solicitacao-cadastro,
+.tema-escuro .aviso-vinculo,
+.tema-escuro .aviso-aprovacao,
+.tema-escuro .aviso-acesso-restrito {
+  background-color: #30483b;
+  color: #ffffff;
+}
+
+.tema-escuro .item-resumo dt,
+.tema-escuro .item-resumo dd,
+.tema-escuro .area-administrativa strong,
+.tema-escuro .area-administrativa p {
+  color: #ffffff;
+}
+
+.tema-escuro .cadastro-login a,
+.tema-escuro .aceite-termos a,
+.tema-escuro .botao-editar-dados,
+.tema-escuro .botao-recuperar-senha,
+.tema-escuro .voltar-login-cidadao {
+  color: #b9dbad;
+}
+
+.tema-escuro .botao-voltar-etapa {
+  color: #ffffff;
+  border-color: #ffffff;
+}
+
+.tema-escuro .botao-avancar-etapa {
+  background-color: #b9dbad;
+  color: #15251e;
+}
+
+.tema-escuro .botao-visualizar-senha img {
+  filter: invert(1);
+}
+
+.alto-contraste {
+  background-color: black;
+  color: white;
+}
+
+.alto-contraste .cadastro-card,
+.alto-contraste .modal-recuperacao,
+.alto-contraste .resumo-cadastro,
+.alto-contraste .area-administrativa,
+.alto-contraste .dados-solicitacao-cadastro,
+.alto-contraste .aviso-vinculo,
+.alto-contraste .aviso-aprovacao,
+.alto-contraste .aviso-acesso-restrito {
+  background-color: black;
+  color: white;
+  border: 2px solid white;
+}
+
+.alto-contraste h1,
+.alto-contraste h2,
+.alto-contraste h3,
+.alto-contraste p,
+.alto-contraste label,
+.alto-contraste legend,
+.alto-contraste small,
+.alto-contraste li,
+.alto-contraste dt,
+.alto-contraste dd,
+.alto-contraste strong,
+.alto-contraste span {
+  color: inherit;
+}
+
+.alto-contraste input,
+.alto-contraste select,
+.alto-contraste .botao-visualizar-senha {
+  background-color: black;
+  color: white;
+  border: 2px solid white;
+}
+
+.alto-contraste a,
+.alto-contraste .cadastro-login a,
+.alto-contraste .aceite-termos a,
+.alto-contraste .botao-recuperar-senha,
+.alto-contraste .botao-editar-dados {
+  color: yellow;
+  text-decoration: underline;
+}
+
+.alto-contraste .botao-avancar-etapa,
+.alto-contraste .botao-voltar-etapa {
+  background-color: black;
+  color: yellow;
+  border: 2px solid yellow;
+}
+
+.alto-contraste .etapa-ativa .barra-etapa {
+  background-color: yellow;
+}
+
+.alto-contraste .requisitos-senha .requisito-atendido {
+  color: yellow;
+  font-weight: bold;
+}
+
+.alto-contraste .mensagem-formulario {
+  background-color: black;
+  color: white;
+  border: 2px solid yellow;
+}
+
+.alto-contraste .botao-visualizar-senha img {
+  filter: invert(1);
+}
+
+.alto-contraste button:focus,
+.alto-contraste input:focus,
+.alto-contraste select:focus,
+.alto-contraste a:focus {
+  outline: 3px solid yellow;
+}
+
+.cadastro-administrativo .painel-acessibilidade,
+.login-administrativo .painel-acessibilidade {
+  display: block;
+}
+
+/* atendimentos e ocorrencias do metro */
+.pagina-metro button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.pagina-metro .form-contato {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.pagina-metro .campo-grupo {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.pagina-metro textarea {
+    resize: vertical;
+}
+
+/* a lista recebe as ocorrencias registradas no formulario do metro. */
+#lista-ocorrencias-metro {
+    margin-top: 16px;
+    padding-left: 20px;
+}
+
+#lista-ocorrencias-metro li {
+    margin-bottom: 12px;
+    font-size: 0.9rem;
+    overflow-wrap: break-word;
+}
+
+/* padroes compartilhados dos paineis */
+.pagina-admin .coord-tabela th,
+.pagina-admin .coord-tabela td {
+  padding: 16px 18px;
+  text-align: left;
+  vertical-align: middle;
+  border-bottom: 1px solid var(--borda);
+}
+
+.pagina-admin .admin-status-pill {
+  display: inline-block;
+  min-width: 96px;
+  max-width: 100%;
+  padding: 6px 10px;
+  border-radius: 12px;
+  text-align: center;
+  white-space: normal;
+  word-break: normal;
+  line-height: 1.4;
+}
+
+.pagina-admin .btn {
+  min-height: 40px;
+  padding: 10px 16px;
+  font-family: inherit;
+  font-size: 0.86rem;
+  text-align: center;
+}
+
+.pagina-admin .admin-chamado-item {
+  padding: 18px 0;
+}
+
+.pagina-admin #aba-ocorrencias h2 {
+  font-size: 1.2rem;
+  margin-top: 28px;
+  margin-bottom: 16px;
+}
+
+.pagina-admin #lista-ocorrencias-metro li {
+  padding: 16px;
+  margin-bottom: 12px;
+  border: 1px solid var(--borda);
+  border-radius: 12px;
+}
+
+.pagina-admin #lista-ocorrencias-metro {
+  padding-left: 0;
+  list-style: none;
+}
+
+.pagina-admin [hidden] {
+  display: none !important;
+}
+
+.pagina-admin .etapa-realizada {
+  color: var(--verde-floresta);
+}
+
+.pagina-admin .etapa-pendente {
+  opacity: 0.6;
+}
+
+/* este formulario confirma a justificativa antes de registrar a recusa do atendimento. */
+.pagina-admin #formulario-recusa-metro {
+  margin-top: 24px;
+}
+
+/* o acompanhamento apresenta a identificacao do chamado antes de suas etapas. */
+.pagina-admin #dados-acompanhamento-metro {
+  margin-bottom: 24px;
+}
+
+/* os cartoes desta lista apresentam os equipamentos consolidados para a coordenacao. */
+.pagina-admin #lista-equipamentos-coordenacao .card-branco {
+  padding: 24px;
+}
+
+/* superficies em alto contraste */
+body.tema-escuro,
+body.alto-contraste {
+  --fundo-creme: var(--creme);
+}
+
+body.alto-contraste .admin-sidebar,
+body.alto-contraste .admin-topbar,
+body.alto-contraste .coord-tabela thead th,
+body.alto-contraste .coord-tabela tbody td,
+body.alto-contraste .coord-estado-vazio {
+  background-color: #000000;
+  color: #ffffff;
+  border-color: #ffffff;
+}
+
+body.alto-contraste .admin-badge-status,
+body.alto-contraste .admin-status-pill,
+body.alto-contraste .cet-pill-neutro,
+body.alto-contraste .cet-pill-aprovado,
+body.alto-contraste .cet-pill-recusado {
+  background-color: #000000;
+  color: #ffffff;
+  border: 1px solid #ffffff;
+}
+
+body.alto-contraste .admin-topbar .icone,
+body.alto-contraste .admin-badge-status .icone,
+body.alto-contraste .admin-status-pill .icone,
+body.alto-contraste .cet-pill-aprovado .icone,
+body.alto-contraste .cet-pill-recusado .icone,
+body.alto-contraste .cet-timeline-icone .icone,
+body.alto-contraste .admin-rodape .icone {
+  filter: brightness(0) invert(1);
+}
+
+body.alto-contraste .admin-nav-item:hover,
+body.alto-contraste .admin-nav-item.ativo {
+  background-color: #303030;
+  color: #ffffff;
+}
+
+/* adaptacao do painel: o javascript alterna .aberto; tabelas rolam no proprio cartao. */
+.pagina-admin #btn-admin-menu-mobile {
+  display: none;
+}
+
+.admin-main,
+.admin-sidebar,
+.admin-topbar,
+.admin-modal-caixa {
+  overflow-wrap: anywhere;
+}
+
+.admin-topbar-esquerda > div,
+.admin-operador-chip > div,
+.coord-filtros-grid .campo-grupo,
+.coord-estacao-info,
+.coord-estacao-info > div,
+.cet-timeline li > div {
+  min-width: 0;
+}
+
+.admin-icon-btn,
+.admin-badge-status img.icone,
+.admin-rodape img.icone {
+  flex-shrink: 0;
+}
+
+.pagina-admin .btn,
+.pagina-admin .coord-select{
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+@media screen and (max-width: 1100px) {
+  .admin-kpis-grid,
   .coord-filtros-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media screen and (max-width: 980px) {
+  .admin-shell {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .admin-sidebar {
+    display: none;
+    padding: 18px 16px;
+  }
+
+  .admin-sidebar.aberto {
+    display: flex;
+  }
+
+  .pagina-admin #btn-admin-menu-mobile {
+    display: inline-flex;
+    flex-shrink: 0;
+  }
+
+  .admin-topbar {
+    padding: 16px;
+  }
+
+  .admin-main {
+    padding: 24px 16px;
+  }
+
+  .admin-fila-card {
+    padding: 18px;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .cet-ciclo-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+  }
+}
+
+@media screen and (max-width: 560px) {
+  .admin-kpis-grid,
+  .coord-filtros-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .admin-topbar-esquerda {
+    flex-wrap: wrap;
+  }
+
+  .admin-topbar-direita {
+    width: 100%;
+  }
+
+  .admin-operador-chip {
+    flex: 1;
+  }
+
+  .admin-modal-overlay {
+    padding: 12px;
+  }
+
+  .admin-modal-caixa {
+    padding: 22px 16px;
+  }
+
+  .admin-modal-card-interno {
+    padding: 16px;
+  }
+
+  .admin-chamado-acoes {
+    align-items: stretch;
+  }
+
+  .admin-chamado-acoes .btn {
+    width: 100%;
+  }
+
+  .cet-barra-linha {
+    grid-template-columns: minmax(0, 1fr) max-content;
+    gap: 8px;
+  }
+
+  .cet-barra-nome {
+    grid-column: 1 / -1;
   }
 }

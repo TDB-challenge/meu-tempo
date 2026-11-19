@@ -1,10 +1,39 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&family=Fraunces:wght@400;500;600&family=Atkinson+Hyperlegible:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&family=Fraunces:wght@400;500;600&family=Atkinson+Hyperlegible:wght@400;700&display=swap');/* carrega as familias de fontes usadas no texto, nos titulos e na leitura acessivel */
+
+/* guia da folha compartilhada:
+   esta base atende o site institucional, o cadastro, o login e os recursos
+   comuns das areas do cidadao e da equipe. app.css e admin.css complementam
+   esta folha nas paginas correspondentes.
+
+   leitura dos seletores:
+   .nome identifica uma classe reutilizavel; #nome identifica um elemento unico.
+   .classe.ativo combina classes no mesmo elemento; .classe .filho procura
+   elementos internos. :hover e :focus-visible representam interacoes;
+   ::before e ::after desenham detalhes sem acrescentar conteudo ao html.
+
+   grupos de classes e ids:
+   .container, .secao e .grid-* organizam largura, espacos e colunas.
+   .cabecalho, .logo, .menu e .btn-menu formam a navegacao compartilhada.
+   .btn, .icone e .etiqueta repetem a identidade dos controles e destaques.
+   .hero, .card-servico, .arte-* e .celular-* apresentam a pagina inicial.
+   .sobre-*, .faq-*, .card-integrante e .contato-* atendem as paginas de conteudo.
+   .cadastro-*, .etapa-* e .campo-* organizam etapas, campos e identificacao.
+   .rodape-* agrupa as informacoes e os links do final das paginas.
+   .botao-acessibilidade-global e .modal-acessibilidade-global sao criados
+   pelo script.js; .interruptor representa cada preferencia selecionavel.
+   #vlibras-access-wrapper e [vw] pertencem ao plugin externo de libras.
+   .tema-escuro, .alto-contraste e .fonte-legivel sao estados do body
+   controlados pelo javascript; por isso continuam mesmo sem html fixo.
+
+   as consultas @media reorganizam o conteudo conforme a largura da tela
+   ou as preferencias de movimento e cores do dispositivo.
+*/
 
 /* =====================================================
-   1. VARIÁVEIS GLOBAIS DO PROJETO
+   1. variáveis globais do projeto
    ===================================================== */
-:root {
-  /* Cores principais */
+:root {/* disponibiliza variaveis que podem ser reutilizadas com var nos demais estilos */
+  /* cores principais */
   --verde-floresta: #203D2E;
   --verde-escuro: #0C201A;
   --verde-natural: #3B654A;
@@ -14,13 +43,13 @@
   --terracota: #8A4B32;
   --branco: #FFFFFF;
 
-  /* Cores de texto e bordas */
+  /* cores de texto e bordas */
   --texto-principal: #1B2922;
   --texto-secundario: #59645B;
   --borda: #DCE0D4;
   --borda-input: #B8C3B6;
 
-  /* Cores do aplicativo */
+  /* cores do aplicativo */
   --app-fundo: #F5F4EE;
   --app-menu: #0C241C;
   --app-menu-ativo: #203F2F;
@@ -28,32 +57,32 @@
   --app-card-terracota: #E9D6C7;
   --app-iara: #E0EBD9;
 
-  /* Fontes */
+  /* fontes */
   --fonte-principal: 'Nunito Sans', sans-serif;
   --fonte-titulo: 'Fraunces', serif;
   --fonte-acessivel: 'Atkinson Hyperlegible', sans-serif;
 
-  /* Espaçamentos */
+  /* espaçamentos */
   --espaco-pequeno: 8px;
   --espaco-medio: 16px;
   --espaco-grande: 24px;
 
-  /* Arredondamentos */
+  /* arredondamentos */
   --radius-pequeno: 7px;
   --radius-medio: 10px;
   --radius-grande: 24px;
 }
 
 /* =====================================================
-   2. RESET E ESTILOS GERAIS
+   2. reset e estilos gerais
    ===================================================== */
-* {
+* {/* o asterisco aplica o ajuste inicial a todos os elementos */
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+  box-sizing: border-box;/* inclui preenchimento e borda nas medidas declaradas */
 }
 
-html {
+html {/* usa o tamanho de fonte escolhido no navegador como referencia para rem */
   font-size: 100%;
 }
 
@@ -67,12 +96,7 @@ body {
   min-height: 100vh;
 }
 
-/* Classes ativadas pelos botões de acessibilidade no JS */
-body.fonte-grande {
-  font-size: 1.18rem;
-}
-
-body.fonte-legivel,
+body.fonte-legivel,/* a lista de seletores estende a fonte legivel aos textos e controles indicados */
 body.fonte-legivel h1,
 body.fonte-legivel h2,
 body.fonte-legivel h3,
@@ -91,7 +115,8 @@ body.fonte-legivel p {
   font-weight: 500;
 }
 
-body.tema-escuro {
+body.tema-escuro {/* troca as variaveis herdadas pelos componentes quando o tema escuro esta ativo */
+  color-scheme: dark; /* adapta os controles nativos ao fundo escuro */
   --creme: #141d18;
   --branco: #1c2822;
   --verde-claro: #213028;
@@ -100,20 +125,27 @@ body.tema-escuro {
   --texto-principal: #f2f5f3;
   --texto-secundario: #c5d1c9;
   --borda: #34473d;
+  --app-card-terracota: #493127; /* mantém textos claros sobre o cartão de apoio */
+  --app-iara: #2b4031; /* mantém a área da iara no tema escolhido */
 }
 
-body.alto-contraste {
-  --creme: #ffffff;
-  --branco: #ffffff;
-  --verde-claro: #f0f0f0;
-  --verde-floresta: #000000;
-  --verde-natural: #000000;
-  --texto-principal: #000000;
-  --texto-secundario: #000000;
-  --borda: #000000;
+body.alto-contraste {/* as variaveis desta regra posterior priorizam o alto contraste quando os dois temas estao ativos */
+  color-scheme: dark; /* adapta os controles nativos ao alto contraste */
+  --creme: #000000; /* mantém o fundo principal preto */
+  --branco: #000000; /* mantém cartões e janelas pretos */
+  --verde-claro: #202020; /* diferencia superfícies selecionadas */
+  --verde-floresta: #ffffff; /* destaca títulos sobre superfícies escuras */
+  --verde-natural: #ffffff; /* preserva os destaques de texto */
+  --texto-principal: #ffffff; /* mantém a leitura sobre o preto */
+  --texto-secundario: #ffffff; /* mantém descrições legíveis */
+  --borda: #ffffff; /* delimita os componentes escuros */
+  --borda-input: #ffffff; /* destaca os limites dos campos */
+  --app-card-verde: #202020; /* mantém cartões institucionais escuros */
+  --app-card-terracota: #202020; /* mantém o cartão de serviços legível */
+  --app-iara: #202020; /* preserva o contraste da área da iara */
 }
 
-/* Tipografia */
+/* tipografia */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--fonte-titulo);
   font-weight: 500;
@@ -152,13 +184,13 @@ img {
   display: block;
 }
 
-.container {
+.container {/* centraliza o conteudo e limita sua largura nas telas grandes */
   width: 90%;
   max-width: 1180px;
-  margin: 0 auto;
+  margin: 0 auto;/* centraliza horizontalmente quando ha largura livre nas laterais */
 }
 
-/* Etiqueta superior com bolinha verde (padrão do Figma) */
+/* etiqueta superior com bolinha verde (padrão do figma) */
 .etiqueta {
   display: inline-flex;
   align-items: center;
@@ -166,12 +198,12 @@ img {
   font-size: 0.72rem;
   font-weight: 800;
   letter-spacing: 1.2px;
-  text-transform: uppercase;
+  text-transform: uppercase;/* mostra o texto em maiusculas sem alterar seu conteudo no html */
   color: var(--verde-floresta);
   margin-bottom: 14px;
 }
 
-.etiqueta::before {
+.etiqueta::before {/* cria a bolinha decorativa antes do texto da etiqueta */
   content: "";
   width: 6px;
   height: 6px;
@@ -179,77 +211,7 @@ img {
   background-color: var(--verde-natural);
 }
 
-/* =====================================================
-   3. BARRA DE ACESSIBILIDADE E CABEÇALHO
-   ===================================================== */
-.barra-util {
-  background-color: var(--verde-claro);
-  border-bottom: 1px solid var(--borda);
-  padding: 8px 0;
-  font-size: 0.82rem;
-  color: var(--texto-secundario);
-}
-
-.barra-util .container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-}
-
-.btn-acess-topo {
-  background: none;
-  border: none;
-  color: var(--texto-principal);
-  font-family: inherit;
-  font-weight: 700;
-  font-size: 0.82rem;
-  cursor: pointer;
-}
-
-.painel-acess-rapido {
-  display: none;
-  background-color: var(--branco);
-  border-bottom: 1px solid var(--borda);
-  padding: 12px 0;
-}
-
-.painel-acess-rapido.aberto {
-  display: block;
-}
-
-.painel-acess-rapido .container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.botoes-acess {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.botoes-acess button {
-  background-color: var(--verde-claro);
-  color: var(--verde-floresta);
-  border: 1px solid var(--borda);
-  padding: 6px 12px;
-  border-radius: var(--radius-pequeno);
-  font-family: inherit;
-  font-weight: 700;
-  font-size: 0.82rem;
-  cursor: pointer;
-}
-
-.botoes-acess button:hover {
-  background-color: #203D2E;
-  color: #F6F3EA;
-}
-
-.cabecalho {
+.cabecalho {/* agrupa a marca e a navegacao principal no cabecalho do site */
   background-color: var(--creme);
   padding: 18px 0;
   border-bottom: 1px solid var(--borda);
@@ -280,17 +242,17 @@ img {
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
+  flex-shrink: 0;/* impede que este item seja comprimido pelos outros elementos da linha */
 }
 
 .logo-circulo .icone,
 .logo-circulo img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: contain;/* mostra a imagem inteira preservando suas proporcoes */
 }
 
-/* Mantém o verde escuro do ícone legível quando ativar o tema escuro ou alto contraste */
+/* mantém o verde escuro do ícone legível quando ativar o tema escuro ou alto contraste */
 body.tema-escuro .logo-circulo,
 body.alto-contraste .logo-circulo {
   background-color: #faf9f5;
@@ -321,26 +283,26 @@ body.alto-contraste .logo-circulo {
   font-weight: 600;
   color: var(--texto-secundario);
   padding-bottom: 4px;
-  position: relative;
+  position: relative;/* mantem o espaco no fluxo e serve de referencia aos filhos absolutos */
 }
 
 .menu a:hover,
-.menu a.ativo {
+.menu a.ativo {/* combina a tag do link com a classe que identifica a pagina atual */
   color: var(--texto-principal);
   font-weight: 700;
 }
 
-.menu a.ativo::after {
+.menu a.ativo::after {/* desenha a marca visual abaixo do link da pagina atual */
   content: "";
-  position: absolute;
+  position: absolute;/* posiciona pela referencia ancestral sem reservar espaco no fluxo normal */
   left: 0;
   bottom: 0;
-  width: 14px;
+  width: 100%; /* acompanha a largura do item selecionado */
   height: 2px;
   background-color: var(--verde-floresta);
 }
 
-.btn-menu {
+.btn-menu {/* prepara o controle que abre a navegacao nas telas pequenas */
   display: none;
   background-color: #203D2E;
   color: #F6F3EA;
@@ -351,8 +313,8 @@ body.alto-contraste .logo-circulo {
   cursor: pointer;
 }
 
-/* Botões padrão */
-.btn {
+/* botões padrão */
+.btn {/* estabelece a aparencia compartilhada pelos botoes do site */
   display: inline-flex;
   align-items: center;
   gap: 10px;
@@ -412,9 +374,9 @@ body.alto-contraste .logo-circulo {
 }
 
 /* =====================================================
-   4. HERO (SEÇÃO PRINCIPAL DO INÍCIO)
+   4. hero (seção principal do início)
    ===================================================== */
-.hero {
+.hero {/* organiza a chamada principal e a ilustracao da pagina inicial */
   display: grid;
   grid-template-columns: 1.05fr 0.95fr;
   align-items: center;
@@ -456,34 +418,34 @@ body.alto-contraste .logo-circulo {
   color: var(--texto-secundario);
 }
 
-/* Moldura em arco da foto principal */
-.hero-visual {
-  position: relative;
+/* moldura em arco da foto principal */
+.hero-visual {/* serve de referencia para os detalhes posicionados ao redor da imagem */
+  position: relative;/* mantem o espaco no fluxo e serve de referencia aos filhos absolutos */
   padding: 14px 26px 18px 14px;
 }
 
 .arco-moldura {
   position: relative;
   border-radius: 240px 240px 14px 14px;
-  overflow: hidden;
+  overflow: hidden;/* recorta o conteudo que ultrapassa os limites desta caixa */
   border: 1px solid var(--borda);
 }
 
 .arco-moldura img {
   width: 100%;
   height: 450px;
-  object-fit: cover;
+  object-fit: cover;/* preenche a moldura e recorta o excesso sem deformar a imagem */
 }
 
-.arco-linha-externa {
-  position: absolute;
+.arco-linha-externa {/* desenha a moldura externa sem interferir no recorte da fotografia */
+  position: absolute;/* posiciona pela referencia ancestral sem reservar espaco no fluxo normal */
   top: 4px;
   right: 16px;
   bottom: 8px;
   left: 24px;
   border: 1px solid var(--borda);
   border-radius: 240px 240px 14px 14px;
-  pointer-events: none;
+  pointer-events: none;/* permite que o ponteiro alcance os elementos que estao atras */
 }
 
 .icone-sol {
@@ -501,10 +463,10 @@ body.alto-contraste .logo-circulo {
   font-weight: 700;
   letter-spacing: 2px;
   color: var(--texto-secundario);
-  white-space: nowrap;
+  white-space: nowrap;/* mantem o texto na mesma linha */
 }
 
-.selo-flutuante {
+.selo-flutuante {/* posiciona o selo sobre a composicao visual da chamada principal */
   position: absolute;
   bottom: 6px;
   left: -14px;
@@ -540,7 +502,7 @@ body.alto-contraste .logo-circulo {
 }
 
 /* =====================================================
-   5. FAIXA DE 4 PILARES E CARTÕES DOS 3 SERVIÇOS
+   5. faixa de 4 pilares e cartões dos 3 serviços
    ===================================================== */
 .faixa-pilares {
   background-color: var(--verde-claro);
@@ -549,9 +511,9 @@ body.alto-contraste .logo-circulo {
   border-bottom: 1px solid var(--borda);
 }
 
-.grid-4 {
+.grid-4 {/* utiliza quatro colunas para os pilares apresentados na mesma faixa */
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, 1fr);/* cria quatro colunas iguais na largura disponivel */
   gap: 20px;
 }
 
@@ -586,9 +548,9 @@ body.alto-contraste .logo-circulo {
   margin-bottom: 0;
 }
 
-.grid-3 {
+.grid-3 {/* organiza tres cartoes por linha nas larguras maiores */
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, 1fr);/* cria tres colunas de mesma largura */
   gap: 24px;
 }
 
@@ -596,7 +558,7 @@ body.alto-contraste .logo-circulo {
   background-color: var(--branco);
   border: 1px solid var(--borda);
   border-radius: 14px;
-  overflow: hidden;
+  overflow: hidden;/* recorta o conteudo que ultrapassa os limites desta caixa */
   display: flex;
   flex-direction: column;
 }
@@ -611,15 +573,15 @@ body.alto-contraste .logo-circulo {
   justify-content: space-between;
 }
 
-.arte-semaforo {
+.arte-semaforo {/* define o fundo da ilustracao de travessia */
   background-color: #e4eadc;
 }
 
-.arte-metro {
+.arte-metro {/* define o fundo da ilustracao de apoio no metro */
   background-color: var(--app-card-terracota);
 }
 
-.arte-mapa {
+.arte-mapa {/* define o fundo da ilustracao de localizacao */
   background-color: #e2e9db;
 }
 
@@ -641,8 +603,8 @@ body.alto-contraste .logo-circulo {
   z-index: 3;
 }
 
-/* Semáforo */
-.semaforo-conjunto {
+/* semáforo */
+.semaforo-conjunto {/* agrupa as pecas desenhadas do semaforo na ilustracao */
   position: absolute;
   left: 33%;
   top: 22px;
@@ -674,7 +636,7 @@ body.alto-contraste .logo-circulo {
   justify-content: center;
 }
 
-.luz.ativa {
+.luz.ativa {/* destaca a luz que tambem recebeu a classe ativa */
   background-color: var(--verde-salvia);
 }
 
@@ -684,7 +646,7 @@ body.alto-contraste .logo-circulo {
   background-color: #203D2E;
 }
 
-.faixa-pedestre {
+.faixa-pedestre {/* desenha a faixa de pedestres usada na composicao ilustrada */
   position: absolute;
   left: 48%;
   top: 40px;
@@ -701,8 +663,8 @@ body.alto-contraste .logo-circulo {
   border-radius: 2px;
 }
 
-/* Trem */
-.trem-frente {
+/* trem */
+.trem-frente {/* monta a frente do trem com elementos estilizados por esta folha */
   width: 94px;
   height: 114px;
   background-color: #203D2E;
@@ -723,7 +685,7 @@ body.alto-contraste .logo-circulo {
   height: 4px;
   background-color: #5b7b67;
   border-radius: 4px;
-  margin: 0 auto;
+  margin: 0 auto;/* centraliza horizontalmente quando ha largura livre nas laterais */
 }
 
 .trem-janelas {
@@ -751,7 +713,7 @@ body.alto-contraste .logo-circulo {
   background-color: #F6F3EA;
 }
 
-/* Mapa */
+/* mapa */
 .mapa-rua-1,
 .mapa-rua-2 {
   position: absolute;
@@ -774,7 +736,7 @@ body.alto-contraste .logo-circulo {
   transform: rotate(18deg);
 }
 
-.pino-verde {
+.pino-verde {/* desenha o marcador verde da ilustracao do mapa */
   width: 48px;
   height: 48px;
   border-radius: 50%;
@@ -843,11 +805,11 @@ body.alto-contraste .logo-circulo {
 }
 
 /* =====================================================
-   6. CONTEXTO, CHAT IARA, 4 PASSOS E DISPOSITIVOS
+   6. contexto, chat iara, 4 passos e dispositivos
    ===================================================== */
-.grid-2 {
+.grid-2 {/* divide a secao em duas colunas antes dos ajustes para telas menores */
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr;/* divide o espaco em duas colunas de mesma largura */
   align-items: center;
   gap: 54px;
 }
@@ -859,7 +821,7 @@ body.alto-contraste .logo-circulo {
 .foto-contexto-box img {
   width: 100%;
   height: 400px;
-  object-fit: cover;
+  object-fit: cover;/* preenche a moldura e recorta o excesso sem deformar a imagem */
   border-radius: 14px 120px 14px 14px;
 }
 
@@ -875,8 +837,8 @@ body.alto-contraste .logo-circulo {
   font-weight: 600;
 }
 
-/* Chat da IARA */
-.chat-card {
+/* chat da iara */
+.chat-card {/* delimita o cartao que apresenta a conversa ilustrativa da iara */
   background-color: var(--app-iara);
   border: 1px solid var(--borda);
   border-radius: 16px;
@@ -905,11 +867,11 @@ body.alto-contraste .logo-circulo {
   flex-direction: column;
   gap: 12px;
   max-height: 250px;
-  overflow-y: auto;
+  overflow-y: auto;/* oferece rolagem vertical quando o conteudo ultrapassa a altura disponivel */
   margin-bottom: 16px;
 }
 
-.msg-iara {
+.msg-iara {/* diferencia a mensagem da assistente na conversa */
   background-color: var(--branco);
   color: var(--texto-principal);
   padding: 14px 16px;
@@ -918,7 +880,7 @@ body.alto-contraste .logo-circulo {
   max-width: 85%;
 }
 
-.msg-usuario {
+.msg-usuario {/* diferencia a mensagem enviada pelo usuario na conversa */
   background-color: #203D2E;
   color: #F6F3EA;
   padding: 14px 16px;
@@ -937,7 +899,7 @@ body.alto-contraste .logo-circulo {
   gap: 8px;
 }
 
-.chat-form input {
+.chat-form input {/* estiliza o campo de envio dentro da demonstracao de conversa */
   flex: 1;
   border: none;
   background: transparent;
@@ -959,7 +921,7 @@ body.alto-contraste .logo-circulo {
   cursor: pointer;
 }
 
-/* 4 Passos */
+/* 4 passos */
 .passo-item {
   border-top: 1px solid var(--borda);
   padding-top: 20px;
@@ -984,8 +946,8 @@ body.alto-contraste .logo-circulo {
   font-size: 0.82rem;
 }
 
-/* Mockup Celular + Relógio */
-.dispositivos-arco {
+/* mockup celular + relógio */
+.dispositivos-arco {/* agrupa as ilustracoes de celular e relogio na secao de dispositivos */
   background-color: var(--verde-claro);
   border-radius: 220px 220px 14px 14px;
   padding: 40px 24px 20px;
@@ -1045,7 +1007,7 @@ body.alto-contraste .logo-circulo {
   margin-top: 6px;
 }
 
-.relogio-mockup {
+.relogio-mockup {/* desenha a moldura do relogio mostrado na ilustracao */
   width: 112px;
   background-color: #203D2E;
   color: #F6F3EA;
@@ -1077,10 +1039,10 @@ body.alto-contraste .logo-circulo {
   color: var(--texto-secundario);
 }
 
-/* Grade 2x2 de recursos de acessibilidade */
-.grid-recursos {
+/* grade 2x2 de recursos de acessibilidade */
+.grid-recursos {/* organiza os recursos de acessibilidade apresentados na pagina */
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr;/* divide o espaco em duas colunas de mesma largura */
   gap: 28px;
 }
 
@@ -1094,7 +1056,7 @@ body.alto-contraste .logo-circulo {
 }
 
 /* =====================================================
-   7. FAIXA ESCURA FINAL, RODAPÉ E BOTÃO LIBRAS
+   7. faixa escura final, rodapé e botão libras
    ===================================================== */
 .faixa-cta {
   background-color: #203D2E;
@@ -1102,7 +1064,7 @@ body.alto-contraste .logo-circulo {
   padding: 68px 0;
 }
 
-.faixa-cta .container {
+.faixa-cta .container {/* alinha o texto e a acao principal da faixa de convite */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -1130,7 +1092,7 @@ body.alto-contraste .logo-circulo {
   padding: 56px 0 28px;
 }
 
-.rodape-grid {
+.rodape-grid {/* distribui as colunas de informacoes e links do rodape */
   display: grid;
   grid-template-columns: 1.5fr 1fr 1fr 1fr;
   gap: 32px;
@@ -1173,31 +1135,10 @@ body.alto-contraste .logo-circulo {
   color: #9cb09e;
 }
 
-/* Botão flutuante de Libras */
-.btn-libras {
-  position: fixed;
-  right: 22px;
-  bottom: 22px;
-  background-color: #203D2E;
-  color: #F6F3EA;
-  border: 1px solid #3c5e4b;
-  padding: 10px 16px;
-  border-radius: var(--radius-medio);
-  font-family: inherit;
-  font-size: 0.85rem;
-  font-weight: 700;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  cursor: pointer;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
-  z-index: 30;
-}
-
 /* =====================================================
-   8. PÁGINAS INTERNAS (FORMULÁRIOS, EQUIPE E FAQ)
+   8. páginas internas (formulários, equipe e faq)
    ===================================================== */
-.card-branco {
+.card-branco {/* fornece a superficie reutilizavel dos cartoes de conteudo */
   background-color: var(--branco);
   border: 1px solid var(--borda);
   border-radius: 14px;
@@ -1263,20 +1204,6 @@ body.alto-contraste .logo-circulo {
   font-size: 0.9rem;
 }
 
-.avatar-equipe {
-  width: 82px;
-  height: 82px;
-  border-radius: 50%;
-  background-color: var(--verde-claro);
-  color: var(--verde-floresta);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 800;
-  font-size: 1.4rem;
-  margin-bottom: 14px;
-}
-
 .faq-item {
   background-color: var(--branco);
   border: 1px solid var(--borda);
@@ -1285,7 +1212,7 @@ body.alto-contraste .logo-circulo {
   margin-bottom: 12px;
 }
 
-.faq-item summary {
+.faq-item summary {/* o summary permite abrir e fechar o conteudo do details pelo navegador */
   font-weight: 700;
   cursor: pointer;
 }
@@ -1296,12 +1223,12 @@ body.alto-contraste .logo-circulo {
 }
 
 /* =====================================================
-   9. ÍCONES (TAG IMG)
+   9. ícones (tag img)
    ===================================================== */
 .icone {
   width: 18px;
   height: 18px;
-  object-fit: contain;
+  object-fit: contain;/* mostra a imagem inteira preservando suas proporcoes */
 }
 
 .icone-pequeno {
@@ -1316,17 +1243,28 @@ body.alto-contraste .logo-circulo {
   object-fit: contain;
 }
 
-.icone-branco {
-  filter: brightness(0) invert(1);
+.icone-branco {/* transforma os simbolos de imagem em branco para uso sobre fundos escuros */
+  filter: brightness(0) invert(1);/* converte os pixels visiveis do icone em branco */
 }
 
 /* =====================================================
-   10. RESPONSIVIDADE (TABLET E CELULAR)
+   10. responsividade (tablet e celular)
    ===================================================== */
-@media (max-width: 960px) {
+@media (max-width: 960px) {/* reduz as grades a partir de 960 pixels para acomodar tablets */
+  /* permite ampliar a fonte sem empurrar os links para fora da tela */
+  .cabecalho .container {
+    flex-wrap: wrap;
+  }
+
+  .cabecalho .menu {
+    min-width: 0;
+    max-width: 100%;
+    flex-wrap: wrap;
+  }
+
   .hero,
   .grid-2 {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr;/* empilha os elementos em uma unica coluna */
   }
 
   .grid-4,
@@ -1341,7 +1279,7 @@ body.alto-contraste .logo-circulo {
   }
 }
 
-@media (max-width: 650px) {
+@media (max-width: 650px) {/* reorganiza o menu e empilha as grades nas telas de ate 650 pixels */
   .btn-menu {
     display: block;
   }
@@ -1355,7 +1293,7 @@ body.alto-contraste .logo-circulo {
     border-top: 1px solid var(--borda);
   }
 
-  .menu.ativo {
+  .menu.ativo {/* a classe ativo exibe o menu que fica recolhido nesta largura */
     display: flex;
   }
 
@@ -1366,7 +1304,7 @@ body.alto-contraste .logo-circulo {
   .grid-4,
   .grid-3,
   .rodape-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr;/* empilha os elementos em uma unica coluna */
   }
 
   h1 {
@@ -1379,7 +1317,7 @@ body.alto-contraste .logo-circulo {
 }
 
 /* =====================================================
-   11. ESTILOS ESPECÍFICOS DA PÁGINA SOBRE
+   11. estilos específicos da página sobre
    ===================================================== */
 .sobre-topo {
   padding: 64px 0 44px;
@@ -1408,7 +1346,7 @@ body.alto-contraste .logo-circulo {
   border: 1px solid var(--borda);
 }
 
-/* Coluna editorial centralizada igual ao Figma */
+/* coluna editorial centralizada igual ao figma */
 .sobre-editorial {
   max-width: 720px;
   margin: 0 auto;
@@ -1419,7 +1357,7 @@ body.alto-contraste .logo-circulo {
   margin-bottom: 52px;
 }
 
-.bloco-editorial:last-child {
+.bloco-editorial:last-child {/* remove o espaco extra depois do ultimo bloco editorial */
   margin-bottom: 0;
 }
 
@@ -1438,7 +1376,6 @@ body.alto-contraste .logo-circulo {
   font-size: 0.98rem;
 }
 
-
 .lista-transformar {
   list-style: none;
   margin-top: 16px;
@@ -1453,7 +1390,7 @@ body.alto-contraste .logo-circulo {
   line-height: 1.6;
 }
 
-.lista-transformar li::before {
+.lista-transformar li::before {/* desenha o marcador personalizado antes de cada item da lista */
   content: "—";
   position: absolute;
   left: 0;
@@ -1461,10 +1398,8 @@ body.alto-contraste .logo-circulo {
   font-weight: 700;
 }
 
-
-
 /* =====================================================
-   12. DESTAQUE DA IARA NA PÁGINA SOBRE
+   12. destaque da iara na página sobre
    ===================================================== */
 .destaque-iara-card {
   background-color: var(--verde-claro);
@@ -1472,7 +1407,7 @@ body.alto-contraste .logo-circulo {
   border-radius: var(--radius-grande);
   padding: 48px;
   margin: 16px 0 56px;
-  display: grid;
+  display: grid;/* divide a chamada da iara em texto e fotografia */
   grid-template-columns: 1.2fr 0.8fr;
   align-items: center;
   gap: 44px;
@@ -1505,7 +1440,7 @@ body.alto-contraste .logo-circulo {
   border: 1px solid var(--borda);
 }
 
-@media (max-width: 820px) {
+@media (max-width: 820px) {/* empilha o texto e a fotografia da iara quando as duas colunas nao couberem */
   .destaque-iara-card {
     grid-template-columns: 1fr;
     padding: 28px;
@@ -1513,7 +1448,7 @@ body.alto-contraste .logo-circulo {
 }
 
 /* =====================================================
-   13. ESTILOS ESPECÍFICOS DA PÁGINA NOSSA SOLUÇÃO
+   13. estilos específicos da página nossa solução
    ===================================================== */
 .solucao-topo {
   padding: 64px 0 36px;
@@ -1535,11 +1470,11 @@ body.alto-contraste .logo-circulo {
   border-bottom: 1px solid var(--borda);
 }
 
-.solucao-bloco:last-of-type {
+.solucao-bloco:last-of-type {/* retira o divisor do ultimo bloco desse tipo na secao */
   border-bottom: none;
 }
 
-/* Quadros ilustrados grandes */
+/* quadros ilustrados grandes */
 .solucao-arte {
   height: 310px;
   border-radius: 16px 96px 16px 16px;
@@ -1587,7 +1522,7 @@ body.alto-contraste .logo-circulo {
   top: 108px;
 }
 
-/* Simuladores expansíveis */
+/* simuladores expansíveis */
 .caixa-simulador {
   display: none;
   margin-top: 32px;
@@ -1595,11 +1530,11 @@ body.alto-contraste .logo-circulo {
   border-top: 1px dashed var(--borda);
 }
 
-.caixa-simulador.aberto {
+.caixa-simulador.aberto {/* a classe aberto mostra o simulador inicialmente recolhido */
   display: block;
 }
 
-/* Cards das Duas Frentes (Cidadão, CET e Metrô) */
+/* cards das duas frentes (cidadão, cet e metrô) */
 .solucao-frentes {
   padding: 68px 0 80px;
 }
@@ -1622,7 +1557,7 @@ body.alto-contraste .logo-circulo {
 }
 
 /* =====================================================
-   14. ESTILOS ESPECÍFICOS DA PÁGINA ACESSIBILIDADE
+   14. estilos específicos da página acessibilidade
    ===================================================== */
 .acess-topo {
   padding: 64px 0 36px;
@@ -1643,7 +1578,7 @@ body.alto-contraste .logo-circulo {
   padding: 16px 0 76px;
 }
 
-.grade-controles-acess {
+.grade-controles-acess {/* agrupa os controles de acessibilidade em duas colunas */
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
@@ -1685,7 +1620,7 @@ body.alto-contraste .logo-circulo {
   gap: 24px;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 720px) {/* empilha controles e pilares de acessibilidade nesta largura */
   .grade-controles-acess,
   .grade-pilares-acess {
     grid-template-columns: 1fr;
@@ -1693,7 +1628,7 @@ body.alto-contraste .logo-circulo {
 }
 
 /* =====================================================
-   15. PERFIS AUTOMÁTICOS POR QR CODE (ACESSIBILIDADE)
+   15. perfis automáticos por qr code (acessibilidade)
    ===================================================== */
 .lista-perfis-auto {
   display: flex;
@@ -1722,7 +1657,7 @@ body.alto-contraste .logo-circulo {
 }
 
 /* =====================================================
-   17. ESTILOS DOS TOGGLES (PÁGINA ACESSIBILIDADE)
+   17. estilos dos toggles (página acessibilidade)
    ===================================================== */
 .lista-toggles {
   display: flex;
@@ -1740,7 +1675,7 @@ body.alto-contraste .logo-circulo {
   gap: 16px;
 }
 
-.item-toggle-linha:last-child {
+.item-toggle-linha:last-child {/* retira o divisor somente da ultima opcao de acessibilidade */
   border-bottom: none;
 }
 
@@ -1758,7 +1693,7 @@ body.alto-contraste .logo-circulo {
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
+  flex-shrink: 0;/* impede que este item seja comprimido pelos outros elementos da linha */
 }
 
 .toggle-info strong {
@@ -1774,7 +1709,7 @@ body.alto-contraste .logo-circulo {
   margin-bottom: 0;
 }
 
-/* O Switch estilo mobile */
+/* o switch estilo mobile */
 .switch-toggle {
   width: 52px;
   height: 28px;
@@ -1787,7 +1722,7 @@ body.alto-contraste .logo-circulo {
   flex-shrink: 0;
 }
 
-.switch-bola {
+.switch-bola {/* desenha a bolinha posicionada dentro do botao de alternancia */
   position: absolute;
   top: 3px;
   left: 3px;
@@ -1803,7 +1738,7 @@ body.alto-contraste .logo-circulo {
   background-color: var(--verde-floresta);
 }
 
-.switch-toggle.ativo .switch-bola {
+.switch-toggle.ativo .switch-bola {/* desloca a bolinha somente dentro do interruptor que esta ativo */
   transform: translateX(24px);
 }
 
@@ -1814,7 +1749,7 @@ body.alto-contraste .logo-circulo {
 }
 
 /* =====================================================
-   19. ESTILOS ESPECÍFICOS DA PÁGINA FAQ
+   19. estilos específicos da página faq
    ===================================================== */
 .faq-topo {
   padding: 64px 0 40px;
@@ -1835,14 +1770,14 @@ body.alto-contraste .logo-circulo {
   padding: 12px 0 96px;
 }
 
-.faq-layout {
+.faq-layout {/* divide as categorias e a lista de perguntas em colunas */
   display: grid;
-  grid-template-columns: 260px 1fr;
+  grid-template-columns: 260px 1fr;/* reserva 260 pixels para o menu e entrega o restante ao conteudo */
   gap: 56px;
   align-items: start;
 }
 
-/* Barra lateral de assuntos */
+/* barra lateral de assuntos */
 .faq-sidebar-titulo {
   display: block;
   font-size: 0.92rem;
@@ -1877,13 +1812,13 @@ body.alto-contraste .logo-circulo {
   color: var(--verde-floresta);
 }
 
-.faq-cat-btn.ativo {
+.faq-cat-btn.ativo {/* identifica a categoria de perguntas que esta selecionada */
   background-color: var(--verde-claro);
   color: var(--verde-floresta);
   font-weight: 700;
 }
 
-/* Card lateral "Prefere conversar?" */
+/* card lateral "prefere conversar?" */
 .faq-card-iara {
   background-color: var(--verde-claro);
   border-radius: 14px;
@@ -1908,7 +1843,7 @@ body.alto-contraste .logo-circulo {
   margin-bottom: 14px;
 }
 
-/* Campo de busca */
+/* campo de busca */
 .faq-busca-wrapper {
   position: relative;
   display: flex;
@@ -1919,7 +1854,7 @@ body.alto-contraste .logo-circulo {
   padding: 0 16px;
 }
 
-.faq-busca-wrapper:focus-within {
+.faq-busca-wrapper:focus-within {/* realca o grupo de busca quando algum controle interno recebe foco */
   border-color: var(--verde-floresta);
 }
 
@@ -1949,18 +1884,18 @@ body.alto-contraste .logo-circulo {
   padding: 4px 6px;
 }
 
-.faq-contador {
+.faq-contador {/* formata a quantidade de perguntas mostrada junto da busca */
   font-size: 0.82rem;
   color: var(--texto-secundario);
   margin: 14px 0 22px;
 }
 
-/* Acordeão de perguntas */
+/* acordeão de perguntas */
 .faq-item {
   border-bottom: 1px solid var(--borda);
 }
 
-.faq-pergunta {
+.faq-pergunta {/* alinha o texto da pergunta e seu indicador de expansao */
   width: 100%;
   display: flex;
   align-items: center;
@@ -1999,7 +1934,7 @@ body.alto-contraste .logo-circulo {
   margin-bottom: 0;
 }
 
-@media (max-width: 860px) {
+@media (max-width: 860px) {/* reorganiza categorias e perguntas para as telas menores */
   .faq-layout {
     grid-template-columns: 1fr;
     gap: 32px;
@@ -2016,7 +1951,7 @@ body.alto-contraste .logo-circulo {
 }
 
 /* =====================================================
-   20. ESTILOS ESPECÍFICOS DA PÁGINA INTEGRANTES
+   20. estilos específicos da página integrantes
    ===================================================== */
 .equipe-topo {
   padding: 64px 0 36px;
@@ -2037,32 +1972,32 @@ body.alto-contraste .logo-circulo {
   padding: 16px 0 84px;
 }
 
-/* Perspectiva 3D para a grade */
+/* perspectiva 3d para a grade */
 .grade-equipe-3d {
-  perspective: 1100px;
+  perspective: 1100px;/* define a distancia de observacao que da profundidade aos cartoes filhos */
 }
 
 .card-integrante {
   display: flex;
   flex-direction: column;
   padding: 20px 20px 24px;
-  transform-style: preserve-3d;
+  transform-style: preserve-3d;/* permite que os elementos internos participem da composicao em tres dimensoes */
   transition:
     transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
     box-shadow 0.35s ease,
     border-color 0.35s ease;
-  will-change: transform;
+  will-change: transform;/* avisa o navegador de que a transformacao do cartao pode mudar */
 }
 
-/* Efeito 3D: traz o card para frente com elevação e sombra */
+/* efeito 3d: traz o card para frente com elevação e sombra */
 .card-integrante:hover,
 .card-integrante:focus-within {
-  transform: translateY(-8px) scale(1.02) translateZ(20px);
+  transform: translateY(-8px) scale(1.02) translateZ(20px);/* combina elevacao vertical, aumento de escala e deslocamento em profundidade */
   box-shadow: 0 20px 36px rgba(24, 58, 42, 0.14);
   border-color: var(--verde-natural);
 }
 
-/* Moldura ampla da foto no topo do card */
+/* moldura ampla da foto no topo do card */
 .topo-integrante {
   position: relative;
   width: 100%;
@@ -2077,7 +2012,7 @@ body.alto-contraste .logo-circulo {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 15%;
+  object-position: center 15%;/* prioriza a regiao superior da foto ao recorta-la na moldura */
   display: block;
   transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -2086,13 +2021,13 @@ body.alto-contraste .logo-circulo {
   transform: scale(1.05);
 }
 
-/* Badge do RM flutuando sobre o canto da foto */
+/* badge do rm flutuando sobre o canto da foto */
 .badge-rm {
   position: absolute;
   top: 12px;
   right: 12px;
   background-color: rgba(250, 249, 245, 0.94);
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);/* desfoca a fotografia vista atraves do fundo semitransparente da etiqueta */
   color: var(--verde-floresta);
   font-size: 0.76rem;
   font-weight: 700;
@@ -2113,7 +2048,7 @@ body.alto-contraste .logo-circulo {
   font-weight: 700;
   color: var(--verde-natural);
   margin-bottom: 12px;
-  text-transform: uppercase;
+  text-transform: uppercase;/* mostra o texto em maiusculas sem alterar seu conteudo no html */
   letter-spacing: 0.5px;
 }
 
@@ -2124,7 +2059,7 @@ body.alto-contraste .logo-circulo {
 }
 
 .links-integrante {
-  margin-top: auto;
+  margin-top: auto;/* empurra os links para a base do cartao flexivel */
   display: flex;
   gap: 18px;
   padding-top: 14px;
@@ -2148,8 +2083,8 @@ body.alto-contraste .logo-circulo {
   margin-bottom: 0;
 }
 
-/* Respeita usuários que preferem redução de movimento */
-@media (prefers-reduced-motion: reduce) {
+/* respeita usuários que preferem redução de movimento */
+@media (prefers-reduced-motion: reduce) {/* consulta a preferencia do dispositivo para reduzir os efeitos de movimento */
   .card-integrante,
   .foto-integrante {
     transition: none;
@@ -2162,7 +2097,7 @@ body.alto-contraste .logo-circulo {
 }
 
 /* =====================================================
-   21. ESTILOS ESPECÍFICOS DA PÁGINA CONTATO
+   21. estilos específicos da página contato
    ===================================================== */
 .contato-topo {
   padding: 64px 0 48px;
@@ -2183,7 +2118,7 @@ body.alto-contraste .logo-circulo {
   padding: 12px 0 96px;
 }
 
-.contato-layout {
+.contato-layout {/* separa as informacoes de contato do formulario */
   display: grid;
   grid-template-columns: 0.9fr 1.1fr;
   gap: 64px;
@@ -2252,7 +2187,7 @@ body.alto-contraste .logo-circulo {
   font-weight: 700;
 }
 
-.form-contato {
+.form-contato {/* organiza os grupos de campos do formulario de contato */
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -2293,15 +2228,15 @@ body.alto-contraste .logo-circulo {
 }
 
 .campo-grupo textarea {
-  resize: vertical;
+  resize: vertical;/* permite ajustar a altura do campo sem alterar sua largura */
   min-height: 120px;
 }
 
-.aviso-contato:not(:empty) {
+.aviso-contato:not(:empty) {/* aplica o destaque somente quando a mensagem de retorno possui conteudo */
   margin-top: 6px;
 }
 
-@media (max-width: 860px) {
+@media (max-width: 860px) {/* empilha as informacoes e o formulario de contato */
   .contato-layout {
     grid-template-columns: 1fr;
     gap: 36px;
@@ -2319,7 +2254,7 @@ body.alto-contraste .logo-circulo {
 }
 
 /* =====================================================
-   22. ESTILOS ESPECÍFICOS DA PÁGINA PRIVACIDADE
+   22. estilos específicos da página privacidade
    ===================================================== */
 .privacidade-topo {
   padding: 64px 0 40px;
@@ -2365,7 +2300,7 @@ body.alto-contraste .logo-circulo {
   margin-top: 32px;
 }
 
-.aviso-privacidade:not(:empty) {
+.aviso-privacidade:not(:empty) {/* reserva o destaque para o aviso de privacidade que possui conteudo */
   margin-top: 14px;
   font-size: 0.9rem;
   font-weight: 600;
@@ -2374,7 +2309,7 @@ body.alto-contraste .logo-circulo {
 
 CSS
 /* =====================================================
-   23. SEÇÃO DE TERMOS DE USO (acessibilidade.html)
+   23. seção de termos de uso (acessibilidade.html)
    ===================================================== */
 .termos-secao {
   padding: 64px 0 88px;
@@ -2396,9 +2331,9 @@ CSS
   margin-bottom: 0;
 }
 
-.termos-grid {
+.termos-grid {/* distribui o conteudo dos termos em colunas */
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, 1fr);/* distribui os elementos em duas colunas iguais */
   gap: 24px;
 }
 
@@ -2414,20 +2349,20 @@ CSS
   margin-bottom: 0;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 768px) {/* empilha os blocos dos termos nas telas de ate 768 pixels */
   .termos-grid {
     grid-template-columns: 1fr;
   }
 }
 
 /* =====================================================
-   24. ESTILOS ESPECÍFICOS DA PÁGINA CADASTRO
+   24. estilos específicos da página cadastro
    ===================================================== */
 .cadastro-secao {
   padding: 56px 0 96px;
 }
 
-.cadastro-layout {
+.cadastro-layout {/* distribui a apresentacao e o formulario de cadastro */
   display: grid;
   grid-template-columns: 0.95fr 1.05fr;
   gap: 56px;
@@ -2445,7 +2380,7 @@ CSS
   margin-bottom: 32px;
 }
 
-/* Foto com recorte em arco fiel ao Figma */
+/* foto com recorte em arco fiel ao figma */
 .cadastro-foto-arco {
   width: 100%;
   max-width: 460px;
@@ -2493,10 +2428,10 @@ CSS
   margin-bottom: 24px;
 }
 
-/* Barra de progresso de 3 etapas */
-.cadastro-etapas {
+/* barra de progresso das quatro etapas do cadastro */
+.cadastro-etapas {/* organiza os indicadores de progresso do cadastro */
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);/* distribui os quatro passos do cadastro */
   gap: 12px;
   margin-bottom: 24px;
 }
@@ -2508,7 +2443,7 @@ CSS
   margin-top: 6px;
 }
 
-.etapa-item.ativa span {
+.etapa-item.ativa span {/* destaca o texto da etapa que esta em andamento */
   font-weight: 700;
   color: var(--texto-principal);
 }
@@ -2519,12 +2454,11 @@ CSS
   background-color: var(--borda);
 }
 
-.etapa-item.ativa .etapa-barra,
-.etapa-item.concluida .etapa-barra {
+.etapa-item.ativa .etapa-barra {/* identifica as barras das etapas ja concluidas */
   background-color: var(--verde-floresta);
 }
 
-/* Box verde de leitura do QR Code */
+/* box verde de leitura do qr code */
 .cadastro-qrcode-box {
   background-color: var(--verde-claro);
   border: 1px solid rgba(24, 58, 42, 0.14);
@@ -2533,7 +2467,7 @@ CSS
   margin-bottom: 22px;
 }
 
-.cadastro-qrcode-box.validado {
+.cadastro-qrcode-box.validado {/* diferencia a caixa de leitura quando ela recebeu o estado validado */
   border-color: var(--verde-floresta);
   background-color: #e4efe7;
 }
@@ -2543,17 +2477,6 @@ CSS
   align-items: flex-start;
   gap: 12px;
   margin-bottom: 14px;
-}
-
-.qrcode-icone-wrap {
-  width: 36px;
-  height: 36px;
-  border-radius: 8px;
-  background-color: rgba(24, 58, 42, 0.08);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
 }
 
 .qrcode-box-topo strong {
@@ -2568,29 +2491,6 @@ CSS
   line-height: 1.45;
   color: var(--texto-secundario);
   margin-bottom: 0;
-}
-
-.btn-qrcode-ler {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 12px 16px;
-  background-color: rgba(255, 255, 255, 0.55);
-  border: 1px solid rgba(24, 58, 42, 0.35);
-  border-radius: 10px;
-  font-family: inherit;
-  font-size: 0.9rem;
-  font-weight: 700;
-  color: var(--texto-principal);
-  cursor: pointer;
-  transition: background-color 0.2s ease, border-color 0.2s ease;
-}
-
-.btn-qrcode-ler:hover {
-  background-color: var(--branco, #ffffff);
-  border-color: var(--verde-floresta);
 }
 
 .qrcode-nota {
@@ -2624,7 +2524,7 @@ CSS
   font-weight: 600;
 }
 
-/* Etapas 2 e 3: cartões de opção */
+/* etapas 2 e 3: cartões de opção */
 .cadastro-opcoes-lista {
   display: flex;
   flex-direction: column;
@@ -2632,7 +2532,7 @@ CSS
   margin-bottom: 24px;
 }
 
-.opcao-check-card {
+.opcao-check-card {/* transforma cada opcao de cadastro em um cartao com controle e texto */
   display: flex;
   align-items: flex-start;
   gap: 12px;
@@ -2666,7 +2566,7 @@ CSS
   flex-wrap: wrap;
 }
 
-/* Rodapé interno do cartão de cadastro */
+/* rodapé interno do cartão de cadastro */
 .cadastro-card-rodape {
   margin-top: 28px;
   padding-top: 20px;
@@ -2709,7 +2609,7 @@ CSS
   text-decoration: none;
 }
 
-@media (max-width: 860px) {
+@media (max-width: 860px) {/* empilha a apresentacao e o formulario de cadastro nas telas menores */
   .cadastro-layout {
     grid-template-columns: 1fr;
     gap: 32px;
@@ -2734,20 +2634,19 @@ CSS
 }
 
 /* =====================================================
-   25. ESTILOS ESPECÍFICOS DA PÁGINA LOGIN
+   25. estilos específicos da página login
    ===================================================== */
-.campo-senha-wrap {
+.campo-senha-wrap {/* cria a referencia usada para posicionar o botao sobre o campo de senha */
   position: relative;
   display: flex;
   align-items: center;
 }
 
 .campo-senha-wrap input {
-  padding-right: 46px;
+  padding-right: 46px;/* reserva espaco para que o texto nao fique sob o botao de revelar a senha */
 }
 .campo-senha-wrap input::-ms-reveal,
-.campo-senha-wrap input::-ms-reveal,
-.campo-senha-wrap input::-ms-clear {
+.campo-senha-wrap input::-ms-clear {/* oculta os controles proprios dos navegadores que implementam estes pseudo-elementos */
   display: none;
 }
 
@@ -2803,7 +2702,7 @@ CSS
 }
 
 .login-divisor::before,
-.login-divisor::after {
+.login-divisor::after {/* cria as duas linhas decorativas nas laterais do divisor de acesso */
   content: "";
   flex: 1;
   height: 1px;
@@ -2829,22 +2728,517 @@ CSS
 .login-link-criar:hover {
   text-decoration: underline;
 }
+/* =========================================================
+   identidade compartilhada e ícones locais
+   ========================================================= */
 
-.btn-card-libras {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: transparent;
-  border: none;
-  padding: 4px 6px;
-  font-family: inherit;
-  font-size: 0.88rem;
-  font-weight: 700;
-  color: var(--texto-principal);
-  cursor: pointer;
+/* mantém a proporção do relógio da marca */
+.marca-icone {
+  width: 38px; /* mantém o ícone proporcional ao nome */
+  height: 38px; /* preserva a altura da marca */
+  object-fit: contain; /* evita distorcer a imagem */
+  flex-shrink: 0; /* preserva o tamanho em telas menores */
 }
 
-.btn-card-libras img.icone {
-  width: 18px;
-  height: 18px;
+/* aproxima a marca dos diferentes ambientes */
+.logo-titulo,
+.admin-logo-titulo {
+  font-family: var(--fonte-principal); /* reaproveita a fonte do aplicativo */
+  font-size: 1.25rem; /* padroniza o tamanho do nome */
+  font-weight: 800; /* mantém o destaque da marca */
+}
+
+/* mantém os símbolos sociais junto aos seus nomes */
+.card-integrante .link-seta {/* restringe o ajuste de link aos cartoes dos integrantes da equipe */
+  display: inline-flex; /* alinha o texto ao símbolo */
+  align-items: center; /* centraliza os elementos na altura */
+  gap: 6px; /* separa o ícone do texto */
+}
+/* =========================================================
+   acessibilidade compartilhada entre as páginas
+   ========================================================= */
+
+/* organiza o botão de ajustes abaixo do widget oficial de libras */
+.botao-acessibilidade-global {
+  position: fixed; /* acompanha a rolagem da página */
+  right: 16px; /* mantém o acesso junto à lateral */
+  top: 50%; /* acompanha a posição habitual do vlibras */
+  margin-top: 56px; /* separa os dois botões */
+  width: 48px; /* oferece uma área de toque confortável */
+  height: 48px; /* mantém o formato quadrado */
+  padding: 8px; /* afasta o símbolo das bordas */
+  border: 1px solid var(--verde-floresta); /* acompanha a paleta existente */
+  border-radius: 10px; /* suaviza os cantos do botão */
+  background-color: #203d2e; /* mantém o símbolo branco visível em todos os temas */
+  cursor: pointer; /* identifica a ação disponível */
+  z-index: 9999; /* mantém o acesso acima dos cartões */
+}
+
+/* preserva a proporção e o contraste do novo símbolo */
+.botao-acessibilidade-global img {
+  width: 100%; /* ocupa o espaço reservado ao símbolo */
+  height: 100%; /* preserva o alinhamento vertical */
+  filter: brightness(0) invert(1); /* destaca o símbolo sobre o verde */
+}
+
+/* mantém o widget oficial alinhado ao botão compartilhado */
+[vw].enabled {
+  position: fixed !important; /* preserva a posição durante o carregamento oficial */
+  right: 16px !important; /* utiliza o mesmo alinhamento lateral do botão de ajustes */
+  top: 50% !important; /* posiciona o acesso oficial acima dos ajustes */
+  width: 48px !important; /* iguala a largura visível dos dois acessos */
+  height: 48px !important; /* iguala a altura visível dos dois acessos */
+  transform: none !important; /* mantém a distância previsível entre os botões */
+}
+
+/* ajusta somente a apresentação do acesso oficial de libras */
+[vw] [vw-access-button] {
+  width: 48px !important; /* iguala a área visível ao botão de acessibilidade */
+  height: 48px !important; /* preserva o formato quadrado */
+  border-radius: 10px !important; /* acompanha os cantos dos ajustes */
+  overflow: hidden; /* mantém a imagem dentro dos cantos */
+  background-size: 48px 48px !important; /* iguala a imagem de fundo oficial à área visível */
+}
+
+/* preserva o símbolo oficial dentro da área reservada */
+[vw] [vw-access-button] img {
+  width: 48px !important; /* adapta a imagem à área de acesso */
+  height: 48px !important; /* preserva o mesmo tamanho visual */
+  object-fit: contain; /* mantém a imagem inteira */
+}
+
+/* reserva a faixa lateral dos acessos em todas as larguras */
+.com-acessibilidade:not(.app):not(.pagina-admin) main .container,
+.com-acessibilidade:not(.app):not(.pagina-admin) .rodape > .container {
+  padding-right: 80px; /* mantém o conteúdo fora dos botões fixos sem cortar os fundos das seções */
+}
+
+/* preserva a faixa mesmo nas áreas com estilos próprios */
+.app.com-acessibilidade .conteudo-app,
+.pagina-admin.com-acessibilidade .admin-main {
+  padding-right: 80px; /* protege cartões e ações no computador */
+}
+
+/* reaproveita a aparência dos cartões administrativos no diálogo nativo */
+.modal-acessibilidade-global {
+  position: fixed; /* mantém a janela dentro da tela */
+  margin: auto; /* centraliza o diálogo nativo */
+  width: 90%; /* respeita a largura de telas menores */
+  max-width: 520px; /* mantém uma leitura confortável */
+  max-height: 85vh; /* permite acessar todos os controles */
+  overflow-y: auto; /* permite rolar somente o conteúdo da janela */
+  padding: 24px; /* afasta os controles das bordas */
+  border: 1px solid var(--borda); /* preserva a borda dos cartões */
+  border-radius: 18px; /* mantém os cantos arredondados */
+  background-color: var(--branco); /* utiliza o fundo do tema atual */
+  color: var(--texto-principal); /* respeita o contraste escolhido */
+  font-family: var(--fonte-principal); /* acompanha a fonte do aplicativo */
+}
+
+/* mantém o fundo da página discreto durante os ajustes */
+.modal-acessibilidade-global::backdrop {
+  background-color: rgba(12, 32, 26, 0.45); /* destaca a janela sem mudar a paleta */
+}
+
+/* mantém o título proporcional e separado do fechamento */
+.modal-acessibilidade-global h2 {
+  font-size: 1.4rem; /* mantém a hierarquia sem ocupar toda a janela */
+  padding-right: 66px; /* reserva espaço para o botão de fechar */
+  margin-bottom: 20px; /* separa o título dos controles */
+}
+
+/* mantém o fechamento visível na parte superior */
+.fechar-acessibilidade-global {
+  position: absolute; /* posiciona o fechamento junto ao título */
+  right: 16px; /* afasta o botão da borda direita */
+  top: 16px; /* alinha o fechamento ao cabeçalho */
+  padding: 8px; /* mantém a área de toque legível */
+  border: 1px solid var(--borda); /* delimita o controle */
+  border-radius: 8px; /* acompanha os outros botões */
+  background-color: var(--verde-claro); /* reaproveita a cor dos ajustes */
+  color: var(--texto-principal); /* mantém o texto legível */
+}
+
+/* organiza cada preferência com seu controle correspondente */
+.opcao-acessibilidade-global {
+  display: flex; /* coloca o nome e o controle lado a lado */
+  align-items: center; /* centraliza o conteúdo na altura */
+  justify-content: space-between; /* separa o texto da escolha */
+  gap: 16px; /* evita aproximar texto e campo */
+  padding: 14px 0; /* separa as opções da lista */
+  border-bottom: 1px solid var(--borda); /* delimita cada preferência */
+}
+
+/* mantém as opções de ativação fáceis de selecionar */
+.opcao-acessibilidade-global input {
+  width: 48px; /* reaproveita a largura dos interruptores do perfil */
+  min-width: 48px; /* evita reduzir o controle junto a textos longos */
+  height: 28px; /* reaproveita a altura dos interruptores do perfil */
+}
+
+/* reaproveita os interruptores do perfil nos controles compartilhados */
+.interruptor {
+  appearance: none; /* retira somente a aparência visual nativa */
+  position: relative; /* posiciona a indicação dentro do controle */
+  width: 48px; /* mantém a mesma largura do perfil */
+  min-width: 48px; /* preserva a área de ativação */
+  height: 28px; /* mantém a mesma altura do perfil */
+  flex-shrink: 0; /* impede a compressão ao lado de textos */
+  margin: 0; /* evita desalinhamento com o rótulo */
+  border: 1px solid var(--borda-input); /* delimita o estado desligado */
+  border-radius: 24px; /* mantém as pontas arredondadas */
+  background-color: #737d73; /* identifica o estado desligado */
+  cursor: pointer; /* indica que o campo pode ser ativado */
+}
+
+/* representa a posição do interruptor sem alterar seu nome acessível */
+.interruptor::before {
+  content: ""; /* cria a indicação decorativa */
+  position: absolute; /* permite deslocar a indicação */
+  top: 3px; /* centraliza a indicação na altura */
+  left: 3px; /* indica inicialmente o estado desligado */
+  width: 20px; /* mantém a indicação visível */
+  height: 20px; /* preserva o formato circular */
+  border-radius: 50%; /* arredonda a indicação */
+  background-color: #ffffff; /* contrasta com o trilho escuro */
+}
+
+/* distingue a ativação pela cor e pela posição */
+.interruptor:checked {
+  background-color: #203d2e; /* identifica a preferência ativada */
+}
+
+/* desloca a indicação quando a preferência está ativada */
+.interruptor:checked::before {
+  transform: translateX(20px); /* indica o estado ligado à direita */
+}
+
+/* mantém o tamanho do interruptor dentro dos cartões de preferências */
+.opcao-check-card .interruptor {
+  width: 48px; /* preserva a largura compartilhada do controle */
+  height: 28px; /* evita a redução aplicada aos checkboxes comuns */
+}
+
+/* mantém a posição e o contorno identificáveis em alto contraste */
+.alto-contraste .interruptor:checked {
+  background-color: #ffff00; /* destaca a escolha ativada */
+}
+
+/* preserva a bolinha sobre o trilho amarelo */
+.alto-contraste .interruptor:checked::before {
+  background-color: #000000; /* evita branco sobre amarelo */
+}
+
+/* mantém os recursos nativos no contraste imposto pelo sistema */
+@media (forced-colors: active) {
+  .interruptor {
+    appearance: auto; /* recupera a apresentação nativa acessível */
+  }
+  .interruptor::before {
+    display: none; /* evita duplicar o indicador nativo */
+  }
+}
+
+/* mantém a seleção de escala compacta */
+.opcao-acessibilidade-global select {
+  padding: 6px; /* separa o texto da borda */
+  font: inherit; /* acompanha a ampliação dos textos */
+  color: inherit; /* respeita o tema escolhido */
+  background-color: var(--branco); /* mantém contraste com as opções */
+}
+
+/* reserva a separação do botão que restaura as configurações */
+.modal-acessibilidade-global .btn {
+  margin-top: 20px; /* separa a restauração das preferências */
+}
+
+/* deixa o foco visível nos novos controles */
+.botao-acessibilidade-global:focus-visible,
+.modal-acessibilidade-global button:focus-visible,
+.modal-acessibilidade-global input:focus-visible,
+.modal-acessibilidade-global select:focus-visible {
+  outline: 3px solid var(--terracota); /* destaca a navegação pelo teclado */
+  outline-offset: 3px; /* separa o foco da borda */
+}
+
+/* preserva a mesma fonte e o espaçamento da marca no aplicativo */
+.app .texto-logo strong,
+.app .logo-mobile strong {
+  font-family: var(--fonte-principal); /* reaproveita a fonte já utilizada no aplicativo */
+  font-size: 1.25rem; /* acompanha o tamanho dos outros ambientes */
+  font-weight: 800; /* mantém o destaque da marca */
+}
+
+/* mantém os recursos flutuantes acima da navegação móvel */
+@media (max-width: 600px) {
+  .botao-acessibilidade-global {
+    top: auto; /* utiliza a base da tela em celulares */
+    bottom: 140px; /* reserva espaço para a navegação com letras ampliadas */
+    right: 10px; /* mantém o acesso dentro da tela */
+    margin-top: 0; /* retira o deslocamento usado no computador */
+  }
+  [vw].enabled {
+    top: auto !important; /* utiliza o mesmo alinhamento do botão de ajustes */
+    bottom: 198px !important; /* mantém dez pixels entre os dois acessos */
+    right: 10px !important; /* acompanha a lateral escolhida */
+    transform: none; /* preserva a separação entre os controles */
+  }
+  .com-acessibilidade:not(.app):not(.pagina-admin) main .container,
+  .com-acessibilidade:not(.app):not(.pagina-admin) .rodape > .container {
+    padding-right: 58px; /* reserva uma faixa para os recursos flutuantes dentro do conteúdo */
+  }
+  .pagina-admin.com-acessibilidade .admin-main {
+    padding-right: 68px; /* impede sobreposição aos controles administrativos */
+  }
+  .app.com-acessibilidade .conteudo-app {
+    padding-right: 68px; /* mantém campos e ações fora da faixa dos controles */
+  }
+  .cadastro-etapas {
+    grid-template-columns: repeat(2, 1fr); /* mantém os quatro passos legíveis no celular */
+  }
+}
+/* permite que o formulário acompanhe a largura disponível em telas pequenas */
+.cadastro-layout > div {
+  min-width: 0; /* evita que o conteúdo force a largura das colunas */
+}
+
+/* mantém os seletores de arquivo dentro do cartão de cadastro */
+.cadastro-qrcode-box input[type="file"] {
+  max-width: 100%; /* limita o controle nativo à largura do formulário */
+}
+
+/* permite ampliar os textos sem alargar a página no celular */
+@media (max-width: 600px) {
+  .container {
+    overflow-wrap: anywhere; /* quebra palavras longas somente quando necessário */
+  }
+  .grid-2 > div,
+  .cabecalho-secao > div,
+  .chat-cabecalho > div {
+    min-width: 0; /* permite reduzir os filhos das grades e linhas flexíveis */
+    max-width: 100%; /* mantém os blocos dentro da largura disponível */
+  }
+  .etiqueta {
+    max-width: 100%; /* permite acomodar a etiqueta com fonte ampliada */
+  }
+}
+
+/* =========================================================
+   contraste das superfícies institucionais
+   ========================================================= */
+
+/* mantém os textos do protótipo de celular sobre seu fundo atual */
+.tema-escuro .celular-topo,
+.tema-escuro .celular-titulo,
+.tema-escuro .celular-opcao,
+.alto-contraste .celular-topo,
+.alto-contraste .celular-titulo,
+.alto-contraste .celular-opcao {
+  color: var(--texto-principal); /* acompanha o fundo escuro do protótipo */
+}
+
+/* mantém legendas legíveis nas ilustrações com fundos claros preservados */
+.tema-escuro .arte-metro .arte-legenda,
+.tema-escuro .arte-metro .arte-tag-topo,
+.alto-contraste .arte-metro .arte-legenda,
+.alto-contraste .arte-metro .arte-tag-topo {
+  color: var(--texto-principal); /* acompanha a superfície temática do cartão */
+}
+
+/* mantém os símbolos escuros legíveis sobre as superfícies dos temas */
+.tema-escuro .cabecalho .icone,
+.tema-escuro .campo-senha-wrap .icone,
+.alto-contraste .cabecalho .icone,
+.alto-contraste .campo-senha-wrap .icone {
+  filter: brightness(0) invert(1); /* destaca os símbolos sobre o fundo escuro */
+}
+
+/* mantém os textos do rodapé claros ao ativar a fonte de leitura */
+body.fonte-legivel .rodape p,
+body.fonte-legivel .faixa-cta p {
+  color: #d7e2d5; /* preserva a leitura sobre o verde escuro */
+}
+
+/* mantém links de conteúdo identificáveis por foco e passagem do ponteiro */
+.link-seta:hover,
+.link-seta:focus-visible,
+.checkbox-termos a:hover,
+.checkbox-termos a:focus-visible,
+.cadastro-login a:hover,
+.cadastro-login a:focus-visible {
+  text-decoration: underline; /* diferencia o link sem depender apenas da cor */
+}
+
+/* mantém os campos obrigatórios identificáveis sobre superfícies escuras */
+.tema-escuro .asterisco,
+.alto-contraste .asterisco {
+  color: #ffb6a7; /* preserva o contraste do sinal de obrigatoriedade */
+}
+
+/* =========================================================
+   campos e preferências compartilhados
+   ========================================================= */
+
+/* organiza os dados de identificação sem alterar a estrutura das etapas */
+.cadastro-passo .form-contato {
+  display: grid; /* distribui os campos na largura disponível */
+  grid-template-columns: repeat(2, minmax(0, 1fr)); /* mantém duas colunas no computador */
+  gap: 16px; /* separa os campos do formulário */
+}
+
+/* mantém a seleção de arquivo alinhada aos demais controles */
+input[type="file"]::file-selector-button {
+  padding: 10px 14px; /* oferece uma área de seleção confortável */
+  margin-right: 12px; /* separa o botão do nome do arquivo */
+  border: 1px solid var(--borda-input); /* mantém o contorno dos formulários */
+  border-radius: 8px; /* acompanha os campos existentes */
+  background-color: #203d2e; /* preserva a identidade dos botões */
+  color: #ffffff; /* mantém a leitura sobre o fundo verde */
+  font: inherit; /* acompanha a preferência de tamanho das letras */
+  cursor: pointer; /* indica a possibilidade de selecionar um arquivo */
+}
+
+/* separa a lista de arquivos dos botões de seleção */
+#arquivos-cadastro {
+  margin-top: 12px; /* diferencia a seleção do resumo dos arquivos */
+}
+
+/* separa os blocos de leitura dos dados e de revisão */
+.resumo-cadastro .cadastro-qrcode-box {
+  margin-top: 16px; /* mantém o resumo distante do bloco anterior */
+}
+
+/* reutiliza os cartões do cadastro na edição dos dados do perfil */
+.app #formulario-perfil fieldset.cadastro-opcoes-lista {
+  display: grid; /* organiza as opções de mobilidade */
+  grid-template-columns: repeat(2, minmax(0, 1fr)); /* utiliza duas colunas no computador */
+  gap: 12px; /* separa as opções de preenchimento */
+}
+
+/* mantém texto e seleção alinhados nas opções do perfil */
+.app #formulario-perfil .opcao-check-card {
+  display: flex; /* posiciona o controle junto ao texto */
+  align-items: center; /* centraliza os elementos na altura */
+  gap: 10px; /* separa o texto da seleção */
+  padding: 12px; /* oferece uma área confortável de seleção */
+}
+
+/* acomoda os formulários e as opções em telas pequenas */
+@media (max-width: 600px) {
+  .cadastro-passo .form-contato,
+  .app #formulario-perfil fieldset.cadastro-opcoes-lista {
+    grid-template-columns: 1fr; /* mantém os campos legíveis no celular */
+  }
+}
+
+/* preserva o relógio escuro sobre o círculo claro já existente */
+body.tema-escuro .logo-circulo .icone,
+body.alto-contraste .logo-circulo .icone {
+  filter: brightness(0); /* mantém o símbolo visível sobre o fundo claro da marca */
+}
+
+/* mantém o relógio do cabeçalho móvel visível nas superfícies escuras */
+.app.tema-escuro .logo-mobile .marca-icone,
+.app.alto-contraste .logo-mobile .marca-icone {
+  filter: brightness(0) invert(1); /* acompanha o texto claro da marca no aplicativo */
+}
+/* acomoda os campos e os textos ampliados nas menores telas */
+@media (max-width: 600px) {
+  .chat-form input,
+  .cadastro-passo .campo-grupo {
+    min-width: 0; /* permite reduzir o controle sem alargar seu cartão */
+  }
+  .com-acessibilidade main {
+    overflow-wrap: anywhere; /* mantém palavras longas dentro da área de leitura */
+  }
+}
+
+/* =========================================================
+   posição do acesso visível do vlibras oficial
+   ========================================================= */
+
+/* adapta o elemento externo que contém o botão oficial em sua área isolada */
+#vlibras-access-wrapper {
+  position: fixed; /* acompanha a tela sem modificar os eventos oficiais */
+  right: 4px; /* compensa os dez pixels internos ampliados para alinhar os acessos */
+  top: calc(24px - 10vh); /* compensa a posição central interna e mantém o botão em metade da tela */
+  width: 0; /* usa a lateral direita como referência para o botão interno */
+  height: 0; /* evita criar uma área vazia sobre o conteúdo */
+  transform: scale(1.2); /* amplia o botão oficial de quarenta para quarenta e oito pixels */
+  transform-origin: top right; /* preserva a referência usada no alinhamento lateral */
+  z-index: 9998; /* mantém o acesso visível junto ao botão de ajustes */
+}
+
+/* mantém o botão oficial dez pixels acima dos ajustes no celular */
+@media (max-width: 600px) {
+  #vlibras-access-wrapper {
+    right: -2px; /* compensa a margem interna ampliada e mantém dez pixels da borda */
+    top: calc(40vh - 222px); /* compensa o centro interno e posiciona o botão acima dos ajustes */
+  }
+}
+
+/* =========================================================
+   escaneamento do cadastro
+   ========================================================= */
+
+/* apresenta câmera e arquivo lado a lado sem acumular instruções */
+.cadastro-leitura-acoes {
+  display: flex; /* reúne as opções de seleção */
+  flex-wrap: wrap; /* acomoda os botões no celular */
+  gap: 10px; /* separa cada ação */
+  margin: 12px 0; /* diferencia a seleção do nome do arquivo */
+}
+
+/* reaproveita o botão existente como área do seletor nativo */
+.cadastro-arquivo {
+  position: relative; /* mantém o seletor sobre seu rótulo */
+  overflow: hidden; /* limita a área clicável ao botão */
+  cursor: pointer; /* identifica a seleção disponível */
+}
+
+/* mantém o campo acessível sem mostrar duas vezes o nome do arquivo */
+.cadastro-arquivo input[type="file"] {
+  position: absolute; /* permite acionar a seleção pela área inteira */
+  top: 0; /* alinha o campo ao botão */
+  left: 0; /* utiliza a mesma margem do rótulo */
+  width: 100%; /* oferece toda a área de interação */
+  height: 100%; /* acompanha a altura do botão */
+  opacity: 0; /* preserva o seletor nativo com aparência do projeto */
+  cursor: pointer; /* mantém a indicação de seleção */
+}
+
+/* indica o foco de teclado no botão que contém o seletor */
+.cadastro-arquivo:focus-within {
+  outline: 3px solid var(--terracota); /* destaca a opção em foco */
+  outline-offset: 3px; /* separa a indicação da borda */
+}
+
+/* limita a prévia para que o documento não ocupe o formulário inteiro */
+#arquivos-cadastro img {
+  display: block; /* mantém a prévia em uma linha própria */
+  width: auto; /* preserva a proporção original */
+  max-width: 100%; /* impede que a imagem ultrapasse o cartão */
+  max-height: 180px; /* mantém a prévia compacta */
+  object-fit: contain; /* apresenta a imagem sem cortar o documento */
+  margin: 12px 0; /* separa a prévia das ações */
+  border-radius: 8px; /* acompanha o arredondamento dos campos */
+}
+
+/* separa o comprovante opcional sem criar outro formulário */
+#complementar-cadastro {
+  margin-top: 16px; /* diferencia o documento complementar */
+  padding-top: 12px; /* separa o título do divisor */
+  border-top: 1px solid var(--borda); /* delimita a opção adicional */
+}
+
+/* mantém a identificação do documento curta e alinhada */
+#rotulo-identificacao {
+  margin-top: 14px; /* afasta o documento da escolha de perfil */
+  margin-bottom: 0; /* aproxima o rótulo das ações */
+  font-weight: 700; /* destaca o documento solicitado */
+}
+
+/* respeita os elementos recolhidos durante a seleção do documento */
+#form-cadastro [hidden] {
+  display: none !important; /* evita prévias vazias e ações antes da seleção */
 }

@@ -7,18 +7,18 @@
     <link rel="stylesheet" href="../../css/style.css" />
     <link rel="stylesheet" href="../../css/admin.css">
     <script src="../../js/script.js" defer></script>
+    <script src="../../js/dados.js" defer></script>
     <script src="../../js/administrativo.js" defer></script>
+    <!-- importa as funcionalidades dos painéis administrativos -->
 </head>
-<body>
-
-    <body class="pagina-admin">
+<body class="pagina-admin">
   <div class="admin-shell">
     <!-- ================= BARRA LATERAL ESQUERDA ================= -->
     <aside id="admin-sidebar" class="admin-sidebar" aria-label="Navegação administrativa">
       <div class="admin-sidebar-topo">
         <a href="../index.html" class="admin-logo">
           <span class="admin-logo-circulo">
-            <img src="../../assets/icones/clock-three.png" alt="" class="icone" />
+            <img src="../../assets/icones/relogio-contorno.png" alt="" class="icone" />
           </span>
           <div>
             <span class="admin-logo-titulo">meu tempo</span>
@@ -27,15 +27,6 @@
         </a>
 
         <div class="admin-ambiente-label">AMBIENTE ADMINISTRATIVO</div>
-
-        <div class="admin-area-select-grupo">
-          <label for="seletor-area-trabalho">Área de trabalho <span class="asterisco">*</span></label>
-          <select id="seletor-area-trabalho" class="admin-select-area">
-            <option value="metro.html">Agente Metrô / CPTM</option>
-            <option value="cet.html" selected>Operador CET</option>
-            <option value="coordenacao.html">Coordenador</option>
-          </select>
-        </div>
 
         <nav class="admin-nav" aria-label="Seções do painel CET">
           <button type="button" class="admin-nav-item ativo" data-admin-aba="visao-geral">
@@ -49,7 +40,7 @@
           </button>
 
           <button type="button" class="admin-nav-item" data-admin-aba="cruzamentos">
-            <img src="../../assets/icones/marker.png" alt="" class="icone" />
+            <img src="../../assets/icones/marcador.png" alt="" class="icone" />
             <span>Cruzamentos</span>
           </button>
 
@@ -59,12 +50,12 @@
           </button>
 
           <button type="button" class="admin-nav-item" data-admin-aba="indicadores">
-            <img src="../../assets/icones/gráfico.png" alt="" class="icone" />
+            <img src="../../assets/icones/grafico.png" alt="" class="icone" />
             <span>Indicadores</span>
           </button>
 
           <button type="button" class="admin-nav-item" data-admin-aba="historico">
-            <img src="../../assets/icones/clock.png" alt="" class="icone" />
+            <img src="../../assets/icones/relogio-inteligente.png" alt="" class="icone" />
             <span>Histórico</span>
           </button>
 
@@ -74,7 +65,7 @@
           </button>
 
           <button type="button" class="admin-nav-item" data-admin-aba="perfil">
-            <img src="../../assets/icones/user.png" alt="" class="icone" />
+            <img src="../../assets/icones/usuario.png" alt="" class="icone" />
             <span>Perfil do operador</span>
           </button>
         </nav>
@@ -83,7 +74,8 @@
       <div class="admin-sidebar-rodape">
         <a href="../solucao01.html" class="admin-link-secundario">Ver área do cidadão</a>
         <a href="../index.html" class="admin-link-secundario">Voltar ao site</a>
-        <a href="../solucao02.html" class="admin-link-sair">
+        <!-- direciona ao login e identifica a saída para encerrar a sessão administrativa -->
+        <a href="login.html" class="admin-link-sair" data-sair>
           <img src="../../assets/icones/sair.png" alt="" class="icone" />
           <span>Sair</span>
         </a>
@@ -93,39 +85,21 @@
     <!-- ================= ÁREA PRINCIPAL DIREITA ================= -->
     <div class="admin-conteudo-coluna">
       <!-- Barra de ajustes rápidos de acessibilidade -->
-      <div id="painel-acess-rapido" class="painel-acess-rapido">
-        <div class="admin-container">
-          <strong>Ajustes rápidos de leitura:</strong>
-          <div class="botoes-acess">
-            <button type="button" class="acao-aumentar">A+ Aumentar texto</button>
-            <button type="button" class="acao-diminuir">A- Texto normal</button>
-            <button type="button" class="acao-fonte-legivel">Fonte Alta Legibilidade</button>
-            <button type="button" class="acao-contraste">Alto contraste</button>
-            <button type="button" class="acao-tema">Tema escuro</button>
-          </div>
-        </div>
-      </div>
+
 
       <!-- Topbar da Região e Operador -->
       <header class="admin-topbar">
         <div class="admin-topbar-esquerda">
-          <button type="button" id="btn-admin-menu-mobile" class="btn-menu">Menu</button>
+          <button type="button" id="btn-admin-menu-mobile" aria-controls="admin-sidebar" aria-expanded="false" class="btn-menu">Menu</button>
           <div>
             <span class="admin-breadcrumb">MEU TEMPO / CET · GESTÃO VIÁRIA</span>
-            <strong class="admin-estacao-titulo">Região Paulista</strong>
+            <!-- identifica o local de atuação do profissional -->
+            <strong class="admin-estacao-titulo" data-local-profissional>Região Paulista</strong>
           </div>
         </div>
 
         <div class="admin-topbar-direita">
-          <button
-            type="button"
-            id="btn-admin-acessibilidade"
-            class="admin-icon-btn"
-            aria-label="Abrir recursos de acessibilidade"
-            title="Recursos de acessibilidade"
-          >
-            <img src="../../assets/icones/homem.png" alt="" class="icone" />
-          </button>
+
 
           <button
             type="button"
@@ -144,11 +118,12 @@
             aria-label="Abrir perfil do operador"
           >
             <span class="admin-operador-avatar">
-              <img src="../../assets/icones/user.png" alt="" class="icone" />
+              <img src="../../assets/icones/usuario.png" alt="" class="icone" />
             </span>
             <div>
-              <strong>Carlos Oliveira</strong>
-              <span>Matrícula 48217</span>
+              <!-- identifica o profissional conectado -->
+              <strong data-nome-profissional>Carlos Oliveira</strong>
+              <span data-matricula-profissional>Matrícula 48217</span>
             </div>
           </button>
         </div>
@@ -217,7 +192,7 @@
                 <div class="admin-chamado-meta">
                   <span>TR-102 · 14:37 · Origem: IARA</span>
                   <span class="admin-status-pill cet-pill-recusado">
-                    <img src="../../assets/icones/X.png" alt="" class="icone" />
+                    <img src="../../assets/icones/fechar.png" alt="" class="icone" />
                     RECUSADO
                   </span>
                 </div>
@@ -249,7 +224,7 @@
                 <div class="admin-chamado-meta">
                   <span>TR-101 · 14:35 · Origem: IARA</span>
                   <span class="admin-status-pill cet-pill-aprovado">
-                    <img src="../../assets/icones/check.png" alt="" class="icone" />
+                    <img src="../../assets/icones/confirmacao.png" alt="" class="icone" />
                     APROVADO
                   </span>
                 </div>
@@ -308,6 +283,11 @@
 
             <div id="espelho-decisoes-cet" class="admin-chamados-lista"></div>
           </div>
+          <!-- apresenta os pedidos compartilhados com o aplicativo -->
+          <section class="card-branco admin-fila-card" aria-labelledby="titulo-lista-pedidos-cet">
+            <div class="admin-fila-topo"><h2 id="titulo-lista-pedidos-cet">Solicitações de travessia</h2></div>
+            <div id="lista-pedidos-cet" class="admin-chamados-lista"></div>
+          </section>
         </section>
 
         <!-- ==================== ABA 3: CRUZAMENTOS ==================== -->
@@ -319,7 +299,7 @@
             </div>
 
             <div class="admin-badge-status">
-              <img src="../../assets/icones/sinal.png" alt="" class="icone" />
+              <img src="../../assets/icones/wifi.png" alt="" class="icone" />
               <span>Acompanhamento de pedidos</span>
             </div>
           </div>
@@ -459,7 +439,7 @@
             </div>
 
             <div class="admin-badge-status">
-              <img src="../../assets/icones/sinal.png" alt="" class="icone" />
+              <img src="../../assets/icones/wifi.png" alt="" class="icone" />
               <span>Acompanhamento de pedidos</span>
             </div>
           </div>
@@ -474,7 +454,7 @@
 
             <article class="admin-chamado-item">
               <div class="admin-chamado-meta">
-                <span>MT-1041 · Hoje · 09:15</span>
+                <span>ZEL-1041 · Hoje · 09:15</span>
               </div>
 
               <h3>Piso tátil danificado</h3>
@@ -498,6 +478,11 @@
 
             <div id="aviso-zeladoria" class="aviso-contato" role="status" aria-live="polite" style="margin-top: 16px;"></div>
           </div>
+          <!-- apresenta os pedidos compartilhados com o aplicativo -->
+          <section class="card-branco admin-fila-card" aria-labelledby="titulo-lista-relatos-cet">
+            <div class="admin-fila-topo"><h2 id="titulo-lista-relatos-cet">Relatos do aplicativo</h2></div>
+            <div id="lista-relatos-cet" class="admin-chamados-lista"></div>
+          </section>
         </section>
 
         <!-- ==================== ABA 5: INDICADORES ==================== -->
@@ -586,46 +571,28 @@
               </div>
             </div>
 
-            <ul class="cet-timeline">
+            <ul data-etapas-operacionais class="cet-timeline">
+
+
+
               <li>
-                <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
+                <span class="cet-timeline-icone"><img src="../../assets/icones/confirmacao.png" alt="" class="icone" /></span>
                 <div>
-                  <strong>MT-1042 · Funcionário a caminho</strong>
-                  <p>14:35 · Aguarde próximo à entrada principal.</p>
-                </div>
-              </li>
-              <li>
-                <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
-                <div>
-                  <strong>MT-1042 · Aprovado</strong>
-                  <p>14:33</p>
-                </div>
-              </li>
-              <li>
-                <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
-                <div>
-                  <strong>MT-1042 · Pedido recebido</strong>
-                  <p>14:32</p>
-                </div>
-              </li>
-              <li>
-                <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
-                <div>
-                  <strong>MT-1041 · Concluído</strong>
+                  <strong>ZEL-1041 · Concluído</strong>
                   <p>11:45 · Passagem desobstruída.</p>
                 </div>
               </li>
               <li>
-                <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
+                <span class="cet-timeline-icone"><img src="../../assets/icones/confirmacao.png" alt="" class="icone" /></span>
                 <div>
-                  <strong>MT-1041 · Em análise</strong>
+                  <strong>ZEL-1041 · Em análise</strong>
                   <p>09:22</p>
                 </div>
               </li>
               <li>
-                <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
+                <span class="cet-timeline-icone"><img src="../../assets/icones/confirmacao.png" alt="" class="icone" /></span>
                 <div>
-                  <strong>MT-1041 · Pedido recebido</strong>
+                  <strong>ZEL-1041 · Pedido recebido</strong>
                   <p>09:15</p>
                 </div>
               </li>
@@ -655,23 +622,17 @@
               </div>
             </div>
 
-            <ul class="cet-timeline">
+            <ul data-etapas-operacionais class="cet-timeline">
+
               <li>
-                <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
-                <div>
-                  <strong>MT-1042 · Funcionário a caminho</strong>
-                  <p>14:35 · Aguarde próximo à entrada principal.</p>
-                </div>
-              </li>
-              <li>
-                <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
+                <span class="cet-timeline-icone"><img src="../../assets/icones/confirmacao.png" alt="" class="icone" /></span>
                 <div>
                   <strong>TR-102 · Ciclo preservado (8s)</strong>
                   <p>14:37 · Av. Paulista &times; Rua Augusta mantido sem alteração.</p>
                 </div>
               </li>
               <li>
-                <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
+                <span class="cet-timeline-icone"><img src="../../assets/icones/confirmacao.png" alt="" class="icone" /></span>
                 <div>
                   <strong>TR-101 · Tempo estendido programado (28s)</strong>
                   <p>14:35 · Av. Paulista &times; Av. Brigadeiro Luís Antônio aguardando transição.</p>
@@ -698,12 +659,16 @@
           <div class="card-branco admin-fila-card">
             <div class="cet-perfil-topo">
               <span class="cet-perfil-avatar">
-                <img src="../../assets/icones/user.png" alt="" class="icone" />
+                <img src="../../assets/icones/usuario.png" alt="" class="icone" />
               </span>
               <div>
-                <h2>Carlos Oliveira</h2>
-                <p>Matrícula 48217 · CET · Gestão viária</p>
-                <p>Vínculo: Região Paulista</p>
+                <!-- identifica os dados do profissional conectado -->
+                <h2 data-nome-profissional>Carlos Oliveira</h2>
+                <p>Matrícula <span data-matricula-profissional>48217</span> · <span data-funcao-profissional>CET · Gestão viária</span></p>
+                <p>Vínculo: <span data-local-profissional>Região Paulista</span></p>
+                <!-- apresenta a instituição e a linha da sessão -->
+                <p>Instituição: <span data-orgao-profissional></span></p>
+                <p>Linha: <span data-linha-profissional></span></p>
               </div>
             </div>
 
@@ -712,10 +677,8 @@
             </div>
 
             <div class="admin-chamado-acoes">
-              <a href="../solucao02.html" class="btn btn-contorno">
-                Trocar perfil &rarr;
-              </a>
-              <a href="../solucao02.html" class="btn">
+              <!-- direciona ao login e identifica a saída para encerrar a sessão administrativa -->
+              <a href="login.html" class="btn" data-sair>
                 Sair &rarr;
               </a>
             </div>
@@ -724,141 +687,16 @@
 
         <!-- Rodapé da área operacional -->
         <footer class="admin-rodape">
-          <img src="../../assets/icones/shield-check.png" alt="" class="icone" />
+          <img src="../../assets/icones/seguranca.png" alt="" class="icone" />
           <span>Operação semafórica e zeladoria · Região Paulista · CET.</span>
+          <span>Projeto acadêmico · FIAP · Sem integração com operadoras.</span>
         </footer>
       </main>
     </div>
   </div>
 
 <!-- ================= POP-UP 1: ACESSIBILIDADE ================= -->
-  <div id="modal-admin-acessibilidade" class="admin-modal-overlay" hidden>
-    <div
-      class="admin-modal-caixa"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="titulo-modal-acess"
-    >
-      <div class="admin-modal-topo">
-        <h2 id="titulo-modal-acess">Uma experiência do seu jeito</h2>
-        <button
-          type="button"
-          class="admin-modal-fechar"
-          data-fechar-modal
-          aria-label="Fechar janela de acessibilidade"
-        >
-          &times;
-        </button>
-      </div>
 
-      <div class="admin-modal-grupo-select">
-        <label for="modal-select-fonte">Tamanho das letras</label>
-        <select id="modal-select-fonte" class="admin-modal-select">
-          <option value="100" selected>100% — padrão</option>
-          <option value="115">115% — médio</option>
-          <option value="130">130% — grande</option>
-          <option value="150">150% — extra grande</option>
-        </select>
-      </div>
-
-      <div class="admin-modal-opcoes-lista">
-        <label class="admin-modal-opcao-item" for="modal-toggle-contraste">
-          <div class="admin-modal-opcao-info">
-            <img src="../../assets/icones/eye.png" alt="" class="icone" />
-            <div>
-              <strong>Alto contraste</strong>
-              <span>Textos e botões mais destacados.</span>
-            </div>
-          </div>
-          <span class="admin-switch">
-            <input type="checkbox" id="modal-toggle-contraste" />
-            <span class="admin-switch-trilho"></span>
-          </span>
-        </label>
-
-        <label class="admin-modal-opcao-item" for="modal-toggle-iara">
-          <div class="admin-modal-opcao-info">
-            <img src="../../assets/icones/artificial-intelligence.png" alt="" class="icone" />
-            <div>
-              <strong>Ouvir a IARA</strong>
-              <span>Respostas por voz e por texto.</span>
-            </div>
-          </div>
-          <span class="admin-switch">
-            <input type="checkbox" id="modal-toggle-iara" />
-            <span class="admin-switch-trilho"></span>
-          </span>
-        </label>
-
-        <label class="admin-modal-opcao-item" for="modal-toggle-vibrar">
-          <div class="admin-modal-opcao-info">
-            <img src="../../assets/icones/watch-smart.png" alt="" class="icone" />
-            <div>
-              <strong>Vibrar nos avisos</strong>
-              <span>Quando o dispositivo permitir.</span>
-            </div>
-          </div>
-          <span class="admin-switch">
-            <input type="checkbox" id="modal-toggle-vibrar" />
-            <span class="admin-switch-trilho"></span>
-          </span>
-        </label>
-      </div>
-
-      <!-- Cartão expansível: Mais opções de leitura -->
-      <div class="admin-modal-mais-leitura">
-        <button
-          type="button"
-          id="btn-mais-opcoes-leitura"
-          class="admin-modal-mais-btn"
-          aria-expanded="false"
-        >
-          <span class="admin-modal-mais-esquerda">
-            <img src="../../assets/icones/filtro.png" alt="" class="icone" />
-            <strong>Mais opções de leitura</strong>
-          </span>
-          <span class="admin-modal-seta">&rsaquo;</span>
-        </button>
-
-        <div id="painel-mais-leitura" class="admin-modal-mais-conteudo" hidden>
-          <label class="admin-modal-opcao-item" for="modal-toggle-fonte-legivel">
-            <div class="admin-modal-opcao-info">
-              <div>
-                <strong>Fonte Alta Legibilidade</strong>
-                <span>Espaçamento ampliado entre letras e linhas.</span>
-              </div>
-            </div>
-            <span class="admin-switch">
-              <input type="checkbox" id="modal-toggle-fonte-legivel" />
-              <span class="admin-switch-trilho"></span>
-            </span>
-          </label>
-
-          <label class="admin-modal-opcao-item" for="modal-toggle-tema-escuro">
-            <div class="admin-modal-opcao-info">
-              <div>
-                <strong>Tema escuro</strong>
-                <span>Reduz o brilho da tela em ambientes escuros.</span>
-              </div>
-            </div>
-            <span class="admin-switch">
-              <input type="checkbox" id="modal-toggle-tema-escuro" />
-              <span class="admin-switch-trilho"></span>
-            </span>
-          </label>
-        </div>
-      </div>
-
-      <div class="admin-modal-rodape">
-        <button type="button" id="btn-restaurar-acess" class="btn btn-contorno">
-          Restaurar padrão
-        </button>
-        <a href="../acessibilidade.html" class="link-seta">
-          Conhecer todos os recursos &rarr;
-        </a>
-      </div>
-    </div>
-  </div>
 
   <!-- ================= POP-UP 2: NOTIFICAÇÕES ================= -->
   <div id="modal-admin-notificacoes" class="admin-modal-overlay" hidden>
@@ -883,39 +721,21 @@
       <div class="card-branco admin-modal-card-interno">
         <h3>Histórico de atividades</h3>
 
-        <ul class="cet-timeline cet-timeline-conectada">
+        <ul data-etapas-operacionais class="cet-timeline cet-timeline-conectada">
+
+
+
           <li>
-            <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
+            <span class="cet-timeline-icone"><img src="../../assets/icones/confirmacao.png" alt="" class="icone" /></span>
             <div>
-              <strong>MT-1042 · Funcionário a caminho</strong>
-              <p>14:35 · Aguarde próximo à entrada principal.</p>
-            </div>
-          </li>
-          <li>
-            <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
-            <div>
-              <strong>MT-1042 · Aprovado</strong>
-              <p>14:33</p>
-            </div>
-          </li>
-          <li>
-            <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
-            <div>
-              <strong>MT-1042 · Pedido recebido</strong>
-              <p>14:32</p>
-            </div>
-          </li>
-          <li>
-            <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
-            <div>
-              <strong>MT-1041 · Concluído</strong>
+              <strong>ZEL-1041 · Concluído</strong>
               <p>11:40 · Passagem desobstruída.</p>
             </div>
           </li>
           <li>
-            <span class="cet-timeline-icone"><img src="../../assets/icones/check.png" alt="" class="icone" /></span>
+            <span class="cet-timeline-icone"><img src="../../assets/icones/confirmacao.png" alt="" class="icone" /></span>
             <div>
-              <strong>MT-1041 · Em análise</strong>
+              <strong>ZEL-1041 · Em análise</strong>
               <p>09:22</p>
             </div>
           </li>
@@ -947,12 +767,16 @@
       <div class="card-branco admin-modal-card-interno">
         <div class="cet-perfil-topo">
           <span class="cet-perfil-avatar">
-            <img src="../../assets/icones/user.png" alt="" class="icone" />
+            <img src="../../assets/icones/usuario.png" alt="" class="icone" />
           </span>
           <div>
-            <h3>Carlos Oliveira</h3>
-            <p>Matrícula 48217 · Operação integrada</p>
-            <p>Vínculo: Região Paulista / Estação Consolação</p>
+            <!-- identifica os dados do profissional conectado -->
+            <h3 data-nome-profissional>Carlos Oliveira</h3>
+            <p>Matrícula <span data-matricula-profissional>48217</span> · <span data-funcao-profissional>Operação integrada</span></p>
+            <p>Vínculo: <span data-local-profissional>Região Paulista / Estação Consolação</span></p>
+                <!-- apresenta a instituição e a linha da sessão -->
+                <p>Instituição: <span data-orgao-profissional></span></p>
+                <p>Linha: <span data-linha-profissional></span></p>
           </div>
         </div>
 
@@ -961,24 +785,13 @@
         </div>
 
         <div class="admin-chamado-acoes">
-          <a href="../solucao02.html" class="btn btn-contorno">Trocar perfil &rarr;</a>
-          <a href="../solucao02.html" class="btn">Sair &rarr;</a>
+          <!-- direciona ao login e identifica a saída para encerrar a sessão administrativa -->
+          <a href="login.html" class="btn" data-sair>Sair &rarr;</a>
         </div>
       </div>
     </div>
   </div>
 
 
-  <!-- Integração oficial do VLibras -->
-  <div vw class="enabled">
-    <div vw-access-button class="active"></div>
-    <div vw-plugin-wrapper>
-      <div class="vw-plugin-top-wrapper"></div>
-    </div>
-  </div>
-  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
-  <script>
-    new window.VLibras.Widget('https://vlibras.gov.br/app');
-  </script>
 </body>
 </html>

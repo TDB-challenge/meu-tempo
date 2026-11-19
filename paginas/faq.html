@@ -5,38 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>FAQ | Meu Tempo</title>
   <link rel="stylesheet" href="../css/style.css" />
+  <script src="../js/dados.js" defer></script>
   <script src="../js/script.js" defer></script>
 </head>
 <body>
   <!-- Barra superior -->
-  <div class="barra-util">
-    <div class="container">
-      <span>Uma cidade para todas as pessoas. Um caminho de cada vez.</span>
-      <button type="button" id="btn-abrir-acess" class="btn-acess-topo">
-        Recursos de acessibilidade &rsaquo;
-      </button>
-    </div>
-  </div>
+
 
   <!-- Barra de ajustes rápidos -->
-  <div id="painel-acess-rapido" class="painel-acess-rapido">
-    <div class="container">
-      <strong>Ajustes rápidos de leitura:</strong>
-      <div class="botoes-acess">
-        <button type="button" class="acao-aumentar">A+ Aumentar texto</button>
-        <button type="button" class="acao-diminuir">A- Texto normal</button>
-        <button type="button" class="acao-contraste">Alto contraste</button>
-        <button type="button" class="acao-tema">Tema escuro</button>
-      </div>
-    </div>
-  </div>
+
 
   <!-- Cabeçalho -->
   <header class="cabecalho">
     <div class="container">
       <a href="index.html" class="logo">
         <span class="logo-circulo">
-          <img src="../assets/icones/clock-three.png" alt="" class="icone" />
+          <img src="../assets/icones/relogio-contorno.png" alt="" class="icone" />
         </span>
         <div>
           <span class="logo-titulo">meu tempo</span>
@@ -52,7 +36,7 @@
         <a href="solucao.html">Nossa solução</a>
         <a href="acessibilidade.html">Acessibilidade</a>
         <a href="integrantes.html">Equipe</a>
-        <a href="faq.html" class="ativo">FAQ</a>
+        <a href="faq.html" class="ativo" aria-current="page">FAQ</a>
         <a href="contato.html">Contato</a>
       </nav>
 
@@ -122,7 +106,7 @@
 
           <!-- Card lateral da IARA -->
           <div class="faq-card-iara">
-            <img src="../assets/icones/artificial-intelligence.png" alt="" class="icone" />
+            <img src="../assets/icones/inteligencia-artificial.png" alt="" class="icone" />
             <strong>Prefere conversar?</strong>
             <p>A IARA pode mostrar por onde começar.</p>
             <a href="solucao.html#demo-iara-box" class="link-seta">Falar com a IARA &rarr;</a>
@@ -200,9 +184,7 @@
                 <span class="faq-sinal" aria-hidden="true">+</span>
               </button>
               <div class="faq-resposta" hidden>
-                <p>
-                  <strong>Sim, a comprovação é obrigatória</strong> para evitar fraudes e garantir que os benefícios operacionais — como a extensão do tempo de semáforo e o acompanhamento presencial nas estações — sejam usados exclusivamente por quem realmente necessita de acessibilidade. A validação é feita no momento do cadastro por meio do <strong>QR Code</strong> de documentos oficiais, como a <strong>Nova Carteira de Identidade Nacional (CIN)</strong> com identificação de deficiência, a <strong>Carteira da Pessoa com Deficiência (CIPCD)</strong>, a <strong>CIPTEA</strong> ou a <strong>Carteira da Pessoa Idosa</strong>. Assim que o documento é validado, o aplicativo já libera o acesso e configura automaticamente o perfil ideal para você.
-                </p>
+                <p>Os serviços gerais não exigem uma deficiência comprovada. A demonstração permite conferir manualmente os dados de documentos fictícios, sem afirmar autenticidade ou diagnóstico. Documentação complementar permanece aguardando análise; as necessidades e preferências são autodeclaradas.</p>
               </div>
             </article>
 
@@ -293,7 +275,7 @@
               </button>
               <div class="faq-resposta" hidden>
                 <p>
-                  <strong>Sim.</strong> Como a Língua Brasileira de Sinais (Libras) é a primeira língua de grande parte da comunidade surda no Brasil, esta plataforma conta com o intérprete virtual do <strong>VLibras</strong> — basta clicar no ícone azul na lateral direita da tela e selecionar qualquer texto para ver a tradução na hora. No aplicativo mobile, o apoio em Libras também orienta etapas importantes como o cadastro via QR Code e o envio de chamados.
+                  <strong>Sim.</strong> Como a Língua Brasileira de Sinais (Libras) é a primeira língua de grande parte da comunidade surda no Brasil, esta plataforma conta com o intérprete virtual do <strong>VLibras</strong> — basta clicar no ícone azul na lateral direita da tela e selecionar qualquer texto para ver a tradução na hora. No aplicativo mobile, o apoio em Libras também orienta etapas importantes como o conferência cadastral e o envio de chamados.
                 </p>
               </div>
             </article>
@@ -355,16 +337,5 @@
     </div>
   </footer>
 
-  <!-- Integração oficial do VLibras -->
-  <div vw class="enabled">
-    <div vw-access-button class="active"></div>
-    <div vw-plugin-wrapper>
-      <div class="vw-plugin-top-wrapper"></div>
-    </div>
-  </div>
-  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
-  <script>
-    new window.VLibras.Widget('https://vlibras.gov.br/app');
-  </script>
 </body>
 </html>

@@ -5,38 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Travessia Acessível | Meu Tempo</title>
   <link rel="stylesheet" href="../css/style.css" />
+  <script src="../js/dados.js" defer></script>
   <script src="../js/script.js" defer></script>
 </head>
 <body>
   <!-- Barra superior -->
-  <div class="barra-util">
-    <div class="container">
-      <span>Uma cidade para todas as pessoas. Um caminho de cada vez.</span>
-      <button type="button" id="btn-abrir-acess" class="btn-acess-topo">
-        Recursos de acessibilidade &rsaquo;
-      </button>
-    </div>
-  </div>
+
 
   <!-- Barra de ajustes rápidos -->
-  <div id="painel-acess-rapido" class="painel-acess-rapido">
-    <div class="container">
-      <strong>Ajustes rápidos de leitura:</strong>
-      <div class="botoes-acess">
-        <button type="button" class="acao-aumentar">A+ Aumentar texto</button>
-        <button type="button" class="acao-diminuir">A- Texto normal</button>
-        <button type="button" class="acao-contraste">Alto contraste</button>
-        <button type="button" class="acao-tema">Tema escuro</button>
-      </div>
-    </div>
-  </div>
+
 
   <!-- Cabeçalho -->
   <header class="cabecalho">
     <div class="container">
       <a href="index.html" class="logo">
         <span class="logo-circulo">
-          <img src="../assets/icones/clock-three.png" alt="" class="icone" />
+          <img src="../assets/icones/relogio-contorno.png" alt="" class="icone" />
         </span>
         <div>
           <span class="logo-titulo">meu tempo</span>
@@ -48,8 +32,8 @@
 
       <nav id="menu-navegacao" class="menu">
         <a href="index.html">Início</a>
-        <a href="sobre.html" class="ativo">Sobre</a>
-        <a href="solucao.html">Nossa solução</a>
+        <a href="sobre.html">Sobre</a>
+        <a href="solucao.html" class="ativo" aria-current="page">Nossa solução</a>
         <a href="acessibilidade.html">Acessibilidade</a>
         <a href="integrantes.html">Equipe</a>
         <a href="faq.html">FAQ</a>
@@ -63,6 +47,8 @@
   <!-- LEMBRETE: ESSA PÁGINA SSERÁ ALTERADA E TERÁ CONECTIVIDADE COM A DEMONSTRAÇÃO DO APP-->
 
   <main>
+    <!-- identifica a demonstração sem alterar os textos da proposta -->
+    <p class="container aviso-cobertura">Demonstração acadêmica local, sem conexão com equipamentos ou instituições reais. Não registra solicitações administrativas e não autoriza atravessar uma rua real.</p>
     <!-- 1. Topo -->
     <section class="container solucao-topo">
       <div class="etiqueta">NOSSA SOLUÇÃO · TRAVESSIA ACESSÍVEL</div>
@@ -87,14 +73,14 @@
               <span class="luz"></span>
               <span class="luz"></span>
               <span class="luz ativa">
-                <img src="../assets/icones/walking.png" alt="" class="icone" />
+                <img src="../assets/icones/caminhada.png" alt="" class="icone" />
               </span>
             </div>
             <div class="semaforo-poste"></div>
           </div>
 
           <span class="arte-legenda">
-            <img src="../assets/icones/clock.png" alt="" class="icone-pequeno" />
+            <img src="../assets/icones/relogio-inteligente.png" alt="" class="icone-pequeno" />
             No seu ritmo.
           </span>
         </div>
@@ -109,8 +95,8 @@
             O sistema verifica automaticamente o ciclo do semáforo: se faltarem menos de 8 segundos, ele reserva o tempo estendido para o próximo fluxo verde, mantendo a segurança e a fluidez do trânsito sem precisar de aprovação manual.
           </p>
           <div style="display: flex; gap: 14px; flex-wrap: wrap;">
-            <button type="button" class="btn btn-abrir-simulador" data-alvo="simulador-travessia">
-              Usar este serviço &rarr;
+            <button type="button" class="btn btn-abrir-simulador" data-alvo="simulador-travessia" aria-controls="simulador-travessia" aria-expanded="true">
+              Como seria na prática?
             </button>
             <a href="solucao02.html" class="btn btn-contorno">Ir para Apoio e Zeladoria &rarr;</a>
           </div>
@@ -150,7 +136,7 @@
             <button type="submit" class="btn">Solicitar tempo estendido &rarr;</button>
           </form>
 
-          <div id="status-travessia" class="painel-status">
+          <div id="status-travessia" class="painel-status" role="status">
             <h3>Regra automática dos 8 segundos</h3>
             <p>
               <strong>Acima de 8 segundos:</strong> o semáforo estende o tempo imediatamente e inicia o sinal musical e a vibração no seu celular.
@@ -172,15 +158,15 @@
           Fale ou escreva o que precisa. A assistente ajuda a confirmar o local por GPS e os detalhes sem exigir digitação.
         </p>
 
-        <button type="button" id="btn-demo-iara" class="btn btn-contorno">
-          Conversar com a IARA &rarr;
+        <button type="button" id="btn-demo-iara" class="btn btn-contorno" aria-controls="demo-iara-box" aria-expanded="false">
+          Como seria na prática?
         </button>
 
         <div id="demo-iara-box" class="caixa-simulador" style="margin-top: 28px;">
           <div class="chat-card" style="max-width: 720px;">
             <div class="chat-cabecalho">
               <span class="chat-avatar">
-                <img src="../assets/icones/walking.png" alt="" class="icone icone-branco" />
+                <img src="../assets/icones/caminhada.png" alt="" class="icone icone-branco" />
               </span>
               <div>
                 <strong>IARA · Inteligência de Apoio à Rotina Acessível</strong>
@@ -188,7 +174,7 @@
               </div>
             </div>
 
-            <div id="demo-iara-mensagens" class="chat-lista" style="max-height: 300px;">
+            <div id="demo-iara-mensagens" class="chat-lista" style="max-height: 300px;" aria-live="polite" aria-relevant="additions">
               <div class="msg-usuario">
                 “IARA, estou aqui na Paulista e quero solicitar mais tempo para a minha travessia.”
               </div>
@@ -259,16 +245,5 @@
     </div>
   </footer>
 
-  <!-- Integração oficial do VLibras -->
-  <div vw class="enabled">
-    <div vw-access-button class="active"></div>
-    <div vw-plugin-wrapper>
-      <div class="vw-plugin-top-wrapper"></div>
-    </div>
-  </div>
-  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
-  <script>
-    new window.VLibras.Widget('https://vlibras.gov.br/app');
-  </script>
 </body>
 </html>

@@ -6,38 +6,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Cadastro | Meu Tempo</title>
   <link rel="stylesheet" href="../css/style.css" />
+  <script src="../js/dados.js" defer></script>
   <script src="../js/script.js" defer></script>
+  <script src="../js/leitor-documentos.js" defer></script>
+  <script src="../js/autenticacao.js" defer></script>
 </head>
 <body>
   <!-- Barra superior -->
-  <div class="barra-util">
-    <div class="container">
-      <span>Uma cidade para todas as pessoas. Um caminho de cada vez.</span>
-      <button type="button" id="btn-abrir-acess" class="btn-acess-topo">
-        Recursos de acessibilidade &rsaquo;
-      </button>
-    </div>
-  </div>
+
 
   <!-- Barra de ajustes rápidos -->
-  <div id="painel-acess-rapido" class="painel-acess-rapido">
-    <div class="container">
-      <strong>Ajustes rápidos de leitura:</strong>
-      <div class="botoes-acess">
-        <button type="button" class="acao-aumentar">A+ Aumentar texto</button>
-        <button type="button" class="acao-diminuir">A- Texto normal</button>
-        <button type="button" class="acao-contraste">Alto contraste</button>
-        <button type="button" class="acao-tema">Tema escuro</button>
-      </div>
-    </div>
-  </div>
+
 
   <!-- Cabeçalho -->
   <header class="cabecalho">
     <div class="container">
       <a href="index.html" class="logo">
         <span class="logo-circulo">
-          <img src="../assets/icones/clock-three.png" alt="" class="icone" />
+          <img src="../assets/icones/relogio-contorno.png" alt="" class="icone" />
         </span>
         <div>
           <span class="logo-titulo">meu tempo</span>
@@ -49,7 +35,7 @@
 
       <nav id="menu-navegacao" class="menu">
         <a href="index.html">Início</a>
-        <a href="sobre.html" class="ativo">Sobre</a>
+        <a href="sobre.html">Sobre</a>
         <a href="solucao.html">Nossa solução</a>
         <a href="acessibilidade.html">Acessibilidade</a>
         <a href="integrantes.html">Equipe</a>
@@ -57,7 +43,7 @@
         <a href="contato.html">Contato</a>
       </nav>
 
-      <a href="cadastro.html" class="btn btn-pequeno header-cta">Acessar plataforma &rarr;</a>
+      <a href="login.html" class="btn btn-pequeno header-cta">Entrar na plataforma &rarr;</a>
     </div>
   </header>
 
@@ -70,12 +56,12 @@
           <div class="etiqueta">SEJA BEM-VINDO AO MEU TEMPO</div>
           <h1>Seu próximo caminho começa por aqui.</h1>
           <p class="cadastro-lead">
-            Mais autonomia para seguir no seu ritmo. Valide sua credencial e configure sua experiência em poucos passos.
+            Mais autonomia para seguir no seu ritmo. Informe dados fictícios e configure sua experiência em poucos passos.
           </p>
 
           <div class="cadastro-foto-arco">
-            <img
-              src="../assets/imagens/homem_acessib.jpg"
+            <img loading="lazy" decoding="async"
+              src="../assets/imagens/homem-com-muletas.jpg"
               alt="Homem com perna amputada usando muletas"
             />
           </div>
@@ -87,105 +73,192 @@
         <!-- Coluna Direita: Cartão branco com formulário em 3 etapas -->
         <div class="card-branco cadastro-card">
           <div class="cadastro-area-tag">
-            <img src="../assets/icones/user.png" alt="" class="icone" />
+            <img src="../assets/icones/usuario.png" alt="" class="icone" />
             <span>Área do cidadão</span>
           </div>
 
           <h2>Vamos começar?</h2>
           <p class="cadastro-subtitulo">Precisamos de poucas informações para começar.</p>
 
-          <!-- Indicador das 3 etapas -->
+          <!-- indicador das quatro etapas; data-indicador-etapa identifica o passo atual -->
           <div class="cadastro-etapas" aria-label="Etapas do cadastro">
             <div class="etapa-item ativa" data-indicador-etapa="1">
               <div class="etapa-barra"></div>
-              <span>1. Dados básicos</span>
+              <span>1. Identificação</span>
             </div>
             <div class="etapa-item" data-indicador-etapa="2">
               <div class="etapa-barra"></div>
-              <span>2. Acessibilidade</span>
+              <span>2. Necessidades</span>
             </div>
             <div class="etapa-item" data-indicador-etapa="3">
               <div class="etapa-barra"></div>
               <span>3. Preferências</span>
             </div>
+            <div class="etapa-item" data-indicador-etapa="4">
+              <div class="etapa-barra"></div>
+              <span>4. Revisão</span>
+            </div>
           </div>
 
           <form id="form-cadastro" novalidate>
-            <!-- ================= ETAPA 1: DADOS BÁSICOS ================= -->
+            <!-- ================= ETAPA 1: IDENTIFICAÇÃO E DOCUMENTOS ================= -->
             <div id="cadastro-passo-1" class="cadastro-passo">
-              <!-- Box verde de validação obrigatória por QR Code -->
+              <!-- arquivos fictícios ficam apenas na memória desta página -->
               <div id="box-qrcode-cadastro" class="cadastro-qrcode-box">
                 <div class="qrcode-box-topo">
-                  <span class="qrcode-icone-wrap">
-                    <img src="../assets/icones/qr.png" alt="" class="icone" />
-                  </span>
-                  <div>
-                    <strong>Valide sua credencial com QR Code <span class="asterisco">*</span></strong>
-                    <p>
-                      Obrigatório para evitar fraudes e liberar os benefícios (CIN, CIPCD, CIPTEA ou Carteira da Pessoa Idosa).
-                    </p>
-                  </div>
+                  <img src="../assets/icones/escanear-documento.svg" alt="" class="icone" />
+                  <strong>Escaneamento de documentos fictício</strong>
                 </div>
-
-                <button type="button" id="btn-simular-qrcode" class="btn-qrcode-ler">
-                  <img src="../assets/icones/qr.png" alt="" class="icone" />
-                  <span>Ler QR Code da credencial</span>
-                </button>
-
-                <p id="status-qrcode-cadastro" class="qrcode-nota">
-                  Após validar o QR Code, confira ou complete seus dados básicos abaixo.
-                </p>
+                <div class="campo-grupo">
+                  <label for="cad-categoria">Perfil do cidadão *</label>
+                  <select id="cad-categoria" required>
+                    <option value="geral">Demais cidadãos</option>
+                    <option value="idosa">Pessoa idosa (a partir de 60 anos)</option>
+                    <option value="pcd">Pessoa com deficiência</option>
+                    <option value="mobilidade">Pessoa com mobilidade reduzida</option>
+                    <option value="temporaria">Necessidade temporária de apoio</option>
+                  </select>
+                </div>
+                <!-- câmera e arquivo utilizam o mesmo preenchimento do cadastro -->
+                <div id="arquivos-cadastro">
+                  <p id="rotulo-identificacao">Documento de identificação</p>
+                  <div class="cadastro-leitura-acoes">
+                    <label class="btn btn-contorno cadastro-arquivo">Usar câmera
+                      <input type="file" id="camera-identificacao" accept="image/*" capture="environment" aria-label="Fotografar documento de identificação" />
+                    </label>
+                    <label class="btn btn-contorno cadastro-arquivo">Abrir arquivo
+                      <input type="file" id="documento-identificacao" accept="image/jpeg,image/png,image/webp,application/pdf" aria-label="Abrir documento de identificação" />
+                    </label>
+                  </div>
+                  <p id="nome-identificacao" class="qrcode-nota" hidden></p>
+                  <img id="previa-identificacao" alt="Prévia do documento selecionado" width="200" hidden />
+                  <button type="button" id="remover-identificacao" class="btn btn-contorno" hidden>Remover</button>
+                  <!-- complemento opcional é apresentado somente para a categoria pcd -->
+                  <details id="complementar-cadastro" hidden>
+                    <summary>Adicionar comprovante (opcional)</summary>
+                    <div class="cadastro-leitura-acoes">
+                      <label class="btn btn-contorno cadastro-arquivo">Usar câmera
+                        <input type="file" id="camera-complementar" accept="image/*" capture="environment" aria-label="Fotografar comprovante complementar" />
+                      </label>
+                      <label class="btn btn-contorno cadastro-arquivo">Abrir arquivo
+                        <input type="file" id="documento-complementar" accept="image/jpeg,image/png,image/webp,application/pdf" aria-label="Abrir comprovante complementar" />
+                      </label>
+                    </div>
+                    <p id="nome-complementar" class="qrcode-nota" hidden></p>
+                    <img id="previa-complementar" alt="Prévia do comprovante selecionado" width="200" hidden />
+                    <button type="button" id="remover-complementar" class="btn btn-contorno" hidden>Remover</button>
+                  </details>
+                </div>
+                <p id="status-qrcode-cadastro" class="qrcode-nota" role="status"></p>
+                <a href="#cad-nome" id="escolher-manual" class="link-seta">Preencher manualmente</a>
               </div>
 
               <div class="form-contato">
                 <div class="campo-grupo">
                   <label for="cad-nome">Nome completo <span class="asterisco">*</span></label>
-                  <input type="text" id="cad-nome" name="nome" required />
+                  <input type="text" id="cad-nome" name="nome-cidadao" autocomplete="name" required />
+                </div>
+
+                <!-- formato demonstrativo de rg paulista ou cin identificada pelo cpf -->
+                <div class="campo-grupo">
+                  <label for="cad-tipo-documento">Tipo de documento *</label>
+                  <select id="cad-tipo-documento" name="tipo-documento-cidadao" required><option value="rg">RG tradicional (referência paulista)</option><option value="cin">Carteira de Identidade Nacional (CIN)</option></select>
+                </div>
+                <div class="campo-grupo" id="grupo-cad-rg">
+                  <label for="cad-rg">RG (referência paulista) *</label>
+                  <input type="text" id="cad-rg" name="rg-cidadao" autocomplete="off" maxlength="12" required />
+                  <small>Nove posições, com X permitido na última. Não é um padrão universal dos estados.</small>
+                </div>
+                <div class="campo-grupo">
+                  <label for="cad-cpf">CPF / número da CIN *</label>
+                  <input type="text" id="cad-cpf" name="cpf-cidadao" autocomplete="off" inputmode="numeric" maxlength="14" required />
+                  <small>Use onze dígitos fictícios. Conferimos somente o formato.</small>
+                </div>
+                <div class="campo-grupo">
+                  <label for="cad-nascimento">Data de nascimento *</label>
+                  <input type="date" id="cad-nascimento" name="nascimento-cidadao" autocomplete="bday" required />
+                </div>
+                <div class="campo-grupo">
+                  <label for="cad-municipio">Município *</label>
+                  <input type="text" id="cad-municipio" name="municipio-cidadao" autocomplete="address-level2" required />
+                </div>
+                <div class="campo-grupo">
+                  <label for="cad-estado">Estado (UF) *</label>
+                  <select id="cad-estado" name="estado-cidadao" autocomplete="address-level1" required>
+                    <option value="">Selecione</option>
+                    <option>AC</option>
+                    <option>AL</option>
+                    <option>AP</option>
+                    <option>AM</option>
+                    <option>BA</option>
+                    <option>CE</option>
+                    <option>DF</option>
+                    <option>ES</option>
+                    <option>GO</option>
+                    <option>MA</option>
+                    <option>MT</option>
+                    <option>MS</option>
+                    <option>MG</option>
+                    <option>PA</option>
+                    <option>PB</option>
+                    <option>PR</option>
+                    <option>PE</option>
+                    <option>PI</option>
+                    <option>RJ</option>
+                    <option>RN</option>
+                    <option>RS</option>
+                    <option>RO</option>
+                    <option>RR</option>
+                    <option>SC</option>
+                    <option>SP</option>
+                    <option>SE</option>
+                    <option>TO</option>
+                  </select>
+                </div>
+                <div class="campo-grupo">
+                  <label for="cad-bairro">Bairro ou região (opcional)</label>
+                  <input type="text" id="cad-bairro" name="bairro-cidadao" autocomplete="off" />
+                </div>
+                <div class="campo-grupo">
+                  <label for="cad-telefone">Telefone (opcional)</label>
+                  <input type="tel" id="cad-telefone" name="telefone-cidadao" autocomplete="tel" />
                 </div>
 
                 <div class="campo-grupo">
                   <label for="cad-email">E-mail <span class="asterisco">*</span></label>
-                  <input type="email" id="cad-email" name="email" required />
+                  <input type="email" id="cad-email" name="email-cidadao" autocomplete="email" required />
                 </div>
 
                 <div class="campo-grupo">
-                  <label for="cad-senha">Senha <span class="asterisco">*</span></label>
+                  <label for="cad-senha">PIN de acesso <span class="asterisco">*</span></label>
                   <div class="campo-senha-wrap">
-                    <input type="password" id="cad-senha" name="senha" minlength="8" required />
+                    <input type="password" id="cad-senha" name="pin-cidadao" autocomplete="new-password" inputmode="numeric" pattern="[0-9]{4}" minlength="4" maxlength="4" required />
                     <button
                       type="button"
                       class="btn-toggle-senha"
-                      aria-label="Mostrar senha"
+                      aria-label="Mostrar PIN"
                       aria-pressed="false"
                     >
-                      <img src="../assets/icones/eye.png" alt="" class="icone" />
+                      <img src="../assets/icones/olho.png" alt="" class="icone" />
                     </button>
                   </div>
                 </div>
 
                 <div class="campo-grupo">
-                  <label for="cad-confirma-senha">Confirme a senha <span class="asterisco">*</span></label>
+                  <label for="cad-confirma-senha">Confirme o PIN <span class="asterisco">*</span></label>
                   <div class="campo-senha-wrap">
-                    <input type="password" id="cad-confirma-senha" name="confirmaSenha" minlength="8" required />
+                    <input type="password" id="cad-confirma-senha" name="confirma-pin-cidadao" autocomplete="new-password" inputmode="numeric" pattern="[0-9]{4}" minlength="4" maxlength="4" required />
                     <button
                       type="button"
                       class="btn-toggle-senha"
-                      aria-label="Mostrar confirmação de senha"
+                      aria-label="Mostrar confirmação do PIN"
                       aria-pressed="false"
                     >
-                      <img src="../assets/icones/eye.png" alt="" class="icone" />
+                      <img src="../assets/icones/olho.png" alt="" class="icone" />
                     </button>
                   </div>
-                  <small class="campo-dica">Use pelo menos 8 caracteres.</small>
+                  <small class="campo-dica">Informe quatro números. Use somente um PIN fictício nesta demonstração.</small>
                 </div>
-
-                <label class="checkbox-termos" for="cad-termos">
-                  <input type="checkbox" id="cad-termos" required />
-                  <span>
-                    Li os <a href="acessibilidade.html#termos-uso">termos de uso</a> e as
-                    <a href="privacidade.html">informações de privacidade</a>.
-                  </span>
-                </label>
 
                 <div>
                   <button type="button" id="btn-cad-ir-passo2" class="btn">
@@ -195,53 +268,31 @@
               </div>
             </div>
 
-            <!-- ================= ETAPA 2: ACESSIBILIDADE ================= -->
+            <!-- ================= ETAPA 2: NECESSIDADES E MOBILIDADE ================= -->
             <div id="cadastro-passo-2" class="cadastro-passo" hidden>
-              <div class="painel-status" style="margin-bottom: 20px;">
-                <strong>Perfil identificado pela credencial:</strong>
-                <p id="resumo-perfil-qrcode" style="margin: 6px 0 0;">
-                  Credencial validada · Recursos visuais e sonoros recomendados ativados.
-                </p>
-              </div>
-
-              <p style="font-size: 0.92rem; margin-bottom: 16px;">
-                Personalize como você prefere visualizar e interagir com a plataforma:
-              </p>
-
+              <h3>Como podemos facilitar seus caminhos?</h3>
+              <p>Selecione apenas o que deseja informar. Estas declarações não comprovam diagnósticos.</p>
               <div class="cadastro-opcoes-lista">
-                <label class="opcao-check-card">
-                  <input type="checkbox" id="pref-contraste" />
-                  <div>
-                    <strong>Alto contraste visual</strong>
-                    <span>Reforça bordas e contraste entre textos e botões na tela.</span>
-                  </div>
-                </label>
-
-                <label class="opcao-check-card">
-                  <input type="checkbox" id="pref-fonte" checked />
-                  <div>
-                    <strong>Fonte de alta legibilidade</strong>
-                    <span>Amplia o espaçamento e facilita a leitura rápida na rua.</span>
-                  </div>
-                </label>
-
-                <label class="opcao-check-card">
-                  <input type="checkbox" id="pref-voz" checked />
-                  <div>
-                    <strong>Comandos e respostas por voz (IARA)</strong>
-                    <span>Permite solicitar travessias e apoio falando com a assistente.</span>
-                  </div>
-                </label>
-
-                <label class="opcao-check-card">
-                  <input type="checkbox" id="pref-vibracao" checked />
-                  <div>
-                    <strong>Alerta vibratório e guia musical</strong>
-                    <span>Sinalização tátil e sonora durante a abertura do semáforo.</span>
-                  </div>
-                </label>
+                <label class="opcao-check-card"><input type="checkbox" name="necessidade" value="Mobilidade reduzida" /> <span>Mobilidade reduzida</span></label>
+                <label class="opcao-check-card"><input type="checkbox" name="necessidade" value="Dificuldade para caminhar longas distâncias" /> <span>Dificuldade para caminhar longas distâncias</span></label>
+                <label class="opcao-check-card"><input type="checkbox" name="necessidade" value="Dificuldade com escadas" /> <span>Dificuldade com escadas</span></label>
+                <label class="opcao-check-card"><input type="checkbox" name="necessidade" value="Uso de cadeira de rodas" /> <span>Uso de cadeira de rodas</span></label>
+                <label class="opcao-check-card"><input type="checkbox" name="necessidade" value="Uso de bengala" /> <span>Uso de bengala</span></label>
+                <label class="opcao-check-card"><input type="checkbox" name="necessidade" value="Uso de muletas" /> <span>Uso de muletas</span></label>
+                <label class="opcao-check-card"><input type="checkbox" name="necessidade" value="Deficiência visual ou baixa visão" /> <span>Deficiência visual ou baixa visão</span></label>
+                <label class="opcao-check-card"><input type="checkbox" name="necessidade" value="Deficiência auditiva" /> <span>Deficiência auditiva</span></label>
+                <label class="opcao-check-card"><input type="checkbox" name="necessidade" value="Necessidade de acompanhamento" /> <span>Necessidade de acompanhamento</span></label>
+                <label class="opcao-check-card"><input type="checkbox" name="necessidade" value="Sensibilidade a estímulos sonoros ou visuais" /> <span>Sensibilidade a estímulos sonoros ou visuais</span></label>
+                <label class="opcao-check-card"><input type="checkbox" name="necessidade" value="Limitação temporária" /> <span>Limitação temporária</span></label>
+                <label class="opcao-check-card"><input type="checkbox" name="necessidade" value="Outras necessidades" /> <span>Outras necessidades</span></label>
+                <label class="opcao-check-card"><input type="checkbox" name="necessidade" value="Prefiro não informar" /> <span>Prefiro não informar</span></label>
               </div>
-
+              <div class="campo-grupo">
+                <label for="cad-complemento">Informação complementar fictícia (opcional)</label>
+                <textarea id="cad-complemento" maxlength="250" aria-describedby="dica-complemento"></textarea>
+                <!-- aria-describedby associa a orientação ao campo -->
+                <small id="dica-complemento">Não informe doenças, diagnósticos ou dados médicos reais. Este texto não será armazenado.</small>
+              </div>
               <div class="cadastro-botoes-linha">
                 <button type="button" id="btn-cad-voltar-1" class="btn btn-contorno">
                   &larr; Voltar
@@ -254,23 +305,39 @@
 
             <!-- ================= ETAPA 3: PREFERÊNCIAS ================= -->
             <div id="cadastro-passo-3" class="cadastro-passo" hidden>
+              <h3>Acessibilidade e preferências</h3>
+              <p>As preferências acompanham sua navegação. Orientações por voz e voz da IARA ficam preparadas para integração futura.</p>
+              <!-- data-preferencia conecta os controles às preferências globais -->
+              <div class="campo-grupo">
+                <label for="pref-tamanho">Tamanho das letras</label>
+                <select id="pref-tamanho" data-preferencia="fonte"><option value="100">100%</option><option value="115">115%</option><option value="125">125%</option><option value="130">130%</option><option value="150">150%</option><option value="175">175%</option><option value="200">200%</option></select>
+              </div>
+              <div class="cadastro-opcoes-lista">
+                <label class="opcao-check-card"><input type="checkbox" id="pref-contraste" data-preferencia="contraste" /> <span>Alto contraste</span></label>
+                <label class="opcao-check-card"><input type="checkbox" id="pref-tema" data-preferencia="temaEscuro" /> <span>Tema escuro</span></label>
+                <label class="opcao-check-card"><input type="checkbox" id="pref-fonte" data-preferencia="fonteLegivel" /> <span>Fonte de alta legibilidade</span></label>
+                <label class="opcao-check-card"><input type="checkbox" id="pref-orientacoes" data-preferencia="orientacoesVoz" /> <span>Orientações por voz</span></label>
+                <label class="opcao-check-card"><input type="checkbox" id="pref-voz" data-preferencia="vozIara" /> <span>Ouvir a IARA</span></label>
+                <label class="opcao-check-card"><input type="checkbox" id="pref-som" data-preferencia="somTravessia" /> <span>Guia sonoro da travessia</span></label>
+                <label class="opcao-check-card"><input type="checkbox" id="pref-vibracao" data-preferencia="vibracao" /> <span>Alertas vibratórios (dependem do dispositivo)</span></label>
+              </div>
               <p style="font-size: 0.92rem; margin-bottom: 16px;">
                 Quais recursos você pretende usar com mais frequência no dia a dia?
               </p>
 
               <div class="cadastro-opcoes-lista">
                 <label class="opcao-check-card">
-                  <input type="checkbox" name="uso" value="travessia" checked />
+                  <input type="checkbox" name="uso" value="travessia" />
                   <div>
-                    <strong>Travessia com tempo estendido</strong>
+                    <strong>Travessia acessível</strong>
                     <span>Solicitação de tempo adicional em cruzamentos semafóricos (CET).</span>
                   </div>
                 </label>
 
                 <label class="opcao-check-card">
-                  <input type="checkbox" name="uso" value="metro" checked />
+                  <input type="checkbox" name="uso" value="metro" />
                   <div>
-                    <strong>Apoio geolocalizado no Metrô e CPTM</strong>
+                    <strong>Apoio no Metrô e CPTM</strong>
                     <span>Acompanhamento de agentes da estação desde o bloqueio até o embarque.</span>
                   </div>
                 </label>
@@ -278,19 +345,40 @@
                 <label class="opcao-check-card">
                   <input type="checkbox" name="uso" value="zeladoria" />
                   <div>
-                    <strong>Zeladoria urbana e elevadores</strong>
+                    <strong>Zeladoria urbana</strong>
                     <span>Consulta e relato de elevadores, rampas e pisos táteis.</span>
                   </div>
                 </label>
               </div>
 
+
               <div class="cadastro-botoes-linha">
                 <button type="button" id="btn-cad-voltar-2" class="btn btn-contorno">
                   &larr; Voltar
                 </button>
-                <button type="submit" class="btn">
-                  Concluir cadastro &rarr;
+                <button type="button" id="btn-cad-ir-passo4" class="btn">
+                  Revisar cadastro &rarr;
                 </button>
+              </div>
+            </div>
+
+            <!-- ================= ETAPA 4: REVISÃO E CONCLUSÃO ================= -->
+            <!-- o resumo nunca inclui a senha ou imagens -->
+            <div id="cadastro-passo-4" class="cadastro-passo" hidden>
+              <h3 tabindex="-1" id="titulo-revisao-cidadao">Revise seus dados fictícios</h3>
+              <div id="resumo-cadastro-cidadao"></div>
+                <label class="checkbox-termos" for="cad-termos">
+                  <input type="checkbox" id="cad-termos" required />
+                  <span>
+                    Li os <a href="termos.html" target="_blank" rel="noopener noreferrer">termos de uso</a> e as
+                    <a href="privacidade.html">informações de privacidade</a>.
+                  </span>
+                </label>
+
+              <p>Autenticação apenas demonstrativa neste navegador. Use dados e documentos fictícios. O resumo da senha não substitui autenticação segura.</p>
+              <div class="cadastro-botoes-linha">
+                <button type="button" id="btn-cad-voltar-3" class="btn btn-contorno">&larr; Corrigir informações</button>
+                <button type="submit" id="concluir-cadastro-cidadao" class="btn">Concluir cadastro &rarr;</button>
               </div>
             </div>
 
@@ -300,13 +388,13 @@
           <!-- Rodapé interno do card -->
           <div class="cadastro-card-rodape">
             <div class="cadastro-seguranca">
-              <img src="../assets/icones/shield-check.png" alt="" class="icone" />
+              <img src="../assets/icones/seguranca.png" alt="" class="icone" />
               <span>Seus dados e suas preferências ficam sob seu controle.</span>
             </div>
 
             <div class="cadastro-links-rodape">
               <a href="login.html" class="cadastro-link-admin">Já tenho conta · Entrar</a>
-              <a href="solucao02.html" class="cadastro-link-libras">
+              <a href="admin/login.html" class="cadastro-link-libras">
                 <span>Acesso administrativo &rarr;</span>
               </a>
             </div>
@@ -339,8 +427,8 @@
         </div>
         <div>
           <h3>Outros caminhos</h3>
-          <a href="solucao01.html">Plataforma do cidadão</a>
-          <a href="solucao02.html">Acesso administrativo</a>
+          <a href="login.html">Plataforma do cidadão</a>
+          <a href="admin/login.html">Acesso administrativo</a>
           <a href="privacidade.html">Privacidade e termos</a>
         </div>
       </div>
@@ -352,16 +440,5 @@
     </div>
   </footer>
 
-  <!-- Integração oficial do VLibras -->
-  <div vw class="enabled">
-    <div vw-access-button class="active"></div>
-    <div vw-plugin-wrapper>
-      <div class="vw-plugin-top-wrapper"></div>
-    </div>
-  </div>
-  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
-  <script>
-    new window.VLibras.Widget('https://vlibras.gov.br/app');
-  </script>
 </body>
 </html>

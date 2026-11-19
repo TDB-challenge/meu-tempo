@@ -6,38 +6,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Contato | Meu Tempo</title>
   <link rel="stylesheet" href="../css/style.css" />
+  <script src="../js/dados.js" defer></script>
   <script src="../js/script.js" defer></script>
 </head>
 <body>
   <!-- Barra superior -->
-  <div class="barra-util">
-    <div class="container">
-      <span>Uma cidade para todas as pessoas. Um caminho de cada vez.</span>
-      <button type="button" id="btn-abrir-acess" class="btn-acess-topo">
-        Recursos de acessibilidade &rsaquo;
-      </button>
-    </div>
-  </div>
+
 
   <!-- Barra de ajustes rápidos -->
-  <div id="painel-acess-rapido" class="painel-acess-rapido">
-    <div class="container">
-      <strong>Ajustes rápidos de leitura:</strong>
-      <div class="botoes-acess">
-        <button type="button" class="acao-aumentar">A+ Aumentar texto</button>
-        <button type="button" class="acao-diminuir">A- Texto normal</button>
-        <button type="button" class="acao-contraste">Alto contraste</button>
-        <button type="button" class="acao-tema">Tema escuro</button>
-      </div>
-    </div>
-  </div>
+
 
   <!-- Cabeçalho -->
   <header class="cabecalho">
     <div class="container">
       <a href="index.html" class="logo">
         <span class="logo-circulo">
-          <img src="../assets/icones/clock-three.png" alt="" class="icone" />
+          <img src="../assets/icones/relogio-contorno.png" alt="" class="icone" />
         </span>
         <div>
           <span class="logo-titulo">meu tempo</span>
@@ -54,7 +38,7 @@
         <a href="acessibilidade.html">Acessibilidade</a>
         <a href="integrantes.html">Equipe</a>
         <a href="faq.html">FAQ</a>
-        <a href="contato.html" class="ativo">Contato</a>
+        <a href="contato.html" class="ativo" aria-current="page">Contato</a>
       </nav>
 
       <a href="cadastro.html" class="btn btn-pequeno header-cta">Acessar plataforma &rarr;</a>
@@ -94,7 +78,7 @@
 
             <div class="contato-aviso-item">
               <span class="contato-aviso-icone">
-                <img src="../assets/icones/shield-check.png" alt="" class="icone" />
+                <img src="../assets/icones/seguranca.png" alt="" class="icone" />
               </span>
               <div>
                 <strong>Não é um canal de emergência</strong>
@@ -187,7 +171,7 @@
         <div>
           <h3>Outros caminhos</h3>
           <a href="solucao01.html">Plataforma do cidadão</a>
-          <a href="solucao02.html">Acesso administrativo</a>
+          <a href="admin/login.html">Acesso administrativo</a>
           <a href="privacidade.html">Privacidade e termos</a>
         </div>
       </div>
@@ -199,16 +183,5 @@
     </div>
   </footer>
 
-  <!-- Integração oficial do VLibras -->
-  <div vw class="enabled">
-    <div vw-access-button class="active"></div>
-    <div vw-plugin-wrapper>
-      <div class="vw-plugin-top-wrapper"></div>
-    </div>
-  </div>
-  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
-  <script>
-    new window.VLibras.Widget('https://vlibras.gov.br/app');
-  </script>
 </body>
 </html>

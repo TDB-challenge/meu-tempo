@@ -6,6 +6,7 @@
 
     <title>Início | Meu Tempo</title>
 
+    <link rel="stylesheet" href="../../css/style.css" />
     <link rel="stylesheet" href="../../css/app.css" />
   </head>
 
@@ -20,6 +21,7 @@
       <aside class="menu-lateral">
         <!-- Logo e slogan do Meu Tempo -->
         <a href="inicio.html" class="logo">
+          <img src="../../assets/icones/relogio.png" class="marca-icone" alt="" />
           <div class="texto-logo">
             <strong>meu tempo</strong>
             <small class="slogan">A cidade no seu ritmo.</small>
@@ -42,12 +44,14 @@
 
             <li>
               <a href="servicos.html">
+                <img src="../../assets/icones/lista.svg" class="icone" alt="" />
                 <span>Serviços</span>
               </a>
             </li>
 
             <li>
               <a href="solicitacoes.html">
+                <img src="../../assets/icones/lista.svg" class="icone" alt="" />
                 <span>Pedidos</span>
               </a>
             </li>
@@ -65,6 +69,7 @@
 
             <li>
               <a href="perfil.html">
+                <img src="../../assets/icones/usuario.png" class="icone" alt="" />
                 <span>Perfil</span>
               </a>
             </li>
@@ -100,6 +105,7 @@
 
           <!-- Logo exibida no cabeçalho em telas menores -->
           <a href="inicio.html" class="logo-mobile">
+          <img src="../../assets/icones/relogio.png" class="marca-icone" alt="" />
             <strong>meu tempo</strong>
           </a>
 
@@ -123,18 +129,20 @@
 
             <!-- Opções disponíveis no menu do usuário -->
             <div class="opcoes-usuario">
+              <!-- encerra somente a sessão do cidadão -->
+              <a href="../login.html" id="sair-app"><img src="../../assets/icones/sair.png" class="icone" alt="" />Sair</a>
               <a href="perfil.html">
                 Meu perfil
               </a>
 
               <a href="perfil.html#abrir-leitor-documentos" id="identificar-documento">
                 <img
-                  src="../../assets/icones/camera.svg"
+                  src="../../assets/icones/escanear-documento.svg"
                   class="icone"
                   alt=""
                 />
 
-                Identificar meu documento
+                Meus documentos
               </a>
 
               <a href="../index.html">
@@ -155,6 +163,7 @@
           <section class="boas-vindas">
             <div class="saudacao">
               <!-- A data atual será inserida automaticamente -->
+              <p>Projeto acadêmico: serviços e dados operacionais simulados, sem integração com órgãos públicos.</p>
               <p class="data-atual" id="data-atual"></p>
 
               <!-- O nome será preenchido com os dados do usuário -->
@@ -183,7 +192,7 @@
               </div>
 
               <!-- Solicita a localização do usuário -->
-              <button type="button" id="alterar-localizacao" disabled>
+              <button type="button" id="alterar-localizacao">
                 Alterar
               </button>
             </div>
@@ -349,12 +358,14 @@
 
           <li>
             <a href="servicos.html">
+              <img src="../../assets/icones/lista.svg" class="icone" alt="" />
               <span>Serviços</span>
             </a>
           </li>
 
           <li>
             <a href="solicitacoes.html">
+              <img src="../../assets/icones/lista.svg" class="icone" alt="" />
               <span>Pedidos</span>
             </a>
           </li>
@@ -373,82 +384,20 @@
 
           <li>
             <a href="perfil.html">
+              <img src="../../assets/icones/usuario.png" class="icone" alt="" />
               <span>Perfil</span>
             </a>
           </li>
         </ul>
       </nav>
 
-      <!-- Botão flutuante que abre a janela de ajuda -->
-      <button
-        type="button"
-        class="botao-ajuda"
-        id="botao-ajuda"
-        aria-label="Preciso de ajuda"
-        aria-haspopup="dialog"
-        aria-controls="modal-ajuda"
-      >
-        <img src="../../assets/icones/ajuda.svg" class="icone" alt="" />
-      </button>
     </div>
 
-    <!-- Janela exibida ao clicar no botão de ajuda -->
-    <dialog
-      class="modal-ajuda"
-      id="modal-ajuda"
-      aria-labelledby="titulo-modal-ajuda"
-    >
-      <header class="cabecalho-modal-ajuda">
-        <h2 id="titulo-modal-ajuda">Como podemos ajudar?</h2>
 
-        <!-- O método dialog permite fechar a janela -->
-        <form method="dialog">
-          <button
-            type="submit"
-            class="fechar-modal-ajuda"
-            aria-label="Fechar janela"
-          >
-            <img src="../../assets/icones/fechar.svg" class="icone" alt="" />
-          </button>
-        </form>
-      </header>
 
-      <p>
-        Escolha um serviço para pedir apoio. Em “Pedidos”, você acompanha cada
-        atualização.
-      </p>
 
-      <!-- Opções disponíveis na janela de ajuda -->
-      <div class="opcoes-ajuda">
-        <a href="iara.html" class="ajuda-iara">
-          <img src="../../assets/icones/audio.svg" class="icone" alt="" />
-
-          <span>Conversar com a IARA</span>
-
-          <img
-            src="../../assets/icones/seta-direita.svg"
-            class="icone"
-            alt=""
-          />
-        </a>
-
-        <a
-          href="perfil.html#preferencias-acessibilidade"
-          class="ajuda-acessibilidade"
-        >
-          <img
-            src="../../assets/icones/libras.svg"
-            class="icone"
-            alt=""
-          />
-
-          <span>Ajustar acessibilidade</span>
-        </a>
-      </div>
-    </dialog>
-
-    <!-- Mapas interativos, marcadores dos semáforos, zoom e geolocalização. -->
-    <script src="../../js/mapas.js" defer></script>
+    <script src="../../js/dados.js" defer></script>
+    <script src="../../js/script.js" defer></script>
 
     <!-- Funcionalidades gerais, navegação, acessibilidade, preferências, formulários, solicitações e regras dos serviços. -->
     <script src="../../js/app.js" defer></script>

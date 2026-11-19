@@ -4,39 +4,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Acessibilidade | Meu Tempo</title>
-  <link rel="stylesheet" href="/meu-tempo/css/style.css" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <script src="../js/dados.js" defer></script>
   <script src="../js/script.js" defer></script>
 </head>
 <body>
   <!-- Barra superior -->
-  <div class="barra-util">
-    <div class="container">
-      <span>Uma cidade para todas as pessoas. Um caminho de cada vez.</span>
-      <button type="button" id="btn-abrir-acess" class="btn-acess-topo">
-        Recursos de acessibilidade &rsaquo;
-      </button>
-    </div>
-  </div>
+
 
   <!-- Barra de ajustes rápidos -->
-  <div id="painel-acess-rapido" class="painel-acess-rapido">
-    <div class="container">
-      <strong>Ajustes rápidos de leitura:</strong>
-      <div class="botoes-acess">
-        <button type="button" class="acao-aumentar">A+ Aumentar texto</button>
-        <button type="button" class="acao-diminuir">A- Texto normal</button>
-        <button type="button" class="acao-contraste">Alto contraste</button>
-        <button type="button" class="acao-tema">Tema escuro</button>
-      </div>
-    </div>
-  </div>
+
 
   <!-- Cabeçalho -->
   <header class="cabecalho">
     <div class="container">
       <a href="index.html" class="logo">
         <span class="logo-circulo">
-          <img src="../assets/icones/clock-three.png" alt="" class="icone" />
+          <img src="../assets/icones/relogio-contorno.png" alt="" class="icone" />
         </span>
         <div>
           <span class="logo-titulo">meu tempo</span>
@@ -50,7 +34,7 @@
         <a href="index.html">Início</a>
         <a href="sobre.html">Sobre</a>
         <a href="solucao.html">Nossa solução</a>
-        <a href="acessibilidade.html" class="ativo">Acessibilidade</a>
+        <a href="acessibilidade.html" class="ativo" aria-current="page">Acessibilidade</a>
         <a href="integrantes.html">Equipe</a>
         <a href="faq.html">FAQ</a>
         <a href="contato.html">Contato</a>
@@ -70,15 +54,13 @@
       </p>
     </section>
 
-    <!-- Destaque: Cadastro Inteligente via QR Code de Documentos -->
+    <!-- apresenta a conferência documental da demonstração -->
     <section class="container" style="padding-bottom: 44px;">
-      <div class="destaque-iara-card" style="margin: 0; grid-template-columns: 1.15fr 0.85fr;">
+      <div class="destaque-iara-card" style="margin: 0;">
         <div>
           <div class="etiqueta">CADASTRO INTELIGENTE E SEGURO</div>
           <h2>A acessibilidade começa na validação do seu cadastro.</h2>
-          <p>
-            Para evitar fraudes e garantir que os recursos de travessia e apoio presencial atendam exclusivamente quem realmente precisa, o cadastro no <strong>Meu Tempo</strong> exige a validação por <strong>QR Code</strong> de um documento oficial — como a <strong>Nova Carteira de Identidade Nacional (CIN)</strong> com identificação de deficiência, a <strong>CIPCD</strong>, a <strong>CIPTEA</strong> ou a <strong>Carteira da Pessoa Idosa</strong>. Além de assegurar o uso legítimo da plataforma, essa leitura já ativa automaticamente o perfil visual e sensorial mais adequado para você.
-          </p>
+          <p>A identificação utiliza os dados informados pelo cidadão e a conferência de documentos fictícios nesta demonstração. A leitura automática por OCR ainda não está conectada. A conferência manual não comprova autenticidade nem condição médica; necessidades e preferências são escolhidas pela própria pessoa.</p>
           <p style="margin-bottom: 0;">
             Depois de validado, se quiser ajustar qualquer detalhe no dia a dia, basta acessar o <strong>Perfil do Usuário</strong> para personalizar fonte, contraste, som ou navegação por voz a qualquer momento.
           </p>
@@ -88,7 +70,7 @@
           <div class="card-perfil-auto">
             <div class="topo-card">
               <span class="topo-card-titulo">
-                <img src="../assets/icones/eye.png" alt="" class="icone-pequeno" />
+                <img src="../assets/icones/olho.png" alt="" class="icone-pequeno" />
                 Baixa visão
               </span>
               <span>Automático</span>
@@ -100,7 +82,7 @@
           <div class="card-perfil-auto">
             <div class="topo-card">
               <span class="topo-card-titulo">
-                <img src="../assets/icones/old-people.png" alt="" class="icone-pequeno" />
+                <img src="../assets/icones/pessoa-idosa.png" alt="" class="icone-pequeno" />
                 Pessoa Idosa (Carteira do Idoso)
               </span>
               <span>Automático</span>
@@ -112,7 +94,7 @@
           <div class="card-perfil-auto">
             <div class="topo-card">
               <span class="topo-card-titulo">
-                <img src="../assets/icones/walking.png" alt="" class="icone-pequeno" />
+                <img src="../assets/icones/caminhada.png" alt="" class="icone-pequeno" />
                 Autismo (CIPTEA) e Neurodivergência
               </span>
               <span>Automático</span>
@@ -191,7 +173,7 @@
             <div class="toggle-info">
               <span class="toggle-icone">
                 <!-- mantenha aqui o src do seu ícone de IA -->
-                <img src="../assets/icones/artificial-intelligence.png" alt="" class="icone" />
+                <img src="../assets/icones/inteligencia-artificial.png" alt="" class="icone" />
               </span>
               <div>
                 <strong>Ativar a IARA</strong>
@@ -207,7 +189,7 @@
           <div class="item-toggle-linha">
             <div class="toggle-info">
               <span class="toggle-icone">
-                <img src="../assets/icones/watch-smart.png" alt="" class="icone" />
+                <img src="../assets/icones/relogio-inteligente.png" alt="" class="icone" />
               </span>
               <div>
                 <strong>Vibrar durante as travessias</strong>
@@ -223,7 +205,7 @@
           <div class="item-toggle-linha">
             <div class="toggle-info">
               <span class="toggle-icone">
-                <img src="../assets/icones/music-alt.png" alt="" class="icone" />
+                <img src="../assets/icones/musica.png" alt="" class="icone" />
               </span>
               <div>
                 <strong>Apoio musical</strong>
@@ -254,7 +236,7 @@
           <article class="card-branco">
             <div class="topo-card">
               <span class="topo-card-titulo">
-                <img src="../assets/icones/walking.png" alt="" class="icone-pequeno" />
+                <img src="../assets/icones/caminhada.png" alt="" class="icone-pequeno" />
                 Voz e leitores de tela
               </span>
               <span>01</span>
@@ -269,7 +251,7 @@
           <article class="card-branco">
             <div class="topo-card">
               <span class="topo-card-titulo">
-                <img src="../assets/icones/clock.png" alt="" class="icone-pequeno" />
+                <img src="../assets/icones/relogio-inteligente.png" alt="" class="icone-pequeno" />
                 Estímulos sensoriais
               </span>
               <span>02</span>
@@ -284,7 +266,7 @@
           <article class="card-branco">
             <div class="topo-card">
               <span class="topo-card-titulo">
-                <img src="../assets/icones/check-circle.png" alt="" class="icone-pequeno" />
+                <img src="../assets/icones/confirmacao-circular.png" alt="" class="icone-pequeno" />
                 Conforto visual
               </span>
               <span>03</span>
@@ -299,7 +281,7 @@
           <article class="card-branco">
             <div class="topo-card">
               <span class="topo-card-titulo">
-                <img src="../assets/icones/hand-paper.png" alt="" class="icone-pequeno" />
+                <img src="../assets/icones/mao.png" alt="" class="icone-pequeno" />
                 Comunicação inclusiva
               </span>
               <span>04</span>
@@ -382,16 +364,5 @@
     </div>
   </footer>
 
-  <!-- Integração oficial do VLibras -->
-  <div vw class="enabled">
-    <div vw-access-button class="active"></div>
-    <div vw-plugin-wrapper>
-      <div class="vw-plugin-top-wrapper"></div>
-    </div>
-  </div>
-  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
-  <script>
-    new window.VLibras.Widget('https://vlibras.gov.br/app');
-  </script>
 </body>
 </html>
