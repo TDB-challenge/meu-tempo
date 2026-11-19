@@ -929,3 +929,267 @@ if (profissionalAdmin !== null) {
 
 }
 
+// =================================================================
+// EQUIPAMENTOS DO METRÔ
+// =================================================================
+
+// seleciona os botões de alteração dos equipamentos
+const botoesEquipamentosMetro = document.querySelectorAll(
+    "[data-alterar-equipamento]"
+);
+
+// seleciona o indicador de equipamentos disponíveis
+const indicadorEquipamentos = document.getElementById(
+    "indicador-equipamentos"
+);
+
+// guarda os equipamentos fictícios da estação
+const equipamentosMetro = [
+
+    {
+        codigo: "EL-01",
+        situacao: "Disponível"
+    },
+
+    {
+        codigo: "ER-02",
+        situacao: "Em manutenção"
+    }
+
+];
+
+
+// função que atualiza o indicador de equipamentos
+function atualizarEquipamentosMetro() {
+
+    // guarda a quantidade de equipamentos disponíveis
+    let disponiveis = 0;
+
+    // percorre a lista de equipamentos
+    for (let i = 0; i < equipamentosMetro.length; i++) {
+
+        // recupera o equipamento atual
+        const equipamento = equipamentosMetro[i];
+
+        // prepara o código para localizar o id no html
+        const identificador = equipamento.codigo.toLowerCase().replace("-", "");
+
+        // seleciona o texto da situação
+        const situacao = document.getElementById("situacao-" + identificador);
+
+        // apresenta a situação atualizada
+        situacao.textContent = equipamento.situacao;
+
+        // verifica se o equipamento está disponível
+        if (equipamento.situacao === "Disponível") {
+
+            disponiveis = disponiveis + 1;
+
+        }
+
+    }
+
+    // apresenta a quantidade na visão geral
+    indicadorEquipamentos.textContent = disponiveis;
+
+}
+
+
+// função que altera a situação do equipamento
+function alterarEquipamentoMetro(event) {
+
+    // recupera o botão clicado
+    const botao = event.currentTarget;
+
+    // recupera o código do equipamento
+    const codigo = botao.getAttribute("data-alterar-equipamento");
+
+    // percorre os equipamentos cadastrados
+    for (let i = 0; i < equipamentosMetro.length; i++) {
+
+        // verifica se encontrou o equipamento
+        if (equipamentosMetro[i].codigo === codigo) {
+
+            // recupera o equipamento encontrado
+            const equipamento = equipamentosMetro[i];
+
+            // verifica a situação atual
+            if (equipamento.situacao === "Disponível") {
+
+                equipamento.situacao = "Em manutenção";
+
+            } else if (equipamento.situacao === "Em manutenção") {
+
+                equipamento.situacao = "Indisponível";
+
+            } else {
+
+                equipamento.situacao = "Disponível";
+
+            }
+
+            // atualiza as informações na página
+            atualizarEquipamentosMetro();
+
+            return;
+
+        }
+
+    }
+
+}
+
+
+// verifica se estamos no painel do metrô
+if (document.body.classList.contains("pagina-metro")) {
+
+    // percorre os botões dos equipamentos
+    for (let i = 0; i < botoesEquipamentosMetro.length; i++) {
+
+        // executa a alteração ao clicar no botão
+        botoesEquipamentosMetro[i].addEventListener(
+            "click",
+            alterarEquipamentoMetro
+        );
+
+    }
+
+    // apresenta as informações iniciais
+    atualizarEquipamentosMetro();
+
+}
+
+
+// =================================================================
+// OCORRÊNCIAS DO METRÔ
+// =================================================================
+
+// seleciona o formulário
+const formularioOcorrenciaMetro = document.getElementById("formulario-ocorrencia");
+
+// seleciona os campos do formulário
+const tipoOcorrenciaMetro = document.getElementById("tipo-ocorrencia");
+const localOcorrenciaMetro = document.getElementById("local-ocorrencia");
+const descricaoOcorrenciaMetro = document.getElementById("descricao-ocorrencia");
+
+// seleciona a mensagem e a lista de ocorrências
+const avisoOcorrenciaMetro = document.getElementById("aviso-ocorrencia");
+const listaOcorrenciasMetro = document.getElementById("lista-ocorrencias-metro");
+
+// cria uma lista para guardar as ocorrências
+let ocorrenciasMetro = [];
+
+
+// função que apresenta as ocorrências registradas
+function exibirOcorrenciasMetro() {
+
+    // limpa a lista anterior
+    listaOcorrenciasMetro.innerHTML = "";
+
+    // verifica se a lista está vazia
+    if (ocorrenciasMetro.length === 0) {
+
+        listaOcorrenciasMetro.innerHTML =
+            "<li>Nenhuma ocorrência registrada.</li>";
+
+        return;
+
+    }
+
+    // percorre as ocorrências cadastradas
+    for (let i = 0; i < ocorrenciasMetro.length; i++) {
+
+        // recupera a ocorrência atual
+        const ocorrencia = ocorrenciasMetro[i];
+
+        // cria um item da lista
+        const item = document.createElement("li");
+
+        // apresenta as informações da ocorrência
+        item.textContent =
+            ocorrencia.tipo + " | " +
+            ocorrencia.local + " | " +
+            ocorrencia.descricao;
+
+        // adiciona o item à lista
+        listaOcorrenciasMetro.appendChild(item);
+
+    }
+
+}
+
+
+// função que registra uma ocorrência
+function registrarOcorrenciaMetro(event) {
+
+    // impede o recarregamento da página
+    event.preventDefault();
+
+    // verifica se os campos possuem conteúdo
+    if (localOcorrenciaMetro.value.trim() === "" ||
+        descricaoOcorrenciaMetro.value.trim() === "") {
+
+        avisoOcorrenciaMetro.textContent = "Preencha todos os campos.";
+
+        return;
+
+    }
+
+    // cria o objeto com os dados informados
+    const ocorrencia = {
+
+        tipo: tipoOcorrenciaMetro.options[tipoOcorrenciaMetro.selectedIndex].text,
+
+        local: localOcorrenciaMetro.value.trim(),
+
+        descricao: descricaoOcorrenciaMetro.value.trim()
+
+    };
+
+    // adiciona a ocorrência à lista
+    ocorrenciasMetro.push(ocorrencia);
+
+    // salva as ocorrências no navegador
+    localStorage.setItem(
+        "metro-ocorrencias",
+        JSON.stringify(ocorrenciasMetro)
+    );
+
+    // atualiza a lista apresentada
+    exibirOcorrenciasMetro();
+
+    // limpa os campos do formulário
+    formularioOcorrenciaMetro.reset();
+
+    // apresenta a mensagem de confirmação
+    avisoOcorrenciaMetro.textContent =
+        "Ocorrência registrada com sucesso!";
+
+}
+
+
+// verifica se estamos no painel do metrô
+if (formularioOcorrenciaMetro && listaOcorrenciasMetro) {
+
+    // recupera as ocorrências salvas anteriormente
+    const ocorrenciasSalvas = localStorage.getItem("metro-ocorrencias");
+
+    // verifica se existem registros anteriores
+    if (ocorrenciasSalvas !== null) {
+
+        ocorrenciasMetro = JSON.parse(ocorrenciasSalvas);
+
+    }
+
+    // apresenta as ocorrências existentes
+    exibirOcorrenciasMetro();
+
+    // registra a ocorrência ao enviar o formulário
+    formularioOcorrenciaMetro.addEventListener(
+        "submit",
+        registrarOcorrenciaMetro
+    );
+
+}
+
+

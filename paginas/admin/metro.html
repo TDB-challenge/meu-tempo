@@ -507,12 +507,12 @@
                     required
                   ></textarea>
                 </div>
-                <p id="aviso-ocorrencia" class="painel-status">
-                  Formulário ilustrativo. Nenhuma ocorrência será registrada
-                  nesta demonstração.
+                <!-- apresenta o resultado do registro -->
+                <p id="aviso-ocorrencia" class="painel-status" role="status">
+                  As ocorrências serão armazenadas neste navegador.
                 </p>
                 <div class="admin-chamado-acoes">
-                  <button type="button" id="registrar-ocorrencia" class="btn">
+                  <button type="submit" id="registrar-ocorrencia" class="btn">
                     Registrar ocorrência
                   </button>
                   <button
@@ -524,6 +524,12 @@
                   </button>
                 </div>
               </form>
+              <!-- apresenta as ocorrências registradas pelo profissional -->
+              <h2>Ocorrências registradas</h2>
+
+              <ul id="lista-ocorrencias-metro">
+                <li>Nenhuma ocorrência registrada.</li>
+              </ul>
             </div>
           </section>
 

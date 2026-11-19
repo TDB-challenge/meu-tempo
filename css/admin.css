@@ -2605,3 +2605,23 @@ body.tema-escuro .coord-estacao-icone img.icone {
     }
 
 }
+
+
+
+
+/* =========================================================
+   LISTA DE OCORRÊNCIAS DO METRÔ
+   ========================================================= */
+
+/* organiza a lista de ocorrências */
+#lista-ocorrencias-metro {
+    margin-top: 16px; /* espaço acima da lista */
+    padding-left: 20px; /* espaço para os marcadores */
+}
+
+/* organiza cada ocorrência registrada */
+#lista-ocorrencias-metro li {
+    margin-bottom: 12px; /* espaço entre os registros */
+    font-size: 0.9rem; /* tamanho do texto */
+    overflow-wrap: break-word; /* permite quebrar textos longos */
+}
