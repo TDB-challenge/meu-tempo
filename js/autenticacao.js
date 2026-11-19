@@ -1131,6 +1131,9 @@ function prepararLogin(event) {
     if (usuario.email === email && usuario.senha === senha) {
       // verifica se o profissional está autorizado
       if (usuario.status === "aprovado") {
+        // salva a sessão do profissional conectado
+        salvarSessao(usuario);
+
         // direciona o profissional ao painel correspondente
         direcionarPainel(usuario);
 
@@ -1158,7 +1161,7 @@ if (formularioLoginAdmin) {
   // verifica a senha enquanto o profissional digita
   senhaLogin.addEventListener("input", validarLogin);
 
-  // impede o envio tradicional até implementarmos a autenticação
+  // executa a autenticação ao enviar o formulário
   formularioLoginAdmin.addEventListener("submit", prepararLogin);
 
   // verifica os campos quando a página é carregada
@@ -1261,4 +1264,27 @@ if (abrirRecuperacao && modalRecuperacao && formularioRecuperacao) {
 
   // executa a recuperação ao enviar o formulário
   formularioRecuperacao.addEventListener("submit", recuperarAcesso);
+}
+
+// =================================================================
+// SESSÃO ADMINISTRATIVA
+// =================================================================
+
+// função que registra o profissional conectado
+// usuario representa a conta encontrada no login
+function salvarSessao(usuario) {
+  // cria um objeto com as informações do profissional
+  const profissionalConectado = {
+    nome: usuario.nome,
+    matricula: usuario.matricula,
+    email: usuario.email,
+    orgao: usuario.orgao,
+    funcao: usuario.funcao,
+    linha: usuario.linha,
+    estacao: usuario.estacao,
+    regiao: usuario.regiao,
+  };
+
+  // transforma o objeto em texto e salva na sessão
+  sessionStorage.setItem("admin-sessao", JSON.stringify(profissionalConectado));
 }
