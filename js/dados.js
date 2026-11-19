@@ -638,6 +638,62 @@ function registrarPedidoCidadao(pedido) {
   return pedido;
 }
 
+// RECUPERAÇÃO DA SIMULAÇÃO AO CONSULTAR OS PEDIDOS
+
+// recupera os pedidos e concilia somente os horários da demonstração local
+function buscarPedidosOperacionais() {
+  // consulta a lista compartilhada e o instante atual
+  const pedidos = lerListaOperacional("meu-tempo-pedidos");
+  const agora = Date.now();
+  let alterou = false;
+  // percorre os serviços sem interferir em pedidos encerrados pelo cidadão
+  for (let i = 0; i < pedidos.length; i++) {
+    // identifica somente uma simulação com horários válidos
+    const pedido = pedidos[i];
+    if (pedido.servico === "travessia" && !pedido.simulacaoEncerrada && pedido.aberturaSimulacao && pedido.fimSimulacao) {
+      // relaciona cada etapa ao horário programado na própria simulação
+      const momentos = [pedido.aberturaSimulacao, pedido.fimSimulacao - 8000, pedido.fimSimulacao];
+      const titulos = ["Travessia liberada na simulação", "Tempo próximo do fim", "Simulação concluída"];
+      // prepara o histórico caso um registro antigo ainda não possua etapas
+      if (!Array.isArray(pedido.etapas)) pedido.etapas = [];
+      // guarda a última etapa alcançada para comparar apenas uma vez
+      let situacaoAtual = pedido.situacao;
+      // recupera apenas os eventos cujos horários já passaram
+      for (let j = 0; j < momentos.length; j++) {
+        if (agora >= momentos[j]) {
+          // verifica se a etapa já foi registrada pelo contador da página
+          let registrada = false;
+          for (let k = 0; k < pedido.etapas.length; k++) {
+            if (pedido.etapas[k].titulo === titulos[j]) registrada = true;
+          }
+          // acrescenta o horário programado sem duplicar etapas existentes
+          if (!registrada) {
+            const data = new Date(momentos[j]);
+            pedido.etapas.push({titulo: titulos[j], horario: data.toLocaleString("pt-BR"), instante: data.toISOString()});
+            alterou = true;
+          }
+          // atualiza a situação para a última etapa realmente alcançada
+          situacaoAtual = titulos[j];
+        }
+      }
+      // salva a situação somente quando uma nova etapa foi alcançada
+      if (pedido.situacao !== situacaoAtual) {
+        pedido.situacao = situacaoAtual;
+        alterou = true;
+      }
+      // encerra a demonstração mesmo quando a página da contagem foi fechada
+      if (agora >= pedido.fimSimulacao) {
+        pedido.simulacaoEncerrada = true;
+        pedido.dataConclusao = new Date(pedido.fimSimulacao).toLocaleString("pt-BR");
+        alterou = true;
+      }
+    }
+  }
+  // evita escritas e eventos de armazenamento quando nada mudou
+  if (alterou) localStorage.setItem("meu-tempo-pedidos", JSON.stringify(pedidos));
+  return pedidos;
+}
+
 // reúne somente as solicitações do cidadão conectado
 function buscarPedidosCidadao() {
   // recupera a sessão e inicia a lista de resultados
@@ -645,7 +701,7 @@ function buscarPedidosCidadao() {
   const resultado = [];
   if (cidadao === null) return resultado;
   // consulta as duas listas já utilizadas pelas áreas da plataforma
-  const listas = [lerListaOperacional("metro-chamados"), lerListaOperacional("meu-tempo-pedidos")];
+  const listas = [lerListaOperacional("metro-chamados"), buscarPedidosOperacionais()];
   // percorre os serviços sem criar cópias de um mesmo atendimento
   for (let i = 0; i < listas.length; i++) {
     for (let j = 0; j < listas[i].length; j++) {

@@ -1081,10 +1081,7 @@ if (profissionalAdmin !== null) {
 // =================================================================
 
 // guarda os equipamentos existentes e seu vínculo fixo
-const equipamentosMetro = [
-  {codigo: "EL-01", nome: "Elevador", local: "Mezanino", estacao: "Consolação", orgao: "metro", situacao: "Disponível"},
-  {codigo: "ER-02", nome: "Escada rolante", local: "Plataforma", estacao: "Consolação", orgao: "metro", situacao: "Em manutenção"}
-];
+const equipamentosMetro = buscarEquipamentosMetro();
 // seleciona o corpo da tabela e o indicador de disponibilidade
 const corpoEquipamentosMetro = document.getElementById("corpo-equipamentos");
 const indicadorEquipamentos = document.getElementById("indicador-equipamentos");
@@ -1308,11 +1305,25 @@ function sincronizarEquipamentosCoordenacao() {
 function sincronizarTransporteAdministrativo() {
   // recupera os mesmos pedidos utilizados no painel de transporte
   const pedidos = buscarChamadosMetro();
+  // acrescenta os outros serviços sem copiar ou trocar seus protocolos
+  const pedidosAplicativo = buscarPedidosOperacionais();
+  const registros = [];
+  let travessias = 0;
+  // conta somente simulações que alcançaram a abertura
+  let travessiasAprovadas = 0;
+  let zeladoria = 1;
+  for (let i = 0; i < pedidos.length; i++) registros.push(pedidos[i]);
+  for (let i = 0; i < pedidosAplicativo.length; i++) {
+    registros.push(pedidosAplicativo[i]);
+    if (travessiaLiberadaAplicativo(pedidosAplicativo[i])) travessiasAprovadas = travessiasAprovadas + 1;
+    if (pedidosAplicativo[i].servico === "travessia") travessias = travessias + 1;
+    else if (pedidosAplicativo[i].servico === "zeladoria") zeladoria = zeladoria + 1;
+  }
   recuperarEquipamentosMetro();
   sincronizarEquipamentosCoordenacao();
   const tabelas = document.querySelectorAll("[data-pedidos-operacionais]");
   // relaciona a situação apresentada aos filtros existentes
-  const codigos = {"Pedido recebido": "aguardando", "Aprovado": "aprovado", "Funcionário a caminho": "caminho", "Em atendimento": "atendimento", "Concluído": "concluido", "Recusado": "recusado"};
+  const codigos = {"Pedido recebido": "aguardando", "Aprovado": "aprovado", "Funcionário a caminho": "caminho", "Em atendimento": "atendimento", "Concluído": "concluido", "Recusado": "recusado", "Em análise": "analise", "Aguardando abertura": "aguardando", "Travessia liberada na simulação": "atendimento", "Tempo próximo do fim": "atendimento", "Simulação concluída": "concluido", "Simulação encerrada pelo cidadão": "concluido"};
   // percorre as tabelas da coordenação e dos relatórios
   for (let i = 0; i < tabelas.length; i++) {
     // seleciona as linhas de transporte que serão atualizadas
@@ -1320,20 +1331,23 @@ function sincronizarTransporteAdministrativo() {
     // remove somente linhas que foram geradas a partir da lista compartilhada
     for (let j = 0; j < anteriores.length; j++) anteriores[j].remove();
     // acrescenta os pedidos preservando as linhas dos demais serviços
-    for (let j = 0; j < pedidos.length; j++) {
-      // recupera o atendimento atual
-      const pedido = pedidos[j];
+    for (let j = 0; j < registros.length; j++) {
+      // recupera o atendimento atual sem alterar o serviço de origem
+      const pedido = registros[j];
       const linha = document.createElement("tr");
       linha.setAttribute("data-pedido-transporte", pedido.protocolo);
-      linha.setAttribute("data-orgao", "metro");
-      linha.setAttribute("data-local", codigoLocalOperacional(pedido.estacao));
+      let orgao = "metro";
+      if (pedido.servico === "travessia") orgao = "cet";
+      else if (pedido.servico === "zeladoria") orgao = "zeladoria";
+      linha.setAttribute("data-orgao", orgao);
+      linha.setAttribute("data-local", codigoLocalOperacional(pedido.estacao || pedido.local));
       linha.setAttribute("data-situacao", codigos[pedido.situacao]);
       linha.setAttribute("data-data-solicitacao", pedido.dataSolicitacao || "");
       adicionarTextoOperacional(linha, "td", pedido.protocolo, "coord-td-proto");
       const servico = adicionarTextoOperacional(linha, "td", "", "");
       adicionarTextoOperacional(servico, "strong", pedido.tipo, "");
       adicionarTextoOperacional(servico, "span", pedido.nome + " · " + pedido.orgao.toUpperCase(), "");
-      adicionarTextoOperacional(linha, "td", pedido.linha + " · " + pedido.local, "");
+      adicionarTextoOperacional(linha, "td", (pedido.linha || "") + " · " + pedido.local, "");
       const situacao = adicionarTextoOperacional(linha, "td", "", "");
       adicionarTextoOperacional(situacao, "span", pedido.situacao, "admin-status-pill");
       adicionarTextoOperacional(linha, "td", pedido.horarioSolicitacao, "");
@@ -1362,6 +1376,13 @@ function sincronizarTransporteAdministrativo() {
   // sincroniza os resumos textuais e as barras simples já existentes
   const resumos = document.querySelectorAll("[data-resumo-transporte]");
   for (let i = 0; i < resumos.length; i++) resumos[i].textContent = "Metrô: " + pedidos.length + " solicitações.";
+  const outrosResumos = document.querySelectorAll("[data-resumo-servico]");
+  for (let i = 0; i < outrosResumos.length; i++) {
+    if (outrosResumos[i].getAttribute("data-resumo-servico") === "travessia") outrosResumos[i].textContent = "Travessia: " + travessias + " solicitações.";
+    else outrosResumos[i].textContent = "Zeladoria: " + zeladoria + " solicitações.";
+  }
+  const indicadorTravessias = document.querySelector("[data-travessias-aprovadas]");
+  if (indicadorTravessias) indicadorTravessias.textContent = travessiasAprovadas;
   const grupos = document.querySelectorAll(".cet-barras-lista");
   for (let i = 0; i < grupos.length; i++) {
     // percorre as barras para atualizar a quantidade ferroviária
@@ -1369,7 +1390,10 @@ function sincronizarTransporteAdministrativo() {
     let maior = 1;
     for (let j = 0; j < barras.length; j++) {
       const valor = barras[j].querySelector(".cet-barra-valor");
-      if (barras[j].querySelector(".cet-barra-nome").textContent === "Metrô") valor.textContent = pedidos.length;
+      const nomeServico = barras[j].querySelector(".cet-barra-nome").textContent;
+      if (nomeServico === "Metrô") valor.textContent = pedidos.length;
+      else if (nomeServico === "Travessia") valor.textContent = travessias;
+      else if (nomeServico === "Zeladoria") valor.textContent = zeladoria;
       if (Number(valor.textContent) > maior) maior = Number(valor.textContent);
     }
     // mantém a proporção visual das barras com as quantidades apresentadas
@@ -1388,7 +1412,7 @@ function sincronizarTransporteAdministrativo() {
     if (descricao) descricao.textContent = quantidade + " solicitações registradas";
   }
   // atualiza os avisos de transporte sem manter situações fixas contraditórias
-  sincronizarEtapasTransporte(pedidos);
+  sincronizarEtapasTransporte(registros);
   filtrarPedidosCoordenacao();
 }
 
@@ -1462,7 +1486,7 @@ function receberAtualizacaoAdministrativa(event) {
   // atualiza solicitações quando a coordenação está aberta
   if (event.key === "admin-solicitacoes" && listaSolicitacoesCadastro && profissionalAdmin !== null && profissionalAdmin.funcao === "Coordenador") exibirSolicitacoesCadastro();
   // sincroniza somente as listas operacionais relacionadas aos painéis
-  if (event.key === "metro-chamados" || event.key === "metro-equipamentos") {
+  if (event.key === "metro-chamados" || event.key === "metro-equipamentos" || event.key === "meu-tempo-pedidos") {
     // atualiza a apresentação do transporte sem gravar novamente o mesmo evento
     if (document.body.classList.contains("pagina-metro") && profissionalAdmin !== null && profissionalAdmin.funcao === "Agente de transporte") {
       chamadosMetro = buscarChamadosMetro();
@@ -1477,9 +1501,129 @@ function receberAtualizacaoAdministrativa(event) {
     } else if (profissionalAdmin !== null && profissionalAdmin.funcao === "Operador CET") {
       // mantém as notificações compartilhadas da cet coerentes
       sincronizarEtapasTransporte(buscarChamadosMetro());
+      exibirPedidosAplicativoCET();
     }
   }
 }
 
 // recebe o evento emitido pelo navegador quando outra aba altera os dados
 window.addEventListener("storage", receberAtualizacaoAdministrativa);
+
+// =================================================================
+// SOLICITAÇÕES DO APLICATIVO NA CET
+// =================================================================
+
+// verifica a abertura efetivamente registrada na demonstração
+// pedido representa o registro compartilhado com o aplicativo
+function travessiaLiberadaAplicativo(pedido) {
+  // impede incluir zeladoria ou pedidos sem histórico na contagem
+  if (pedido.servico !== "travessia" || !Array.isArray(pedido.etapas)) return false;
+  // procura a etapa de abertura sem considerar a espera como aprovação
+  for (let i = 0; i < pedido.etapas.length; i++) {
+    if (pedido.etapas[i].titulo === "Travessia liberada na simulação") return true;
+  }
+  return false;
+}
+
+// apresenta somente os registros relacionados à área viária
+function exibirPedidosAplicativoCET() {
+  // recupera a lista compartilhada sem modificar os atendimentos ferroviários
+  const pedidos = buscarPedidosOperacionais();
+  // seleciona os locais destinados a cada serviço
+  const destinos = [{id: "lista-pedidos-cet", servico: "travessia"}, {id: "lista-relatos-cet", servico: "zeladoria"}];
+  // inicia as contagens adicionais aos exemplos operacionais já existentes
+  let recebidos = 0;
+  let aprovados = 0;
+  let recusados = 0;
+  // percorre os serviços sem duplicar sua lógica de apresentação
+  for (let i = 0; i < destinos.length; i++) {
+    const lista = document.getElementById(destinos[i].id);
+    if (lista) {
+      lista.textContent = "";
+      // apresenta somente os pedidos do serviço correspondente
+      for (let j = 0; j < pedidos.length; j++) {
+        const pedido = pedidos[j];
+        if (pedido.orgao === "cet" && pedido.servico === destinos[i].servico) {
+          recebidos = recebidos + 1;
+          if (travessiaLiberadaAplicativo(pedido)) aprovados = aprovados + 1;
+          if (pedido.situacao === "Recusado") recusados = recusados + 1;
+          // cria o cartão utilizando os mesmos textos seguros dos demais painéis
+          const cartao = adicionarTextoOperacional(lista, "article", "", "admin-chamado-item");
+          const meta = adicionarTextoOperacional(cartao, "div", "", "admin-chamado-meta");
+          adicionarTextoOperacional(meta, "span", pedido.protocolo + " · " + pedido.horarioSolicitacao, "");
+          adicionarTextoOperacional(meta, "span", pedido.situacao, "admin-status-pill");
+          adicionarTextoOperacional(cartao, "h3", pedido.tipo + " · " + pedido.nome, "");
+          adicionarTextoOperacional(cartao, "p", pedido.local, "admin-chamado-local");
+          // inclui a descrição quando o serviço recebeu um relato textual
+          if (pedido.descricao) adicionarTextoOperacional(cartao, "p", pedido.descricao, "admin-chamado-local");
+          const detalhes = adicionarTextoOperacional(cartao, "details", "", "");
+          adicionarTextoOperacional(detalhes, "summary", "Acompanhar etapas", "");
+          const etapas = adicionarTextoOperacional(detalhes, "ol", "", "cet-timeline");
+          // apresenta somente as etapas efetivamente registradas pelo serviço
+          for (let k = 0; k < pedido.etapas.length; k++) {
+            const etapa = adicionarTextoOperacional(etapas, "li", "", "");
+            adicionarTextoOperacional(etapa, "span", pedido.etapas[k].titulo + " · " + pedido.etapas[k].horario, "");
+          }
+          // a travessia é automática na simulação; apenas a zeladoria recebe ações manuais
+          if (pedido.servico === "zeladoria" && pedido.situacao !== "Concluído" && pedido.situacao !== "Recusado") {
+            const acoes = adicionarTextoOperacional(cartao, "div", "", "admin-chamado-acoes");
+            const situacoes = ["Em análise", "Concluído"];
+            for (let k = 0; k < situacoes.length; k++) {
+              const botao = adicionarTextoOperacional(acoes, "button", "Marcar: " + situacoes[k], "btn btn-contorno");
+              botao.type = "button";
+              // data identifica o registro e a próxima situação da mesma solicitação
+              botao.setAttribute("data-pedido-cet", pedido.protocolo);
+              botao.setAttribute("data-situacao-cet", situacoes[k]);
+              botao.addEventListener("click", alterarPedidoAplicativoCET);
+            }
+          }
+        }
+      }
+      // informa ausência de pedidos sem apresentar exemplos como novos registros
+      if (lista.children.length === 0) adicionarTextoOperacional(lista, "p", "Nenhum pedido do aplicativo para este serviço.", "admin-chamado-local");
+    }
+  }
+  // preserva os exemplos de decisões da cet e soma os pedidos reais da simulação
+  const exemplos = document.getElementById("lista-decisoes-cet");
+  if (exemplos) {
+    document.getElementById("kpi-cet-recebidas").textContent = exemplos.querySelectorAll(".admin-chamado-item").length + recebidos;
+    document.getElementById("kpi-cet-aprovados").textContent = exemplos.querySelectorAll(".cet-pill-aprovado").length + aprovados;
+    document.getElementById("kpi-cet-recusados").textContent = exemplos.querySelectorAll(".cet-pill-recusado").length + recusados;
+  }
+}
+
+// atualiza o mesmo relato que o cidadão acompanha no aplicativo
+// event representa o botão que informa o protocolo e a situação escolhida
+function alterarPedidoAplicativoCET(event) {
+  // recupera a solicitação e a decisão do controle
+  const protocolo = event.currentTarget.getAttribute("data-pedido-cet");
+  const situacao = event.currentTarget.getAttribute("data-situacao-cet");
+  const pedidos = buscarPedidosOperacionais();
+  // verifica a função antes de alterar o relato
+  if (profissionalAdmin === null || profissionalAdmin.funcao !== "Operador CET") return;
+  // percorre os pedidos preservando os demais registros
+  for (let i = 0; i < pedidos.length; i++) {
+    const pedido = pedidos[i];
+    // permite modificar somente a zeladoria vinculada à cet e ainda não encerrada
+    if (pedido.protocolo === protocolo && pedido.servico === "zeladoria" && pedido.orgao === "cet" && pedido.situacao !== "Concluído" && pedido.situacao !== "Recusado" && pedido.situacao !== situacao) {
+      const data = new Date();
+      pedido.situacao = situacao;
+      pedido.etapas.push({titulo: situacao, horario: data.toLocaleString("pt-BR"), instante: data.toISOString()});
+      if (situacao === "Concluído") pedido.dataConclusao = data.toLocaleString("pt-BR");
+      salvarPedidoCidadao(pedido);
+      exibirPedidosAplicativoCET();
+      mostrarToastAdmin("Relato atualizado no acompanhamento do cidadão.");
+      return;
+    }
+  }
+}
+
+// conecta os pedidos do aplicativo sem retirar as ações viárias anteriores
+if (paginaAdmin.endsWith("/cet.html") && profissionalAdmin !== null && profissionalAdmin.funcao === "Operador CET") {
+  exibirPedidosAplicativoCET();
+  // recalcula os indicadores depois das ações de demonstração já existentes
+  const exemplos = [document.getElementById("btn-cet-add-aprovado"), document.getElementById("btn-cet-add-recusado")];
+  for (let i = 0; i < exemplos.length; i++) {
+    if (exemplos[i]) exemplos[i].addEventListener("click", exibirPedidosAplicativoCET);
+  }
+}

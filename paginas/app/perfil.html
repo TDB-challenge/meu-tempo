@@ -6,6 +6,7 @@
 
     <title>Perfil e acessibilidade | Meu Tempo</title>
 
+    <link rel="stylesheet" href="../../css/style.css" />
     <link rel="stylesheet" href="../../css/app.css" />
   </head>
 
@@ -19,6 +20,7 @@
       <!-- Menu lateral do aplicativo -->
       <aside class="menu-lateral">
         <a href="inicio.html" class="logo">
+          <img src="../../assets/icones/clock-three.png" class="marca-icone" alt="" />
           <div class="texto-logo">
             <strong>meu tempo</strong>
             <small class="slogan">A cidade no seu ritmo.</small>
@@ -97,6 +99,7 @@
 
           <!-- Logo exibida em telas menores -->
           <a href="inicio.html" class="logo-mobile">
+          <img src="../../assets/icones/clock-three.png" class="marca-icone" alt="" />
             <strong>meu tempo</strong>
           </a>
 
@@ -118,17 +121,19 @@
             </summary>
 
             <div class="opcoes-usuario">
+              <!-- encerra somente a sessão do cidadão -->
+              <a href="../login.html" id="sair-app"><img src="../../assets/icones/logout-2.png" class="icone" alt="" />Sair</a>
               <a href="perfil.html">
                 Meu perfil
               </a>
 
               <a href="#abrir-leitor-documentos" id="identificar-documento">
                 <img
-                  src="../../assets/icones/camera.svg"
+                  src="../../assets/icones/scan-traces.svg"
                   class="icone"
                   alt=""
                 />
-                Identificar meu documento
+                Meus documentos
               </a>
 
               <a href="../index.html">
@@ -167,13 +172,7 @@
             <label class="tamanho-letras" for="tamanho-fonte">
               Tamanho das letras
 
-              <select id="tamanho-fonte" name="tamanho-fonte">
-                <option value="100">100% — padrão</option>
-                <option value="125">125%</option>
-                <option value="150">150%</option>
-                <option value="175">175%</option>
-                <option value="200">200%</option>
-              </select>
+              <select id="tamanho-fonte" data-preferencia="fonte" name="tamanho-fonte"><option value="100">100%</option><option value="115">115%</option><option value="125">125%</option><option value="130">130%</option><option value="150">150%</option><option value="175">175%</option><option value="200">200%</option></select>
             </label>
 
             <!-- Preferências que podem ser ativadas ou desativadas -->
@@ -197,7 +196,7 @@
                 <input
                   type="checkbox"
                   class="interruptor"
-                  id="alto-contraste"
+                  id="alto-contraste" data-preferencia="contraste"
                   name="alto-contraste"
                   role="switch"
                 />
@@ -216,13 +215,13 @@
                 <span class="descricao-preferencia">
                   <strong>Ouvir a IARA</strong>
 
-                  <small> Respostas por voz e por texto. </small>
+                  <small> Indisponível até configurar o webchat. </small>
                 </span>
 
                 <input
                   type="checkbox"
                   class="interruptor"
-                  id="ouvir-iara"
+                  id="ouvir-iara" data-preferencia="vozIara"
                   name="ouvir-iara"
                   role="switch"
                 />
@@ -247,13 +246,16 @@
                 <input
                   type="checkbox"
                   class="interruptor"
-                  id="vibrar-avisos"
+                  id="vibrar-avisos" data-preferencia="vibracao"
                   name="vibrar-avisos"
                   role="switch"
                 />
               </label>
             </div>
 
+<!-- data-preferencia identifica a configuração sincronizada com o botão global -->
+<label class="opcao-preferencia">Orientações por voz <input type="checkbox" data-preferencia="orientacoesVoz" /></label>
+<label class="opcao-preferencia">Guia sonoro da travessia <input type="checkbox" data-preferencia="somTravessia" /></label>
             <!-- Outras configurações de leitura -->
             <details class="opcoes-leitura">
               <summary class="titulo-opcoes-leitura">
@@ -290,7 +292,7 @@
                   <input
                     type="checkbox"
                     class="interruptor"
-                    id="fonte-legivel"
+                    id="fonte-legivel" data-preferencia="fonteLegivel"
                     name="fonte-legivel"
                     role="switch"
                   />
@@ -313,7 +315,7 @@
                   <input
                     type="checkbox"
                     class="interruptor"
-                    id="tema-escuro"
+                    id="tema-escuro" data-preferencia="temaEscuro"
                     name="tema-escuro"
                     role="switch"
                   />
@@ -322,35 +324,25 @@
             </details>
 
             <!-- Acesso aos conteúdos em Libras -->
-            <button
-              type="button"
-              class="botao-libras"
-              id="abrir-libras"
-              disabled
-            >
-              <img src="../../assets/icones/libras.svg" class="icone" alt="" />
-
-              <span>Conteúdo em Libras</span>
-            </button>
           </section>
 
           <!-- Identificação por documento, com revisão dos dados pelo usuário -->
           <section class="card-documento" aria-labelledby="titulo-identificacao-documento">
             <span class="icone-documento">
-              <img src="../../assets/icones/camera.svg" class="icone" alt="" />
+              <img src="../../assets/icones/scan-traces.svg" class="icone" alt="" />
             </span>
 
             <div class="dados-documento">
-              <h2 id="titulo-identificacao-documento">Meu documento</h2>
+              <h2 id="titulo-identificacao-documento">Meus documentos</h2>
 
               <!-- O texto será atualizado após a confirmação dos dados -->
               <p id="status-documento">
-                Fotografe um documento ou escolha uma imagem da galeria.
-                Você também pode preencher seus dados manualmente.
+                Consulte a identificação e os documentos registrados no cadastro.
+                O leitor permite revisar os dados informados; não há validação por órgão público.
               </p>
             </div>
 
-            <!-- O leitor-documentos.js abrirá a janela quando for implementado -->
+            <!-- abre a revisão local sem leitura automática nem alteração de identidade -->
             <button
               type="button"
               class="botao-documento"
@@ -358,8 +350,8 @@
               aria-haspopup="dialog"
               aria-controls="modal-documento"
             >
-              <img src="../../assets/icones/camera.svg" class="icone" alt="" />
-              <span id="texto-botao-documento">Identificar documento</span>
+              <img src="../../assets/icones/scan-traces.svg" class="icone" alt="" />
+              <span id="texto-botao-documento">Revisar meus documentos</span>
             </button>
           </section>
 
@@ -385,7 +377,7 @@
 
                 <input
                   type="text"
-                  id="nome-completo"
+                  id="nome-completo" readonly
                   name="nome-completo"
                   autocomplete="name"
                   maxlength="100"
@@ -395,13 +387,13 @@
                 <label for="data-nascimento">Data de nascimento</label>
                 <input
                   type="date"
-                  id="data-nascimento"
+                  id="data-nascimento" readonly
                   name="data-nascimento"
                   autocomplete="bday"
                 />
 
                 <label for="tipo-documento-perfil">Tipo de documento</label>
-                <select id="tipo-documento-perfil" name="tipo-documento-perfil">
+                <select id="tipo-documento-perfil" disabled name="tipo-documento-perfil">
                   <option value="">Selecione o tipo de documento</option>
                   <option value="cin">Carteira de Identidade Nacional (CIN)</option>
                   <option value="rg">Registro Geral (RG)</option>
@@ -409,26 +401,44 @@
                   <option value="outro">Outro documento</option>
                 </select>
 
+                <!-- dados de contato e escolhas editáveis do cidadão -->
+                <label for="telefone-perfil">Telefone</label>
+                <input type="tel" id="telefone-perfil" maxlength="20" autocomplete="tel" />
+                <label for="municipio-perfil">Município</label>
+                <input type="text" id="municipio-perfil" maxlength="100" required />
+                <label for="bairro-perfil">Bairro</label>
+                <input type="text" id="bairro-perfil" maxlength="100" />
+                <fieldset><legend>Necessidades e mobilidade autodeclaradas</legend>
+<label ><input type="checkbox" name="necessidade-perfil" value="Mobilidade reduzida" /> <span>Mobilidade reduzida</span></label>
+<label ><input type="checkbox" name="necessidade-perfil" value="Dificuldade para caminhar longas distâncias" /> <span>Dificuldade para caminhar longas distâncias</span></label>
+<label ><input type="checkbox" name="necessidade-perfil" value="Dificuldade com escadas" /> <span>Dificuldade com escadas</span></label>
+<label ><input type="checkbox" name="necessidade-perfil" value="Uso de cadeira de rodas" /> <span>Uso de cadeira de rodas</span></label>
+<label ><input type="checkbox" name="necessidade-perfil" value="Uso de bengala" /> <span>Uso de bengala</span></label>
+<label ><input type="checkbox" name="necessidade-perfil" value="Uso de muletas" /> <span>Uso de muletas</span></label>
+<label ><input type="checkbox" name="necessidade-perfil" value="Deficiência visual ou baixa visão" /> <span>Deficiência visual ou baixa visão</span></label>
+<label ><input type="checkbox" name="necessidade-perfil" value="Deficiência auditiva" /> <span>Deficiência auditiva</span></label>
+<label ><input type="checkbox" name="necessidade-perfil" value="Necessidade de acompanhamento" /> <span>Necessidade de acompanhamento</span></label>
+<label ><input type="checkbox" name="necessidade-perfil" value="Sensibilidade a estímulos sonoros ou visuais" /> <span>Sensibilidade a estímulos sonoros ou visuais</span></label>
+<label ><input type="checkbox" name="necessidade-perfil" value="Limitação temporária" /> <span>Limitação temporária</span></label>
+<label ><input type="checkbox" name="necessidade-perfil" value="Outras necessidades" /> <span>Outras necessidades</span></label>
+<label ><input type="checkbox" name="necessidade-perfil" value="Prefiro não informar" /> <span>Prefiro não informar</span></label>
+</fieldset>
+                <fieldset><legend>Serviços de interesse</legend>
+                <label><input type="checkbox" name="servico-perfil" value="travessia" /> Travessia acessível</label>
+                <label><input type="checkbox" name="servico-perfil" value="metro" /> Apoio ferroviário</label>
+                <label><input type="checkbox" name="servico-perfil" value="zeladoria" /> Zeladoria</label>
+                </fieldset>
+                <p id="aviso-perfil" role="status"></p>
                 <button
                   type="submit"
                   class="botao-salvar"
                   id="salvar-dados-perfil"
-                  disabled
                 >
                   Salvar dados
                 </button>
               </form>
 
               <!-- Redireciona para a página de cadastro -->
-              <a href="../cadastro.html" class="criar-conta" id="criar-conta">
-                <span>Criar minha conta</span>
-
-                <img
-                  src="../../assets/icones/seta-direita.svg"
-                  class="icone"
-                  alt=""
-                />
-              </a>
             </div>
           </details>
 
@@ -488,16 +498,6 @@
       </nav>
 
       <!-- Botão flutuante de ajuda -->
-      <button
-        type="button"
-        class="botao-ajuda"
-        id="botao-ajuda"
-        aria-label="Preciso de ajuda"
-        aria-haspopup="dialog"
-        aria-controls="modal-ajuda"
-      >
-        <img src="../../assets/icones/ajuda.svg" class="icone" alt="" />
-      </button>
     </div>
 
     <!-- Estrutura para a futura identificação por documento e revisão dos dados -->
@@ -508,7 +508,7 @@
       aria-describedby="descricao-leitura-documento"
     >
       <header class="cabecalho-modal">
-        <h2 id="titulo-modal-documento">Identificar meu documento</h2>
+        <h2 id="titulo-modal-documento">Meus documentos</h2>
 
         <form method="dialog">
           <button type="submit" class="fechar-modal" aria-label="Fechar janela">
@@ -518,21 +518,21 @@
       </header>
 
       <p id="descricao-leitura-documento">
-        Fotografe um documento legível ou escolha uma imagem da galeria.
-        Confira e corrija os dados encontrados antes de confirmá-los.
+        A revisão disponível compara dados digitados manualmente com o cadastro atual.
+        Não há OCR, envio de arquivos nem validação documental. Atualizar nome ou nascimento por documento ainda não está disponível.
       </p>
 
       <!-- Estes campos apenas selecionam a imagem; nenhum arquivo é enviado -->
-      <fieldset class="opcoes-leitura-documento">
+      <fieldset class="opcoes-leitura-documento" hidden>
         <legend>Imagem do documento</legend>
 
         <label class="botao-camera" for="foto-documento">
-          <img src="../../assets/icones/camera.svg" class="icone" alt="" />
+          <img src="../../assets/icones/scan-traces.svg" class="icone" alt="" />
           <span>Fotografar documento</span>
         </label>
         <input
           type="file"
-          id="foto-documento"
+          id="foto-documento" disabled
           name="foto-documento"
           accept="image/*"
           capture="environment"
@@ -545,7 +545,7 @@
         </label>
         <input
           type="file"
-          id="imagem-documento"
+          id="imagem-documento" disabled
           name="imagem-documento"
           accept="image/*"
           aria-describedby="orientacao-imagem-documento"
@@ -574,25 +574,20 @@
         </button>
       </figure>
 
-      <!-- A autorização será conferida antes de qualquer envio ao serviço externo -->
-      <fieldset class="autorizacao-documento">
-        <legend>Autorização para processamento externo</legend>
-        <p id="aviso-processamento-externo">
-          Na leitura automática, a imagem será enviada por um backend seguro ao
-          serviço externo Azure AI Document Intelligence para extrair os dados
-          do documento. Autorize o envio somente se concordar com esse processamento.
-          Para continuar sem enviar uma imagem, preencha seus dados manualmente.
-        </p>
+      <!-- o processamento externo não está configurado e estes controles ficam indisponíveis -->
+      <fieldset class="autorizacao-documento" hidden>
+        <legend>Processamento externo indisponível</legend>
+        <p id="aviso-processamento-externo">Não existe processamento externo configurado. Nenhuma imagem será enviada ou armazenada.</p>
 
         <label for="autorizar-processamento-documento">
           <input
             type="checkbox"
-            id="autorizar-processamento-documento"
+            id="autorizar-processamento-documento" disabled
             name="autorizar-processamento-documento"
             aria-describedby="aviso-processamento-externo"
             required
           />
-          Autorizo o envio da imagem ao serviço externo para identificar meus dados.
+          Envio de imagens indisponível nesta versão.
         </label>
 
         <!-- O envio ficará desativado até a integração segura e a validação da autorização -->
@@ -603,14 +598,11 @@
           aria-describedby="mensagem-leitura-documento"
           disabled
         >
-          Identificar dados automaticamente
+          Leitura automática indisponível
         </button>
       </fieldset>
 
-      <p class="mensagem-leitura" id="mensagem-leitura-documento" role="status" aria-live="polite">
-        A leitura automática ainda não está disponível. Por enquanto, preencha
-        seus dados manualmente na seção “Meus dados” do perfil.
-      </p>
+      <p class="mensagem-leitura" id="mensagem-leitura-documento" role="status" aria-live="polite">Digite o nome e o nascimento para comparar com o cadastro. A revisão não altera a identidade nem a situação documental e não comprova autenticidade.</p>
 
       <!-- Os campos encontrados serão editáveis antes da confirmação -->
       <section
@@ -667,9 +659,9 @@
 
       <!-- O preenchimento manual dispensa imagem e autorização para processamento externo -->
       <details class="leitura-manual" id="preenchimento-manual-documento">
-        <summary>Preencher dados manualmente</summary>
+        <summary>Revisar dados do cadastro manualmente</summary>
         <div class="conteudo-leitura-manual">
-          <p>Use esta opção se preferir ou se a leitura automática não funcionar.</p>
+          <p>Transcreva os dados para comparar com o cadastro. Uma divergência não altera nome ou nascimento. A atualização documental ainda não está disponível.</p>
 
           <label for="manual-nome-completo">Nome completo</label>
           <input
@@ -705,14 +697,14 @@
             id="confirmar-dados-manuais"
             disabled
           >
-            Confirmar dados preenchidos
+            Comparar com o cadastro
           </button>
         </div>
       </details>
 
       <form method="dialog">
         <button type="submit" class="continuar-sem-documento">
-          Continuar sem leitura de documento
+          Fechar revisão
         </button>
       </form>
     </dialog>
@@ -723,54 +715,9 @@
     </p>
 
     <!-- Janela de ajuda do aplicativo -->
-    <dialog
-      class="modal-ajuda"
-      id="modal-ajuda"
-      aria-labelledby="titulo-modal-ajuda"
-    >
-      <header class="cabecalho-modal-ajuda">
-        <h2 id="titulo-modal-ajuda">Como podemos ajudar?</h2>
 
-        <form method="dialog">
-          <button
-            type="submit"
-            class="fechar-modal-ajuda"
-            aria-label="Fechar janela"
-          >
-            <img src="../../assets/icones/fechar.svg" class="icone" alt="" />
-          </button>
-        </form>
-      </header>
-
-      <p>
-        Escolha um serviço para pedir apoio. Em “Pedidos”, você acompanha cada
-        atualização.
-      </p>
-
-      <div class="opcoes-ajuda">
-        <a href="iara.html" class="ajuda-iara">
-          <img src="../../assets/icones/audio.svg" class="icone" alt="" />
-
-          <span>Conversar com a IARA</span>
-
-          <img
-            src="../../assets/icones/seta-direita.svg"
-            class="icone"
-            alt=""
-          />
-        </a>
-
-        <a href="#preferencias-acessibilidade" class="ajuda-acessibilidade">
-          <img
-            src="../../assets/icones/libras.svg"
-            class="icone"
-            alt=""
-          />
-
-          <span>Ajustar acessibilidade</span>
-        </a>
-      </div>
-    </dialog>
+    <script src="../../js/dados.js" defer></script>
+    <script src="../../js/script.js" defer></script>
 
     <!-- Funcionalidades gerais, navegação, acessibilidade, preferências, formulários, solicitações e regras dos serviços. -->
     <script src="../../js/app.js" defer></script>

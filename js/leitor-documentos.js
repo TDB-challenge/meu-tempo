@@ -174,3 +174,63 @@ if (consentimentoDocumentos) {
   // descarta arquivos ao deixar a página, inclusive no histórico do navegador
   window.addEventListener("pagehide", limparDocumentosCadastro);
 }
+
+// =================================================================
+// REVISÃO LOCAL DOS DADOS NO PERFIL
+// =================================================================
+
+// abre a revisão manual sem oferecer alteração livre de identidade
+function abrirRevisaoDocumentoPerfil() {
+  // seleciona a janela existente no perfil
+  const modal = document.getElementById("modal-documento");
+  // abre somente quando a janela ainda estiver fechada
+  if (!modal.open) {
+    modal.showModal();
+  }
+  document.getElementById("preenchimento-manual-documento").open = true;
+  document.getElementById("manual-nome-completo").focus();
+}
+
+// compara a transcrição manual com o cadastro sem salvar mudanças de identidade
+function conferirDadosDocumentoPerfil() {
+  // recupera o cadastro atual para impedir comparação com dados antigos
+  const cidadao = buscarCidadaoConectado();
+  // seleciona a mensagem de retorno da revisão
+  const mensagem = document.getElementById("mensagem-leitura-documento");
+  // impede conferência quando a sessão não estiver disponível
+  if (!cidadao) {
+    mensagem.textContent = "Entre novamente para consultar seus dados.";
+    return;
+  }
+  // recupera o nome transcrito manualmente
+  const nome = document.getElementById("manual-nome-completo");
+  // recupera o nascimento transcrito manualmente
+  const nascimento = document.getElementById("manual-data-nascimento");
+  // recupera o tipo de documento declarado para esta revisão local
+  const tipo = document.getElementById("manual-tipo-documento");
+  // exige preenchimento dos campos antes de comparar
+  if (!nome.reportValidity() || !nascimento.reportValidity() || !tipo.reportValidity() || !nome.value.trim()) {
+    mensagem.textContent = "Informe o nome, o nascimento e o tipo de documento para comparar com o cadastro.";
+    return;
+  }
+  // informa divergências sem alterar dados ou estados documentais já cadastrados
+  if (nome.value.trim().toLowerCase() !== cidadao.nome.trim().toLowerCase() || nascimento.value !== cidadao.nascimento) {
+    mensagem.textContent = "Nome ou nascimento divergem do cadastro. Esta revisão local não altera a identidade. A atualização de identidade depende de uma conferência documental ainda indisponível.";
+    return;
+  }
+  mensagem.textContent = "Os dados digitados coincidem com o cadastro nesta revisão manual. Isso não comprova identidade ou autenticidade documental. Nenhum dado ou estado documental foi alterado.";
+}
+
+// seleciona o botão apenas quando o leitor está na página de perfil
+const abrirDocumentoPerfil = document.getElementById("abrir-leitor-documentos");
+// conecta a janela existente sem modificar o fluxo de cadastro
+if (abrirDocumentoPerfil) {
+  abrirDocumentoPerfil.addEventListener("click", abrirRevisaoDocumentoPerfil);
+  // permite comparar os dados sem OCR, upload ou persistência de imagens
+  document.getElementById("confirmar-dados-manuais").disabled = false;
+  document.getElementById("confirmar-dados-manuais").addEventListener("click", conferirDadosDocumentoPerfil);
+  // recupera o foco no controle que abriu a revisão
+  document.getElementById("modal-documento").addEventListener("close", function () {
+    abrirDocumentoPerfil.focus();
+  });
+}
