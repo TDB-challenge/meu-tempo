@@ -2518,3 +2518,90 @@ body.tema-escuro .coord-estacao-icone img.icone {
 .login-administrativo .painel-acessibilidade {
   display: block; /* mostra o painel */
 }
+
+
+
+
+
+/* =========================================================
+   PAINEL DO METRÔ
+   ========================================================= */
+
+/* organiza os botões de atendimento */
+.pagina-metro .admin-chamado-acoes {
+    display: flex; /* coloca os botões lado a lado */
+    gap: 8px; /* espaço entre os botões */
+    flex-wrap: wrap; /* permite a quebra de linha */
+    align-items: center; /* centraliza os botões verticalmente */
+}
+
+/* estiliza os botões desabilitados */
+.pagina-metro button:disabled {
+    opacity: 0.5; /* diminui a opacidade */
+    cursor: not-allowed; /* indica que o botão está indisponível */
+}
+
+/* permite a rolagem horizontal das tabelas */
+.pagina-metro .coord-tabela-wrapper {
+    width: 100%; /* ocupa a largura disponível */
+    overflow-x: auto; /* permite rolar a tabela horizontalmente */
+}
+
+/* mantém as seções escondidas */
+.pagina-metro .admin-aba-painel[hidden] {
+    display: none; /* esconde a seção */
+}
+
+/* mantém os modais fechados inicialmente */
+.pagina-metro .admin-modal-overlay[hidden] {
+    display: none; /* esconde o modal */
+}
+
+
+
+
+/* =========================================================
+   FORMULÁRIO DE OCORRÊNCIAS
+   ========================================================= */
+
+/* organiza os campos do formulário */
+.pagina-metro .form-contato {
+    display: flex; /* permite organizar os elementos */
+    flex-direction: column; /* coloca os campos um abaixo do outro */
+    gap: 16px; /* espaço entre os campos */
+}
+
+/* organiza cada grupo de preenchimento */
+.pagina-metro .campo-grupo {
+    display: flex; /* permite organizar o grupo */
+    flex-direction: column; /* coloca o texto acima do campo */
+    gap: 8px; /* espaço entre o texto e o campo */
+}
+
+/* permite aumentar a altura do campo de descrição */
+.pagina-metro textarea {
+    resize: vertical; /* permite redimensionar verticalmente */
+}
+
+
+
+
+/* =========================================================
+   RESPONSIVIDADE DO METRÔ
+   ========================================================= */
+
+/* adapta o painel para telas menores */
+@media (max-width: 600px) {
+
+    /* organiza os indicadores em uma coluna */
+    .pagina-metro .admin-kpis-grid {
+        grid-template-columns: 1fr; /* exibe um cartão por linha */
+    }
+
+    /* organiza os botões verticalmente */
+    .pagina-metro .admin-chamado-acoes {
+        flex-direction: column; /* coloca um botão abaixo do outro */
+        align-items: stretch; /* ocupa a largura disponível */
+    }
+
+}
