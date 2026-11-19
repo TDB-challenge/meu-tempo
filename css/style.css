@@ -2936,8 +2936,9 @@ CSS
 }
 
 /* reserva a faixa lateral dos acessos em todas as larguras */
-.com-acessibilidade main {
-  padding-right: 80px; /* mantém o conteúdo fora dos botões fixos */
+.com-acessibilidade:not(.app):not(.pagina-admin) main .container,
+.com-acessibilidade:not(.app):not(.pagina-admin) .rodape > .container {
+  padding-right: 80px; /* mantém o conteúdo fora dos botões fixos sem cortar os fundos das seções */
 }
 
 /* preserva a faixa mesmo nas áreas com estilos próprios */
@@ -3115,8 +3116,9 @@ CSS
     right: 10px !important; /* acompanha a lateral escolhida */
     transform: none; /* preserva a separação entre os controles */
   }
-  .com-acessibilidade main {
-    padding-right: 58px; /* reserva uma faixa para os recursos flutuantes */
+  .com-acessibilidade:not(.app):not(.pagina-admin) main .container,
+  .com-acessibilidade:not(.app):not(.pagina-admin) .rodape > .container {
+    padding-right: 58px; /* reserva uma faixa para os recursos flutuantes dentro do conteúdo */
   }
   .pagina-admin.com-acessibilidade .admin-main {
     padding-right: 68px; /* impede sobreposição aos controles administrativos */
@@ -3267,8 +3269,8 @@ input[type="file"]::file-selector-button {
 }
 
 /* preserva o relógio escuro sobre o círculo claro já existente */
-body.tema-escuro .logo-circulo img,
-body.alto-contraste .logo-circulo img {
+body.tema-escuro .logo-circulo .icone,
+body.alto-contraste .logo-circulo .icone {
   filter: brightness(0); /* mantém o símbolo visível sobre o fundo claro da marca */
 }
 
