@@ -335,7 +335,7 @@ body.alto-contraste .logo-circulo {
   position: absolute;
   left: 0;
   bottom: 0;
-  width: 14px;
+  width: 100%; /* acompanha a largura do item selecionado */
   height: 2px;
   background-color: var(--verde-floresta);
 }
@@ -2847,4 +2847,30 @@ CSS
 .btn-card-libras img.icone {
   width: 18px;
   height: 18px;
+}
+/* =========================================================
+   IDENTIDADE COMPARTILHADA E ÍCONES LOCAIS
+   ========================================================= */
+
+/* mantém a proporção do relógio da marca */
+.marca-icone {
+  width: 38px; /* mantém o ícone proporcional ao nome */
+  height: 38px; /* preserva a altura da marca */
+  object-fit: contain; /* evita distorcer a imagem */
+  flex-shrink: 0; /* preserva o tamanho em telas menores */
+}
+
+/* aproxima a marca dos diferentes ambientes */
+.logo-titulo,
+.admin-logo-titulo {
+  font-family: var(--fonte-principal); /* reaproveita a fonte do aplicativo */
+  font-size: 1.25rem; /* padroniza o tamanho do nome */
+  font-weight: 800; /* mantém o destaque da marca */
+}
+
+/* mantém os símbolos sociais junto aos seus nomes */
+.card-integrante .link-seta {
+  display: inline-flex; /* alinha o texto ao símbolo */
+  align-items: center; /* centraliza os elementos na altura */
+  gap: 6px; /* separa o ícone do texto */
 }
