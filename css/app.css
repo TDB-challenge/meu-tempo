@@ -5975,23 +5975,89 @@ button {
 
 /* organiza o diagrama sem inventar coordenadas geográficas */
 .app #mapa-base-travessia {
-    position: relative; /* mantém os marcadores no fluxo da página */
-    display: grid; /* organiza os cruzamentos como pontos do diagrama */
-    gap: 12px; /* separa cada opção de seleção */
-    padding: 18px; /* afasta os pontos das bordas */
+    position: relative; /* mantém o desenho dentro da área do mapa */
+    display: block; /* permite sobrepor ruas e marcadores */
+    height: 28rem; /* separa as cinco ruas e acompanha o tamanho das letras */
+    min-height: 420px; /* preserva uma área confortável para os semáforos */
+    padding: 0; /* permite que as ruas atravessem toda a área */
+}
+
+/* desenha a avenida principal do mapa esquemático */
+.app .avenida-mapa {
+    position: absolute; /* posiciona a avenida atrás dos cruzamentos */
+    top: 0; /* inicia a via na parte superior */
+    bottom: 0; /* mantém a via até a parte inferior */
+    left: 24%; /* reserva espaço para os quarteirões à esquerda */
+    width: 52px; /* diferencia a avenida das ruas menores */
+    background-color: var(--branco); /* acompanha o tema escolhido */
+    border-left: 2px solid var(--borda); /* delimita a lateral da avenida */
+    border-right: 2px solid var(--borda); /* delimita a outra lateral */
+}
+
+/* identifica a avenida sem encobrir os pontos de seleção */
+.app .nome-avenida {
+    position: absolute; /* mantém a identificação acima do primeiro cruzamento */
+    top: 12px; /* afasta o nome da borda superior */
+    left: 10px; /* alinha o nome à margem do mapa */
+    padding: 4px 8px; /* separa o nome de seu fundo */
+    border-radius: var(--raio-pequeno); /* acompanha as etiquetas da interface */
+    background-color: var(--branco); /* destaca a identificação da via */
+    color: var(--texto-principal); /* respeita o contraste do tema */
+    font-size: 0.75rem; /* mantém o nome proporcional ao mapa */
+    font-weight: 800; /* diferencia a avenida das demais ruas */
+}
+
+/* desenha cada rua transversal e seu ponto de encontro com a avenida */
+.app .rua-mapa {
+    position: absolute; /* distribui os cruzamentos ao longo da avenida */
+    left: 0; /* inicia a rua na lateral do mapa */
+    width: 100%; /* atravessa a área disponível */
+    height: 32px; /* mantém as ruas menores que a avenida */
+    background-color: var(--branco); /* diferencia a rua dos quarteirões */
+    border-top: 1px solid var(--borda); /* marca a borda superior da rua */
+    border-bottom: 1px solid var(--borda); /* marca a borda inferior da rua */
+}
+
+/* distribui os cinco pontos apenas para ilustrar o mapa, sem escala geográfica */
+.app .rua-mapa[data-cruzamento="paulista-augusta"] {
+    top: 14%; /* posiciona o primeiro cruzamento */
+}
+.app .rua-mapa[data-cruzamento="paulista-consolacao"] {
+    top: 32%; /* separa o segundo cruzamento */
+}
+.app .rua-mapa[data-cruzamento="paulista-pamplona"] {
+    top: 50%; /* posiciona o cruzamento central */
+}
+.app .rua-mapa[data-cruzamento="paulista-campinas"] {
+    top: 68%; /* separa o quarto cruzamento */
+}
+.app .rua-mapa[data-cruzamento="paulista-brigadeiro"] {
+    top: 86%; /* posiciona o último cruzamento */
+}
+
+/* identifica a rua sem substituir as informações acessíveis do semáforo */
+.app .nome-rua {
+    position: absolute; /* mantém o nome junto à rua correspondente */
+    left: calc(24% + 64px); /* deixa o nome depois do semáforo */
+    right: 10px; /* evita aproximar o nome da borda */
+    top: 50%; /* alinha o texto ao centro da rua */
+    transform: translateY(-50%); /* mantém nomes de duas linhas centralizados */
+    font-size: 0.75rem; /* acompanha a ampliação das letras */
+    line-height: 1.3; /* separa as linhas dos nomes longos */
+    color: var(--texto-principal); /* mantém o nome legível em cada tema */
 }
 
 /* reaproveita os marcadores existentes com texto acessível */
 .app #mapa-travessia .marcador-semaforo {
-    position: static; /* evita posições geográficas fictícias */
-    transform: none; /* mantém nomes e símbolos na posição de leitura */
-    width: 100%; /* ocupa a faixa disponível no diagrama */
-    height: auto; /* acompanha nomes e textos ampliados */
-    min-height: 48px; /* oferece área confortável de seleção */
-    padding: 12px; /* separa o texto do contorno */
-    border-radius: var(--raio-medio); /* acompanha os outros cartões */
-    gap: 10px; /* separa símbolo e nome */
-    text-align: left; /* mantém os nomes alinhados */
+    position: absolute; /* coloca o semáforo sobre o encontro das duas vias */
+    left: calc(24% + 26px); /* alinha o ponto ao centro da avenida */
+    top: 50%; /* alinha o ponto ao centro da rua */
+    transform: translate(-50%, -50%); /* centraliza o ícone no cruzamento */
+    width: 44px; /* mantém o marcador compacto e fácil de selecionar */
+    height: 44px; /* preserva a área quadrada do semáforo */
+    min-height: 44px; /* mantém o tamanho mínimo de interação */
+    padding: 10px; /* separa o símbolo de sua borda */
+    border-radius: 50%; /* identifica o ponto de seleção no mapa */
     color: #ffffff; /* contrasta com as superfícies escuras dos marcadores */
 }
 

@@ -104,8 +104,29 @@ function prepararMarcadoresTravessia() {
   const mapa = document.getElementById('mapa-base-travessia');
   if (!mapa || mapa.tagName === 'IFRAME') return;
   mapa.textContent = '';
+  // desenha a avenida principal somente como referência visual do mapa esquemático
+  const avenida = document.createElement('div');
+  avenida.className = 'avenida-mapa';
+  avenida.setAttribute('aria-hidden', 'true');
+  mapa.appendChild(avenida);
+  // identifica a via principal sem repetir o nome em cada cruzamento
+  const tituloAvenida = document.createElement('span');
+  tituloAvenida.className = 'nome-avenida';
+  tituloAvenida.textContent = 'Av. Paulista';
+  tituloAvenida.setAttribute('aria-hidden', 'true');
+  mapa.appendChild(tituloAvenida);
   // apresenta todos os locais do catálogo, sem criar posições geográficas fictícias
   for (let i = 0; i < cruzamentosMeuTempo.length; i++) {
+    // desenha a rua transversal usando o mesmo catálogo dos serviços
+    const rua = document.createElement('div');
+    rua.className = 'rua-mapa';
+    rua.setAttribute('data-cruzamento', cruzamentosMeuTempo[i].id);
+    // apresenta o nome da rua ao lado do seu semáforo
+    const nomeRua = document.createElement('span');
+    nomeRua.className = 'nome-rua';
+    nomeRua.textContent = cruzamentosMeuTempo[i].nome.split(' × ')[1];
+    nomeRua.setAttribute('aria-hidden', 'true');
+    rua.appendChild(nomeRua);
     // cria um botão identificável por ícone, nome e situação de suporte
     const botao = document.createElement('button');
     botao.type = 'button';
@@ -122,6 +143,10 @@ function prepararMarcadoresTravessia() {
     let suporte = ' — sem suporte confirmado';
     if (cruzamentosMeuTempo[i].suporte) suporte = ' — com suporte na simulação';
     nome.textContent = cruzamentosMeuTempo[i].nome + suporte;
+    // mantém no marcador o ícone e oferece o nome completo ao foco e ao ponteiro
+    nome.hidden = true;
+    botao.setAttribute('aria-label', nome.textContent);
+    botao.title = nome.textContent;
     botao.appendChild(nome);
     // aciona a mesma seleção da alternativa acessível sem enviar solicitações
     botao.addEventListener('click', function (evento) {
@@ -133,7 +158,8 @@ function prepararMarcadoresTravessia() {
         }
       }
     });
-    mapa.appendChild(botao);
+    rua.appendChild(botao);
+    mapa.appendChild(rua);
   }
 }
 
