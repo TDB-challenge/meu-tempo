@@ -1184,3 +1184,81 @@ function direcionarPainel(usuario) {
     window.location.href = "metro.html";
   }
 }
+
+// =================================================================
+// RECUPERAÇÃO DE ACESSO
+// =================================================================
+
+// seleciona o botão esqueci minha senha
+const abrirRecuperacao = document.getElementById("abrir-recuperacao");
+
+// seleciona a janela de recuperação
+const modalRecuperacao = document.getElementById("modal-recuperacao");
+
+// seleciona o formulário de recuperação
+const formularioRecuperacao = document.getElementById("formulario-recuperacao");
+
+// seleciona o campo de e-mail
+const emailRecuperacao = document.getElementById("email-recuperacao");
+
+// seleciona o botão de solicitar recuperação
+const solicitarRecuperacao = document.getElementById("solicitar-recuperacao");
+
+// seleciona o elemento que apresenta a mensagem
+const mensagemRecuperacao = document.getElementById("mensagem-recuperacao");
+
+// função que abre a janela de recuperação
+function abrirModalRecuperacao() {
+  // limpa o campo de e-mail
+  emailRecuperacao.value = "";
+
+  // esconde a mensagem anterior
+  mensagemRecuperacao.hidden = true;
+
+  // desabilita o botão inicialmente
+  solicitarRecuperacao.disabled = true;
+
+  // abre a janela de recuperação
+  modalRecuperacao.showModal();
+}
+
+// função que verifica o e-mail digitado
+function validarRecuperacao() {
+  // esconde a mensagem anterior
+  mensagemRecuperacao.hidden = true;
+
+  // verifica se o e-mail atende às regras do html
+  if (emailRecuperacao.checkValidity()) {
+    solicitarRecuperacao.disabled = false;
+  } else {
+    solicitarRecuperacao.disabled = true;
+  }
+}
+
+// função que simula uma solicitação de recuperação
+function recuperarAcesso(event) {
+  // impede que o formulário recarregue a página
+  event.preventDefault();
+
+  // apresenta uma mensagem demonstrativa
+  mensagemRecuperacao.textContent =
+    "Caso a credencial esteja cadastrada, a recuperação deverá ser realizada pela coordenação.";
+
+  // adiciona a classe que estiliza a mensagem
+  mensagemRecuperacao.classList.add("mensagem-sucesso");
+
+  // mostra a mensagem
+  mensagemRecuperacao.hidden = false;
+}
+
+// verifica se estamos na página de login
+if (abrirRecuperacao && modalRecuperacao && formularioRecuperacao) {
+  // abre o modal ao clicar em esqueci minha senha
+  abrirRecuperacao.addEventListener("click", abrirModalRecuperacao);
+
+  // valida o e-mail enquanto o usuário digita
+  emailRecuperacao.addEventListener("input", validarRecuperacao);
+
+  // executa a recuperação ao enviar o formulário
+  formularioRecuperacao.addEventListener("submit", recuperarAcesso);
+}
