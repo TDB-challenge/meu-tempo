@@ -114,8 +114,12 @@ const selectFonteModal = document.getElementById("modal-select-fonte");
 const toggleContrasteModal = document.getElementById("modal-toggle-contraste");
 const toggleIaraModal = document.getElementById("modal-toggle-iara");
 const toggleVibrarModal = document.getElementById("modal-toggle-vibrar");
-const toggleFonteLegivelModal = document.getElementById("modal-toggle-fonte-legivel");
-const toggleTemaEscuroModal = document.getElementById("modal-toggle-tema-escuro");
+const toggleFonteLegivelModal = document.getElementById(
+  "modal-toggle-fonte-legivel",
+);
+const toggleTemaEscuroModal = document.getElementById(
+  "modal-toggle-tema-escuro",
+);
 const btnMaisLeitura = document.getElementById("btn-mais-opcoes-leitura");
 const painelMaisLeitura = document.getElementById("painel-mais-leitura");
 const btnRestaurarAcess = document.getElementById("btn-restaurar-acess");
@@ -140,7 +144,8 @@ if (selectFonteModal) {
 }
 
 if (toggleContrasteModal) {
-  toggleContrasteModal.checked = document.body.classList.contains("alto-contraste");
+  toggleContrasteModal.checked =
+    document.body.classList.contains("alto-contraste");
   toggleContrasteModal.addEventListener("change", function () {
     document.body.classList.toggle("alto-contraste", this.checked);
     localStorage.setItem("altoContraste", this.checked ? "ativo" : "inativo");
@@ -155,7 +160,8 @@ if (toggleIaraModal) {
 }
 
 if (toggleVibrarModal) {
-  toggleVibrarModal.checked = localStorage.getItem("meuTempoVibrar") === "ativo";
+  toggleVibrarModal.checked =
+    localStorage.getItem("meuTempoVibrar") === "ativo";
   toggleVibrarModal.addEventListener("change", function () {
     localStorage.setItem("meuTempoVibrar", this.checked ? "ativo" : "inativo");
     if (this.checked && navigator.vibrate) {
@@ -165,7 +171,8 @@ if (toggleVibrarModal) {
 }
 
 if (toggleFonteLegivelModal) {
-  toggleFonteLegivelModal.checked = document.body.classList.contains("fonte-legivel");
+  toggleFonteLegivelModal.checked =
+    document.body.classList.contains("fonte-legivel");
   toggleFonteLegivelModal.addEventListener("change", function () {
     document.body.classList.toggle("fonte-legivel", this.checked);
     localStorage.setItem("fonteLegivel", this.checked ? "ativo" : "inativo");
@@ -173,7 +180,8 @@ if (toggleFonteLegivelModal) {
 }
 
 if (toggleTemaEscuroModal) {
-  toggleTemaEscuroModal.checked = document.body.classList.contains("tema-escuro");
+  toggleTemaEscuroModal.checked =
+    document.body.classList.contains("tema-escuro");
   toggleTemaEscuroModal.addEventListener("change", function () {
     document.body.classList.toggle("tema-escuro", this.checked);
     localStorage.setItem("temaEscuro", this.checked ? "ativo" : "inativo");
@@ -183,7 +191,11 @@ if (toggleTemaEscuroModal) {
 if (btnRestaurarAcess) {
   btnRestaurarAcess.addEventListener("click", function () {
     document.documentElement.style.fontSize = "100%";
-    document.body.classList.remove("alto-contraste", "fonte-legivel", "tema-escuro");
+    document.body.classList.remove(
+      "alto-contraste",
+      "fonte-legivel",
+      "tema-escuro",
+    );
 
     localStorage.setItem("meuTempoAdminFonte", "100");
     localStorage.setItem("altoContraste", "inativo");
@@ -215,19 +227,22 @@ const indicadorConcluidos = document.getElementById("indicador-concluidos");
 
 // guarda os chamados fictícios da estação
 const chamadosMetro = [
+  {
+    protocolo: "MT-1042",
+    // informa o tipo de apoio e o local do atendimento
+    tipo: "Apoio no embarque",
+    local: "Consolação - Bloqueio sul",
+    situacao: "Aguardando agente",
+  },
 
-    {
-        protocolo: "MT-1042",
-        situacao: "Aguardando agente"
-    },
-
-    {
-        protocolo: "MT-1041",
-        situacao: "Em atendimento"
-    }
-
+  {
+    protocolo: "MT-1041",
+    // informa o tipo de apoio e o local do atendimento
+    tipo: "Apoio com elevador",
+    local: "Consolação - Mezanino",
+    situacao: "Em atendimento",
+  },
 ];
-
 
 // =================================================================
 // INDICADORES DA VISÃO GERAL
@@ -235,43 +250,32 @@ const chamadosMetro = [
 
 // função que atualiza os números dos atendimentos
 function atualizarIndicadoresMetro() {
+  // guarda a quantidade de chamados pendentes
+  let pendentes = 0;
 
-    // guarda a quantidade de chamados pendentes
-    let pendentes = 0;
+  // guarda a quantidade de chamados em atendimento
+  let andamento = 0;
 
-    // guarda a quantidade de chamados em atendimento
-    let andamento = 0;
+  // começa com um atendimento fictício já concluído
+  let concluidos = 1;
 
-    // começa com um atendimento fictício já concluído
-    let concluidos = 1;
-
-    // percorre a lista de chamados
-    for (let i = 0; i < chamadosMetro.length; i++) {
-
-        // verifica a situação de cada chamado
-        if (chamadosMetro[i].situacao === "Aguardando agente") {
-
-            pendentes = pendentes + 1;
-
-        } else if (chamadosMetro[i].situacao === "Em atendimento") {
-
-            andamento = andamento + 1;
-
-        } else if (chamadosMetro[i].situacao === "Concluído") {
-
-            concluidos = concluidos + 1;
-
-        }
-
+  // percorre a lista de chamados
+  for (let i = 0; i < chamadosMetro.length; i++) {
+    // verifica a situação de cada chamado
+    if (chamadosMetro[i].situacao === "Aguardando agente") {
+      pendentes = pendentes + 1;
+    } else if (chamadosMetro[i].situacao === "Em atendimento") {
+      andamento = andamento + 1;
+    } else if (chamadosMetro[i].situacao === "Concluído") {
+      concluidos = concluidos + 1;
     }
+  }
 
-    // apresenta os números atualizados na visão geral
-    indicadorPendentes.textContent = pendentes;
-    indicadorAndamento.textContent = andamento;
-    indicadorConcluidos.textContent = concluidos;
-
+  // apresenta os números atualizados na visão geral
+  indicadorPendentes.textContent = pendentes;
+  indicadorAndamento.textContent = andamento;
+  indicadorConcluidos.textContent = concluidos;
 }
-
 
 // =================================================================
 // ATUALIZAÇÃO DOS CHAMADOS
@@ -280,57 +284,47 @@ function atualizarIndicadoresMetro() {
 // função que atualiza a aparência de cada chamado
 // chamado representa o objeto que será atualizado
 function atualizarChamadoMetro(chamado) {
+  // transforma o protocolo no formato utilizado pelos ids
+  const identificador = chamado.protocolo.toLowerCase().replace("-", "");
 
-    // transforma o protocolo no formato utilizado pelos ids
-    const identificador = chamado.protocolo.toLowerCase().replace("-", "");
+  // seleciona o elemento que apresenta a situação
+  const situacao = document.getElementById("situacao-" + identificador);
 
-    // seleciona o elemento que apresenta a situação
-    const situacao = document.getElementById("situacao-" + identificador);
+  // seleciona os três botões do chamado
+  const aceitar = document.getElementById("aceitar-" + identificador);
+  const recusar = document.getElementById("recusar-" + identificador);
+  const concluir = document.getElementById("concluir-" + identificador);
 
-    // seleciona os três botões do chamado
-    const aceitar = document.getElementById("aceitar-" + identificador);
-    const recusar = document.getElementById("recusar-" + identificador);
-    const concluir = document.getElementById("concluir-" + identificador);
+  // apresenta a situação atualizada na tabela
+  situacao.textContent = chamado.situacao;
 
-    // apresenta a situação atualizada na tabela
-    situacao.textContent = chamado.situacao;
+  // desabilita inicialmente todos os botões
+  aceitar.disabled = true;
+  recusar.disabled = true;
+  concluir.disabled = true;
 
-    // desabilita inicialmente todos os botões
-    aceitar.disabled = true;
-    recusar.disabled = true;
-    concluir.disabled = true;
+  // verifica se o chamado ainda está pendente
+  if (chamado.situacao === "Aguardando agente") {
+    aceitar.disabled = false;
+    recusar.disabled = false;
+  } else if (chamado.situacao === "Em atendimento") {
+    concluir.disabled = false;
+  }
 
-    // verifica se o chamado ainda está pendente
-    if (chamado.situacao === "Aguardando agente") {
+  // seleciona o chamado exibido na visão geral
+  const chamadoRecente = document.querySelector(
+    '#lista-chamados-recentes [data-protocolo="' + chamado.protocolo + '"]',
+  );
 
-        aceitar.disabled = false;
-        recusar.disabled = false;
+  // verifica se o chamado aparece na visão geral
+  if (chamadoRecente) {
+    // seleciona o texto da situação
+    const situacaoRecente = chamadoRecente.querySelector(".admin-status-pill");
 
-    } else if (chamado.situacao === "Em atendimento") {
-
-        concluir.disabled = false;
-
-    }
-
-    // seleciona o chamado exibido na visão geral
-    const chamadoRecente = document.querySelector(
-        '#lista-chamados-recentes [data-protocolo="' +
-        chamado.protocolo + '"]'
-    );
-
-    // verifica se o chamado aparece na visão geral
-    if (chamadoRecente) {
-
-        // seleciona o texto da situação
-        const situacaoRecente = chamadoRecente.querySelector(".admin-status-pill");
-
-        // atualiza a situação na visão geral
-        situacaoRecente.textContent = chamado.situacao;
-
-    }
-
+    // atualiza a situação na visão geral
+    situacaoRecente.textContent = chamado.situacao;
+  }
 }
-
 
 // =================================================================
 // AÇÕES DE ATENDIMENTO
@@ -338,55 +332,61 @@ function atualizarChamadoMetro(chamado) {
 
 // função que executa a ação escolhida pelo profissional
 function alterarChamadoMetro(event) {
+  // event representa o evento de clique no botao de atendimento
+  // recupera o botao que recebeu o evento
+  const botao = event.currentTarget;
 
-    // recupera o botão clicado
-    const botao = event.currentTarget;
+  // recupera o protocolo do chamado
+  const protocolo = botao.getAttribute("data-protocolo");
 
-    // recupera o protocolo do chamado
-    const protocolo = botao.getAttribute("data-protocolo");
+  // recupera a acao escolhida pelo profissional
+  const acao = botao.getAttribute("data-acao-chamado");
 
-    // recupera a ação escolhida
-    const acao = botao.getAttribute("data-acao-chamado");
+  // percorre os chamados usando i como indice da lista
+  for (let i = 0; i < chamadosMetro.length; i++) {
+    // verifica se encontrou o protocolo do botao clicado
+    if (chamadosMetro[i].protocolo === protocolo) {
+      // recupera o chamado que sera alterado
+      const chamado = chamadosMetro[i];
 
-    // percorre a lista de chamados
-    for (let i = 0; i < chamadosMetro.length; i++) {
+      // verifica se um chamado pendente foi aceito
+      if (acao === "aceitar" && chamado.situacao === "Aguardando agente") {
+        chamado.situacao = "Em atendimento";
+      } else if (
+        acao === "recusar" &&
+        chamado.situacao === "Aguardando agente"
+      ) {
+        // registra a recusa de um chamado pendente
+        chamado.situacao = "Recusado";
+      } else if (acao === "concluir" && chamado.situacao === "Em atendimento") {
+        // registra a conclusao e a data do atendimento
+        chamado.situacao = "Concluído";
+        chamado.dataConclusao = new Date().toLocaleString("pt-BR");
 
-        // verifica se encontrou o chamado correspondente
-        if (chamadosMetro[i].protocolo === protocolo) {
+        // adiciona o atendimento concluido ao historico
+        adicionarHistoricoMetro(chamado);
+      } else {
+        // encerra sem alterar chamados que nao permitem a acao escolhida
+        return;
+      }
 
-            // guarda o chamado encontrado
-            const chamado = chamadosMetro[i];
+      // atualiza a tabela e a situacao apresentada na visao geral
+      atualizarChamadoMetro(chamado);
 
-            // verifica se o profissional aceitou o chamado
-            if (acao === "aceitar" && chamado.situacao === "Aguardando agente") {
+      // atualiza os indicadores dos atendimentos
+      atualizarIndicadoresMetro();
 
-                chamado.situacao = "Em atendimento";
+      // apresenta a alteracao nas notificacoes do painel e do modal
+      adicionarNotificacaoMetro("Chamado " + protocolo + ": " + chamado.situacao + ".");
 
-            } else if (acao === "recusar" && chamado.situacao === "Aguardando agente") {
+      // salva a lista atualizada no navegador
+      localStorage.setItem("metro-chamados", JSON.stringify(chamadosMetro));
 
-                chamado.situacao = "Recusado";
-
-            } else if (acao === "concluir" && chamado.situacao === "Em atendimento") {
-
-                chamado.situacao = "Concluído";
-
-            }
-
-            // atualiza o chamado na página
-            atualizarChamadoMetro(chamado);
-
-            // atualiza os indicadores da visão geral
-            atualizarIndicadoresMetro();
-
-            // encerra a função
-            return;
-
-        }
-
+      // encerra apos atualizar o chamado correspondente
+      return;
     }
-
+  }
 }
-
 
 // =================================================================
 // INICIALIZAÇÃO DOS CHAMADOS
@@ -394,18 +394,14 @@ function alterarChamadoMetro(event) {
 
 // verifica se estamos no painel do metrô
 if (document.body.classList.contains("pagina-metro")) {
+  // percorre os botões de atendimento
+  for (let i = 0; i < botoesChamadosMetro.length; i++) {
+    // executa a ação quando o botão é clicado
+    botoesChamadosMetro[i].addEventListener("click", alterarChamadoMetro);
+  }
 
-    // percorre os botões de atendimento
-    for (let i = 0; i < botoesChamadosMetro.length; i++) {
-
-        // executa a ação quando o botão é clicado
-        botoesChamadosMetro[i].addEventListener("click", alterarChamadoMetro);
-
-    }
-
-    // apresenta os indicadores iniciais
-    atualizarIndicadoresMetro();
-
+  // apresenta os indicadores iniciais
+  atualizarIndicadoresMetro();
 }
 
 // =====================================================
@@ -453,7 +449,11 @@ if (listaDecisoesCet) {
       totalAprovados++;
       novoCard.innerHTML =
         '<div class="admin-chamado-meta">' +
-        "<span>" + protocolo + " · " + hora + " · Origem: IARA</span>" +
+        "<span>" +
+        protocolo +
+        " · " +
+        hora +
+        " · Origem: IARA</span>" +
         '<span class="admin-status-pill cet-pill-aprovado">' +
         '<img src="../../assets/icones/check.png" alt="" class="icone" /> APROVADO' +
         "</span>" +
@@ -468,13 +468,19 @@ if (listaDecisoesCet) {
 
       if (avisoDecisoesCet) {
         avisoDecisoesCet.textContent =
-          "Nova decisão (" + protocolo + "): pedido aprovado, aguardando transição.";
+          "Nova decisão (" +
+          protocolo +
+          "): pedido aprovado, aguardando transição.";
       }
     } else {
       totalRecusados++;
       novoCard.innerHTML =
         '<div class="admin-chamado-meta">' +
-        "<span>" + protocolo + " · " + hora + " · Origem: IARA</span>" +
+        "<span>" +
+        protocolo +
+        " · " +
+        hora +
+        " · Origem: IARA</span>" +
         '<span class="admin-status-pill cet-pill-recusado">' +
         '<img src="../../assets/icones/clock.png" alt="" class="icone" /> RECUSADO' +
         "</span>" +
@@ -489,7 +495,9 @@ if (listaDecisoesCet) {
 
       if (avisoDecisoesCet) {
         avisoDecisoesCet.textContent =
-          "Nova decisão (" + protocolo + "): pedido recusado pois restam 8s ou menos no ciclo.";
+          "Nova decisão (" +
+          protocolo +
+          "): pedido recusado pois restam 8s ou menos no ciclo.";
       }
     }
 
@@ -531,14 +539,17 @@ if (listaDecisoesCet) {
   const statusZeladoria = document.getElementById("status-zeladoria-mt1041");
   const avisoZeladoria = document.getElementById("aviso-zeladoria");
   const btnZeladoriaAnalise = document.getElementById("btn-zeladoria-analise");
-  const btnZeladoriaResolvido = document.getElementById("btn-zeladoria-resolvido");
+  const btnZeladoriaResolvido = document.getElementById(
+    "btn-zeladoria-resolvido",
+  );
 
   if (btnZeladoriaAnalise && statusZeladoria) {
     btnZeladoriaAnalise.addEventListener("click", function () {
       statusZeladoria.textContent = "Em análise";
       statusZeladoria.className = "admin-status-pill cet-pill-recusado";
       if (avisoZeladoria) {
-        avisoZeladoria.textContent = "Pedido MT-1041: Em análise. O pedido foi atualizado.";
+        avisoZeladoria.textContent =
+          "Pedido MT-1041: Em análise. O pedido foi atualizado.";
       }
     });
   }
@@ -548,7 +559,8 @@ if (listaDecisoesCet) {
       statusZeladoria.textContent = "Concluído";
       statusZeladoria.className = "admin-status-pill cet-pill-aprovado";
       if (avisoZeladoria) {
-        avisoZeladoria.textContent = "Pedido MT-1041: Concluído. O pedido foi atualizado.";
+        avisoZeladoria.textContent =
+          "Pedido MT-1041: Concluído. O pedido foi atualizado.";
       }
     });
   }
@@ -588,10 +600,13 @@ function filtrarPedidosCoordenacao() {
   let visiveis = 0;
 
   for (let i = 0; i < linhas.length; i++) {
-    const matchOrgao = orgao === "todos" || linhas[i].getAttribute("data-orgao") === orgao;
-    const matchLocal = local === "todos" || linhas[i].getAttribute("data-local") === local;
+    const matchOrgao =
+      orgao === "todos" || linhas[i].getAttribute("data-orgao") === orgao;
+    const matchLocal =
+      local === "todos" || linhas[i].getAttribute("data-local") === local;
     const matchSituacao =
-      situacao === "todos" || linhas[i].getAttribute("data-situacao") === situacao;
+      situacao === "todos" ||
+      linhas[i].getAttribute("data-situacao") === situacao;
 
     const exibir = matchOrgao && matchLocal && matchSituacao;
     linhas[i].hidden = !exibir;
@@ -603,8 +618,10 @@ function filtrarPedidosCoordenacao() {
   const estadoVazio = document.getElementById("vazio-coord-pedidos");
 
   if (contagemTexto) {
-    const plural = visiveis === 1 ? "solicitação encontrada" : "solicitações encontradas";
-    contagemTexto.textContent = visiveis + " " + plural + " · Período selecionado";
+    const plural =
+      visiveis === 1 ? "solicitação encontrada" : "solicitações encontradas";
+    contagemTexto.textContent =
+      visiveis + " " + plural + " · Período selecionado";
   }
 
   if (tabelaWrapper && estadoVazio) {
@@ -618,7 +635,7 @@ if (tbodyCoordPedidos) {
     filtroCoordOrgao,
     filtroCoordLocal,
     filtroCoordSituacao,
-    filtroCoordPeriodo
+    filtroCoordPeriodo,
   ];
   for (let i = 0; i < selectsFiltro.length; i++) {
     if (selectsFiltro[i]) {
@@ -659,7 +676,9 @@ if (btnExportarCsv) {
     document.body.removeChild(linkDownload);
     URL.revokeObjectURL(url);
 
-    mostrarToastAdmin("Relatório de atendimentos exportado com os filtros selecionados.");
+    mostrarToastAdmin(
+      "Relatório de atendimentos exportado com os filtros selecionados.",
+    );
   });
 }
 
@@ -672,13 +691,22 @@ if (btnImprimirRelatorio) {
 
 // Gestão de acessos (Aprovar / Recusar cadastro CAD-2048)
 // recupera o modelo e a lista de cadastros da coordenacao
-var listaSolicitacoesCadastro = document.getElementById("lista-solicitacoes-cadastro");
-var modeloSolicitacaoCadastro = document.getElementById("modelo-solicitacao-cadastro");
-var avisoSolicitacoesCadastro = document.getElementById("aviso-solicitacoes-cadastro");
+var listaSolicitacoesCadastro = document.getElementById(
+  "lista-solicitacoes-cadastro",
+);
+var modeloSolicitacaoCadastro = document.getElementById(
+  "modelo-solicitacao-cadastro",
+);
+var avisoSolicitacoesCadastro = document.getElementById(
+  "aviso-solicitacoes-cadastro",
+);
 
 // salva a decisao e apresenta a lista atualizada
 function decidirSolicitacaoCadastro() {
-  alterarSituacaoCadastro(this.getAttribute("data-protocolo"), this.getAttribute("data-situacao"));
+  alterarSituacaoCadastro(
+    this.getAttribute("data-protocolo"),
+    this.getAttribute("data-situacao"),
+  );
   exibirSolicitacoesCadastro();
   mostrarToastAdmin("Situação do cadastro atualizada");
 }
@@ -696,7 +724,8 @@ function exibirSolicitacoesCadastro() {
     cartao.hidden = false;
 
     // apresenta os dados cadastrados somente como texto
-    cartao.querySelector(".admin-chamado-meta span").textContent = cadastro.protocolo + " · " + cadastro.orgao;
+    cartao.querySelector(".admin-chamado-meta span").textContent =
+      cadastro.protocolo + " · " + cadastro.orgao;
     cartao.querySelector("h3").textContent = cadastro.nome;
     var local = cadastro.regiao || "";
     if (cadastro.estacao) {
@@ -705,8 +734,15 @@ function exibirSolicitacoesCadastro() {
     if (cadastro.linha) {
       local = local + " · " + cadastro.linha;
     }
-    cartao.querySelector(".admin-chamado-local").textContent = "Vínculo: " + local;
-    cartao.querySelector("[data-dados-solicitacao]").textContent = "Matrícula: " + cadastro.matricula + " · " + cadastro.funcao + " · E-mail: " + cadastro.email;
+    cartao.querySelector(".admin-chamado-local").textContent =
+      "Vínculo: " + local;
+    cartao.querySelector("[data-dados-solicitacao]").textContent =
+      "Matrícula: " +
+      cadastro.matricula +
+      " · " +
+      cadastro.funcao +
+      " · E-mail: " +
+      cadastro.email;
 
     // atualiza a situacao e mostra as credenciais apenas na aprovacao
     var situacao = cartao.querySelector(".admin-status-pill");
@@ -717,7 +753,10 @@ function exibirSolicitacoesCadastro() {
     if (cadastro.status === "aprovado") {
       situacao.textContent = "Cadastro aprovado";
       situacao.className = "admin-status-pill cet-pill-aprovado";
-      credenciais.textContent = "E-mail administrativo: " + cadastro.emailAdministrativo + " · Senha demonstrativa: MeuTempo123!";
+      credenciais.textContent =
+        "E-mail administrativo: " +
+        cadastro.emailAdministrativo +
+        " · Senha demonstrativa: MeuTempo123!";
       credenciais.hidden = false;
     } else if (cadastro.status === "reprovado") {
       situacao.textContent = "Cadastro reprovado";
@@ -754,7 +793,9 @@ if (window.location.hash && botoesAbaAdmin.length > 0) {
 }
 
 // Faz o botão "Ver relatórios ->" de coordenacao.html abrir diretamente relatorios.html
-const botoesIrRelatorios = document.querySelectorAll('[data-admin-aba="relatorios"]');
+const botoesIrRelatorios = document.querySelectorAll(
+  '[data-admin-aba="relatorios"]',
+);
 for (let i = 0; i < botoesIrRelatorios.length; i++) {
   botoesIrRelatorios[i].addEventListener("click", function () {
     window.location.href = "relatorios.html";
@@ -774,68 +815,52 @@ let profissionalAdmin = null;
 // recupera o endereço da página atual
 const paginaAdmin = window.location.pathname;
 
-
 // função que verifica a sessão e a permissão do profissional
 function verificarSessaoAdmin() {
+  // verifica se existe uma sessão
+  if (sessaoAdmin === null) {
+    // retorna ao login caso não exista uma sessão
+    window.location.replace("login.html");
 
-    // verifica se existe uma sessão
-    if (sessaoAdmin === null) {
+    return;
+  }
 
-        // retorna ao login caso não exista uma sessão
-        window.location.replace("login.html");
+  // transforma os dados armazenados em um objeto
+  profissionalAdmin = JSON.parse(sessaoAdmin);
 
-        return;
-
+  // verifica a permissão do painel de transporte
+  if (paginaAdmin.endsWith("/metro.html")) {
+    if (profissionalAdmin.funcao !== "Agente de transporte") {
+      window.location.replace("login.html");
     }
+  }
 
-    // transforma os dados armazenados em um objeto
-    profissionalAdmin = JSON.parse(sessaoAdmin);
-
-    // verifica a permissão do painel de transporte
-    if (paginaAdmin.endsWith("/metro.html")) {
-
-        if (profissionalAdmin.funcao !== "Agente de transporte") {
-
-            window.location.replace("login.html");
-
-        }
-
+  // verifica a permissão do painel da cet
+  if (paginaAdmin.endsWith("/cet.html")) {
+    if (profissionalAdmin.funcao !== "Operador CET") {
+      window.location.replace("login.html");
     }
+  }
 
-    // verifica a permissão do painel da cet
-    if (paginaAdmin.endsWith("/cet.html")) {
-
-        if (profissionalAdmin.funcao !== "Operador CET") {
-
-            window.location.replace("login.html");
-
-        }
-
+  // verifica a permissão da coordenação e dos relatórios
+  if (
+    paginaAdmin.endsWith("/coordenacao.html") ||
+    paginaAdmin.endsWith("/relatorios.html")
+  ) {
+    if (profissionalAdmin.funcao !== "Coordenador") {
+      window.location.replace("login.html");
     }
-
-    // verifica a permissão da coordenação e dos relatórios
-    if (paginaAdmin.endsWith("/coordenacao.html") ||
-        paginaAdmin.endsWith("/relatorios.html")) {
-
-        if (profissionalAdmin.funcao !== "Coordenador") {
-
-            window.location.replace("login.html");
-
-        }
-
-    }
-
+  }
 }
 
-
 // verifica se estamos em uma página administrativa
-if (paginaAdmin.endsWith("/metro.html") ||
-    paginaAdmin.endsWith("/cet.html") ||
-    paginaAdmin.endsWith("/coordenacao.html") ||
-    paginaAdmin.endsWith("/relatorios.html")) {
-
-    verificarSessaoAdmin();
-
+if (
+  paginaAdmin.endsWith("/metro.html") ||
+  paginaAdmin.endsWith("/cet.html") ||
+  paginaAdmin.endsWith("/coordenacao.html") ||
+  paginaAdmin.endsWith("/relatorios.html")
+) {
+  verificarSessaoAdmin();
 }
 
 // =================================================================
@@ -845,32 +870,23 @@ if (paginaAdmin.endsWith("/metro.html") ||
 // seleciona todos os links que possuem o atributo data-sair
 const botoesSairAdmin = document.querySelectorAll("[data-sair]");
 
-
 // função que encerra a sessão do profissional
 function sairAdmin(event) {
+  // impede o comportamento padrão do link
+  event.preventDefault();
 
-    // impede o comportamento padrão do link
-    event.preventDefault();
+  // remove a sessão do profissional conectado
+  sessionStorage.removeItem("admin-sessao");
 
-    // remove a sessão do profissional conectado
-    sessionStorage.removeItem("admin-sessao");
-
-    // retorna para o login administrativo
-    window.location.replace("login.html");
-
+  // retorna para o login administrativo
+  window.location.replace("login.html");
 }
-
 
 // percorre todos os botões de saída
 for (let i = 0; i < botoesSairAdmin.length; i++) {
-
-    // encerra a sessão quando o botão é clicado
-    botoesSairAdmin[i].addEventListener("click", sairAdmin);
-
+  // encerra a sessão quando o botão é clicado
+  botoesSairAdmin[i].addEventListener("click", sairAdmin);
 }
-
-
-
 
 // =================================================================
 // IDENTIFICAÇÃO DO PROFISSIONAL
@@ -878,55 +894,47 @@ for (let i = 0; i < botoesSairAdmin.length; i++) {
 
 // função que apresenta os dados do profissional conectado
 function exibirDadosProfissional() {
+  // seleciona os elementos que receberão os dados
+  const nomes = document.querySelectorAll("[data-nome-profissional]");
+  const matriculas = document.querySelectorAll("[data-matricula-profissional]");
+  const funcoes = document.querySelectorAll("[data-funcao-profissional]");
+  const locais = document.querySelectorAll("[data-local-profissional]");
 
-    // seleciona os elementos que receberão os dados
-    const nomes = document.querySelectorAll("[data-nome-profissional]");
-    const matriculas = document.querySelectorAll("[data-matricula-profissional]");
-    const funcoes = document.querySelectorAll("[data-funcao-profissional]");
-    const locais = document.querySelectorAll("[data-local-profissional]");
+  // apresenta o nome do profissional
+  for (let i = 0; i < nomes.length; i++) {
+    nomes[i].textContent = profissionalAdmin.nome;
+  }
 
-    // apresenta o nome do profissional
-    for (let i = 0; i < nomes.length; i++) {
-        nomes[i].textContent = profissionalAdmin.nome;
-    }
+  // apresenta a matrícula do profissional
+  for (let i = 0; i < matriculas.length; i++) {
+    matriculas[i].textContent = profissionalAdmin.matricula;
+  }
 
-    // apresenta a matrícula do profissional
-    for (let i = 0; i < matriculas.length; i++) {
-        matriculas[i].textContent = profissionalAdmin.matricula;
-    }
+  // apresenta a função do profissional
+  for (let i = 0; i < funcoes.length; i++) {
+    funcoes[i].textContent = profissionalAdmin.funcao;
+  }
 
-    // apresenta a função do profissional
-    for (let i = 0; i < funcoes.length; i++) {
-        funcoes[i].textContent = profissionalAdmin.funcao;
-    }
+  // guarda o local de atuação
+  let localAtuacao = "";
 
-    // guarda o local de atuação
-    let localAtuacao = "";
+  // verifica se o profissional atua em uma estação
+  if (profissionalAdmin.estacao) {
+    localAtuacao = profissionalAdmin.estacao;
+  } else {
+    localAtuacao = profissionalAdmin.regiao;
+  }
 
-    // verifica se o profissional atua em uma estação
-    if (profissionalAdmin.estacao) {
-
-        localAtuacao = profissionalAdmin.estacao;
-
-    } else {
-
-        localAtuacao = profissionalAdmin.regiao;
-
-    }
-
-    // apresenta o local de atuação
-    for (let i = 0; i < locais.length; i++) {
-        locais[i].textContent = localAtuacao;
-    }
-
+  // apresenta o local de atuação
+  for (let i = 0; i < locais.length; i++) {
+    locais[i].textContent = localAtuacao;
+  }
 }
 
 // verifica se existe um profissional conectado
 if (profissionalAdmin !== null) {
-
-    // apresenta os dados no painel
-    exibirDadosProfissional();
-
+  // apresenta os dados no painel
+  exibirDadosProfissional();
 }
 
 // =================================================================
@@ -935,261 +943,341 @@ if (profissionalAdmin !== null) {
 
 // seleciona os botões de alteração dos equipamentos
 const botoesEquipamentosMetro = document.querySelectorAll(
-    "[data-alterar-equipamento]"
+  "[data-alterar-equipamento]",
 );
 
 // seleciona o indicador de equipamentos disponíveis
-const indicadorEquipamentos = document.getElementById(
-    "indicador-equipamentos"
-);
+const indicadorEquipamentos = document.getElementById("indicador-equipamentos");
 
 // guarda os equipamentos fictícios da estação
 const equipamentosMetro = [
+  {
+    codigo: "EL-01",
+    situacao: "Disponível",
+  },
 
-    {
-        codigo: "EL-01",
-        situacao: "Disponível"
-    },
-
-    {
-        codigo: "ER-02",
-        situacao: "Em manutenção"
-    }
-
+  {
+    codigo: "ER-02",
+    situacao: "Em manutenção",
+  },
 ];
-
 
 // função que atualiza o indicador de equipamentos
 function atualizarEquipamentosMetro() {
+  // guarda a quantidade de equipamentos disponíveis
+  let disponiveis = 0;
 
-    // guarda a quantidade de equipamentos disponíveis
-    let disponiveis = 0;
+  // percorre a lista de equipamentos
+  for (let i = 0; i < equipamentosMetro.length; i++) {
+    // recupera o equipamento atual
+    const equipamento = equipamentosMetro[i];
 
-    // percorre a lista de equipamentos
-    for (let i = 0; i < equipamentosMetro.length; i++) {
+    // prepara o código para localizar o id no html
+    const identificador = equipamento.codigo.toLowerCase().replace("-", "");
 
-        // recupera o equipamento atual
-        const equipamento = equipamentosMetro[i];
+    // seleciona o texto da situação
+    const situacao = document.getElementById("situacao-" + identificador);
 
-        // prepara o código para localizar o id no html
-        const identificador = equipamento.codigo.toLowerCase().replace("-", "");
+    // apresenta a situação atualizada
+    situacao.textContent = equipamento.situacao;
 
-        // seleciona o texto da situação
-        const situacao = document.getElementById("situacao-" + identificador);
-
-        // apresenta a situação atualizada
-        situacao.textContent = equipamento.situacao;
-
-        // verifica se o equipamento está disponível
-        if (equipamento.situacao === "Disponível") {
-
-            disponiveis = disponiveis + 1;
-
-        }
-
+    // verifica se o equipamento está disponível
+    if (equipamento.situacao === "Disponível") {
+      disponiveis = disponiveis + 1;
     }
+  }
 
-    // apresenta a quantidade na visão geral
-    indicadorEquipamentos.textContent = disponiveis;
-
+  // apresenta a quantidade na visão geral
+  indicadorEquipamentos.textContent = disponiveis;
 }
-
 
 // função que altera a situação do equipamento
 function alterarEquipamentoMetro(event) {
+  // recupera o botão clicado
+  const botao = event.currentTarget;
 
-    // recupera o botão clicado
-    const botao = event.currentTarget;
+  // recupera o código do equipamento
+  const codigo = botao.getAttribute("data-alterar-equipamento");
 
-    // recupera o código do equipamento
-    const codigo = botao.getAttribute("data-alterar-equipamento");
+  // percorre os equipamentos cadastrados
+  for (let i = 0; i < equipamentosMetro.length; i++) {
+    // verifica se encontrou o equipamento
+    if (equipamentosMetro[i].codigo === codigo) {
+      // recupera o equipamento encontrado
+      const equipamento = equipamentosMetro[i];
 
-    // percorre os equipamentos cadastrados
-    for (let i = 0; i < equipamentosMetro.length; i++) {
+      // verifica a situação atual
+      if (equipamento.situacao === "Disponível") {
+        equipamento.situacao = "Em manutenção";
+      } else if (equipamento.situacao === "Em manutenção") {
+        equipamento.situacao = "Indisponível";
+      } else {
+        equipamento.situacao = "Disponível";
+      }
 
-        // verifica se encontrou o equipamento
-        if (equipamentosMetro[i].codigo === codigo) {
+      // atualiza as informações na página
+      atualizarEquipamentosMetro();
 
-            // recupera o equipamento encontrado
-            const equipamento = equipamentosMetro[i];
-
-            // verifica a situação atual
-            if (equipamento.situacao === "Disponível") {
-
-                equipamento.situacao = "Em manutenção";
-
-            } else if (equipamento.situacao === "Em manutenção") {
-
-                equipamento.situacao = "Indisponível";
-
-            } else {
-
-                equipamento.situacao = "Disponível";
-
-            }
-
-            // atualiza as informações na página
-            atualizarEquipamentosMetro();
-
-            return;
-
-        }
-
+      return;
     }
-
+  }
 }
-
 
 // verifica se estamos no painel do metrô
 if (document.body.classList.contains("pagina-metro")) {
+  // percorre os botões dos equipamentos
+  for (let i = 0; i < botoesEquipamentosMetro.length; i++) {
+    // executa a alteração ao clicar no botão
+    botoesEquipamentosMetro[i].addEventListener(
+      "click",
+      alterarEquipamentoMetro,
+    );
+  }
 
-    // percorre os botões dos equipamentos
-    for (let i = 0; i < botoesEquipamentosMetro.length; i++) {
-
-        // executa a alteração ao clicar no botão
-        botoesEquipamentosMetro[i].addEventListener(
-            "click",
-            alterarEquipamentoMetro
-        );
-
-    }
-
-    // apresenta as informações iniciais
-    atualizarEquipamentosMetro();
-
+  // apresenta as informações iniciais
+  atualizarEquipamentosMetro();
 }
-
 
 // =================================================================
 // OCORRÊNCIAS DO METRÔ
 // =================================================================
 
 // seleciona o formulário
-const formularioOcorrenciaMetro = document.getElementById("formulario-ocorrencia");
+const formularioOcorrenciaMetro = document.getElementById(
+  "formulario-ocorrencia",
+);
 
 // seleciona os campos do formulário
 const tipoOcorrenciaMetro = document.getElementById("tipo-ocorrencia");
 const localOcorrenciaMetro = document.getElementById("local-ocorrencia");
-const descricaoOcorrenciaMetro = document.getElementById("descricao-ocorrencia");
+const descricaoOcorrenciaMetro = document.getElementById(
+  "descricao-ocorrencia",
+);
 
 // seleciona a mensagem e a lista de ocorrências
 const avisoOcorrenciaMetro = document.getElementById("aviso-ocorrencia");
-const listaOcorrenciasMetro = document.getElementById("lista-ocorrencias-metro");
+const listaOcorrenciasMetro = document.getElementById(
+  "lista-ocorrencias-metro",
+);
 
 // cria uma lista para guardar as ocorrências
 let ocorrenciasMetro = [];
 
-
 // função que apresenta as ocorrências registradas
 function exibirOcorrenciasMetro() {
+  // limpa a lista anterior
+  listaOcorrenciasMetro.innerHTML = "";
 
-    // limpa a lista anterior
-    listaOcorrenciasMetro.innerHTML = "";
+  // verifica se a lista está vazia
+  if (ocorrenciasMetro.length === 0) {
+    listaOcorrenciasMetro.innerHTML = "<li>Nenhuma ocorrência registrada.</li>";
 
-    // verifica se a lista está vazia
-    if (ocorrenciasMetro.length === 0) {
+    return;
+  }
 
-        listaOcorrenciasMetro.innerHTML =
-            "<li>Nenhuma ocorrência registrada.</li>";
+  // percorre as ocorrências cadastradas
+  for (let i = 0; i < ocorrenciasMetro.length; i++) {
+    // recupera a ocorrência atual
+    const ocorrencia = ocorrenciasMetro[i];
 
-        return;
+    // cria um item da lista
+    const item = document.createElement("li");
 
-    }
+    // apresenta as informações da ocorrência
+    item.textContent =
+      ocorrencia.tipo + " | " + ocorrencia.local + " | " + ocorrencia.descricao;
 
-    // percorre as ocorrências cadastradas
-    for (let i = 0; i < ocorrenciasMetro.length; i++) {
-
-        // recupera a ocorrência atual
-        const ocorrencia = ocorrenciasMetro[i];
-
-        // cria um item da lista
-        const item = document.createElement("li");
-
-        // apresenta as informações da ocorrência
-        item.textContent =
-            ocorrencia.tipo + " | " +
-            ocorrencia.local + " | " +
-            ocorrencia.descricao;
-
-        // adiciona o item à lista
-        listaOcorrenciasMetro.appendChild(item);
-
-    }
-
+    // adiciona o item à lista
+    listaOcorrenciasMetro.appendChild(item);
+  }
 }
-
 
 // função que registra uma ocorrência
 function registrarOcorrenciaMetro(event) {
+  // impede o recarregamento da página
+  event.preventDefault();
 
-    // impede o recarregamento da página
-    event.preventDefault();
+  // verifica se os campos possuem conteúdo
+  if (
+    localOcorrenciaMetro.value.trim() === "" ||
+    descricaoOcorrenciaMetro.value.trim() === ""
+  ) {
+    avisoOcorrenciaMetro.textContent = "Preencha todos os campos.";
 
-    // verifica se os campos possuem conteúdo
-    if (localOcorrenciaMetro.value.trim() === "" ||
-        descricaoOcorrenciaMetro.value.trim() === "") {
+    return;
+  }
 
-        avisoOcorrenciaMetro.textContent = "Preencha todos os campos.";
+  // cria o objeto com os dados informados
+  const ocorrencia = {
+    tipo: tipoOcorrenciaMetro.options[tipoOcorrenciaMetro.selectedIndex].text,
 
-        return;
+    local: localOcorrenciaMetro.value.trim(),
 
-    }
+    descricao: descricaoOcorrenciaMetro.value.trim(),
+  };
 
-    // cria o objeto com os dados informados
-    const ocorrencia = {
+  // adiciona a ocorrência à lista
+  ocorrenciasMetro.push(ocorrencia);
 
-        tipo: tipoOcorrenciaMetro.options[tipoOcorrenciaMetro.selectedIndex].text,
+  // salva as ocorrências no navegador
+  localStorage.setItem("metro-ocorrencias", JSON.stringify(ocorrenciasMetro));
 
-        local: localOcorrenciaMetro.value.trim(),
+  // atualiza a lista apresentada
+  exibirOcorrenciasMetro();
 
-        descricao: descricaoOcorrenciaMetro.value.trim()
+  // limpa os campos do formulário
+  formularioOcorrenciaMetro.reset();
 
-    };
-
-    // adiciona a ocorrência à lista
-    ocorrenciasMetro.push(ocorrencia);
-
-    // salva as ocorrências no navegador
-    localStorage.setItem(
-        "metro-ocorrencias",
-        JSON.stringify(ocorrenciasMetro)
-    );
-
-    // atualiza a lista apresentada
-    exibirOcorrenciasMetro();
-
-    // limpa os campos do formulário
-    formularioOcorrenciaMetro.reset();
-
-    // apresenta a mensagem de confirmação
-    avisoOcorrenciaMetro.textContent =
-        "Ocorrência registrada com sucesso!";
-
+  // apresenta a mensagem de confirmação
+  avisoOcorrenciaMetro.textContent = "Ocorrência registrada com sucesso!";
 }
-
 
 // verifica se estamos no painel do metrô
 if (formularioOcorrenciaMetro && listaOcorrenciasMetro) {
+  // recupera as ocorrências salvas anteriormente
+  const ocorrenciasSalvas = localStorage.getItem("metro-ocorrencias");
 
-    // recupera as ocorrências salvas anteriormente
-    const ocorrenciasSalvas = localStorage.getItem("metro-ocorrencias");
+  // verifica se existem registros anteriores
+  if (ocorrenciasSalvas !== null) {
+    ocorrenciasMetro = JSON.parse(ocorrenciasSalvas);
+  }
 
-    // verifica se existem registros anteriores
-    if (ocorrenciasSalvas !== null) {
+  // apresenta as ocorrências existentes
+  exibirOcorrenciasMetro();
 
-        ocorrenciasMetro = JSON.parse(ocorrenciasSalvas);
-
-    }
-
-    // apresenta as ocorrências existentes
-    exibirOcorrenciasMetro();
-
-    // registra a ocorrência ao enviar o formulário
-    formularioOcorrenciaMetro.addEventListener(
-        "submit",
-        registrarOcorrenciaMetro
-    );
-
+  // registra a ocorrência ao enviar o formulário
+  formularioOcorrenciaMetro.addEventListener(
+    "submit",
+    registrarOcorrenciaMetro,
+  );
 }
 
+// =================================================================
+// HISTÓRICO DE ATENDIMENTOS
+// =================================================================
 
+// seleciona o corpo da tabela de histórico
+const corpoHistoricoMetro = document.getElementById("corpo-historico");
+
+// função que adiciona um atendimento ao histórico
+// chamado representa o atendimento concluído
+function adicionarHistoricoMetro(chamado) {
+  // cria uma linha na tabela
+  const linha = document.createElement("tr");
+
+  // cria a lista com as informações do atendimento
+  const informacoes = [
+    chamado.protocolo,
+    chamado.tipo,
+    chamado.local,
+    chamado.dataConclusao,
+    chamado.situacao,
+  ];
+
+  // percorre as informações do atendimento
+  for (let i = 0; i < informacoes.length; i++) {
+    // cria uma célula da tabela
+    const coluna = document.createElement("td");
+
+    // apresenta a informação na célula
+    coluna.textContent = informacoes[i];
+
+    // adiciona a célula à linha
+    linha.appendChild(coluna);
+  }
+
+  // adiciona a linha à tabela de histórico
+  corpoHistoricoMetro.appendChild(linha);
+}
+
+// =================================================================
+// NOTIFICAÇÕES DO METRÔ
+// =================================================================
+
+// seleciona a lista de notificações do painel
+const listaNotificacoesMetro = document.getElementById("lista-notificacoes");
+
+// seleciona a lista de notificações do modal
+const listaModalNotificacoesMetro = document.querySelector(
+  "#modal-admin-notificacoes .cet-timeline",
+);
+
+// função que adiciona uma notificação
+// mensagem representa o texto que será apresentado
+function adicionarNotificacaoMetro(mensagem) {
+  // cria um item na lista principal
+  const item = document.createElement("li");
+
+  // adiciona o texto da notificação
+  item.textContent = mensagem;
+
+  // adiciona a notificação no início da lista
+  listaNotificacoesMetro.prepend(item);
+
+  // cria outro item para o modal
+  const itemModal = document.createElement("li");
+
+  // adiciona o mesmo texto ao item do modal
+  itemModal.textContent = mensagem;
+
+  // apresenta a notificação no modal
+  listaModalNotificacoesMetro.prepend(itemModal);
+}
+
+// =================================================================
+// RECUPERAÇÃO DOS CHAMADOS SALVOS
+// =================================================================
+
+// verifica se estamos no painel do metro antes de recuperar os chamados
+if (document.body.classList.contains("pagina-metro")) {
+  // recupera a lista de chamados armazenada no navegador
+  const dadosChamadosSalvos = localStorage.getItem("metro-chamados");
+
+  // verifica se existe uma lista salva
+  if (dadosChamadosSalvos !== null) {
+    // transforma o texto armazenado na lista de chamados salvos
+    const chamadosSalvos = JSON.parse(dadosChamadosSalvos);
+
+    // percorre os chamados salvos usando i como indice
+    for (let i = 0; i < chamadosSalvos.length; i++) {
+      // percorre os chamados da estacao usando j como indice
+      for (let j = 0; j < chamadosMetro.length; j++) {
+        // verifica se os protocolos correspondem ao mesmo chamado
+        if (chamadosSalvos[i].protocolo === chamadosMetro[j].protocolo) {
+          // recupera o chamado da estacao e restaura sua situacao e data
+          const chamado = chamadosMetro[j];
+          chamado.situacao = chamadosSalvos[i].situacao;
+          chamado.dataConclusao = chamadosSalvos[i].dataConclusao;
+
+          // atualiza os textos e os botoes do chamado na pagina
+          atualizarChamadoMetro(chamado);
+
+          // verifica se o atendimento deve aparecer no historico
+          if (chamado.situacao === "Concluído") {
+            // recupera as linhas que ja estao na tabela de historico
+            const linhasHistorico = corpoHistoricoMetro.rows;
+
+            // guarda se o protocolo ja possui um registro no historico
+            let registradoNoHistorico = false;
+
+            // percorre as linhas do historico usando k como indice
+            for (let k = 0; k < linhasHistorico.length; k++) {
+              // compara o protocolo da primeira celula com o chamado salvo
+              if (linhasHistorico[k].cells[0].textContent === chamado.protocolo) {
+                registradoNoHistorico = true;
+              }
+            }
+
+            // adiciona somente atendimentos que ainda nao foram apresentados
+            if (registradoNoHistorico === false) {
+              adicionarHistoricoMetro(chamado);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // apresenta os indicadores com as situacoes recuperadas
+  atualizarIndicadoresMetro();
+}
