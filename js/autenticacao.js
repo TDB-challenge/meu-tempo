@@ -885,4 +885,249 @@ function preencherResumo() {
     // mostra a região na revisão
     itemResumoRegiao.hidden = false;
   }
+
+  // habilita o botão de solicitar acesso
+  enviarSolicitacao.disabled = false;
+}
+
+// =================================================================
+// GERAÇÃO DO PROTOCOLO
+// =================================================================
+
+// função que gera o protocolo da solicitação
+// instituicao representa o órgão selecionado
+// quantidade representa o número de solicitações registradas
+function gerarProtocolo(instituicao, quantidade) {
+  // guarda a sigla da instituição
+  let sigla = "";
+
+  // verifica qual instituição foi selecionada
+  if (instituicao === "metro") {
+    sigla = "MET";
+  } else if (instituicao === "cptm") {
+    sigla = "CPT";
+  } else if (instituicao === "viaquatro") {
+    sigla = "VQT";
+  } else if (instituicao === "viamobilidade") {
+    sigla = "VMB";
+  } else if (instituicao === "cet") {
+    sigla = "CET";
+  }
+
+  // cria o número da próxima solicitação
+  const numero = quantidade + 1;
+
+  // completa o número com zeros até possuir quatro caracteres
+  const numeroProtocolo = String(numero).padStart(4, "0");
+
+  // retorna o protocolo completo
+  return "CAD-" + sigla + "-" + numeroProtocolo;
+}
+
+// =================================================================
+// REGISTRO DA SOLICITAÇÃO DE CADASTRO
+// =================================================================
+
+// seleciona o formulário de cadastro
+const formularioCadastroAdmin = document.getElementById(
+  "formulario-cadastro-admin",
+);
+
+// seleciona a mensagem de erro da revisão
+const mensagemRevisao = document.getElementById("mensagem-revisao");
+
+// função que registra a solicitação
+function registrarSolicitacao(event) {
+  // impede que o formulário recarregue a página
+  event.preventDefault();
+
+  // esconde mensagens anteriores
+  mensagemRevisao.hidden = true;
+
+  // recupera as solicitações armazenadas no navegador
+  const dadosSalvos = localStorage.getItem("admin-solicitacoes");
+
+  // cria uma lista vazia de solicitações
+  let solicitacoes = [];
+
+  // verifica se existem solicitações anteriores
+  if (dadosSalvos !== null) {
+    // transforma os dados armazenados em uma lista
+    solicitacoes = JSON.parse(dadosSalvos);
+  }
+
+  // percorre as solicitações existentes
+  for (let i = 0; i < solicitacoes.length; i++) {
+    // verifica se o e-mail institucional já foi cadastrado
+    if (
+      solicitacoes[i].email === emailInstitucional.value.trim().toLowerCase()
+    ) {
+      // apresenta uma mensagem de erro
+      mensagemRevisao.textContent =
+        "Já existe uma solicitação para este e-mail.";
+
+      mensagemRevisao.classList.add("mensagem-erro");
+
+      mensagemRevisao.hidden = false;
+
+      // encerra a função sem registrar novamente
+      return;
+    }
+  }
+
+  // gera o protocolo da nova solicitação
+  const protocolo = gerarProtocolo(orgaoCadastro.value, solicitacoes.length);
+
+  // cria um objeto com os dados do profissional
+  const novaSolicitacao = {
+    protocolo: protocolo,
+
+    nome: nomeCompleto.value.trim(),
+
+    matricula: matriculaFuncional.value.trim(),
+
+    email: emailInstitucional.value.trim().toLowerCase(),
+
+    orgao: orgaoCadastro.value,
+
+    funcao: funcaoCadastro.value,
+
+    linha: linhaCadastro.value,
+
+    estacao: estacaoCadastro.value,
+
+    regiao: regiaoCadastro.value.trim(),
+
+    status: "pendente",
+
+    dataSolicitacao: new Date().toISOString(),
+  };
+
+  // adiciona a nova solicitação à lista
+  solicitacoes.push(novaSolicitacao);
+
+  // transforma a lista em texto e salva no navegador
+  localStorage.setItem("admin-solicitacoes", JSON.stringify(solicitacoes));
+
+  // limpa os campos de senha
+  senhaCadastro.value = "";
+  confirmarSenha.value = "";
+
+  // apresenta a confirmação do cadastro
+  mostrarConfirmacao(protocolo);
+}
+
+// =================================================================
+// CONFIRMAÇÃO DO CADASTRO
+// =================================================================
+
+// seleciona a seção de confirmação
+const confirmacaoCadastro = document.getElementById("confirmacao-cadastro");
+
+// seleciona o elemento que receberá o protocolo
+const protocoloCadastro = document.getElementById("protocolo-cadastro");
+
+// seleciona a situação do cadastro
+const situacaoCadastro = document.getElementById("situacao-cadastro");
+
+// seleciona o indicador de etapas
+const etapasCadastro = document.getElementById("etapas-cadastro");
+
+// seleciona o link de login abaixo do formulário
+const cadastroLogin = document.getElementById("cadastro-login");
+
+// seleciona o título da confirmação
+const tituloConfirmacao = document.getElementById("titulo-confirmacao");
+
+// seleciona o título e o subtítulo iniciais do cartão
+const tituloCadastro = document.querySelector(".cadastro-card h2");
+const subtituloCadastro = document.querySelector(".cadastro-subtitulo");
+
+// função que apresenta a confirmação da solicitação
+function mostrarConfirmacao(protocolo) {
+  // esconde o formulário
+  formularioCadastroAdmin.hidden = true;
+
+  // esconde o indicador de etapas
+  etapasCadastro.hidden = true;
+
+  // esconde o link de login anterior
+  cadastroLogin.hidden = true;
+
+  // esconde o título e o subtítulo iniciais
+  tituloCadastro.hidden = true;
+  subtituloCadastro.hidden = true;
+
+  // apresenta o protocolo gerado
+  protocoloCadastro.textContent = protocolo;
+
+  // apresenta a situação da solicitação
+  situacaoCadastro.textContent = "Aguardando aprovação";
+
+  // mostra a seção de confirmação
+  confirmacaoCadastro.hidden = false;
+
+  // direciona o foco para o título da confirmação
+  tituloConfirmacao.focus();
+}
+
+// verifica se estamos na página de cadastro
+if (formularioCadastroAdmin && enviarSolicitacao) {
+  // executa a função quando o formulário for enviado
+  formularioCadastroAdmin.addEventListener("submit", registrarSolicitacao);
+}
+
+// =================================================================
+// VALIDAÇÃO DO LOGIN ADMINISTRATIVO
+// =================================================================
+
+// seleciona o formulário de login
+const formularioLoginAdmin = document.getElementById("formulario-login-admin");
+
+// seleciona o campo de e-mail administrativo
+const emailLogin = document.getElementById("email-administrativo");
+
+// seleciona o campo de senha do login
+const senhaLogin = document.getElementById("senha");
+
+// seleciona o botão de acessar o painel
+const entrarPainel = document.getElementById("entrar-painel");
+
+// seleciona o elemento que apresenta as mensagens do login
+const mensagemLogin = document.getElementById("mensagem-login-admin");
+
+// função que verifica o preenchimento dos campos
+function validarLogin() {
+  // esconde as mensagens anteriores
+  mensagemLogin.hidden = true;
+
+  // verifica se o e-mail é válido e a senha está preenchida
+  if (emailLogin.checkValidity() && senhaLogin.value.trim() !== "") {
+    // habilita o botão de acessar o painel
+    entrarPainel.disabled = false;
+  } else {
+    // desabilita o botão caso os campos estejam incorretos
+    entrarPainel.disabled = true;
+  }
+}
+
+// função temporária que impede o envio tradicional do formulário
+function prepararLogin(event) {
+  // impede o recarregamento da página
+  event.preventDefault();
+}
+
+// verifica se estamos na página de login administrativo
+if (formularioLoginAdmin) {
+  // verifica o e-mail enquanto o profissional digita
+  emailLogin.addEventListener("input", validarLogin);
+
+  // verifica a senha enquanto o profissional digita
+  senhaLogin.addEventListener("input", validarLogin);
+
+  // impede o envio tradicional até implementarmos a autenticação
+  formularioLoginAdmin.addEventListener("submit", prepararLogin);
+
+  // verifica os campos quando a página é carregada
+  validarLogin();
 }
