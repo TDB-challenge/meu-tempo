@@ -39,10 +39,10 @@ function atualizarCruzamentoMapa() {
   document.getElementById('nome-cruzamento-' + tipo).textContent = nome;
   document.getElementById('cruzamento-' + tipo).setAttribute('data-suporte', rotulo.getAttribute('data-suporte'));
   // prepara a descrição de cobertura sem afirmar integração com órgão público
-  let descricao = 'Indisponível na simulação.';
+  let descricao = 'Indisponível no Meu Tempo.';
   // informa quando o catálogo permite simular o pedido
   if (suporte) {
-    descricao = 'Disponível na simulação.';
+    descricao = 'Disponível no Meu Tempo.';
   }
   document.getElementById('suporte-cruzamento-' + tipo).textContent = descricao;
   // seleciona o iframe público sem inventar coordenadas
@@ -165,8 +165,8 @@ function prepararMarcadoresTravessia() {
     icone.alt = '';
     botao.appendChild(icone);
     const nome = document.createElement('span');
-    let suporte = ' — indisponível na simulação';
-    if (cruzamentosMeuTempo[i].suporte) suporte = ' — disponível na simulação';
+    let suporte = ' — indisponível no Meu Tempo';
+    if (cruzamentosMeuTempo[i].suporte) suporte = ' — disponível no Meu Tempo';
     nome.textContent = cruzamentosMeuTempo[i].nome + suporte;
     // mantém no marcador o ícone e oferece o nome completo ao foco e ao ponteiro
     nome.hidden = true;
