@@ -724,7 +724,7 @@ if (formRecuperarSenha) {
 
     avisoRecuperar.innerHTML =
       '<p style="margin-bottom: 10px;">Solicitação registrada! Se este e-mail estiver vinculado a uma conta, enviaremos as instruções de redefinição.</p>' +
-      '<a href="login.html" class="link-seta">Voltar para o login &rarr;</a>';
+      '<a href="login.html" class="link-seta">&larr; Voltar para o login</a>';
 
     formRecuperarSenha.reset();
   });

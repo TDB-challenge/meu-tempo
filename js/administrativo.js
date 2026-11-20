@@ -197,7 +197,7 @@ function criarAcoesChamadoMetro(chamado, destino, origem) {
   } else if (chamado.situacao === "Em atendimento") {
     acoes.push({acao: "concluir", texto: "Concluir atendimento"});
   }
-  acoes.push({acao: "acompanhar", texto: "Ver acompanhamento do cidadão"});
+  acoes.push({acao: "acompanhar", texto: "Ver acompanhamento", rotulo: "Ver acompanhamento do cidadão"});
   // percorre as ações permitidas e conecta o mesmo evento aos dois locais
   for (let i = 0; i < acoes.length; i++) {
     // cria um botão para a ação atual
@@ -210,7 +210,7 @@ function criarAcoesChamadoMetro(chamado, destino, origem) {
     botao.setAttribute("data-acao-chamado", acoes[i].acao);
     botao.setAttribute("data-protocolo", chamado.protocolo);
     // aria diferencia ações iguais de pedidos diferentes
-    botao.setAttribute("aria-label", acoes[i].texto + " · " + chamado.protocolo);
+    botao.setAttribute("aria-label", (acoes[i].rotulo || acoes[i].texto) + " · " + chamado.protocolo);
     // executa a função compartilhada ao clicar
     botao.addEventListener("click", alterarChamadoMetro);
   }
@@ -245,14 +245,23 @@ function exibirChamadosMetro() {
       // cria a linha correspondente na tabela usando o mesmo pedido
       const linha = document.createElement("tr");
       linha.setAttribute("data-protocolo", chamado.protocolo);
-      adicionarTextoOperacional(linha, "td", chamado.protocolo, "coord-td-proto");
-      adicionarTextoOperacional(linha, "td", chamado.tipo + " · " + chamado.nome, "");
-      adicionarTextoOperacional(linha, "td", chamado.local, "");
+      // protocolo com o horário logo abaixo
+      const colunaProtocolo = adicionarTextoOperacional(linha, "td", "", "coord-td-proto");
+      adicionarTextoOperacional(colunaProtocolo, "strong", chamado.protocolo, "");
+      adicionarTextoOperacional(colunaProtocolo, "span", chamado.horarioSolicitacao, "");
+      // nome do cidadão em destaque e o tipo de apoio abaixo
+      const colunaCidadao = adicionarTextoOperacional(linha, "td", "", "");
+      adicionarTextoOperacional(colunaCidadao, "strong", chamado.nome, "");
+      adicionarTextoOperacional(colunaCidadao, "span", chamado.tipo, "");
+      // estação em destaque e o ponto de encontro embaixo
+      const colunaLocal = adicionarTextoOperacional(linha, "td", "", "");
+      adicionarTextoOperacional(colunaLocal, "strong", chamado.estacao, "");
+      adicionarTextoOperacional(colunaLocal, "span", chamado.encontro, "");
       const colunaSituacao = adicionarTextoOperacional(linha, "td", "", "");
       const situacao = adicionarTextoOperacional(colunaSituacao, "span", chamado.situacao, "admin-status-pill");
       situacao.id = "situacao-" + chamado.protocolo.toLowerCase().replace("-", "");
       const colunaAcoes = adicionarTextoOperacional(linha, "td", "", "");
-      const botoes = adicionarTextoOperacional(colunaAcoes, "div", "", "admin-chamado-acoes");
+      const botoes = adicionarTextoOperacional(colunaAcoes, "div", "", "admin-chamado-acoes acoes-tabela");
       criarAcoesChamadoMetro(chamado, botoes, "");
       corpoChamadosMetro.appendChild(linha);
     }
@@ -578,7 +587,7 @@ if (listaDecisoesCet) {
         hora +
         " · Origem: IARA</span>" +
         '<span class="admin-status-pill cet-pill-aprovado">' +
-        '<img src="../../assets/icones/confirmacao.png" alt="" class="icone" /> APROVADO' +
+        'Aprovado' +
         "</span>" +
         "</div>" +
         "<h3>Av. Paulista &times; Av. Brigadeiro Luís Antônio</h3>" +
@@ -605,7 +614,7 @@ if (listaDecisoesCet) {
         hora +
         " · Origem: IARA</span>" +
         '<span class="admin-status-pill cet-pill-recusado">' +
-        '<img src="../../assets/icones/relogio.png" alt="" class="icone" /> RECUSADO' +
+        'Recusado' +
         "</span>" +
         "</div>" +
         "<h3>Av. Paulista &times; Rua Augusta</h3>" +
@@ -1130,14 +1139,20 @@ function atualizarEquipamentosMetro() {
     if (equipamento.estacao === profissionalAdmin.estacao && equipamento.orgao === profissionalAdmin.orgao) {
       // cria a linha com os dados do equipamento
       const linha = document.createElement("tr");
-      adicionarTextoOperacional(linha, "td", equipamento.nome + " " + equipamento.codigo, "coord-td-proto");
-      adicionarTextoOperacional(linha, "td", equipamento.estacao + " · " + equipamento.local, "");
+      // nome do equipamento em destaque e o código embaixo
+      const colunaEquipamento = adicionarTextoOperacional(linha, "td", "", "coord-td-proto");
+      adicionarTextoOperacional(colunaEquipamento, "strong", equipamento.nome, "");
+      adicionarTextoOperacional(colunaEquipamento, "span", equipamento.codigo, "");
+      // estação em destaque e o ponto da estação embaixo
+      const colunaLocal = adicionarTextoOperacional(linha, "td", "", "");
+      adicionarTextoOperacional(colunaLocal, "strong", equipamento.estacao, "");
+      adicionarTextoOperacional(colunaLocal, "span", equipamento.local, "");
       const colunaSituacao = adicionarTextoOperacional(linha, "td", "", "");
       const situacao = adicionarTextoOperacional(colunaSituacao, "span", equipamento.situacao, "admin-status-pill");
       situacao.id = "situacao-" + equipamento.codigo.toLowerCase().replace("-", "");
       const colunaAcao = adicionarTextoOperacional(linha, "td", "", "");
       // organiza os controles dentro da célula sem modificar sua estrutura
-      const grupo = adicionarTextoOperacional(colunaAcao, "div", "", "campo-grupo");
+      const grupo = adicionarTextoOperacional(colunaAcao, "div", "", "acoes-tabela");
       const seletor = document.createElement("select");
       seletor.id = "selecao-" + equipamento.codigo.toLowerCase().replace("-", "");
       seletor.className = "coord-select";
@@ -1377,7 +1392,10 @@ function sincronizarTransporteAdministrativo() {
       const servico = adicionarTextoOperacional(linha, "td", "", "");
       adicionarTextoOperacional(servico, "strong", pedido.tipo, "");
       adicionarTextoOperacional(servico, "span", pedido.nome + " · " + pedido.orgao.toUpperCase(), "");
-      adicionarTextoOperacional(linha, "td", (pedido.linha || "") + " · " + pedido.local, "");
+      // local em destaque e a linha ou região embaixo
+      const colunaLocal = adicionarTextoOperacional(linha, "td", "", "");
+      adicionarTextoOperacional(colunaLocal, "strong", pedido.local, "");
+      adicionarTextoOperacional(colunaLocal, "span", pedido.linha || pedido.orgao.toUpperCase(), "");
       const situacao = adicionarTextoOperacional(linha, "td", "", "");
       adicionarTextoOperacional(situacao, "span", pedido.situacao, "admin-status-pill");
       adicionarTextoOperacional(linha, "td", pedido.horarioSolicitacao, "");
@@ -1603,7 +1621,7 @@ function exibirPedidosAplicativoCET() {
             const acoes = adicionarTextoOperacional(cartao, "div", "", "admin-chamado-acoes");
             const situacoes = ["Em análise", "Concluído"];
             for (let k = 0; k < situacoes.length; k++) {
-              const botao = adicionarTextoOperacional(acoes, "button", "Marcar: " + situacoes[k], "btn btn-contorno");
+              const botao = adicionarTextoOperacional(acoes, "button", situacoes[k] === "Concluído" ? "Marcar como concluído" : "Marcar em análise", "btn btn-contorno");
               botao.type = "button";
               // data identifica o registro e a próxima situação da mesma solicitação
               botao.setAttribute("data-pedido-cet", pedido.protocolo);

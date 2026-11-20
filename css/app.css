@@ -1882,7 +1882,7 @@ button {
     color: var(--verde-natural); /* cor do texto */
 }
 
-/* seta-solicitacao: ícone que indica que o pedido pode ser aberto. */
+/* seta-solicitacao: seta para baixo que indica que o pedido pode ser aberto. */
 .app .seta-solicitacao {
     width: 19px; /* largura da seta */
     height: 19px; /* altura da seta */
@@ -1891,7 +1891,7 @@ button {
 
 /* altera a direção da seta quando o pedido estiver aberto. */
 .app .card-solicitacao[open] .seta-solicitacao {
-    transform: rotate(90deg); /* gira a seta para baixo */
+    transform: rotate(180deg); /* vira a seta para cima */
 }
 
 /* historico-solicitacao: div que aparece ao abrir o pedido. */
@@ -3626,6 +3626,14 @@ button {
     display: grid; /* organiza os anexos em colunas */
     grid-template-columns: repeat(2, minmax(0, 1fr)); /* cria duas colunas iguais */
     gap: 14px; /* espaço entre os anexos */
+}
+
+/* dica-anexos: texto que ocupa a linha inteira acima dos dois botões de anexo. */
+.app .dica-anexos {
+    grid-column: 1 / -1; /* deixa foto e áudio lado a lado na linha de baixo */
+    margin: 0; /* retira o espaço padrão do parágrafo */
+    font-size: 0.85rem; /* texto de apoio menor que o dos campos */
+    color: var(--texto-secundario); /* cor de texto auxiliar */
 }
 
 /* anexo-relato: div que contém o campo de arquivo e sua prévia. */

@@ -990,7 +990,7 @@ function apresentarPedidosApp(filtro) {
       situacao.textContent = pedido.situacao;
       resumo.appendChild(situacao);
       const seta = document.createElement('img');
-      seta.src = '../../assets/icones/seta-direita.svg';
+      seta.src = '../../assets/icones/expandir.svg';
       seta.alt = '';
       seta.className = 'icone seta-solicitacao';
       resumo.appendChild(seta);
