@@ -1,0 +1,334 @@
+IARA — AJUSTES MANUAIS NO NODE-RED
+Base da revisão: iara-integrada.json fornecido em 19/11/2026.
+Os trechos abaixo são instruções para o ambiente externo. Nenhum banco ou servidor foi adicionado ao front-end.
+Antes de alterar: exporte uma cópia do fluxo no Node-RED. Os IDs abaixo identificam os nós mesmo se você já renomeou SpotAccess para IARA.
+
+1. SITUAÇÃO DO FRONT-END
+Configuração única: js/integracao.js, objeto configuracaoIara.
+enderecoBase: http://127.0.0.1:1880; intervalo: 3000 ms; credenciais: omit.
+As rotas existentes do chat, listagem, decisão e notificações já são usadas.
+rotaPedidosCidadao permanece vazia: habilitar somente após o passo 4.
+Os formulários continuam com suas simulações locais: ainda não existe POST estruturado no fluxo entregue. Não enviamos mensagens artificiais ao chat para fingir essa integração.
+
+2. CONFIRMAR SQLITE ANTES DA RESPOSTA DO CHAT
+Problema encontrado: o núcleo envia a resposta pela saída 1 e SQLs independentes pela saída 2. “Gravar no banco” (b4809bdb11fcdba5) não retorna para a resposta. Assim, uma falha de escrita pode ocorrer depois da mensagem de sucesso.
+Pré-requisito dos trechos: SQLite 3.35 ou superior, com RETURNING. Confira com um Inject -> Function (msg.topic = 'SELECT sqlite_version() AS versao'; return msg;) -> SQLite -> Debug. Todos os novos SQLite devem usar a configuração de banco existente e consulta por msg.topic. Não criar outro banco.
+
+2.1 Nó existente: “Núcleo SpotAccess (regras + estado)” / ID c2b50a38f048f9f0
+Tipo: function, manter duas saídas. Se estiver renomeado para IARA, localizar pelo ID.
+Substituir apenas a função finalizar pelo bloco abaixo:
+
+function finalizar(resposta, opcoes) {
+    flow.set('ctx_' + sid, ctx);
+    msg.resposta = resposta;
+    msg.opcoes = opcoes || [];
+    msg.sqlsIara = sqls;
+    msg.indiceSqlIara = 0;
+    return [msg, null];
+}
+
+Substituir apenas a função inserirLog pelo bloco abaixo. O INSERT de cidadão garante que a sessão exista no banco mesmo quando o cache estava desatualizado. O RETURNING confirma que uma linha de solicitação foi inserida; não usar SELECT max(id) ou last_insert_rowid() em chamadas separadas e concorrentes.
+
+function inserirLog(campos) {
+    sqls.push('INSERT OR IGNORE INTO TB_CIDADAO ' +
+        '(NM_CIDADAO, DS_CANAL, DS_CANAL_ID, DS_PERFIL) VALUES (' +
+        q((cid && cid.nome) || 'Cidadão WEB') + ',' + q(canal.toUpperCase()) + ',' +
+        q(msg.sessao) + ',' + q((cid && cid.perfil) || 'nenhum') + ')');
+    const cols = Object.keys(campos);
+    sqls.push('INSERT INTO TB_LOG_SOLICITACAO (ID_CIDADAO, ' + cols.join(', ') + ', NR_LATITUDE, NR_LONGITUDE) ' +
+        'SELECT ID_CIDADAO, ' + cols.map(c => campos[c]).join(', ') + ', ' +
+        n(loc ? loc.lat : null) + ', ' + n(loc ? loc.lng : null) +
+        ' FROM TB_CIDADAO WHERE DS_CANAL = ' + q(canal.toUpperCase()) +
+        ' AND DS_CANAL_ID = ' + q(msg.sessao) +
+        ' RETURNING ID_SOLICITACAO AS id, TP_PEDIDO AS tipo, DH_SOLICITACAO AS data_hora');
+}
+
+Na função travessia, dentro de if (aceita), substituir somente o trecho que busca/push/set da fila_semaforo pelo seguinte. Assim a fila só será alterada depois da gravação:
+
+msg.pedidoSemaforoIara = {
+    cruzamento_id: alvo.id, cruzamento: alvo.rotulo,
+    tempo_travessia: concedido, sessao: sid, quando: new Date().toISOString()
+};
+
+2.2 Novo nó: “Executar próximo SQL IARA”
+Tipo: function, duas saídas. Código:
+
+if (msg.sqlAtualIara && /RETURNING ID_SOLICITACAO/i.test(msg.sqlAtualIara)) {
+    const registro = Array.isArray(msg.payload) ? msg.payload[0] : null;
+    if (!registro || !registro.id) {
+        node.error('A solicitação não foi confirmada no SQLite.', msg);
+        return null;
+    }
+    msg.registroIara = registro;
+}
+const comandos = msg.sqlsIara || [];
+if (msg.indiceSqlIara < comandos.length) {
+    msg.topic = comandos[msg.indiceSqlIara++];
+    msg.sqlAtualIara = msg.topic;
+    return [msg, null];
+}
+if (msg.registroIara) {
+    const r = msg.registroIara;
+    const sigla = {TRAVESSIA:'TR', APOIO_METRO:'AF', ZELADORIA:'ZU'}[r.tipo];
+    const protocolo = 'MT-' + sigla + '-' + String(r.data_hora).slice(0,4) + '-' + String(r.id).padStart(4,'0');
+    msg.resposta += '\n\nProtocolo: ' + protocolo;
+    if (msg.pedidoSemaforoIara) {
+        const fila = global.get('fila_semaforo') || [];
+        fila.push(Object.assign({id:r.id, protocolo:protocolo}, msg.pedidoSemaforoIara));
+        global.set('fila_semaforo', fila.slice(-50));
+    }
+}
+return [null, msg];
+
+Conexões:
+- Remover núcleo saída 1 -> “Responder (Telegram / Web)”.
+- Remover núcleo saída 2 -> “Gravar no banco”.
+- Núcleo saída 1 -> “Executar próximo SQL IARA”.
+- “Executar próximo SQL IARA” saída 1 -> “Gravar no banco” (b4809bdb11fcdba5).
+- “Gravar no banco” -> “Executar próximo SQL IARA”.
+- “Executar próximo SQL IARA” saída 2 -> “Responder (Telegram / Web)” (abaf4c17172b1a22).
+- Manter o restante dos canais Telegram e Web existentes.
+
+2.3 Novo nó: “Capturar erro de gravação IARA”
+Tipo: catch, escopo apenas “Gravar no banco” e “Executar próximo SQL IARA”.
+Conectar a novo function “Informar falha de gravação IARA”, uma saída, com:
+
+msg.statusCode = 500;
+msg.resposta = 'Não foi possível confirmar o registro no banco. Consulte seus pedidos antes de repetir a solicitação.';
+msg.opcoes = [{rotulo:'Menu', valor:'menu'}];
+delete msg.pedidoSemaforoIara;
+return msg;
+
+Conectar esse function a “Responder (Telegram / Web)”. Nesse último nó, trocar somente msg.statusCode = 200 por msg.statusCode = msg.statusCode || 200, no ramo Web. Isso preserva o HTTP 500 quando houver erro.
+Se ocorrer falha depois de uma gravação parcial, o aviso não afirma sucesso nem repete INSERT. Para idempotência de reenvios após queda de rede, criar futuramente uma chave de requisição UNIQUE no banco e devolver a solicitação já gravada em vez de inserir novamente.
+
+3. DECISÃO DO METRÔ SOMENTE APÓS GRAVAÇÃO
+Problema: “Atualizar + avisar cidadão” envia UPDATE, notificação e HTTP em paralelo; “Gravar decisão” tem saída desconectada.
+Manter a validação de ID/decisão e o SELECT existentes.
+
+3.1 Nó: “Atualizar + avisar cidadão” (524564e6cc6e08fe)
+Tipo: function; manter três saídas para facilitar a alteração das conexões. Substituir seu código por:
+
+const row = (msg.payload || [])[0];
+if (!row) {
+    msg.statusCode = 404; msg.payload = {erro:'Chamado de apoio não encontrado'};
+    return [null, null, msg];
+}
+if (row.ST_SOLICITACAO !== 'PENDENTE') {
+    msg.statusCode = 409; msg.payload = {erro:'Chamado já decidido'};
+    return [null, null, msg];
+}
+msg.registroDecisaoIara = row;
+const q = v => v ? "'" + String(v).replace(/'/g,"''") + "'" : 'NULL';
+msg.topic = 'UPDATE TB_LOG_SOLICITACAO SET ST_SOLICITACAO=' + q(msg.decisao) +
+    ', DS_FUNCIONARIO=' + q(msg.funcionario) + ", DH_DECISAO=datetime('now','localtime')" +
+    ' WHERE ID_SOLICITACAO=' + Number(msg.chamadoId) + " AND ST_SOLICITACAO='PENDENTE'" +
+    ' RETURNING ID_SOLICITACAO AS id, ST_SOLICITACAO AS status';
+return [msg, null, null];
+
+3.2 Novo nó: “Confirmar decisão IARA”
+Tipo: function, duas saídas. Código:
+
+const gravado = (msg.payload || [])[0];
+if (!gravado) {
+    msg.statusCode = 409; msg.payload = {erro:'Decisão não gravada ou chamado já decidido'};
+    return [null, msg];
+}
+const row = msg.registroDecisaoIara;
+const aviso = {
+    canal: String(row.DS_CANAL).toLowerCase(), sessao: row.DS_CANAL_ID,
+    chatId: Number(row.DS_CANAL_ID), ehAudio: true,
+    resposta: gravado.status === 'APROVADO'
+        ? 'Seu pedido de apoio foi aprovado. Funcionário: ' + (msg.funcionario || 'Não informado') +
+          '. Estação: ' + row.NM_ESTACAO + '. Ponto: ' + (row.DS_PONTO_ENCONTRO || 'Não informado') + '.'
+        : 'Seu pedido de apoio na estação ' + row.NM_ESTACAO + ' foi recusado.',
+    opcoes: [{rotulo:'Menu',valor:'menu'}]
+};
+msg.statusCode = 200;
+msg.payload = {ok:true,id:gravado.id,status:gravado.status};
+return [aviso, msg];
+
+Conexões:
+- “Atualizar + avisar cidadão” saída 1 -> “Gravar decisão” (6d43a65f6a7438fa), preservando msg.req e msg.res.
+- Desconectar saída 2 antiga do nó “Atualizar + avisar cidadão”.
+- Manter saída 3 -> resposta HTTP existente (58b2baaa7cf6bf19), para erros de validação.
+- “Gravar decisão” -> “Confirmar decisão IARA”.
+- “Confirmar decisão IARA” saída 1 -> “Responder (Telegram / Web)”.
+- “Confirmar decisão IARA” saída 2 -> resposta HTTP existente.
+- Adicionar Catch com escopo “Gravar decisão” -> function “Falha na decisão IARA” -> resposta HTTP, com:
+
+msg.statusCode = 500;
+msg.payload = {erro:'Não foi possível confirmar a decisão no banco'};
+return msg;
+
+Etapas de chegada, início e conclusão não existem no endpoint atual. O front-end não as altera localmente em pedidos remotos. Para adicioná-las, definir estados e transições no banco, validar o vínculo do funcionário no servidor, criar uma rota autenticada para cada transição e devolver a etapa gravada antes da notificação. Nenhum desses estados foi inventado nesta integração.
+
+4. CONSULTA INDIVIDUAL DO CIDADÃO
+O fluxo fornecido não filtra /api/chamados por session. Não usar /api/chamados?session=...: esse parâmetro seria ignorado e retornaria dados de outras pessoas.
+
+4.1 Novo nó: “GET /api/meus-chamados”
+Tipo: http in; método GET; URL /api/meus-chamados.
+Conectar a novo function “Consultar pedidos da sessão IARA”, duas saídas, com:
+
+const sessao = String((msg.req.query || {}).session || '');
+if (!/^[a-zA-Z0-9_-]{16,64}$/.test(sessao)) {
+    msg.statusCode = 400; msg.payload = {erro:'Sessão inválida'};
+    return [null,msg];
+}
+msg.sessaoConsultaIara = sessao;
+msg.topic = `SELECT l.ID_SOLICITACAO AS id, l.TP_PEDIDO AS tipo,
+ l.ST_SOLICITACAO AS status, l.DS_PONTO_ENCONTRO AS ponto_encontro,
+ l.DS_DETALHE AS descricao, l.DS_LOCAL_LIVRE AS local_livre,
+ l.NR_TEMPO_RESTANTE AS tempo_restante, l.NR_TEMPO_CONCEDIDO AS tempo_concedido,
+ l.DH_SOLICITACAO AS data_hora, l.DH_DECISAO AS data_decisao,
+ l.DS_FUNCIONARIO AS funcionario, c.NM_CIDADAO AS cidadao,
+ e.NM_ESTACAO AS estacao,
+ x.NM_LOGRADOURO_1 || ' x ' || x.NM_LOGRADOURO_2 AS cruzamento
+ FROM TB_LOG_SOLICITACAO l
+ JOIN TB_CIDADAO c ON c.ID_CIDADAO=l.ID_CIDADAO
+ LEFT JOIN TB_ESTACAO e ON e.ID_ESTACAO=l.ID_ESTACAO
+ LEFT JOIN TB_CRUZAMENTO x ON x.ID_CRUZAMENTO=l.ID_CRUZAMENTO
+ WHERE c.DS_CANAL='WEB' AND c.DS_CANAL_ID='` + sessao + `'
+ ORDER BY l.DH_SOLICITACAO DESC, l.ID_SOLICITACAO DESC`;
+return [msg,null];
+
+Saída 1 -> novo SQLite “Consultar pedidos individuais IARA”, no mesmo banco, msg.topic.
+SQLite -> novo function “Responder pedidos individuais IARA”, uma saída:
+
+msg.statusCode = 200;
+msg.payload = {session:msg.sessaoConsultaIara, chamados:Array.isArray(msg.payload) ? msg.payload : []};
+msg.headers = {'Cache-Control':'no-store'};
+return msg;
+
+Esse function e a saída 2 de validação -> resposta HTTP existente.
+Adicionar Catch do SQLite -> function HTTP 500 equivalente ao passo 3.
+Depois de implantar e testar a rota, alterar somente em js/integracao.js:
+rotaPedidosCidadao: '/api/meus-chamados'
+O front-end então consulta essa rota imediatamente e a cada três segundos.
+O protocolo é derivado do mesmo ID original e ano do banco em todas as telas; não criar um segundo contador de protocolos por página.
+
+Privacidade: a sessão aleatória funciona apenas como uma capacidade local da demonstração. Não publicá-la, não registrar a URL completa em logs compartilhados e não usar IDs previsíveis de cidadãos. Uma sessão digitada na URL não substitui autenticação de produção. Antes de expor esse endpoint em rede, o middleware autenticado deve obter o cidadão da sessão de servidor e rejeitar qualquer session que não lhe pertença. As sessões locais do front-end não comprovam identidade no servidor.
+
+5. NOTIFICAÇÕES
+A rota GET /api/chat/poll atual é destrutiva: lê e remove as mensagens da caixa_web. O front-end usa Web Locks para manter apenas uma aba consumindo cada sessão e não sobrepor consultas; a outra aba assume quando a primeira é fechada. Usar localhost ou HTTPS em navegador com Web Locks.
+Não configurar outro consumidor externo da mesma session. As notificações podem se perder se a conexão cair depois de o servidor remover a caixa. Garantia de entrega exigirá IDs de notificação e uma rota de confirmação de leitura; isso não existe no fluxo recebido. A listagem individual do passo 4 permanece a fonte de acompanhamento mesmo se uma notificação for perdida.
+
+6. TRAVESSIA: DIVERGÊNCIA ENTRE AS REGRAS
+No JSON recebido, o núcleo define TEMPO_PADRAO=15 e TEMPO_PCD_IDOSO=28; isto representa duração total da travessia, com diferença de 13 s para perfis, e não um campo de extensão solicitado pelo usuário. O núcleo aceita quando o verde dos carros tem mais de 8 s; caso contrário registra RECUSADA e manda pedir novamente.
+O front-end local tem controlador próprio, adicional explícito de 0 a 15 s e possibilidade de reservar outro ciclo. O fluxo recebido não contém confirmação de abertura, fim ou reserva do próximo ciclo. Portanto, o painel integrado apresenta ACEITA/RECUSADA e os tempos gravados, sem marcar uma travessia como aberta ou concluída.
+Não limitar NR_TEMPO_CONCEDIDO a 15: isso confundiria duração total com extensão.
+Para compatibilizar uma extensão explícita, modificar a função tempoDoPerfil no mesmo núcleo e a função travessia somente depois de definir de onde vem o adicional. A fórmula deverá ser TEMPO_BASE + Math.min(15, Math.max(0, adicional)), com números inteiros validados. A regra atual de perfis, 15/28, já mantém uma diferença de 13 s, mas não oferece escolha de 0 a 15.
+Aguardar o próximo ciclo ainda NÃO é uma funcionalidade do backend. Implementá-la exige um estado de reserva, timestamps de abertura/fim e confirmação do simulador. Não basta trocar a mensagem “RECUSADA” por “Aguardando”. O simulador Python não foi fornecido; não há como fornecer um encaixe fiel de callbacks sem esse contrato. Preservamos a simulação local e registramos essa dependência, sem criar estados fictícios.
+No núcleo, mudar o texto de autorização para deixar explícito que é uma simulação acadêmica e que a resposta do bot não autoriza atravessar uma via real.
+
+7. FORMULÁRIOS: ROTA ESTRUTURADA A CRIAR
+Nenhum POST /api/chamados existe no fluxo fornecido. Os formulários continuam locais; o chat real não depende desta etapa.
+Para criar uma rota de registro sem interpretar mensagens, definir primeiro no Node-RED o contrato:
+- tipo: TRAVESSIA, APOIO_METRO ou ZELADORIA;
+- session: sessão WEB do cidadão;
+- idRequisicao: UUID estável por tentativa, para evitar duplicação em reenvio;
+- metro: estacao_id do catálogo do servidor, ponto_encontro e descricao;
+- zeladoria: local_livre e descricao;
+- travessia: cruzamento_id e adicional de 0 a 15, com decisão exclusiva do controlador;
+- nunca CPF, RG, PIN ou documentos.
+Conexão necessária: http in “POST /api/chamados” -> function “Validar pedido estruturado IARA” -> consulta dos IDs de estação/cruzamento no SQLite -> function de regras do serviço -> SQLite de INSERT com RETURNING -> function de resposta {ok:true,chamado:{...campos da consulta individual...}} -> http response.
+A gravação deve usar o cidadão autenticado, validar IDs existentes e aplicar idempotência; não aceitar nomes de linha ou instituição enviados pelo navegador como permissão. A rota administrativa de decisão não serve para registrar novos pedidos.
+Para esta etapa não há código de backend acrescentado ao repositório nem uma rota fictícia habilitada no front-end. Como a travessia externa e a autenticação ainda não têm contrato de reserva/identidade, ativar essa rota agora com uma cópia do simulador local produziria duas fontes de verdade. Primeiro concluir os passos 2 a 6, validar o contrato externo e então adaptar os três submits do app.js para essa rota real.
+
+7.1 CÓDIGO OPCIONAL DA ROTA ESTRUTURADA PARA METRÔ E ZELADORIA
+Aplicar somente após os passos de confirmação de gravação e proteção das rotas. Este trecho não implementa reserva de ciclo de travessia. Para TRAVESSIA retorna 501 até existir o contrato do controlador; os formulários atuais continuam locais.
+
+SQL indispensável para idempotência, executar UMA VEZ em um Inject -> Function -> SQLite do banco existente, com cada instrução em uma execução separada. Se a coluna já existir, não executar novamente o ALTER:
+ALTER TABLE TB_LOG_SOLICITACAO ADD COLUMN DS_REQUISICAO_WEB TEXT;
+CREATE UNIQUE INDEX IF NOT EXISTS UX_LOG_REQUISICAO_WEB ON TB_LOG_SOLICITACAO(DS_REQUISICAO_WEB);
+
+Novo nó “POST /api/chamados”: http in, POST, URL /api/chamados.
+Conectar ao novo function “Validar formulário IARA”, duas saídas, com:
+
+const b = msg.req.body || {};
+const falhar = (codigo,texto) => { msg.statusCode=codigo; msg.payload={erro:texto}; return [null,msg]; };
+if (!/^[a-zA-Z0-9_-]{16,64}$/.test(b.session || '')) return falhar(400,'Sessão inválida');
+if (!/^[a-f0-9-]{36}$/i.test(b.idRequisicao || '')) return falhar(400,'idRequisicao obrigatório');
+if (b.tipo === 'TRAVESSIA') return falhar(501,'Integração com o controlador de ciclos ainda não configurada');
+if (!['APOIO_METRO','ZELADORIA'].includes(b.tipo)) return falhar(400,'Tipo inválido');
+const descricao = String(b.descricao || '').trim();
+if (!descricao || descricao.length > 600) return falhar(400,'Informe uma descrição de até 600 caracteres');
+const ponto = String(b.ponto_encontro || '').trim();
+const local = String(b.local_livre || '').trim();
+const estacao = Number(b.estacao_id);
+if (b.tipo === 'APOIO_METRO' && (!ponto || ponto.length>120 || !Number.isInteger(estacao) || !(global.get('estacoes') || []).some(e=>e.id===estacao))) return falhar(400,'Estação ou encontro inválido');
+if (b.tipo === 'ZELADORIA' && (!local || local.length>200)) return falhar(400,'Local inválido');
+const q = v => v === null ? 'NULL' : "'" + String(v).replace(/'/g,"''") + "'";
+const dono = "SELECT ID_CIDADAO FROM TB_CIDADAO WHERE DS_CANAL='WEB' AND DS_CANAL_ID=" + q(b.session);
+msg.formularioIara = true;
+msg.sessaoFormularioIara = b.session;
+msg.canal = 'web'; msg.sessao = b.session; msg.resposta = ''; msg.opcoes = [];
+msg.sqlsIara = [
+ "INSERT OR IGNORE INTO TB_CIDADAO (NM_CIDADAO,DS_CANAL,DS_CANAL_ID,DS_PERFIL) VALUES ('Cidadão WEB','WEB'," + q(b.session) + ",'nenhum')",
+ 'INSERT INTO TB_LOG_SOLICITACAO (ID_CIDADAO,TP_PEDIDO,ID_ESTACAO,DS_PONTO_ENCONTRO,DS_LOCAL_LIVRE,DS_DETALHE,ST_SOLICITACAO,DS_REQUISICAO_WEB) ' +
+ 'SELECT ID_CIDADAO,' + q(b.tipo) + ',' + (b.tipo==='APOIO_METRO' ? estacao : 'NULL') + ',' +
+ q(b.tipo==='APOIO_METRO' ? ponto : null) + ',' + q(b.tipo==='ZELADORIA' ? local : null) + ',' + q(descricao) + ',' +
+ q(b.tipo==='APOIO_METRO' ? 'PENDENTE' : 'REGISTRADA') + ',' + q(b.idRequisicao) +
+ " FROM TB_CIDADAO WHERE DS_CANAL='WEB' AND DS_CANAL_ID=" + q(b.session) +
+ ' ON CONFLICT(DS_REQUISICAO_WEB) DO UPDATE SET DS_REQUISICAO_WEB=excluded.DS_REQUISICAO_WEB ' +
+ 'WHERE TB_LOG_SOLICITACAO.ID_CIDADAO=(' + dono + ') ' +
+ 'RETURNING ID_SOLICITACAO AS id,TP_PEDIDO AS tipo,DH_SOLICITACAO AS data_hora'
+];
+msg.indiceSqlIara = 0;
+return [msg,null];
+
+Saída 1 -> “Executar próximo SQL IARA” do passo 2; saída 2 -> resposta HTTP.
+Para separar a resposta do formulário da conversa, adicionar nó switch “Origem da resposta IARA”, propriedade msg.formularioIara, saída 1 true, saída 2 otherwise. Colocá-lo entre a saída 2 do executor SQL e “Responder (Telegram / Web)”. Saída 2 otherwise mantém o responder original; saída 1 true vai ao function abaixo.
+
+Novo function “Consultar formulário gravado IARA”, uma saída:
+
+const sessao = msg.sessaoFormularioIara;
+if (!msg.registroIara || !/^[a-zA-Z0-9_-]{16,64}$/.test(sessao || '')) { node.error('Registro não confirmado',msg); return null; }
+msg.topic = `SELECT l.ID_SOLICITACAO AS id,l.TP_PEDIDO AS tipo,l.ST_SOLICITACAO AS status,
+ l.DS_PONTO_ENCONTRO AS ponto_encontro,l.DS_DETALHE AS descricao,l.DS_LOCAL_LIVRE AS local_livre,
+ l.DH_SOLICITACAO AS data_hora,l.DH_DECISAO AS data_decisao,l.DS_FUNCIONARIO AS funcionario,
+ c.NM_CIDADAO AS cidadao,e.NM_ESTACAO AS estacao
+ FROM TB_LOG_SOLICITACAO l JOIN TB_CIDADAO c ON c.ID_CIDADAO=l.ID_CIDADAO
+ LEFT JOIN TB_ESTACAO e ON e.ID_ESTACAO=l.ID_ESTACAO
+ WHERE l.ID_SOLICITACAO=` + Number(msg.registroIara.id) + " AND c.DS_CANAL='WEB' AND c.DS_CANAL_ID='" + sessao + "'";
+return msg;
+
+Conectar ao novo SQLite “Ler formulário gravado IARA” (banco existente, msg.topic), depois ao novo function “Responder formulário IARA”, uma saída:
+
+const chamado = (msg.payload || [])[0];
+msg.statusCode = chamado ? 200 : 500;
+msg.payload = chamado ? {ok:true,chamado:chamado} : {erro:'Gravação não confirmada'};
+return msg;
+
+Conectar à resposta HTTP. Incluir esses novos nós no Catch de falha de gravação; para mensagens com msg.formularioIara, responder HTTP 500 com {erro:'Gravação não confirmada'}, em vez de enviá-las ao responder de conversa. Pode usar um switch idêntico ao “Origem da resposta IARA” na saída do Catch.
+Não recriar índices ou executar migrações pelo navegador. Esses comandos ficam no ambiente externo.
+A etapa seguinte, após essa rota existir e ser validada, é trocar os submits de apoio e zeladoria em app.js por fetch estruturado, usando a mesma session de buscarSessaoIara(), um idRequisicao mantido para reenvios da mesma tentativa e o chamado retornado como resultado. Não ativamos essas chamadas antes de existir uma rota real.
+
+7.2 CONSULTA ADMINISTRATIVA SEM LIMITE SILENCIOSO
+O nó “Montar consulta” de ID 39899e075722d1bb termina o SQL com LIMIT 200. Isso restringe a quantidade que os painéis conseguem receber. Para mostrar todos os registros na demonstração local, substituir apenas:
+' ORDER BY l.DH_SOLICITACAO DESC LIMIT 200'
+por:
+' ORDER BY l.DH_SOLICITACAO DESC, l.ID_SOLICITACAO DESC'
+Para volume de produção, será necessária paginação autenticada, em vez de transferir toda a tabela a cada 3 segundos.
+
+8. PERMISSÕES E EXPOSIÇÃO
+No fluxo recebido, /api/chamados e /api/chamados/:id/decisao não verificam o usuário autenticado nem o vínculo de estação. As verificações do front-end organizam a interface, mas não protegem a API.
+Manter Node-RED acessível somente em loopback durante a demonstração, sem túnel público ou redirecionamento de porta. Em settings.js, revisar uiHost: '127.0.0.1'.
+Antes de acesso por rede, configurar HTTPS e autenticação das rotas HTTP por httpNodeMiddleware/httpNodeAuth, conforme a documentação oficial. Não inserir senha de API, token Groq ou Telegram no JavaScript do site.
+No middleware de produção, associar a conta autenticada à função, instituição, linha e estação em dados do servidor. O GET deve filtrar esses vínculos em SQL; o POST deve validar novamente o mesmo vínculo antes do UPDATE. A sessão administrativa atual do protótipo é local e não pode ser usada como prova de identidade.
+A consulta antiga não devolve linha/instituição. A interface valida estação e catálogo da linha do operador sem atribuir linha fictícia ao pedido. Para distinguir instituições em estações compartilhadas, acrescentar à consulta os campos orgao e linha a partir dos relacionamentos reais do seu banco. O schema desses relacionamentos não consta no JSON, portanto não foi inventado um JOIN ou uma coluna.
+Se o servidor passar a usar cookie de sessão: configurar CORS com origem exata e Access-Control-Allow-Credentials: true; somente então mudar configuracaoIara.credenciais para 'include'. A API local atual não anuncia essa permissão; 'omit' permite o chat atual sem cookies.
+
+9. VALIDAÇÃO APÓS CADA ALTERAÇÃO
+Chat: enviar menu, selecionar uma opção e conferir continuidade da session.
+Gravação: conferir registro no GET; simular erro de SQLite e confirmar que o cidadão não recebe sucesso.
+Metrô: aprovar/recusar somente um pedido fictício de teste; conferir status no GET e notificação no poll. Clicar novamente deve receber 409, sem segunda notificação.
+Privacidade: criar duas sessões fictícias; /api/meus-chamados deve retornar somente os pedidos da sessão correta. Parâmetro inválido deve falhar. Em produção, sessão de outro usuário deve receber 403 pelo middleware.
+Painéis: verificar atualização em aproximadamente 3 s; desligar Node-RED e conferir que os últimos registros continuam visíveis.
+Travessia: comparar tempos persistidos com os do controlador; não apresentar tempo_concedido como adicional.
+Formulários: manter a identificação de simulação local até existir uma rota estruturada testada.
+
+Referências oficiais consultadas:
+https://www.sqlite.org/lang_returning.html — suporte e comportamento de RETURNING.
+https://nodered.org/docs/user-guide/runtime/securing-node-red — autenticação e middleware HTTP.
+https://nodered.org/docs/user-guide/runtime/configuration — configuração do runtime.

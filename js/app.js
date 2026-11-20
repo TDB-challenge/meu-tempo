@@ -912,7 +912,7 @@ function prepararPedidos() {
 // filtro indica todas, andamento ou finalizadas
 function apresentarPedidosApp(filtro) {
   // recupera os pedidos do cidadão já ordenados pela data mais recente
-  const pedidos = buscarPedidosCidadao();
+  const pedidos = buscarPedidosCidadao().concat(buscarPedidosIndividuaisIara()).sort(function (a, b) { return Date.parse(b.dataSolicitacao) - Date.parse(a.dataSolicitacao); });
   const lista = document.getElementById('lista-solicitacoes');
   // preserva o acompanhamento aberto e o foco durante atualizações de situação
   const abertos = lista.querySelectorAll('.card-solicitacao[open]');
@@ -1001,7 +1001,8 @@ function apresentarPedidosApp(filtro) {
       const detalhes = document.createElement('p');
       detalhes.className = 'protocolo-solicitacao';
       detalhes.textContent = pedido.tipo;
-      if (pedido.servico === 'metro') detalhes.textContent = pedido.tipo + ' · ' + pedido.linha + ' · ' + pedido.estacao;
+      if (pedido.servico === 'metro') detalhes.textContent = pedido.tipo + (pedido.linha ? ' · ' + pedido.linha : '') + ' · ' + pedido.estacao;
+      else if (pedido.servico === 'travessia' && pedido.fonte === 'node-red') detalhes.textContent = 'Tempo restante no registro: ' + (pedido.tempoRestante ?? 'Não informado') + ' s. Tempo concedido: ' + (pedido.tempoConcedido ?? 'Não informado') + ' s.';
       else if (pedido.servico === 'travessia') detalhes.textContent = 'Adicional solicitado: ' + (pedido.tempoAdicionalSolicitado || 0) + ' s. Concedido: ' + (pedido.tempoAdicionalConcedido || 0) + ' s.';
       else detalhes.textContent = (pedido.categoria || 'Relato') + ' · ' + (pedido.descricao || '').slice(0, 180);
       historico.appendChild(detalhes);
@@ -1061,3 +1062,51 @@ function apresentarPedidosApp(filtro) {
 
 // inicia após os scripts de dados e acessibilidade compartilhados
 iniciarApp();
+
+// =================================================================
+// acompanhamento individual dos registros da iara
+// =================================================================
+
+let consultandoPedidosIara = false;
+let temporizadorPedidosIara = null;
+
+// consulta somente a rota individual habilitada depois da configuração externa
+async function atualizarPedidosIndividuaisIara() {
+  if (consultandoPedidosIara) return;
+  const lista = document.getElementById('lista-solicitacoes');
+  if (!lista) return;
+  consultandoPedidosIara = true;
+  let aviso = document.getElementById('aviso-pedidos-iara');
+  if (!aviso) {
+    aviso = document.createElement('p');
+    aviso.id = 'aviso-pedidos-iara';
+    aviso.setAttribute('role', 'status');
+    lista.before(aviso);
+  }
+  try {
+    await consultarPedidosCidadaoIara();
+    if (!configuracaoIara.rotaPedidosCidadao) {
+      aviso.textContent = 'Os pedidos da IARA estarão disponíveis aqui após a conexão do acompanhamento individual.';
+      return;
+    }
+    apresentarPedidosApp(lista.getAttribute('data-filtro'));
+    aviso.textContent = '';
+  } catch (erro) {
+    aviso.textContent = 'Não foi possível atualizar os pedidos da IARA. Os últimos registros recebidos foram preservados.';
+  } finally {
+    consultandoPedidosIara = false;
+  }
+}
+
+// mantém a consulta individual independente do consumo de notificações do chat
+function iniciarPedidosIndividuaisIara() {
+  if (!document.getElementById('lista-solicitacoes') || temporizadorPedidosIara !== null) return;
+  atualizarPedidosIndividuaisIara();
+  temporizadorPedidosIara = setInterval(atualizarPedidosIndividuaisIara, configuracaoIara.intervalo);
+}
+
+if (document.getElementById('lista-solicitacoes')) {
+  iniciarPedidosIndividuaisIara();
+  window.addEventListener('pagehide', function () { clearInterval(temporizadorPedidosIara); temporizadorPedidosIara = null; });
+  window.addEventListener('pageshow', function (evento) { if (evento.persisted) iniciarPedidosIndividuaisIara(); });
+}
