@@ -202,7 +202,7 @@
                 <div class="mensagem mensagem-iara">
                   <p>
                     Olá! Sou a IARA, sua assistente de acessibilidade urbana.
-                    O webchat será configurado futuramente. Consulte os serviços pelos atalhos abaixo.
+                    Conectando ao atendimento…
                   </p>
                 </div>
               </div>
@@ -250,6 +250,11 @@
               <p class="aviso-chat" id="aviso-chat" role="status" hidden></p>
             </div>
 
+            <!-- o uso de nome e categoria começa desmarcado e depende de autorização -->
+            <label class="orientacao-chat">
+              <input type="checkbox" id="autorizar-perfil-iara" />
+              Autorizo usar meu nome e minha categoria de atendimento nesta conversa.
+            </label>
             <!-- Área utilizada para enviar mensagens -->
             <div class="area-envio">
               <form class="formulario-chat" id="formulario-chat" method="post">
@@ -297,8 +302,7 @@
               </form>
 
               <p class="orientacao-chat">
-                A conversa e os recursos de voz dependem da futura configuração do webchat. Os atalhos abrem os serviços em
-                texto.
+                Converse por texto e escolha as opções da IARA. A leitura das respostas depende do seu navegador. Não envie CPF, RG, PIN ou documentos pela conversa.
               </p>
             </div>
           </section>
@@ -357,6 +361,8 @@
     <!-- Janela de ajuda do aplicativo -->
 
     <script src="../../js/dados.js" defer></script>
+    <!-- compartilha endereço da api, sessão da iara e registros recebidos; depende de dados.js -->
+    <script src="../../js/integracao.js" defer></script>
     <script src="../../js/script.js" defer></script>
 
     <!-- Funcionalidades gerais, navegação, acessibilidade, preferências, formulários, solicitações e regras dos serviços. -->

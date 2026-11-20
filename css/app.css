@@ -4890,3 +4890,15 @@ button {
         min-height: 180px; /* mantém a quantidade em destaque no celular */
     }
 }
+
+/* mantém os balões enviados alinhados à direita e respeita as cores dos temas. */
+.app .mensagem-usuario {
+    align-self: flex-end; /* identifica a mensagem enviada pelo cidadão */
+    background-color: var(--app-iara); /* reutiliza a paleta acessível */
+    color: var(--texto-principal); /* acompanha a preferência de contraste */
+}
+
+/* preserva as quebras de linha das respostas reais do atendimento. */
+.app .mensagem p {
+    white-space: pre-wrap; /* apresenta menus e instruções em várias linhas */
+}
