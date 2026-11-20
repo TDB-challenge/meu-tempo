@@ -11,8 +11,54 @@
 */
 
 // =====================================================
-// 1. menu mobile (hambúrguer)
+// 1. menu mobile (hambúrguer) e navegação inferior do site
 // =====================================================
+// guarda o endereço deste arquivo para montar os caminhos em qualquer pasta
+const raizSite = document.currentScript ? new URL("../", document.currentScript.src).href : "";
+
+// cria a barra inferior do site no celular, no mesmo formato da barra do app
+function criarNavegacaoSiteCelular() {
+  // o app e os painéis administrativos já possuem a sua própria navegação
+  if (!raizSite || !document.querySelector(".cabecalho") || document.body.classList.contains("app") || document.body.classList.contains("pagina-admin")) return;
+  // identifica a página atual pelo nome do arquivo
+  const pagina = location.pathname.split("/").pop() || "index.html";
+  const naPastaAdmin = location.pathname.indexOf("/admin/") !== -1;
+  const itens = [
+    {texto: "Início", href: "paginas/index.html", icone: "casa.png", paginas: ["index.html"]},
+    {texto: "Solução", href: "paginas/solucao.html", icone: "piso-tatil.svg", paginas: ["solucao.html", "solucao01.html", "solucao02.html"]},
+    {texto: "Acessível", href: "paginas/acessibilidade.html", icone: "acessibilidade.png", paginas: ["acessibilidade.html"]},
+    {texto: "Ajuda", href: "paginas/faq.html", icone: "envelope.png", paginas: ["faq.html", "contato.html"]},
+    {texto: "Entrar", href: "paginas/login.html", icone: "usuario.png", paginas: ["login.html", "cadastro.html", "recuperar-senha.html"]}
+  ];
+  const nav = document.createElement("nav");
+  nav.className = "nav-site-celular";
+  nav.setAttribute("aria-label", "Navegação principal no celular");
+  const lista = document.createElement("ul");
+  for (let i = 0; i < itens.length; i++) {
+    const item = document.createElement("li");
+    const link = document.createElement("a");
+    link.href = raizSite + itens[i].href;
+    // as páginas de acesso administrativo também destacam a opção entrar
+    if (itens[i].paginas.indexOf(pagina) !== -1 && (!naPastaAdmin || itens[i].texto === "Entrar")) link.setAttribute("aria-current", "page");
+    if (naPastaAdmin && itens[i].texto === "Entrar") link.setAttribute("aria-current", "page");
+    if (itens[i].texto === "Entrar") link.classList.add("nav-site-entrar");
+    const icone = document.createElement("img");
+    icone.src = raizSite + "assets/icones/" + itens[i].icone;
+    icone.alt = "";
+    icone.className = "icone";
+    const texto = document.createElement("span");
+    texto.textContent = itens[i].texto;
+    link.appendChild(icone);
+    link.appendChild(texto);
+    item.appendChild(link);
+    lista.appendChild(item);
+  }
+  nav.appendChild(lista);
+  document.body.appendChild(nav);
+  document.body.classList.add("com-nav-site-celular");
+}
+
+criarNavegacaoSiteCelular();
 const btnMenu = document.getElementById("btn-menu");
 const menu = document.getElementById("menu-navegacao");
 
