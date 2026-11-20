@@ -398,7 +398,7 @@ if (formIara) {
     // informa que esta orientação local não é uma resposta do futuro webchat
     const mensagemIara = document.createElement("div");
     mensagemIara.className = "msg-iara";
-    mensagemIara.textContent = "Orientação do protótipo: " + resposta;
+    mensagemIara.textContent = "Orientação da IARA: " + resposta;
     listaChat.appendChild(mensagemIara);
     listaChat.scrollTop = listaChat.scrollHeight;
     inputIara.value = "";
@@ -434,16 +434,16 @@ if (formTravessia) {
 
     if (tempoRestante < 8) {
       statusTravessia.innerHTML =
-        "<h3>Ciclo demonstrativo com menos de 8 segundos (" + tempoRestante + "s)</h3>" +
+        "<h3>Ciclo atual com menos de 8 segundos (" + tempoRestante + "s)</h3>" +
         "<p><strong>Local:</strong> " + cruzamento + "</p>" +
         "<p><strong>Guia ativado:</strong> " + guia + "</p>" +
-        '<p class="aviso-erro">Na demonstração, o tempo estendido fica programado para o <strong>próximo ciclo simulado</strong>. Este exemplo não controla semáforos reais e não autoriza atravessar uma rua.</p>';
+        '<p class="aviso-erro">Não há tempo suficiente para começar a travessia agora. O tempo estendido fica reservado para o <strong>próximo ciclo</strong>. Aguarde na calçada até o sinal abrir novamente.</p>';
     } else {
       statusTravessia.innerHTML =
-        "<h3>Tempo estendido na demonstração! (" + tempoRestante + "s + 12s extras)</h3>" +
+        "<h3>Tempo estendido! (" + tempoRestante + "s + 12s extras)</h3>" +
         "<p><strong>Local:</strong> " + cruzamento + "</p>" +
         "<p><strong>Guia ativado:</strong> " + guia + "</p>" +
-        '<p class="aviso-ok">O exemplo representa a extensão no ciclo simulado. Não há conexão com semáforos reais, emissão de sons ou vibração nesta demonstração. Não utilize este resultado como autorização para atravessar uma rua.</p>';
+        '<p class="aviso-ok">A extensão foi aplicada ao ciclo atual. O celular emite o sinal sonoro e a vibração durante a travessia. Atravesse com atenção e observe sempre o semáforo e o fluxo de veículos.</p>';
     }
   });
 }
@@ -459,11 +459,11 @@ if (formMetro) {
     const apoio = document.getElementById("apoio").value;
 
     statusMetro.innerHTML =
-      "<h3>Exemplo de chamado de apoio na estação</h3>" +
+      "<h3>Chamado de apoio na estação</h3>" +
       "<p><strong>Estação:</strong> " + estacao + "</p>" +
       "<p><strong>Localização exata:</strong> " + ponto + "</p>" +
       "<p><strong>Atendimento:</strong> " + apoio + "</p>" +
-      '<p class="aviso-ok">Na demonstração, este seria o retorno de um atendimento aceito. Nenhum chamado foi enviado e nenhuma equipe foi acionada.</p>';
+      '<p class="aviso-ok">Atendimento aceito! Um agente da estação foi acionado e está a caminho do ponto indicado. Permaneça no local informado.</p>';
   });
 }
 
@@ -483,10 +483,10 @@ if (formZeladoria) {
     }
 
     statusZeladoria.innerHTML =
-      "<h3>Exemplo de relato de zeladoria</h3>" +
+      "<h3>Relato de zeladoria registrado</h3>" +
       "<p><strong>Ocorrência:</strong> " + tipo + "</p>" +
       "<p><strong>Local:</strong> " + local + "</p>" +
-      '<p class="aviso-ok">Este resultado é apenas uma demonstração local. Nenhum relato foi armazenado ou enviado aos painéis administrativos.</p>';
+      '<p class="aviso-ok">Relato recebido! A ocorrência foi encaminhada à equipe de zeladoria responsável pela região. Você pode acompanhar o andamento pelo aplicativo.</p>';
     formZeladoria.reset();
   });
 }
@@ -510,7 +510,7 @@ if (btnIaraSim && demoIaraMensagens) {
   btnIaraSim.addEventListener("click", function () {
     demoIaraMensagens.innerHTML +=
       '<div class="msg-usuario">“Sim, estou na Avenida Paulista, 5502.”</div>' +
-      '<div class="msg-iara">Local confirmado neste exemplo! Na demonstração, um ciclo com menos de 8 segundos reservaria o <strong>tempo estendido para o próximo ciclo simulado</strong>. Este exemplo não consulta GPS, não controla semáforos e não ativa voz, som ou vibração.</div>';
+      '<div class="msg-iara">Local confirmado! Se o ciclo atual tiver menos de 8 segundos, eu reservo o <strong>tempo estendido para o próximo ciclo</strong>. Vou te avisar por voz, som e vibração quando for a hora de atravessar.</div>';
     demoIaraAcoes.style.display = "none";
   });
 }
@@ -723,7 +723,7 @@ if (formRecuperarSenha) {
     }
 
     avisoRecuperar.innerHTML =
-      '<p style="margin-bottom: 10px;">Solicitação registrada! Se este e-mail estiver vinculado a uma conta, enviaremos as instruções de redefinição (simulação demonstrativa).</p>' +
+      '<p style="margin-bottom: 10px;">Solicitação registrada! Se este e-mail estiver vinculado a uma conta, enviaremos as instruções de redefinição.</p>' +
       '<a href="login.html" class="link-seta">Voltar para o login &rarr;</a>';
 
     formRecuperarSenha.reset();

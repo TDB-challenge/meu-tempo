@@ -650,7 +650,7 @@ function atualizarContagemApp() {
   // encerra também a apresentação do contador quando o cidadão cancela antes do prazo
   if (pedidoTravessia.simulacaoEncerrada) {
     titulo = 'Tempo encerrado';
-    if (pedidoTravessia.situacao === 'Simulação encerrada pelo cidadão') titulo = 'Solicitação encerrada';
+    if (pedidoTravessia.situacao === 'Travessia encerrada pelo cidadão') titulo = 'Solicitação encerrada';
     orientacao = 'Você pode escolher outra travessia.';
     fase = 'encerrada';
     fim = Date.now();
@@ -709,7 +709,7 @@ function apresentarEtapasTravessia() {
 // encerra a simulação após solicitação do cidadão
 function encerrarTravessiaApp() {
   // impede alteração de pedidos já encerrados
-  if (pedidoTravessia) finalizarTravessiaApp('Simulação encerrada pelo cidadão');
+  if (pedidoTravessia) finalizarTravessiaApp('Travessia encerrada pelo cidadão');
 }
 
 // finaliza o pedido sem interromper a existência do ciclo automático
@@ -781,15 +781,15 @@ function alertarTravessiaApp(mensagem) {
   if (typeof falarOrientacaoAcessivel === 'function') falarOrientacaoAcessivel(mensagem + '.');
 
   // interrompe os sons anteriores e apresenta um único aviso de encerramento
-  if (mensagem === 'Simulação concluída' || mensagem === 'Simulação encerrada pelo cidadão') {
+  if (mensagem === 'Travessia concluída' || mensagem === 'Travessia encerrada pelo cidadão') {
     pararAvisosTravessia();
     // o aviso final já toca nos últimos segundos e não continua depois do zero
   }
   // emite padrões curtos conforme o evento, quando o dispositivo oferecer suporte
   if (buscarPreferenciasAcessibilidade().vibracao && navigator.vibrate) {
-    if (mensagem === 'Travessia liberada na simulação') navigator.vibrate([100, 120, 100]);
+    if (mensagem === 'Travessia liberada') navigator.vibrate([100, 120, 100]);
     else if (mensagem === 'Tempo próximo do fim') navigator.vibrate([80, 80, 80, 80, 80]);
-    else if (mensagem === 'Simulação concluída' || mensagem === 'Simulação encerrada pelo cidadão') navigator.vibrate(220);
+    else if (mensagem === 'Travessia concluída' || mensagem === 'Travessia encerrada pelo cidadão') navigator.vibrate(220);
     else navigator.vibrate(100);
   }
 }
@@ -818,7 +818,7 @@ function atualizarAvisosTravessia() {
     return;
   }
   // mantém a espera silenciosa e inicia o áudio somente na fase de travessia
-  if (pedidoTravessia.situacao !== 'Travessia liberada na simulação' && pedidoTravessia.situacao !== 'Tempo próximo do fim') {
+  if (pedidoTravessia.situacao !== 'Travessia liberada' && pedidoTravessia.situacao !== 'Tempo próximo do fim') {
     pararSonsTravessia();
     return;
   }
@@ -930,7 +930,7 @@ function apresentarPedidosApp(filtro) {
   for (let i = 0; i < pedidos.length; i++) {
     // identifica as situações encerradas que pertencem ao filtro de finalizadas
     const pedido = pedidos[i];
-    const finalizado = pedido.situacao === 'Concluído' || pedido.situacao === 'Recusado' || pedido.situacao === 'Cancelado' || pedido.situacao === 'Simulação concluída' || pedido.situacao === 'Simulação encerrada pelo cidadão';
+    const finalizado = pedido.situacao === 'Concluído' || pedido.situacao === 'Recusado' || pedido.situacao === 'Cancelado' || pedido.situacao === 'Travessia concluída' || pedido.situacao === 'Travessia encerrada pelo cidadão';
     if ((filtro !== 'filtro-andamento' || !finalizado) && (filtro !== 'filtro-finalizadas' || finalizado)) {
       // recupera o nome completo e o ícone local do serviço correspondente
       let nomeServico = 'Zeladoria urbana';

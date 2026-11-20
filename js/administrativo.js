@@ -914,7 +914,7 @@ function exibirSolicitacoesCadastro() {
       credenciais.textContent = "";
       adicionarTextoOperacional(credenciais, "strong", "Acesso aprovado", "");
       adicionarTextoOperacional(credenciais, "p", "E-mail administrativo: " + cadastro.emailAdministrativo, "admin-chamado-local");
-      adicionarTextoOperacional(credenciais, "p", "Senha demonstrativa: MeuTempo123!", "admin-chamado-local");
+      adicionarTextoOperacional(credenciais, "p", "Senha provisória: MeuTempo123!", "admin-chamado-local");
       credenciais.hidden = false;
     } else if (cadastro.status === "reprovado") {
       situacao.textContent = "Cadastro reprovado";
@@ -1353,7 +1353,7 @@ function sincronizarTransporteAdministrativo() {
   sincronizarEquipamentosCoordenacao();
   const tabelas = document.querySelectorAll("[data-pedidos-operacionais]");
   // relaciona a situação apresentada aos filtros existentes
-  const codigos = {"Pedido recebido": "aguardando", "Aprovado": "aprovado", "Funcionário a caminho": "caminho", "Em atendimento": "atendimento", "Concluído": "concluido", "Recusado": "recusado", "Em análise": "analise", "Aguardando abertura": "aguardando", "Fase de segurança": "aguardando", "Travessia liberada na simulação": "atendimento", "Tempo próximo do fim": "atendimento", "Simulação concluída": "concluido", "Simulação encerrada pelo cidadão": "concluido"};
+  const codigos = {"Pedido recebido": "aguardando", "Aprovado": "aprovado", "Funcionário a caminho": "caminho", "Em atendimento": "atendimento", "Concluído": "concluido", "Recusado": "recusado", "Em análise": "analise", "Aguardando abertura": "aguardando", "Fase de segurança": "aguardando", "Travessia liberada": "atendimento", "Tempo próximo do fim": "atendimento", "Travessia concluída": "concluido", "Travessia encerrada pelo cidadão": "concluido"};
   // percorre as tabelas da coordenação e dos relatórios
   for (let i = 0; i < tabelas.length; i++) {
     // seleciona as linhas de transporte que serão atualizadas
@@ -1552,7 +1552,7 @@ function travessiaLiberadaAplicativo(pedido) {
   if (pedido.servico !== "travessia" || !Array.isArray(pedido.etapas)) return false;
   // procura a etapa de abertura sem considerar a espera como aprovação
   for (let i = 0; i < pedido.etapas.length; i++) {
-    if (pedido.etapas[i].titulo === "Travessia liberada na simulação") return true;
+    if (pedido.etapas[i].titulo === "Travessia liberada") return true;
   }
   return false;
 }
