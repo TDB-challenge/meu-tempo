@@ -1,14 +1,26 @@
+/*
+  testes automatizados da integração, executados com node --test tests/iara.test.cjs:
+  cada test descreve o comportamento esperado e prepara seus próprios dados fictícios.
+  assert.equal confere um valor; assert.match confere um padrão; assert.rejects espera uma falha.
+  as respostas controladas pertencem somente aos testes e não são exibidas ao usuário do aplicativo.
+*/
+// usa o executor de testes que já vem com o node, sem instalar bibliotecas
 const { test } = require('node:test');
+// assert compara o resultado obtido com o resultado esperado e aponta diferenças
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const vm = require('node:vm');
 const { webcrypto } = require('node:crypto');
+// simula o armazenamento do navegador em memória para os testes não alterarem os cadastros reais
 function storage() {
+  // map associa uma chave a um valor, permitindo reproduzir getitem, setitem e removeitem
   const data = new Map();
   return {getItem: k => data.get(k) ?? null, setItem: (k,v) => data.set(k,String(v)), removeItem: k => data.delete(k)};
 }
+// prepara um contexto separado para cada teste, sem compartilhar sessão ou lista com os demais
 function ambiente() {
   let cidadao = {id:'pessoa-a', nome:'Ana', categoria:'idosa', cpf:'sigiloso', pin:'1234'};
+  // vm cria um ambiente isolado para executar o javascript do site sem abrir o navegador
   const c = vm.createContext({console, crypto:webcrypto, localStorage:storage(), sessionStorage:storage(),
     AbortController, setTimeout, clearTimeout, setInterval, clearInterval,
     buscarCidadaoConectado:()=>cidadao,
@@ -16,9 +28,11 @@ function ambiente() {
     window:{location:{hostname:'localhost'},addEventListener:()=>{}},
     document:{getElementById:()=>null}, navigator:{}});
   const file = 'js/integracao.js';
+  // carrega o código real da integração dentro do ambiente de teste
   if (fs.existsSync(file)) vm.runInContext(fs.readFileSync(file,'utf8'),c);
   return {c, trocar: valor=>{cidadao=valor;}};
 }
+// permite consultar variáveis internas do script sem acrescentar funções de teste ao código do aplicativo
 function executar(c,s) {return vm.runInContext(s,c);}
 const row = {id:42,tipo:'APOIO_METRO',status:'PENDENTE',estacao:'Consolação',ponto_encontro:'catraca',descricao:'Acompanhamento',data_hora:'2026-11-19 19:30:00',cidadao:'Ana'};
 test('sessao estavel por cidadao sem usar dados pessoais no identificador',()=>{
@@ -91,6 +105,7 @@ test('resposta nao JSON ou HTTP com erro nao vira sucesso',async()=>{
   c.fetch=async()=>({ok:false,status:500,json:async()=>({resposta:'texto'})});
   await assert.rejects(c.consultarApiIara('/api/chat'));
 });
+// representa apenas os recursos de elementos html necessários aos testes da conversa
 class Elemento {
   constructor(){this.children=[];this.listeners={};this.attributes={};this.value='';this.textContent='';this.disabled=false;this.scrollHeight=100;}
   appendChild(n){this.children.push(n);return n;}
@@ -100,6 +115,7 @@ class Elemento {
   querySelectorAll(){return this.children;}
   focus(){}
 }
+// prepara os controles fictícios do chat e executa o mesmo iara.js usado pela página
 function conversa() {
   const a=ambiente(); const elementos={};
   for(const id of ['aviso-chat','campo-mensagem','formulario-chat','ouvir-mensagem','enviar-mensagem','mensagens','sugestoes-iara','conversa-iara','autorizar-perfil-iara','sugestao-travessia','sugestao-metro','sugestao-zeladoria','sugestao-informacoes']) elementos[id]=new Elemento();
@@ -107,6 +123,7 @@ function conversa() {
   a.c.buscarPreferenciasAcessibilidade=()=>({vozIara:false});
   a.c.salvarPreferenciasAcessibilidade=()=>{};
   a.c.setInterval=()=>1; a.c.clearInterval=()=>{};
+  // neste teste automatizado a resposta é controlada; o teste api-local.cjs verifica separadamente o servidor real
   a.c.consultarApiIara=async()=>({resposta:'Menu real',opcoes:[{rotulo:'Apoio',valor:'2'}]});
   vm.runInContext(fs.readFileSync('js/iara.js','utf8'),a.c);
   return {...a,elementos};
@@ -114,6 +131,7 @@ function conversa() {
 test('chat usa resposta real e envia valor da opcao sem redirecionar',async()=>{
   const {c,elementos}=conversa();
   assert.equal(typeof c.enviarMensagemIara,'function');
+  // aguarda a conclusão das tarefas assíncronas já iniciadas antes de conferir os controles
   await new Promise(resolve=>setImmediate(resolve));
   const opcoes=elementos['sugestoes-iara']; assert.equal(opcoes.children.at(-1).textContent,'Apoio');
   let corpo;
@@ -124,6 +142,7 @@ test('chat usa resposta real e envia valor da opcao sem redirecionar',async()=>{
 });
 test('chat bloqueia envio duplicado enquanto aguarda e recupera controles apos erro',async()=>{
   const {c,elementos}=conversa(); assert.equal(typeof c.enviarMensagemIara,'function');
+  // aguarda a conclusão das tarefas assíncronas já iniciadas antes de conferir os controles
   await new Promise(resolve=>setImmediate(resolve));
   let liberar,numero=0;
   c.consultarApiIara=()=>{numero++;return new Promise((resolve,reject)=>{liberar=reject;});};
@@ -136,11 +155,13 @@ test('chat bloqueia envio duplicado enquanto aguarda e recupera controles apos e
 });
 test('chat apresenta HTML externo como texto e nao como marcacao executavel',async()=>{
   const {c,elementos}=conversa(); assert.equal(typeof c.enviarMensagemIara,'function');
+  // aguarda a conclusão das tarefas assíncronas já iniciadas antes de conferir os controles
   await new Promise(resolve=>setImmediate(resolve));
   c.consultarApiIara=async()=>({resposta:'<img src=x onerror=alert(1)>',opcoes:[]});
   await c.enviarMensagemIara('teste');
   assert.equal(elementos.mensagens.children.at(-1).children[0].textContent,'<img src=x onerror=alert(1)>');
 });
+// seleciona uma função administrativa real para testar seu comportamento com dados controlados
 function carregarFuncao(c,nome) {
   const s=fs.readFileSync('js/administrativo.js','utf8');
   let inicio=s.indexOf('function '+nome+'(');

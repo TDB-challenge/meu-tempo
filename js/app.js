@@ -1067,46 +1067,66 @@ iniciarApp();
 // acompanhamento individual dos registros da iara
 // =================================================================
 
+// esta marca impede iniciar outra consulta enquanto os pedidos individuais ainda estão sendo recebidos
 let consultandoPedidosIara = false;
+// guarda o intervalo para interromper as consultas ao sair da página de pedidos
 let temporizadorPedidosIara = null;
 
 // consulta somente a rota individual habilitada depois da configuração externa
 async function atualizarPedidosIndividuaisIara() {
+  // return encerra esta chamada quando a anterior ainda não terminou
   if (consultandoPedidosIara) return;
+  // seleciona a lista existente, preservando a estrutura dos cartões do aplicativo
   const lista = document.getElementById('lista-solicitacoes');
+  // as outras páginas compartilham este script, mas não precisam consultar o histórico individual
   if (!lista) return;
+  // marca a consulta como iniciada antes de aguardar a resposta do servidor
   consultandoPedidosIara = true;
+  // reutiliza o aviso anterior quando esta função já foi executada
   let aviso = document.getElementById('aviso-pedidos-iara');
   if (!aviso) {
     aviso = document.createElement('p');
     aviso.id = 'aviso-pedidos-iara';
+    // permite que recursos de acessibilidade acompanhem mudanças na conexão
     aviso.setAttribute('role', 'status');
+    // before insere o aviso antes da lista, sem substituir os pedidos que já estão visíveis
     lista.before(aviso);
   }
   try {
+    // await aguarda a consulta da sessão atual; esta função não acessa a listagem administrativa
     await consultarPedidosCidadaoIara();
+    // a rota vazia indica que a consulta individual ainda precisa ser configurada no ambiente externo
     if (!configuracaoIara.rotaPedidosCidadao) {
       aviso.textContent = 'Os pedidos da IARA estarão disponíveis aqui após a conexão do acompanhamento individual.';
       return;
     }
+    // recria os cartões mantendo o filtro que o cidadão já escolheu
     apresentarPedidosApp(lista.getAttribute('data-filtro'));
     aviso.textContent = '';
+  // uma falha exibe o aviso e mantém o último resultado individual recebido
   } catch (erro) {
     aviso.textContent = 'Não foi possível atualizar os pedidos da IARA. Os últimos registros recebidos foram preservados.';
+  // libera a consulta em qualquer resultado, evitando que uma falha interrompa todas as próximas tentativas
   } finally {
+    // permite que o próximo intervalo faça uma nova tentativa de atualização
     consultandoPedidosIara = false;
   }
 }
 
 // mantém a consulta individual independente do consumo de notificações do chat
 function iniciarPedidosIndividuaisIara() {
+  // só inicia na página de pedidos e quando ainda não existe um intervalo ativo
   if (!document.getElementById('lista-solicitacoes') || temporizadorPedidosIara !== null) return;
+  // faz a consulta inicial sem esperar o primeiro intervalo
   atualizarPedidosIndividuaisIara();
+  // repete a consulta usando o mesmo tempo de atualização definido para a integração
   temporizadorPedidosIara = setInterval(atualizarPedidosIndividuaisIara, configuracaoIara.intervalo);
 }
 
 if (document.getElementById('lista-solicitacoes')) {
   iniciarPedidosIndividuaisIara();
+  // ao sair, cancela o intervalo para não manter consultas desnecessárias
   window.addEventListener('pagehide', function () { clearInterval(temporizadorPedidosIara); temporizadorPedidosIara = null; });
+  // ao voltar pelo histórico com a página em cache, retoma o intervalo interrompido
   window.addEventListener('pageshow', function (evento) { if (evento.persisted) iniciarPedidosIndividuaisIara(); });
 }

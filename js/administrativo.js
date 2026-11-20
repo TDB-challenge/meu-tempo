@@ -1716,74 +1716,110 @@ window.addEventListener("pageshow", function (evento) {
 // atualização dos registros integrados da iara
 // =================================================================
 
+// marca se o painel já está aguardando uma resposta, para não sobrepor consultas
 let consultandoPainelIara = false;
+// set é uma coleção sem repetições; aqui guarda os ids que já possuem uma decisão sendo enviada
 const decisoesPendentesIara = new Set();
+// guarda o intervalo de atualização para poder encerrá-lo ao sair do painel
 let temporizadorPainelIara = null;
 
 // apresenta a situação da conexão sem substituir os últimos pedidos recebidos
 function avisarPainelIara(texto) {
+  // procura o aviso existente para atualizar o texto sem criar um aviso duplicado a cada consulta
   let aviso = document.getElementById('aviso-integracao-iara');
+  // cria o parágrafo apenas na primeira vez que o painel precisa exibir a situação da conexão
   if (!aviso) {
     const principal = document.querySelector('main');
     if (!principal) return;
     aviso = document.createElement('p');
     aviso.id = 'aviso-integracao-iara';
     aviso.className = 'admin-chamado-local';
+    // role status permite que recursos de acessibilidade anunciem as mudanças desse aviso
     aviso.setAttribute('role', 'status');
+    // prepend insere o aviso no início da área principal, preservando os cartões que já existem
     principal.prepend(aviso);
   }
+  // altera o aviso somente quando sua mensagem mudou, evitando anúncios repetidos do mesmo texto
   if (aviso.textContent !== texto) aviso.textContent = texto;
 }
 
 // atualiza os mesmos cartões e tabelas depois de uma consulta completa
 async function atualizarPainelIara() {
+  // não consulta sem um profissional identificado ou enquanto a consulta anterior ainda estiver em andamento
   if (consultandoPainelIara || !profissionalAdmin) return;
+  // recupera a função do profissional para escolher os componentes que esta tela deve atualizar
   const funcao = profissionalAdmin.funcao;
+  // includes verifica se a função pertence aos três perfis que possuem acompanhamento integrado
   if (!['Agente de transporte', 'Operador CET', 'Coordenador'].includes(funcao)) return;
+  // marca a consulta antes do await para impedir que outro intervalo inicie uma segunda consulta
   consultandoPainelIara = true;
   try {
+    // o transporte consulta apenas apoio ferroviário; a cet e a coordenação separam os serviços na apresentação
     await consultarChamadosIara(funcao === 'Agente de transporte' ? 'APOIO_METRO' : '');
     if (funcao === 'Agente de transporte') {
+      // concat reúne exemplos locais e pedidos do servidor em uma lista de apresentação, sem gravar a lista remota no armazenamento local
       chamadosMetro = buscarChamadosMetro().concat(buscarChamadosIara('metro'));
+      // reutiliza a função que monta os cartões e a tabela da estação conectada
       exibirChamadosMetro();
+      // recalcula os indicadores usando os mesmos chamados que estão disponíveis para o profissional
       atualizarIndicadoresMetro();
+      // atualiza o acompanhamento e os históricos do transporte nos componentes existentes
       exibirRegistrosMetro();
     } else if (funcao === 'Operador CET') {
+      // reutiliza os cartões de travessia e zeladoria, mantendo a decisão de travessia no controlador
       exibirPedidosAplicativoCET();
+      // preserva o histórico local ao acrescentar as etapas realmente recebidas do servidor
       sincronizarEtapasTransporte(buscarChamadosMetro().concat(buscarChamadosIara()));
+    // a coordenação reaproveita suas tabelas, filtros e indicadores consolidados
     } else sincronizarTransporteAdministrativo();
     avisarPainelIara('IARA conectada. Registros atualizados automaticamente.');
+  // uma falha de conexão muda apenas o aviso e conserva os últimos registros válidos do painel
   } catch (erro) {
     avisarPainelIara('Sem atualização da IARA. Os últimos registros recebidos foram preservados.');
+  // finally executa no sucesso e na falha, liberando a próxima tentativa de atualização
   } finally {
+    // encerra a marca de consulta em andamento para permitir o próximo intervalo
     consultandoPainelIara = false;
   }
 }
 
 // chamado mantém o id original; decisao corresponde às operações existentes na api
 async function decidirChamadoRemotoIara(chamado, decisao) {
+  // confere o vínculo da estação e usa has para impedir o envio de outra decisão para o mesmo id
   if (!chamadoDaEstacaoMetro(chamado) || decisoesPendentesIara.has(chamado.idServidor)) return;
+  // add guarda o id enquanto o servidor ainda está processando a decisão
   decisoesPendentesIara.add(chamado.idServidor);
   avisarPainelIara('Registrando decisão no servidor…');
   try {
+    // aguarda a resposta da rota que grava aprovação ou recusa usando o id original do banco
     await enviarDecisaoIara(chamado, decisao, profissionalAdmin.nome);
+    // depois da confirmação, consulta a fonte original para apresentar a situação devolvida pelo servidor
     await atualizarPainelIara();
+  // uma falha de conexão muda apenas o aviso e conserva os últimos registros válidos do painel
   } catch (erro) {
     avisarPainelIara('Não foi possível confirmar a decisão. Atualize a fila antes de tentar novamente.');
+  // finally executa no sucesso e na falha, liberando a próxima tentativa de atualização
   } finally {
+    // delete retira o id da coleção, inclusive após falha, para permitir uma tentativa futura
     decisoesPendentesIara.delete(chamado.idServidor);
   }
 }
 
 // consulta imediatamente e mantém um único intervalo por painel
 function iniciarPainelIara() {
+  // evita iniciar a atualização sem sessão ou criar dois intervalos para o mesmo painel
   if (!profissionalAdmin || temporizadorPainelIara !== null) return;
+  // faz a consulta inicial imediatamente, sem esperar os primeiros três segundos
   atualizarPainelIara();
+  // setinterval repete a atualização no tempo definido pela configuração compartilhada
   temporizadorPainelIara = setInterval(atualizarPainelIara, configuracaoIara.intervalo);
 }
 
+// a expressão regular limita a inicialização aos quatro painéis que possuem integração
 if (profissionalAdmin && /\/(metro|cet|coordenacao|relatorios)\.html$/.test(paginaAdmin)) {
   iniciarPainelIara();
+  // ao sair do painel, cancela o intervalo e marca que ele não está mais ativo
   window.addEventListener('pagehide', function () { clearInterval(temporizadorPainelIara); temporizadorPainelIara = null; });
+  // ao voltar pelo histórico com a página em cache, retoma a atualização que foi interrompida
   window.addEventListener('pageshow', function (evento) { if (evento.persisted) iniciarPainelIara(); });
 }
