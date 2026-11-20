@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CET | Administração | Meu Tempo</title>
+    <link rel="icon" href="../../assets/icones/relogio-contorno.png" type="image/png" />
+    <link rel="apple-touch-icon" href="../../assets/icones/relogio-contorno.png" />
+    <link rel="manifest" href="../../assets/site.webmanifest" />
+    <meta name="theme-color" content="#203D2E" />
+    <meta name="application-name" content="Meu Tempo" />
+    <meta name="apple-mobile-web-app-title" content="Meu Tempo" />
     <link rel="stylesheet" href="../../css/style.css" />
     <link rel="stylesheet" href="../../css/admin.css">
     <script src="../../js/script.js" defer></script>
@@ -74,8 +80,6 @@
       </div>
 
       <div class="admin-sidebar-rodape">
-        <a href="../solucao01.html" class="admin-link-secundario">Ver área do cidadão</a>
-        <a href="../index.html" class="admin-link-secundario">Voltar ao site</a>
         <!-- direciona ao login e identifica a saída para encerrar a sessão administrativa -->
         <a href="login.html" class="admin-link-sair" data-sair>
           <img src="../../assets/icones/sair.png" alt="" class="icone" />
@@ -193,10 +197,7 @@
               <article class="admin-chamado-item">
                 <div class="admin-chamado-meta">
                   <span>TR-102 · 14:37 · Origem: IARA</span>
-                  <span class="admin-status-pill cet-pill-recusado">
-                    <img src="../../assets/icones/fechar.png" alt="" class="icone" />
-                    RECUSADO
-                  </span>
+                  <span class="admin-status-pill cet-pill-recusado">Recusado</span>
                 </div>
 
                 <h3>Av. Paulista &times; Rua Augusta</h3>
@@ -225,10 +226,7 @@
               <article class="admin-chamado-item">
                 <div class="admin-chamado-meta">
                   <span>TR-101 · 14:35 · Origem: IARA</span>
-                  <span class="admin-status-pill cet-pill-aprovado">
-                    <img src="../../assets/icones/confirmacao.png" alt="" class="icone" />
-                    APROVADO
-                  </span>
+                  <span class="admin-status-pill cet-pill-aprovado">Aprovado</span>
                 </div>
 
                 <h3>Av. Paulista &times; Av. Brigadeiro Luís Antônio</h3>
@@ -473,7 +471,7 @@
                   Marcar em análise
                 </button>
                 <button type="button" id="btn-zeladoria-resolvido" class="btn btn-contorno">
-                  Marcar como resolvido
+                  Marcar como concluído
                 </button>
               </div>
             </article>
@@ -677,13 +675,6 @@
             <div class="painel-status" style="margin: 22px 0;">
               Seu acesso é limitado ao órgão e às localidades vinculadas ao seu perfil.
             </div>
-
-            <div class="admin-chamado-acoes">
-              <!-- direciona ao login e identifica a saída para encerrar a sessão administrativa -->
-              <a href="login.html" class="btn" data-sair>
-                Sair &rarr;
-              </a>
-            </div>
           </div>
         </section>
 
@@ -784,11 +775,6 @@
 
         <div class="painel-status" style="margin: 20px 0;">
           Seu acesso é limitado ao órgão e às localidades vinculadas ao seu perfil.
-        </div>
-
-        <div class="admin-chamado-acoes">
-          <!-- direciona ao login e identifica a saída para encerrar a sessão administrativa -->
-          <a href="login.html" class="btn" data-sair>Sair &rarr;</a>
         </div>
       </div>
     </div>

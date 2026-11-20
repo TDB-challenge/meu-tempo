@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>Perfil e acessibilidade | Meu Tempo</title>
+    <link rel="icon" href="../../assets/icones/relogio-contorno.png" type="image/png" />
+    <link rel="apple-touch-icon" href="../../assets/icones/relogio-contorno.png" />
+    <link rel="manifest" href="../../assets/site.webmanifest" />
+    <meta name="theme-color" content="#203D2E" />
+    <meta name="application-name" content="Meu Tempo" />
+    <meta name="apple-mobile-web-app-title" content="Meu Tempo" />
 
     <link rel="stylesheet" href="../../css/style.css" />
     <link rel="stylesheet" href="../../css/app.css" />
@@ -32,7 +38,7 @@
             <li>
               <a href="inicio.html">
                 <img
-                  src="../../assets/icones/piso-tatil.svg"
+                  src="../../assets/icones/casa.png"
                   class="icone"
                   alt=""
                 />
@@ -42,14 +48,14 @@
 
             <li>
               <a href="servicos.html">
-                <img src="../../assets/icones/lista.svg" class="icone" alt="" />
+                <img src="../../assets/icones/piso-tatil.svg" class="icone" alt="" />
                 <span>Serviços</span>
               </a>
             </li>
 
             <li>
               <a href="solicitacoes.html">
-                <img src="../../assets/icones/lista.svg" class="icone" alt="" />
+                <img src="../../assets/icones/papel.png" class="icone" alt="" />
                 <span>Pedidos</span>
               </a>
             </li>
@@ -57,7 +63,7 @@
             <li>
               <a href="iara.html">
                 <img
-                  src="../../assets/icones/audio.svg"
+                  src="../../assets/icones/inteligencia-artificial.png"
                   class="icone"
                   alt=""
                 />
@@ -78,16 +84,17 @@
         <div class="menu-inferior">
           <a href="#preferencias-acessibilidade">
             <img
-              src="../../assets/icones/libras.svg"
+              src="../../assets/icones/acessibilidade.png"
               class="icone"
               alt=""
             />
             <span>Acessibilidade</span>
           </a>
 
-          <a href="../index.html">
-            <img src="../../assets/icones/seta-direita.svg" class="icone" alt="" />
-            <span>Voltar ao site</span>
+          <!-- encerra somente a sessão do cidadão -->
+          <a href="../login.html" data-sair-app>
+            <img src="../../assets/icones/sair.png" class="icone" alt="" />
+            <span>Sair</span>
           </a>
         </div>
       </aside>
@@ -124,9 +131,8 @@
             </summary>
 
             <div class="opcoes-usuario">
-              <!-- encerra somente a sessão do cidadão -->
-              <a href="../login.html" id="sair-app"><img src="../../assets/icones/sair.png" class="icone" alt="" />Sair</a>
               <a href="perfil.html">
+                <img src="../../assets/icones/usuario.png" class="icone" alt="" />
                 Meu perfil
               </a>
 
@@ -138,10 +144,10 @@
                 />
                 Meus documentos
               </a>
-
-              <a href="../index.html">
-                <img src="../../assets/icones/seta-direita.svg" class="icone" alt="" />
-                Voltar ao site
+              <!-- encerra somente a sessão do cidadão; aparece só no celular -->
+              <a href="../login.html" class="sair-celular" data-sair-app>
+                <img src="../../assets/icones/sair.png" class="icone" alt="" />
+                Sair
               </a>
             </div>
           </details>
@@ -475,21 +481,21 @@
         <ul>
           <li>
             <a href="inicio.html">
-              <img src="../../assets/icones/piso-tatil.svg" class="icone" alt="" />
+              <img src="../../assets/icones/casa.png" class="icone" alt="" />
               <span>Início</span>
             </a>
           </li>
 
           <li>
             <a href="servicos.html">
-              <img src="../../assets/icones/lista.svg" class="icone" alt="" />
+              <img src="../../assets/icones/piso-tatil.svg" class="icone" alt="" />
               <span>Serviços</span>
             </a>
           </li>
 
           <li>
             <a href="solicitacoes.html">
-              <img src="../../assets/icones/lista.svg" class="icone" alt="" />
+              <img src="../../assets/icones/papel.png" class="icone" alt="" />
               <span>Pedidos</span>
             </a>
           </li>
@@ -497,7 +503,7 @@
           <li>
             <a href="iara.html">
               <img
-                src="../../assets/icones/audio.svg"
+                src="../../assets/icones/inteligencia-artificial.png"
                 class="icone"
                 alt=""
               />

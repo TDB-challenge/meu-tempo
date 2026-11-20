@@ -4,6 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Metrô | Administração | Meu Tempo</title>
+    <link rel="icon" href="../../assets/icones/relogio-contorno.png" type="image/png" />
+    <link rel="apple-touch-icon" href="../../assets/icones/relogio-contorno.png" />
+    <link rel="manifest" href="../../assets/site.webmanifest" />
+    <meta name="theme-color" content="#203D2E" />
+    <meta name="application-name" content="Meu Tempo" />
+    <meta name="apple-mobile-web-app-title" content="Meu Tempo" />
     <link rel="stylesheet" href="../../css/style.css" />
     <link rel="stylesheet" href="../../css/admin.css" />
     <!-- carrega os dados antes das funcionalidades dos painéis administrativos -->
@@ -114,9 +120,6 @@
           </nav>
         </div>
         <div class="admin-sidebar-rodape">
-          <a href="../index.html" class="admin-link-secundario"
-            >Voltar ao site</a
-          >
           <!-- identifica a saída para encerrar a sessão administrativa -->
           <a href="login.html" class="admin-link-sair" data-sair>
             <img src="../../assets/icones/sair.png" alt="" class="icone" />
@@ -251,13 +254,13 @@
               <div class="coord-tabela-wrapper">
                 <table
                   id="tabela-chamados"
-                  class="coord-tabela"
+                  class="coord-tabela tabela-padrao"
                   aria-labelledby="titulo-chamados"
                 >
                   <thead>
                     <tr>
                       <th scope="col">Protocolo</th>
-                      <th scope="col">Tipo de apoio</th>
+                      <th scope="col">Cidadão e apoio</th>
                       <th scope="col">Local</th>
                       <th scope="col">Situação</th>
                       <th scope="col">Ações</th>
@@ -283,7 +286,7 @@
               <div class="coord-tabela-wrapper">
                 <table
                   id="tabela-equipamentos"
-                  class="coord-tabela"
+                  class="coord-tabela tabela-padrao"
                   aria-labelledby="titulo-equipamentos"
                 >
                   <thead>
