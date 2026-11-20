@@ -6,7 +6,7 @@
    .admin-nav organiza as abas; .admin-nav-item identifica cada opcao.
    .ativo destaca a aba escolhida; .aberto mostra o menu recolhido no celular.
    #admin-sidebar e o menu controlado por #btn-admin-menu-mobile.
-   .admin-sidebar-rodape reune retorno ao site, area do cidadao e saida.
+   .admin-sidebar-rodape reune a saida do painel.
    cabecalho e conteudo:
    .admin-conteudo-coluna envolve o cabecalho e a area principal.
    .admin-topbar-esquerda identifica o local; .admin-topbar-direita reune os controles.

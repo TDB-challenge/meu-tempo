@@ -63,10 +63,10 @@ function iniciarApp() {
   textoApp('data-atual', new Date().toLocaleDateString('pt-BR', {day: 'numeric', month: 'long', year: 'numeric'}));
   textoApp('usuario-localizacao', cidadaoApp.bairro + ' — ' + cidadaoApp.municipio);
   // seleciona a saída exclusiva do cidadão
-  const sair = document.getElementById('sair-app');
+  const sair = document.querySelectorAll('[data-sair-app]');
   // remove somente a sessão cidadã no clique
-  if (sair) {
-    sair.addEventListener('click', function () {
+  for (let i = 0; i < sair.length; i++) {
+    sair[i].addEventListener('click', function () {
       sessionStorage.removeItem('cidadao-sessao');
     });
   }

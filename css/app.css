@@ -4890,3 +4890,14 @@ button {
         min-height: 180px; /* mantém a quantidade em destaque no celular */
     }
 }
+
+/* o sair do menu do usuário só aparece no celular, quando o menu lateral fica escondido */
+.app .opcoes-usuario a.sair-celular {
+    display: none;
+}
+
+@media (max-width: 900px) {
+    .app .opcoes-usuario a.sair-celular {
+        display: flex;
+    }
+}
