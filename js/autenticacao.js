@@ -1084,7 +1084,7 @@ function calcularIdadeCidadao(nascimento) {
 async function resumirSenhaCidadao(senha) {
   // exige o recurso nativo disponível em localhost ou conexão segura
   if (!window.crypto || !window.crypto.subtle) {
-    throw new Error("Abra a demonstração em localhost ou HTTPS para usar o resumo nativo da senha.");
+    throw new Error("Abra o Meu Tempo em localhost ou HTTPS para concluir o cadastro com segurança.");
   }
   // converte a senha fictícia em bytes e calcula o resumo sha-256
   // textencoder transforma os caracteres em bytes utf-8, formato exigido pela operação criptográfica nativa
@@ -1429,7 +1429,7 @@ async function registrarCadastroCidadao(evento) {
     tituloConclusao.textContent = "Cadastro concluído!";
     avisoCadastroCidadao.appendChild(tituloConclusao);
     const textoConclusao = document.createElement("p");
-    textoConclusao.textContent = "Sua conta fictícia está pronta. Entre para utilizar os serviços.";
+    textoConclusao.textContent = "Sua conta está pronta. Entre para utilizar os serviços.";
     avisoCadastroCidadao.appendChild(textoConclusao);
     // reaproveita o cartão existente para destacar a confirmação
     avisoCadastroCidadao.classList.add("cadastro-qrcode-box");
@@ -1509,7 +1509,7 @@ async function entrarCidadao(evento) {
         return;
       }
     }
-    aviso.textContent = "E-mail ou PIN incorretos. Contas antigas com senha exigem recuperação ainda indisponível; use uma nova conta fictícia.";
+    aviso.textContent = "E-mail ou PIN incorretos. Contas antigas com senha precisam de uma nova conta com outro e-mail.";
   } catch (erro) {
     // mantém uma mensagem clara caso o navegador impeça a demonstração
     aviso.textContent = "Não foi possível entrar. " + erro.message;

@@ -1,0 +1,18 @@
+{
+  "name": "Meu Tempo · A cidade no seu ritmo",
+  "short_name": "Meu Tempo",
+  "description": "Travessia acessível, apoio no Metrô e zeladoria urbana no seu ritmo.",
+  "lang": "pt-BR",
+  "start_url": "../paginas/index.html",
+  "scope": "../",
+  "display": "standalone",
+  "background_color": "#F6F3EA",
+  "theme_color": "#203D2E",
+  "icons": [
+    {
+      "src": "icones/relogio-contorno.png",
+      "sizes": "240x240",
+      "type": "image/png"
+    }
+  ]
+}

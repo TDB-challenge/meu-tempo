@@ -4,10 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Relatórios | Administração | Meu Tempo</title>
+    <link rel="icon" href="../../assets/icones/relogio-contorno.png" type="image/png" />
+    <link rel="apple-touch-icon" href="../../assets/icones/relogio-contorno.png" />
+    <link rel="manifest" href="../../assets/site.webmanifest" />
+    <meta name="theme-color" content="#203D2E" />
+    <meta name="application-name" content="Meu Tempo" />
+    <meta name="apple-mobile-web-app-title" content="Meu Tempo" />
     <link rel="stylesheet" href="../../css/style.css">
     <link rel="stylesheet" href="../../css/admin.css"/>
     <script src="../../js/script.js" defer></script>
     <script src="../../js/dados.js" defer></script>
+    <!-- compartilha endereço da api, sessão da iara e registros recebidos; depende de dados.js -->
+    <script src="../../js/integracao.js" defer></script>
     <script src="../../js/administrativo.js" defer></script>
 </head>
 <body class="pagina-admin">
@@ -85,8 +93,6 @@
       </div>
 
       <div class="admin-sidebar-rodape">
-        <a href="../solucao01.html" class="admin-link-secundario">Ver área do cidadão</a>
-        <a href="../index.html" class="admin-link-secundario">Voltar ao site</a>
         <!-- direciona ao login e identifica a saída para encerrar a sessão administrativa -->
         <a href="login.html" class="admin-link-sair" data-sair>
           <img src="../../assets/icones/sair.png" alt="" class="icone" />
@@ -211,7 +217,7 @@
             </p>
 
             <div id="tabela-coord-wrapper" class="coord-tabela-wrapper">
-              <table class="coord-tabela">
+              <table class="coord-tabela tabela-padrao tabela-pedidos">
                 <thead>
                   <tr>
                     <th>Protocolo</th>
@@ -228,7 +234,10 @@
                       <strong>Piso tátil danificado</strong>
                       <span>Zeladoria</span>
                     </td>
-                    <td>Av. Paulista &times; Rua Pamplona</td>
+                    <td>
+                      <strong>Av. Paulista &times; Rua Pamplona</strong>
+                      <span>Região Paulista</span>
+                    </td>
                     <td><span class="admin-status-pill cet-pill-aprovado">Concluído</span></td>
                     <td>Hoje · 09:15</td>
                   </tr>
@@ -257,7 +266,7 @@
         <footer class="admin-rodape">
           <img src="../../assets/icones/seguranca.png" alt="" class="icone" />
           <span>Relatórios consolidados · Área de coordenação operacional · Meu Tempo.</span>
-          <span>Projeto acadêmico · FIAP · Sem integração com operadoras.</span>
+          <span>Projeto acadêmico · FIAP 2026.</span>
         </footer>
       </main>
     </div>
@@ -328,11 +337,6 @@
 
         <div class="painel-status" style="margin: 20px 0;">
           Seu acesso é limitado ao órgão e às localidades vinculadas ao seu perfil.
-        </div>
-
-        <div class="admin-chamado-acoes">
-          <!-- direciona ao login e identifica a saída para encerrar a sessão administrativa -->
-          <a href="login.html" class="btn" data-sair>Sair &rarr;</a>
         </div>
       </div>
     </div>

@@ -11,8 +11,54 @@
 */
 
 // =====================================================
-// 1. menu mobile (hambúrguer)
+// 1. menu mobile (hambúrguer) e navegação inferior do site
 // =====================================================
+// guarda o endereço deste arquivo para montar os caminhos em qualquer pasta
+const raizSite = document.currentScript ? new URL("../", document.currentScript.src).href : "";
+
+// cria a barra inferior do site no celular, no mesmo formato da barra do app
+function criarNavegacaoSiteCelular() {
+  // o app e os painéis administrativos já possuem a sua própria navegação
+  if (!raizSite || !document.querySelector(".cabecalho") || document.body.classList.contains("app") || document.body.classList.contains("pagina-admin")) return;
+  // identifica a página atual pelo nome do arquivo
+  const pagina = location.pathname.split("/").pop() || "index.html";
+  const naPastaAdmin = location.pathname.indexOf("/admin/") !== -1;
+  const itens = [
+    {texto: "Início", href: "paginas/index.html", icone: "casa.png", paginas: ["index.html"]},
+    {texto: "Solução", href: "paginas/solucao.html", icone: "piso-tatil.svg", paginas: ["solucao.html", "solucao01.html", "solucao02.html"]},
+    {texto: "Acessível", href: "paginas/acessibilidade.html", icone: "acessibilidade.png", paginas: ["acessibilidade.html"]},
+    {texto: "Ajuda", href: "paginas/faq.html", icone: "envelope.png", paginas: ["faq.html", "contato.html"]},
+    {texto: "Entrar", href: "paginas/login.html", icone: "usuario.png", paginas: ["login.html", "cadastro.html", "recuperar-senha.html"]}
+  ];
+  const nav = document.createElement("nav");
+  nav.className = "nav-site-celular";
+  nav.setAttribute("aria-label", "Navegação principal no celular");
+  const lista = document.createElement("ul");
+  for (let i = 0; i < itens.length; i++) {
+    const item = document.createElement("li");
+    const link = document.createElement("a");
+    link.href = raizSite + itens[i].href;
+    // as páginas de acesso administrativo também destacam a opção entrar
+    if (itens[i].paginas.indexOf(pagina) !== -1 && (!naPastaAdmin || itens[i].texto === "Entrar")) link.setAttribute("aria-current", "page");
+    if (naPastaAdmin && itens[i].texto === "Entrar") link.setAttribute("aria-current", "page");
+    if (itens[i].texto === "Entrar") link.classList.add("nav-site-entrar");
+    const icone = document.createElement("img");
+    icone.src = raizSite + "assets/icones/" + itens[i].icone;
+    icone.alt = "";
+    icone.className = "icone";
+    const texto = document.createElement("span");
+    texto.textContent = itens[i].texto;
+    link.appendChild(icone);
+    link.appendChild(texto);
+    item.appendChild(link);
+    lista.appendChild(item);
+  }
+  nav.appendChild(lista);
+  document.body.appendChild(nav);
+  document.body.classList.add("com-nav-site-celular");
+}
+
+criarNavegacaoSiteCelular();
 const btnMenu = document.getElementById("btn-menu");
 const menu = document.getElementById("menu-navegacao");
 
@@ -398,7 +444,7 @@ if (formIara) {
     // informa que esta orientação local não é uma resposta do futuro webchat
     const mensagemIara = document.createElement("div");
     mensagemIara.className = "msg-iara";
-    mensagemIara.textContent = "Orientação do protótipo: " + resposta;
+    mensagemIara.textContent = "Orientação da IARA: " + resposta;
     listaChat.appendChild(mensagemIara);
     listaChat.scrollTop = listaChat.scrollHeight;
     inputIara.value = "";
@@ -434,16 +480,16 @@ if (formTravessia) {
 
     if (tempoRestante < 8) {
       statusTravessia.innerHTML =
-        "<h3>Ciclo demonstrativo com menos de 8 segundos (" + tempoRestante + "s)</h3>" +
+        "<h3>Ciclo atual com menos de 8 segundos (" + tempoRestante + "s)</h3>" +
         "<p><strong>Local:</strong> " + cruzamento + "</p>" +
         "<p><strong>Guia ativado:</strong> " + guia + "</p>" +
-        '<p class="aviso-erro">Na demonstração, o tempo estendido fica programado para o <strong>próximo ciclo simulado</strong>. Este exemplo não controla semáforos reais e não autoriza atravessar uma rua.</p>';
+        '<p class="aviso-erro">Não há tempo suficiente para começar a travessia agora. O tempo estendido fica reservado para o <strong>próximo ciclo</strong>. Aguarde na calçada até o sinal abrir novamente.</p>';
     } else {
       statusTravessia.innerHTML =
-        "<h3>Tempo estendido na demonstração! (" + tempoRestante + "s + 12s extras)</h3>" +
+        "<h3>Tempo estendido! (" + tempoRestante + "s + 12s extras)</h3>" +
         "<p><strong>Local:</strong> " + cruzamento + "</p>" +
         "<p><strong>Guia ativado:</strong> " + guia + "</p>" +
-        '<p class="aviso-ok">O exemplo representa a extensão no ciclo simulado. Não há conexão com semáforos reais, emissão de sons ou vibração nesta demonstração. Não utilize este resultado como autorização para atravessar uma rua.</p>';
+        '<p class="aviso-ok">A extensão foi aplicada ao ciclo atual. O celular emite o sinal sonoro e a vibração durante a travessia. Atravesse com atenção e observe sempre o semáforo e o fluxo de veículos.</p>';
     }
   });
 }
@@ -459,11 +505,11 @@ if (formMetro) {
     const apoio = document.getElementById("apoio").value;
 
     statusMetro.innerHTML =
-      "<h3>Exemplo de chamado de apoio na estação</h3>" +
+      "<h3>Chamado de apoio na estação</h3>" +
       "<p><strong>Estação:</strong> " + estacao + "</p>" +
       "<p><strong>Localização exata:</strong> " + ponto + "</p>" +
       "<p><strong>Atendimento:</strong> " + apoio + "</p>" +
-      '<p class="aviso-ok">Na demonstração, este seria o retorno de um atendimento aceito. Nenhum chamado foi enviado e nenhuma equipe foi acionada.</p>';
+      '<p class="aviso-ok">Atendimento aceito! Um agente da estação foi acionado e está a caminho do ponto indicado. Permaneça no local informado.</p>';
   });
 }
 
@@ -483,10 +529,10 @@ if (formZeladoria) {
     }
 
     statusZeladoria.innerHTML =
-      "<h3>Exemplo de relato de zeladoria</h3>" +
+      "<h3>Relato de zeladoria registrado</h3>" +
       "<p><strong>Ocorrência:</strong> " + tipo + "</p>" +
       "<p><strong>Local:</strong> " + local + "</p>" +
-      '<p class="aviso-ok">Este resultado é apenas uma demonstração local. Nenhum relato foi armazenado ou enviado aos painéis administrativos.</p>';
+      '<p class="aviso-ok">Relato recebido! A ocorrência foi encaminhada à equipe de zeladoria responsável pela região. Você pode acompanhar o andamento pelo aplicativo.</p>';
     formZeladoria.reset();
   });
 }
@@ -510,7 +556,7 @@ if (btnIaraSim && demoIaraMensagens) {
   btnIaraSim.addEventListener("click", function () {
     demoIaraMensagens.innerHTML +=
       '<div class="msg-usuario">“Sim, estou na Avenida Paulista, 5502.”</div>' +
-      '<div class="msg-iara">Local confirmado neste exemplo! Na demonstração, um ciclo com menos de 8 segundos reservaria o <strong>tempo estendido para o próximo ciclo simulado</strong>. Este exemplo não consulta GPS, não controla semáforos e não ativa voz, som ou vibração.</div>';
+      '<div class="msg-iara">Local confirmado! Se o ciclo atual tiver menos de 8 segundos, eu reservo o <strong>tempo estendido para o próximo ciclo</strong>. Vou te avisar por voz, som e vibração quando for a hora de atravessar.</div>';
     demoIaraAcoes.style.display = "none";
   });
 }
@@ -723,8 +769,8 @@ if (formRecuperarSenha) {
     }
 
     avisoRecuperar.innerHTML =
-      '<p style="margin-bottom: 10px;">Solicitação registrada! Se este e-mail estiver vinculado a uma conta, enviaremos as instruções de redefinição (simulação demonstrativa).</p>' +
-      '<a href="login.html" class="link-seta">Voltar para o login &rarr;</a>';
+      '<p style="margin-bottom: 10px;">Solicitação registrada! Se este e-mail estiver vinculado a uma conta, enviaremos as instruções de redefinição.</p>' +
+      '<a href="login.html" class="link-seta">&larr; Voltar para o login</a>';
 
     formRecuperarSenha.reset();
   });

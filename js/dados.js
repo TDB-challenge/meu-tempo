@@ -832,7 +832,7 @@ function buscarPedidosOperacionais() {
     if (pedido.servico === "travessia" && !pedido.simulacaoEncerrada && pedido.aberturaSimulacao && pedido.fimSimulacao) {
       // relaciona cada etapa ao horário programado na própria simulação
       const momentos = [Math.max(Date.parse(pedido.dataSolicitacao), pedido.aberturaSimulacao - 3000), Math.max(Date.parse(pedido.dataSolicitacao), pedido.aberturaSimulacao), Math.max(Date.parse(pedido.dataSolicitacao), pedido.fimSimulacao - 8000), pedido.fimSimulacao];
-      const titulos = ["Fase de segurança", "Travessia liberada na simulação", "Tempo próximo do fim", "Simulação concluída"];
+      const titulos = ["Fase de segurança", "Travessia liberada", "Tempo próximo do fim", "Travessia concluída"];
       // prepara o histórico caso um registro antigo ainda não possua etapas
       if (!Array.isArray(pedido.etapas)) pedido.etapas = [];
       // guarda a última etapa alcançada para comparar apenas uma vez

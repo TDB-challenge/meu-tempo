@@ -63,10 +63,10 @@ function iniciarApp() {
   textoApp('data-atual', new Date().toLocaleDateString('pt-BR', {day: 'numeric', month: 'long', year: 'numeric'}));
   textoApp('usuario-localizacao', cidadaoApp.bairro + ' — ' + cidadaoApp.municipio);
   // seleciona a saída exclusiva do cidadão
-  const sair = document.getElementById('sair-app');
+  const sair = document.querySelectorAll('[data-sair-app]');
   // remove somente a sessão cidadã no clique
-  if (sair) {
-    sair.addEventListener('click', function () {
+  for (let i = 0; i < sair.length; i++) {
+    sair[i].addEventListener('click', function () {
       sessionStorage.removeItem('cidadao-sessao');
     });
   }
@@ -650,7 +650,7 @@ function atualizarContagemApp() {
   // encerra também a apresentação do contador quando o cidadão cancela antes do prazo
   if (pedidoTravessia.simulacaoEncerrada) {
     titulo = 'Tempo encerrado';
-    if (pedidoTravessia.situacao === 'Simulação encerrada pelo cidadão') titulo = 'Solicitação encerrada';
+    if (pedidoTravessia.situacao === 'Travessia encerrada pelo cidadão') titulo = 'Solicitação encerrada';
     orientacao = 'Você pode escolher outra travessia.';
     fase = 'encerrada';
     fim = Date.now();
@@ -709,7 +709,7 @@ function apresentarEtapasTravessia() {
 // encerra a simulação após solicitação do cidadão
 function encerrarTravessiaApp() {
   // impede alteração de pedidos já encerrados
-  if (pedidoTravessia) finalizarTravessiaApp('Simulação encerrada pelo cidadão');
+  if (pedidoTravessia) finalizarTravessiaApp('Travessia encerrada pelo cidadão');
 }
 
 // finaliza o pedido sem interromper a existência do ciclo automático
@@ -781,15 +781,15 @@ function alertarTravessiaApp(mensagem) {
   if (typeof falarOrientacaoAcessivel === 'function') falarOrientacaoAcessivel(mensagem + '.');
 
   // interrompe os sons anteriores e apresenta um único aviso de encerramento
-  if (mensagem === 'Simulação concluída' || mensagem === 'Simulação encerrada pelo cidadão') {
+  if (mensagem === 'Travessia concluída' || mensagem === 'Travessia encerrada pelo cidadão') {
     pararAvisosTravessia();
     // o aviso final já toca nos últimos segundos e não continua depois do zero
   }
   // emite padrões curtos conforme o evento, quando o dispositivo oferecer suporte
   if (buscarPreferenciasAcessibilidade().vibracao && navigator.vibrate) {
-    if (mensagem === 'Travessia liberada na simulação') navigator.vibrate([100, 120, 100]);
+    if (mensagem === 'Travessia liberada') navigator.vibrate([100, 120, 100]);
     else if (mensagem === 'Tempo próximo do fim') navigator.vibrate([80, 80, 80, 80, 80]);
-    else if (mensagem === 'Simulação concluída' || mensagem === 'Simulação encerrada pelo cidadão') navigator.vibrate(220);
+    else if (mensagem === 'Travessia concluída' || mensagem === 'Travessia encerrada pelo cidadão') navigator.vibrate(220);
     else navigator.vibrate(100);
   }
 }
@@ -818,7 +818,7 @@ function atualizarAvisosTravessia() {
     return;
   }
   // mantém a espera silenciosa e inicia o áudio somente na fase de travessia
-  if (pedidoTravessia.situacao !== 'Travessia liberada na simulação' && pedidoTravessia.situacao !== 'Tempo próximo do fim') {
+  if (pedidoTravessia.situacao !== 'Travessia liberada' && pedidoTravessia.situacao !== 'Tempo próximo do fim') {
     pararSonsTravessia();
     return;
   }
@@ -912,7 +912,7 @@ function prepararPedidos() {
 // filtro indica todas, andamento ou finalizadas
 function apresentarPedidosApp(filtro) {
   // recupera os pedidos do cidadão já ordenados pela data mais recente
-  const pedidos = buscarPedidosCidadao();
+  const pedidos = buscarPedidosCidadao().concat(buscarPedidosIndividuaisIara()).sort(function (a, b) { return Date.parse(b.dataSolicitacao) - Date.parse(a.dataSolicitacao); });
   const lista = document.getElementById('lista-solicitacoes');
   // preserva o acompanhamento aberto e o foco durante atualizações de situação
   const abertos = lista.querySelectorAll('.card-solicitacao[open]');
@@ -930,7 +930,7 @@ function apresentarPedidosApp(filtro) {
   for (let i = 0; i < pedidos.length; i++) {
     // identifica as situações encerradas que pertencem ao filtro de finalizadas
     const pedido = pedidos[i];
-    const finalizado = pedido.situacao === 'Concluído' || pedido.situacao === 'Recusado' || pedido.situacao === 'Cancelado' || pedido.situacao === 'Simulação concluída' || pedido.situacao === 'Simulação encerrada pelo cidadão';
+    const finalizado = pedido.situacao === 'Concluído' || pedido.situacao === 'Recusado' || pedido.situacao === 'Cancelado' || pedido.situacao === 'Travessia concluída' || pedido.situacao === 'Travessia encerrada pelo cidadão';
     if ((filtro !== 'filtro-andamento' || !finalizado) && (filtro !== 'filtro-finalizadas' || finalizado)) {
       // recupera o nome completo e o ícone local do serviço correspondente
       let nomeServico = 'Zeladoria urbana';
@@ -990,7 +990,7 @@ function apresentarPedidosApp(filtro) {
       situacao.textContent = pedido.situacao;
       resumo.appendChild(situacao);
       const seta = document.createElement('img');
-      seta.src = '../../assets/icones/seta-direita.svg';
+      seta.src = '../../assets/icones/expandir.svg';
       seta.alt = '';
       seta.className = 'icone seta-solicitacao';
       resumo.appendChild(seta);
@@ -1001,7 +1001,8 @@ function apresentarPedidosApp(filtro) {
       const detalhes = document.createElement('p');
       detalhes.className = 'protocolo-solicitacao';
       detalhes.textContent = pedido.tipo;
-      if (pedido.servico === 'metro') detalhes.textContent = pedido.tipo + ' · ' + pedido.linha + ' · ' + pedido.estacao;
+      if (pedido.servico === 'metro') detalhes.textContent = pedido.tipo + (pedido.linha ? ' · ' + pedido.linha : '') + ' · ' + pedido.estacao;
+      else if (pedido.servico === 'travessia' && pedido.fonte === 'node-red') detalhes.textContent = 'Tempo restante no registro: ' + (pedido.tempoRestante ?? 'Não informado') + ' s. Tempo concedido: ' + (pedido.tempoConcedido ?? 'Não informado') + ' s.';
       else if (pedido.servico === 'travessia') detalhes.textContent = 'Adicional solicitado: ' + (pedido.tempoAdicionalSolicitado || 0) + ' s. Concedido: ' + (pedido.tempoAdicionalConcedido || 0) + ' s.';
       else detalhes.textContent = (pedido.categoria || 'Relato') + ' · ' + (pedido.descricao || '').slice(0, 180);
       historico.appendChild(detalhes);
@@ -1061,3 +1062,71 @@ function apresentarPedidosApp(filtro) {
 
 // inicia após os scripts de dados e acessibilidade compartilhados
 iniciarApp();
+
+// =================================================================
+// acompanhamento individual dos registros da iara
+// =================================================================
+
+// esta marca impede iniciar outra consulta enquanto os pedidos individuais ainda estão sendo recebidos
+let consultandoPedidosIara = false;
+// guarda o intervalo para interromper as consultas ao sair da página de pedidos
+let temporizadorPedidosIara = null;
+
+// consulta somente a rota individual habilitada depois da configuração externa
+async function atualizarPedidosIndividuaisIara() {
+  // return encerra esta chamada quando a anterior ainda não terminou
+  if (consultandoPedidosIara) return;
+  // seleciona a lista existente, preservando a estrutura dos cartões do aplicativo
+  const lista = document.getElementById('lista-solicitacoes');
+  // as outras páginas compartilham este script, mas não precisam consultar o histórico individual
+  if (!lista) return;
+  // marca a consulta como iniciada antes de aguardar a resposta do servidor
+  consultandoPedidosIara = true;
+  // reutiliza o aviso anterior quando esta função já foi executada
+  let aviso = document.getElementById('aviso-pedidos-iara');
+  if (!aviso) {
+    aviso = document.createElement('p');
+    aviso.id = 'aviso-pedidos-iara';
+    // permite que recursos de acessibilidade acompanhem mudanças na conexão
+    aviso.setAttribute('role', 'status');
+    // before insere o aviso antes da lista, sem substituir os pedidos que já estão visíveis
+    lista.before(aviso);
+  }
+  try {
+    // await aguarda a consulta da sessão atual; esta função não acessa a listagem administrativa
+    await consultarPedidosCidadaoIara();
+    // a rota vazia indica que a consulta individual ainda precisa ser configurada no ambiente externo
+    if (!configuracaoIara.rotaPedidosCidadao) {
+      aviso.textContent = 'Os pedidos da IARA estarão disponíveis aqui após a conexão do acompanhamento individual.';
+      return;
+    }
+    // recria os cartões mantendo o filtro que o cidadão já escolheu
+    apresentarPedidosApp(lista.getAttribute('data-filtro'));
+    aviso.textContent = '';
+  // uma falha exibe o aviso e mantém o último resultado individual recebido
+  } catch (erro) {
+    aviso.textContent = 'Não foi possível atualizar os pedidos da IARA. Os últimos registros recebidos foram preservados.';
+  // libera a consulta em qualquer resultado, evitando que uma falha interrompa todas as próximas tentativas
+  } finally {
+    // permite que o próximo intervalo faça uma nova tentativa de atualização
+    consultandoPedidosIara = false;
+  }
+}
+
+// mantém a consulta individual independente do consumo de notificações do chat
+function iniciarPedidosIndividuaisIara() {
+  // só inicia na página de pedidos e quando ainda não existe um intervalo ativo
+  if (!document.getElementById('lista-solicitacoes') || temporizadorPedidosIara !== null) return;
+  // faz a consulta inicial sem esperar o primeiro intervalo
+  atualizarPedidosIndividuaisIara();
+  // repete a consulta usando o mesmo tempo de atualização definido para a integração
+  temporizadorPedidosIara = setInterval(atualizarPedidosIndividuaisIara, configuracaoIara.intervalo);
+}
+
+if (document.getElementById('lista-solicitacoes')) {
+  iniciarPedidosIndividuaisIara();
+  // ao sair, cancela o intervalo para não manter consultas desnecessárias
+  window.addEventListener('pagehide', function () { clearInterval(temporizadorPedidosIara); temporizadorPedidosIara = null; });
+  // ao voltar pelo histórico com a página em cache, retoma o intervalo interrompido
+  window.addEventListener('pageshow', function (evento) { if (evento.persisted) iniciarPedidosIndividuaisIara(); });
+}

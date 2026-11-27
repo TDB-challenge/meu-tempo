@@ -6,7 +6,7 @@
    .admin-nav organiza as abas; .admin-nav-item identifica cada opcao.
    .ativo destaca a aba escolhida; .aberto mostra o menu recolhido no celular.
    #admin-sidebar e o menu controlado por #btn-admin-menu-mobile.
-   .admin-sidebar-rodape reune retorno ao site, area do cidadao e saida.
+   .admin-sidebar-rodape reune a saida do painel.
    cabecalho e conteudo:
    .admin-conteudo-coluna envolve o cabecalho e a area principal.
    .admin-topbar-esquerda identifica o local; .admin-topbar-direita reune os controles.
@@ -2380,5 +2380,149 @@ body.alto-contraste .admin-nav-item.ativo {
 
   .cet-barra-nome {
     grid-column: 1 / -1;
+  }
+}
+
+/* tabelas operacionais do metro (chamados e equipamentos) =================== */
+/* larguras fixas: as colunas não mudam quando a situação ou a ação mudam */
+.tabela-padrao {
+  table-layout: fixed;
+  min-width: 860px;
+}
+
+#tabela-chamados th:nth-child(1) { width: 14%; }
+#tabela-chamados th:nth-child(2) { width: 24%; }
+#tabela-chamados th:nth-child(3) { width: 20%; }
+#tabela-chamados th:nth-child(4) { width: 18%; }
+#tabela-chamados th:nth-child(5) { width: 24%; }
+
+#tabela-equipamentos th:nth-child(1) { width: 26%; }
+#tabela-equipamentos th:nth-child(2) { width: 26%; }
+#tabela-equipamentos th:nth-child(3) { width: 24%; }
+#tabela-equipamentos th:nth-child(4) { width: 24%; }
+
+/* texto principal em cima e detalhe embaixo */
+.tabela-padrao tbody td strong {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--texto-principal);
+}
+
+.tabela-padrao tbody td span {
+  display: block;
+}
+
+.tabela-padrao .coord-td-proto {
+  white-space: normal;
+}
+
+/* etiqueta de situação com a mesma largura em todas as linhas */
+.tabela-padrao tbody td .admin-status-pill {
+  display: inline-block;
+  width: 160px;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--texto-principal);
+}
+
+/* controles da coluna de ação empilhados, com a mesma largura e altura */
+.tabela-padrao .acoes-tabela {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  margin-top: 0;
+}
+
+.tabela-padrao .acoes-tabela .btn,
+.tabela-padrao .acoes-tabela select {
+  width: 100%;
+  height: 42px;
+  min-height: 42px;
+  padding: 0 14px;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+/* todos os botões com o mesmo visual; o hover destaca o que será clicado */
+.tabela-padrao .acoes-tabela .btn {
+  justify-content: center;
+  background-color: transparent;
+  color: var(--texto-principal);
+  border: 1px solid var(--borda);
+  font-weight: 700;
+}
+
+.tabela-padrao .acoes-tabela .btn:hover,
+.tabela-padrao .acoes-tabela .btn:focus-visible {
+  background-color: #203D2E;
+  border-color: #203D2E;
+  color: #F6F3EA;
+}
+
+.tabela-padrao .acoes-tabela select {
+  color: var(--texto-principal);
+  background-color: var(--branco, #ffffff);
+  border: 1px solid var(--borda);
+  font-weight: 600;
+}
+
+/* tabelas de pedidos da coordenação e dos relatórios */
+.tabela-pedidos th:nth-child(1) { width: 13%; }
+.tabela-pedidos th:nth-child(2) { width: 27%; }
+.tabela-pedidos th:nth-child(3) { width: 26%; }
+.tabela-pedidos th:nth-child(4) { width: 18%; }
+.tabela-pedidos th:nth-child(5) { width: 16%; }
+
+/* cartões dos painéis: mesmo padrão de botões e etiquetas das tabelas ========= */
+/* botões das ações dos cartões e do topo das listas com o mesmo visual */
+.pagina-admin .admin-chamado-acoes .btn,
+.pagina-admin .cet-acoes-topo .btn {
+  min-width: 198px;
+  height: 42px;
+  min-height: 42px;
+  padding: 0 16px;
+  justify-content: center;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  white-space: nowrap;
+  background-color: transparent;
+  color: var(--texto-principal);
+  border: 1px solid var(--borda);
+}
+
+.pagina-admin .admin-chamado-acoes .btn:hover,
+.pagina-admin .admin-chamado-acoes .btn:focus-visible,
+.pagina-admin .cet-acoes-topo .btn:hover,
+.pagina-admin .cet-acoes-topo .btn:focus-visible {
+  background-color: #203D2E;
+  border-color: #203D2E;
+  color: #F6F3EA;
+}
+
+/* etiquetas de situação dos cartões com a mesma largura */
+.pagina-admin .admin-chamado-item .admin-status-pill {
+  display: inline-block;
+  width: 160px;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+}
+
+/* no celular os botões ocupam a linha inteira, sem largura mínima */
+@media (max-width: 560px) {
+  .pagina-admin .admin-chamado-acoes .btn,
+  .pagina-admin .cet-acoes-topo .btn {
+    min-width: 0;
+    width: 100%;
   }
 }

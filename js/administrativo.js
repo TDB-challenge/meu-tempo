@@ -153,6 +153,15 @@ function adicionarTextoOperacional(destino, tag, texto, classe) {
 function chamadoDaEstacaoMetro(chamado) {
   // impede a apresentação de pedidos antes de identificar o profissional
   if (profissionalAdmin === null) return false;
+  // a api antiga não informa linha; valida o vínculo pelo catálogo sem atribuir uma linha ao pedido
+  if (chamado.fonte === "node-red") {
+    if (profissionalAdmin.funcao !== "Agente de transporte" || chamado.estacao !== profissionalAdmin.estacao) return false;
+    if (chamado.orgao && chamado.orgao !== profissionalAdmin.orgao) return false;
+    if (chamado.linha && chamado.linha !== profissionalAdmin.linha) return false;
+    const linhas = linhasInstituicoes[profissionalAdmin.orgao] || [];
+    const estacoes = estacoesLinhas[profissionalAdmin.linha] || [];
+    return linhas.includes(profissionalAdmin.linha) && estacoes.includes(chamado.estacao);
+  }
   // compara a estação e a instituição sem mudar o vínculo do pedido
   if (chamado.estacao !== profissionalAdmin.estacao || chamado.orgao !== profissionalAdmin.orgao) return false;
   // verifica a linha quando ela faz parte da sessão
@@ -197,7 +206,7 @@ function criarAcoesChamadoMetro(chamado, destino, origem) {
   } else if (chamado.situacao === "Em atendimento") {
     acoes.push({acao: "concluir", texto: "Concluir atendimento"});
   }
-  acoes.push({acao: "acompanhar", texto: "Ver acompanhamento do cidadão"});
+  acoes.push({acao: "acompanhar", texto: "Ver acompanhamento", rotulo: "Ver acompanhamento do cidadão"});
   // percorre as ações permitidas e conecta o mesmo evento aos dois locais
   for (let i = 0; i < acoes.length; i++) {
     // cria um botão para a ação atual
@@ -209,8 +218,9 @@ function criarAcoesChamadoMetro(chamado, destino, origem) {
     // data relaciona o botão à ação e ao protocolo sem usar textos como identificadores
     botao.setAttribute("data-acao-chamado", acoes[i].acao);
     botao.setAttribute("data-protocolo", chamado.protocolo);
+    if (chamado.fonte === "node-red") botao.setAttribute("data-id-servidor", chamado.idServidor);
     // aria diferencia ações iguais de pedidos diferentes
-    botao.setAttribute("aria-label", acoes[i].texto + " · " + chamado.protocolo);
+    botao.setAttribute("aria-label", (acoes[i].rotulo || acoes[i].texto) + " · " + chamado.protocolo);
     // executa a função compartilhada ao clicar
     botao.addEventListener("click", alterarChamadoMetro);
   }
@@ -239,20 +249,30 @@ function exibirChamadosMetro() {
       adicionarTextoOperacional(cartao, "p", chamado.tipo + " · Origem: " + chamado.origem, "admin-chamado-local");
       adicionarTextoOperacional(cartao, "p", chamado.linha + " · " + chamado.estacao, "admin-chamado-local");
       adicionarTextoOperacional(cartao, "p", "Encontro: " + chamado.encontro, "admin-chamado-local");
+      if (chamado.descricao) adicionarTextoOperacional(cartao, "p", chamado.descricao, "admin-chamado-local");
       adicionarTextoOperacional(cartao, "p", chamado.credencial, "admin-chamado-credencial");
       const acoes = adicionarTextoOperacional(cartao, "div", "", "admin-chamado-acoes");
       criarAcoesChamadoMetro(chamado, acoes, "fila-");
       // cria a linha correspondente na tabela usando o mesmo pedido
       const linha = document.createElement("tr");
       linha.setAttribute("data-protocolo", chamado.protocolo);
-      adicionarTextoOperacional(linha, "td", chamado.protocolo, "coord-td-proto");
-      adicionarTextoOperacional(linha, "td", chamado.tipo + " · " + chamado.nome, "");
-      adicionarTextoOperacional(linha, "td", chamado.local, "");
+      // protocolo com o horário logo abaixo
+      const colunaProtocolo = adicionarTextoOperacional(linha, "td", "", "coord-td-proto");
+      adicionarTextoOperacional(colunaProtocolo, "strong", chamado.protocolo, "");
+      adicionarTextoOperacional(colunaProtocolo, "span", chamado.horarioSolicitacao, "");
+      // nome do cidadão em destaque e o tipo de apoio abaixo
+      const colunaCidadao = adicionarTextoOperacional(linha, "td", "", "");
+      adicionarTextoOperacional(colunaCidadao, "strong", chamado.nome, "");
+      adicionarTextoOperacional(colunaCidadao, "span", chamado.tipo, "");
+      // estação em destaque e o ponto de encontro embaixo
+      const colunaLocal = adicionarTextoOperacional(linha, "td", "", "");
+      adicionarTextoOperacional(colunaLocal, "strong", chamado.estacao, "");
+      adicionarTextoOperacional(colunaLocal, "span", chamado.encontro, "");
       const colunaSituacao = adicionarTextoOperacional(linha, "td", "", "");
       const situacao = adicionarTextoOperacional(colunaSituacao, "span", chamado.situacao, "admin-status-pill");
       situacao.id = "situacao-" + chamado.protocolo.toLowerCase().replace("-", "");
       const colunaAcoes = adicionarTextoOperacional(linha, "td", "", "");
-      const botoes = adicionarTextoOperacional(colunaAcoes, "div", "", "admin-chamado-acoes");
+      const botoes = adicionarTextoOperacional(colunaAcoes, "div", "", "admin-chamado-acoes acoes-tabela");
       criarAcoesChamadoMetro(chamado, botoes, "");
       corpoChamadosMetro.appendChild(linha);
     }
@@ -294,9 +314,9 @@ function abrirAcompanhamentoMetro(chamado, recusar) {
   // informa o motivo somente quando o pedido foi recusado
   if (chamado.motivoRecusa) adicionarTextoOperacional(dados, "p", "Motivo: " + chamado.motivoRecusa, "painel-status");
   // define as etapas normais do acompanhamento
-  const titulos = ["Pedido recebido", "Aprovado", "Funcionário a caminho", "Em atendimento", "Concluído"];
+  const titulos = chamado.fonte === "node-red" ? chamado.etapas.map(function (etapa) { return etapa.titulo; }) : ["Pedido recebido", "Aprovado", "Funcionário a caminho", "Em atendimento", "Concluído"];
   // acrescenta a recusa como etapa final quando ela ocorreu
-  if (chamado.situacao === "Recusado") titulos.push("Recusado");
+  if (chamado.fonte !== "node-red" && chamado.situacao === "Recusado") titulos.push("Recusado");
   // percorre as etapas e destaca somente as registradas
   for (let i = 0; i < titulos.length; i++) {
     // procura o horário que realmente foi registrado para esta etapa
@@ -336,15 +356,21 @@ function alterarChamadoMetro(event) {
   const botao = event.currentTarget;
   const protocolo = botao.getAttribute("data-protocolo");
   const acao = botao.getAttribute("data-acao-chamado");
+  const idServidor = botao.getAttribute("data-id-servidor");
   // percorre os pedidos para encontrar o atendimento selecionado
   for (let i = 0; i < chamadosMetro.length; i++) {
     // recupera o pedido atual
     const chamado = chamadosMetro[i];
     // verifica o protocolo e o vínculo antes de permitir uma ação
-    if (chamado.protocolo === protocolo && chamadoDaEstacaoMetro(chamado)) {
+    if (chamado.protocolo === protocolo && chamadoDaEstacaoMetro(chamado) && (idServidor ? chamado.fonte === "node-red" && chamado.idServidor === Number(idServidor) : chamado.fonte !== "node-red")) {
       // apresenta o acompanhamento sem mudar a situação
       if (acao === "acompanhar") {
         abrirAcompanhamentoMetro(chamado, false);
+        return;
+      }
+      // decisões remotas usam o id do banco; não alteram a cópia local do atendimento
+      if (chamado.fonte === "node-red") {
+        if (chamado.situacao === "Pedido recebido" && (acao === "aceitar" || acao === "recusar")) decidirChamadoRemotoIara(chamado, acao === "aceitar" ? "APROVADO" : "RECUSADO");
         return;
       }
       // solicita o motivo antes de recusar um pedido pendente
@@ -366,7 +392,7 @@ function alterarChamadoMetro(event) {
         // impede ações incompatíveis com a situação atual
         return;
       }
-      localStorage.setItem("metro-chamados", JSON.stringify(chamadosMetro));
+      localStorage.setItem("metro-chamados", JSON.stringify(chamadosMetro.filter(function (pedido) { return pedido.fonte !== "node-red"; })));
       atualizarChamadoMetro(chamado);
       return;
     }
@@ -391,9 +417,13 @@ function confirmarRecusaMetro(event) {
     const chamado = chamadosMetro[i];
     // permite a recusa somente enquanto o pedido está pendente
     if (chamado.protocolo === protocolo && chamado.situacao === "Pedido recebido" && chamadoDaEstacaoMetro(chamado)) {
+      if (chamado.fonte === "node-red") {
+        decidirChamadoRemotoIara(chamado, "RECUSADO");
+        return;
+      }
       chamado.motivoRecusa = motivo;
       registrarEtapaMetro(chamado, "Recusado");
-      localStorage.setItem("metro-chamados", JSON.stringify(chamadosMetro));
+      localStorage.setItem("metro-chamados", JSON.stringify(chamadosMetro.filter(function (pedido) { return pedido.fonte !== "node-red"; })));
       atualizarChamadoMetro(chamado);
       fecharTodosModaisAdmin();
       return;
@@ -503,28 +533,10 @@ function atualizarChamadoMetro(chamado) {
   avisoFilaMetro.textContent = chamado.protocolo + " · " + chamado.situacao;
 }
 
-// recupera os dados e demonstra o recebimento de um único pedido adicional
+// recupera os dados confirmados pelo node-red
 function atualizarFilaMetro() {
-  // lê novamente a lista compartilhada para recuperar mudanças já salvas
-  chamadosMetro = buscarChamadosMetro();
-  // verifica se o pedido adicional já existe
-  let possuiNovoPedido = false;
-  for (let i = 0; i < chamadosMetro.length; i++) {
-    // compara o protocolo único da solicitação de demonstração
-    if (chamadosMetro[i].protocolo === "MT-1043") possuiNovoPedido = true;
-  }
-  // insere o exemplo somente na estação à qual ele pertence
-  if (possuiNovoPedido === false && profissionalAdmin.estacao === "Consolação" && profissionalAdmin.orgao === "metro" && profissionalAdmin.linha === "Linha 2 - Verde") {
-    // prepara o novo pedido com o horário atual
-    const novo = criarChamadoTransporte("MT-1043", "Carlos Mendes", "Apoio no desembarque", new Date().toLocaleString("pt-BR"), "Bloqueio norte", "IARA");
-    novo.credencial = "Credencial não informada";
-    chamadosMetro.push(novo);
-  }
-  localStorage.setItem("metro-chamados", JSON.stringify(chamadosMetro));
-  exibirChamadosMetro();
-  atualizarIndicadoresMetro();
-  exibirRegistrosMetro();
-  avisoFilaMetro.textContent = "Fila atualizada com os pedidos vinculados à estação.";
+  // o botão consulta os registros reais, sem criar outro pedido de demonstração
+  atualizarPainelIara();
 }
 
 // =====================================================
@@ -578,7 +590,7 @@ if (listaDecisoesCet) {
         hora +
         " · Origem: IARA</span>" +
         '<span class="admin-status-pill cet-pill-aprovado">' +
-        '<img src="../../assets/icones/confirmacao.png" alt="" class="icone" /> APROVADO' +
+        'Aprovado' +
         "</span>" +
         "</div>" +
         "<h3>Av. Paulista &times; Av. Brigadeiro Luís Antônio</h3>" +
@@ -605,7 +617,7 @@ if (listaDecisoesCet) {
         hora +
         " · Origem: IARA</span>" +
         '<span class="admin-status-pill cet-pill-recusado">' +
-        '<img src="../../assets/icones/relogio.png" alt="" class="icone" /> RECUSADO' +
+        'Recusado' +
         "</span>" +
         "</div>" +
         "<h3>Av. Paulista &times; Rua Augusta</h3>" +
@@ -914,7 +926,7 @@ function exibirSolicitacoesCadastro() {
       credenciais.textContent = "";
       adicionarTextoOperacional(credenciais, "strong", "Acesso aprovado", "");
       adicionarTextoOperacional(credenciais, "p", "E-mail administrativo: " + cadastro.emailAdministrativo, "admin-chamado-local");
-      adicionarTextoOperacional(credenciais, "p", "Senha demonstrativa: MeuTempo123!", "admin-chamado-local");
+      adicionarTextoOperacional(credenciais, "p", "Senha provisória: MeuTempo123!", "admin-chamado-local");
       credenciais.hidden = false;
     } else if (cadastro.status === "reprovado") {
       situacao.textContent = "Cadastro reprovado";
@@ -1130,14 +1142,20 @@ function atualizarEquipamentosMetro() {
     if (equipamento.estacao === profissionalAdmin.estacao && equipamento.orgao === profissionalAdmin.orgao) {
       // cria a linha com os dados do equipamento
       const linha = document.createElement("tr");
-      adicionarTextoOperacional(linha, "td", equipamento.nome + " " + equipamento.codigo, "coord-td-proto");
-      adicionarTextoOperacional(linha, "td", equipamento.estacao + " · " + equipamento.local, "");
+      // nome do equipamento em destaque e o código embaixo
+      const colunaEquipamento = adicionarTextoOperacional(linha, "td", "", "coord-td-proto");
+      adicionarTextoOperacional(colunaEquipamento, "strong", equipamento.nome, "");
+      adicionarTextoOperacional(colunaEquipamento, "span", equipamento.codigo, "");
+      // estação em destaque e o ponto da estação embaixo
+      const colunaLocal = adicionarTextoOperacional(linha, "td", "", "");
+      adicionarTextoOperacional(colunaLocal, "strong", equipamento.estacao, "");
+      adicionarTextoOperacional(colunaLocal, "span", equipamento.local, "");
       const colunaSituacao = adicionarTextoOperacional(linha, "td", "", "");
       const situacao = adicionarTextoOperacional(colunaSituacao, "span", equipamento.situacao, "admin-status-pill");
       situacao.id = "situacao-" + equipamento.codigo.toLowerCase().replace("-", "");
       const colunaAcao = adicionarTextoOperacional(linha, "td", "", "");
       // organiza os controles dentro da célula sem modificar sua estrutura
-      const grupo = adicionarTextoOperacional(colunaAcao, "div", "", "campo-grupo");
+      const grupo = adicionarTextoOperacional(colunaAcao, "div", "", "acoes-tabela");
       const seletor = document.createElement("select");
       seletor.id = "selecao-" + equipamento.codigo.toLowerCase().replace("-", "");
       seletor.className = "coord-select";
@@ -1334,9 +1352,9 @@ function sincronizarEquipamentosCoordenacao() {
 // apresenta os registros atuais nas tabelas consolidadas sem remover os outros serviços
 function sincronizarTransporteAdministrativo() {
   // recupera os mesmos pedidos utilizados no painel de transporte
-  const pedidos = buscarChamadosMetro();
+  const pedidos = buscarChamadosMetro().concat(buscarChamadosIara("metro"));
   // acrescenta os outros serviços sem copiar ou trocar seus protocolos
-  const pedidosAplicativo = buscarPedidosOperacionais();
+  const pedidosAplicativo = buscarPedidosOperacionais().concat(buscarChamadosIara().filter(function (pedido) { return pedido.servico !== "metro"; }));
   const registros = [];
   let travessias = 0;
   // conta somente simulações que alcançaram a abertura
@@ -1345,7 +1363,7 @@ function sincronizarTransporteAdministrativo() {
   for (let i = 0; i < pedidos.length; i++) registros.push(pedidos[i]);
   for (let i = 0; i < pedidosAplicativo.length; i++) {
     registros.push(pedidosAplicativo[i]);
-    if (travessiaLiberadaAplicativo(pedidosAplicativo[i])) travessiasAprovadas = travessiasAprovadas + 1;
+    if (travessiaLiberadaAplicativo(pedidosAplicativo[i]) || (pedidosAplicativo[i].servico === "travessia" && pedidosAplicativo[i].statusServidor === "ACEITA")) travessiasAprovadas = travessiasAprovadas + 1;
     if (pedidosAplicativo[i].servico === "travessia") travessias = travessias + 1;
     else if (pedidosAplicativo[i].servico === "zeladoria") zeladoria = zeladoria + 1;
   }
@@ -1353,7 +1371,8 @@ function sincronizarTransporteAdministrativo() {
   sincronizarEquipamentosCoordenacao();
   const tabelas = document.querySelectorAll("[data-pedidos-operacionais]");
   // relaciona a situação apresentada aos filtros existentes
-  const codigos = {"Pedido recebido": "aguardando", "Aprovado": "aprovado", "Funcionário a caminho": "caminho", "Em atendimento": "atendimento", "Concluído": "concluido", "Recusado": "recusado", "Em análise": "analise", "Aguardando abertura": "aguardando", "Fase de segurança": "aguardando", "Travessia liberada na simulação": "atendimento", "Tempo próximo do fim": "atendimento", "Simulação concluída": "concluido", "Simulação encerrada pelo cidadão": "concluido"};
+  // reconhece os nomes atuais e os antigos, além das situações recebidas pela iara
+  const codigos = {"Aceita pelo controlador": "aprovado", "Registrada": "aguardando", "Pedido recebido": "aguardando", "Aprovado": "aprovado", "Funcionário a caminho": "caminho", "Em atendimento": "atendimento", "Concluído": "concluido", "Recusado": "recusado", "Em análise": "analise", "Aguardando abertura": "aguardando", "Fase de segurança": "aguardando", "Travessia liberada": "atendimento", "Tempo próximo do fim": "atendimento", "Travessia concluída": "concluido", "Travessia encerrada pelo cidadão": "concluido", "Travessia liberada na simulação": "atendimento", "Simulação concluída": "concluido", "Simulação encerrada pelo cidadão": "concluido"};
   // percorre as tabelas da coordenação e dos relatórios
   for (let i = 0; i < tabelas.length; i++) {
     // seleciona as linhas de transporte que serão atualizadas
@@ -1377,7 +1396,10 @@ function sincronizarTransporteAdministrativo() {
       const servico = adicionarTextoOperacional(linha, "td", "", "");
       adicionarTextoOperacional(servico, "strong", pedido.tipo, "");
       adicionarTextoOperacional(servico, "span", pedido.nome + " · " + pedido.orgao.toUpperCase(), "");
-      adicionarTextoOperacional(linha, "td", (pedido.linha || "") + " · " + pedido.local, "");
+      // local em destaque e a linha ou região embaixo
+      const colunaLocal = adicionarTextoOperacional(linha, "td", "", "");
+      adicionarTextoOperacional(colunaLocal, "strong", pedido.local, "");
+      adicionarTextoOperacional(colunaLocal, "span", pedido.linha || pedido.orgao.toUpperCase(), "");
       const situacao = adicionarTextoOperacional(linha, "td", "", "");
       adicionarTextoOperacional(situacao, "span", pedido.situacao, "admin-status-pill");
       adicionarTextoOperacional(linha, "td", pedido.horarioSolicitacao, "");
@@ -1479,8 +1501,8 @@ function sincronizarEtapasTransporte(pedidos) {
 // inicia somente depois de verificar a sessão e a função do profissional
 if (document.body.classList.contains("pagina-metro") && profissionalAdmin !== null && profissionalAdmin.funcao === "Agente de transporte") {
   // recupera os pedidos sem apagar situações e históricos anteriores
-  chamadosMetro = buscarChamadosMetro();
-  localStorage.setItem("metro-chamados", JSON.stringify(chamadosMetro));
+  chamadosMetro = buscarChamadosMetro().concat(buscarChamadosIara("metro"));
+  localStorage.setItem("metro-chamados", JSON.stringify(chamadosMetro.filter(function (pedido) { return pedido.fonte !== "node-red"; })));
   recuperarEquipamentosMetro();
   // recupera as ocorrências usando a mesma chave da versão anterior
   ocorrenciasMetro = lerListaOperacional("metro-ocorrencias");
@@ -1504,7 +1526,7 @@ if ((paginaAdmin.endsWith("/coordenacao.html") || paginaAdmin.endsWith("/relator
 
 // atualiza somente os avisos compartilhados, preservando as ações da cet
 if (paginaAdmin.endsWith("/cet.html") && profissionalAdmin !== null && profissionalAdmin.funcao === "Operador CET") {
-  sincronizarEtapasTransporte(buscarChamadosMetro());
+  sincronizarEtapasTransporte(buscarChamadosMetro().concat(buscarChamadosIara("metro")));
 }
 
 // =================================================================
@@ -1520,7 +1542,7 @@ function receberAtualizacaoAdministrativa(event) {
   if (event.key === "metro-chamados" || event.key === "metro-equipamentos" || event.key === "meu-tempo-pedidos") {
     // atualiza a apresentação do transporte sem gravar novamente o mesmo evento
     if (document.body.classList.contains("pagina-metro") && profissionalAdmin !== null && profissionalAdmin.funcao === "Agente de transporte") {
-      chamadosMetro = buscarChamadosMetro();
+      chamadosMetro = buscarChamadosMetro().concat(buscarChamadosIara("metro"));
       recuperarEquipamentosMetro();
       exibirChamadosMetro();
       atualizarIndicadoresMetro();
@@ -1531,7 +1553,7 @@ function receberAtualizacaoAdministrativa(event) {
       sincronizarTransporteAdministrativo();
     } else if (profissionalAdmin !== null && profissionalAdmin.funcao === "Operador CET") {
       // mantém as notificações compartilhadas da cet coerentes
-      sincronizarEtapasTransporte(buscarChamadosMetro());
+      sincronizarEtapasTransporte(buscarChamadosMetro().concat(buscarChamadosIara("metro")));
       exibirPedidosAplicativoCET();
     }
   }
@@ -1552,7 +1574,7 @@ function travessiaLiberadaAplicativo(pedido) {
   if (pedido.servico !== "travessia" || !Array.isArray(pedido.etapas)) return false;
   // procura a etapa de abertura sem considerar a espera como aprovação
   for (let i = 0; i < pedido.etapas.length; i++) {
-    if (pedido.etapas[i].titulo === "Travessia liberada na simulação") return true;
+    if (pedido.etapas[i].titulo === "Travessia liberada") return true;
   }
   return false;
 }
@@ -1560,7 +1582,7 @@ function travessiaLiberadaAplicativo(pedido) {
 // apresenta somente os registros relacionados à área viária
 function exibirPedidosAplicativoCET() {
   // recupera a lista compartilhada sem modificar os atendimentos ferroviários
-  const pedidos = buscarPedidosOperacionais();
+  const pedidos = buscarPedidosOperacionais().concat(buscarChamadosIara().filter(function (pedido) { return pedido.servico !== "metro"; }));
   // seleciona os locais destinados a cada serviço
   const destinos = [{id: "lista-pedidos-cet", servico: "travessia"}, {id: "lista-relatos-cet", servico: "zeladoria"}];
   // inicia as contagens adicionais aos exemplos operacionais já existentes
@@ -1577,7 +1599,7 @@ function exibirPedidosAplicativoCET() {
         const pedido = pedidos[j];
         if (pedido.orgao === "cet" && pedido.servico === destinos[i].servico) {
           recebidos = recebidos + 1;
-          if (travessiaLiberadaAplicativo(pedido)) aprovados = aprovados + 1;
+          if (travessiaLiberadaAplicativo(pedido) || (pedido.servico === "travessia" && pedido.statusServidor === "ACEITA")) aprovados = aprovados + 1;
           if (pedido.situacao === "Recusado") recusados = recusados + 1;
           // cria o cartão utilizando os mesmos textos seguros dos demais painéis
           const cartao = adicionarTextoOperacional(lista, "article", "", "admin-chamado-item");
@@ -1587,7 +1609,8 @@ function exibirPedidosAplicativoCET() {
           adicionarTextoOperacional(cartao, "h3", pedido.tipo + " · " + pedido.nome, "");
           adicionarTextoOperacional(cartao, "p", pedido.local, "admin-chamado-local");
           // apresenta a reserva e a concessão registradas pelo controlador local
-          if (pedido.servico === "travessia") adicionarTextoOperacional(cartao, "p", "Adicional solicitado: " + (pedido.tempoAdicionalSolicitado || 0) + " s. Concedido: " + (pedido.tempoAdicionalConcedido || 0) + " s. Cenário: " + (pedido.cenario || "Anterior") + ".", "admin-chamado-local");
+          if (pedido.servico === "travessia" && pedido.fonte !== "node-red") adicionarTextoOperacional(cartao, "p", "Adicional solicitado: " + (pedido.tempoAdicionalSolicitado || 0) + " s. Concedido: " + (pedido.tempoAdicionalConcedido || 0) + " s. Cenário: " + (pedido.cenario || "Anterior") + ".", "admin-chamado-local");
+          if (pedido.servico === "travessia" && pedido.fonte === "node-red") adicionarTextoOperacional(cartao, "p", "Tempo restante no registro: " + (pedido.tempoRestante ?? "Não informado") + " s. Tempo concedido: " + (pedido.tempoConcedido ?? "Não informado") + " s.", "admin-chamado-local");
           // inclui a descrição quando o serviço recebeu um relato textual
           if (pedido.descricao) adicionarTextoOperacional(cartao, "p", pedido.descricao, "admin-chamado-local");
           const detalhes = adicionarTextoOperacional(cartao, "details", "", "");
@@ -1599,11 +1622,11 @@ function exibirPedidosAplicativoCET() {
             adicionarTextoOperacional(etapa, "span", pedido.etapas[k].titulo + " · " + pedido.etapas[k].horario, "");
           }
           // a travessia é automática na simulação; apenas a zeladoria recebe ações manuais
-          if (pedido.servico === "zeladoria" && pedido.situacao !== "Concluído" && pedido.situacao !== "Recusado") {
+          if (pedido.fonte !== "node-red" && pedido.servico === "zeladoria" && pedido.situacao !== "Concluído" && pedido.situacao !== "Recusado") {
             const acoes = adicionarTextoOperacional(cartao, "div", "", "admin-chamado-acoes");
             const situacoes = ["Em análise", "Concluído"];
             for (let k = 0; k < situacoes.length; k++) {
-              const botao = adicionarTextoOperacional(acoes, "button", "Marcar: " + situacoes[k], "btn btn-contorno");
+              const botao = adicionarTextoOperacional(acoes, "button", situacoes[k] === "Concluído" ? "Marcar como concluído" : "Marcar em análise", "btn btn-contorno");
               botao.type = "button";
               // data identifica o registro e a próxima situação da mesma solicitação
               botao.setAttribute("data-pedido-cet", pedido.protocolo);
@@ -1705,3 +1728,115 @@ if (profissionalAdmin !== null && (profissionalAdmin.funcao === "Operador CET" |
 window.addEventListener("pageshow", function (evento) {
   if (evento.persisted && sessionStorage.getItem("admin-sessao") === null) window.location.replace("login.html");
 });
+
+// =================================================================
+// atualização dos registros integrados da iara
+// =================================================================
+
+// marca se o painel já está aguardando uma resposta, para não sobrepor consultas
+let consultandoPainelIara = false;
+// set é uma coleção sem repetições; aqui guarda os ids que já possuem uma decisão sendo enviada
+const decisoesPendentesIara = new Set();
+// guarda o intervalo de atualização para poder encerrá-lo ao sair do painel
+let temporizadorPainelIara = null;
+
+// apresenta a situação da conexão sem substituir os últimos pedidos recebidos
+function avisarPainelIara(texto) {
+  // procura o aviso existente para atualizar o texto sem criar um aviso duplicado a cada consulta
+  let aviso = document.getElementById('aviso-integracao-iara');
+  // cria o parágrafo apenas na primeira vez que o painel precisa exibir a situação da conexão
+  if (!aviso) {
+    const principal = document.querySelector('main');
+    if (!principal) return;
+    aviso = document.createElement('p');
+    aviso.id = 'aviso-integracao-iara';
+    aviso.className = 'admin-chamado-local';
+    // role status permite que recursos de acessibilidade anunciem as mudanças desse aviso
+    aviso.setAttribute('role', 'status');
+    // prepend insere o aviso no início da área principal, preservando os cartões que já existem
+    principal.prepend(aviso);
+  }
+  // altera o aviso somente quando sua mensagem mudou, evitando anúncios repetidos do mesmo texto
+  if (aviso.textContent !== texto) aviso.textContent = texto;
+}
+
+// atualiza os mesmos cartões e tabelas depois de uma consulta completa
+async function atualizarPainelIara() {
+  // não consulta sem um profissional identificado ou enquanto a consulta anterior ainda estiver em andamento
+  if (consultandoPainelIara || !profissionalAdmin) return;
+  // recupera a função do profissional para escolher os componentes que esta tela deve atualizar
+  const funcao = profissionalAdmin.funcao;
+  // includes verifica se a função pertence aos três perfis que possuem acompanhamento integrado
+  if (!['Agente de transporte', 'Operador CET', 'Coordenador'].includes(funcao)) return;
+  // marca a consulta antes do await para impedir que outro intervalo inicie uma segunda consulta
+  consultandoPainelIara = true;
+  try {
+    // o transporte consulta apenas apoio ferroviário; a cet e a coordenação separam os serviços na apresentação
+    await consultarChamadosIara(funcao === 'Agente de transporte' ? 'APOIO_METRO' : '');
+    if (funcao === 'Agente de transporte') {
+      // concat reúne exemplos locais e pedidos do servidor em uma lista de apresentação, sem gravar a lista remota no armazenamento local
+      chamadosMetro = buscarChamadosMetro().concat(buscarChamadosIara('metro'));
+      // reutiliza a função que monta os cartões e a tabela da estação conectada
+      exibirChamadosMetro();
+      // recalcula os indicadores usando os mesmos chamados que estão disponíveis para o profissional
+      atualizarIndicadoresMetro();
+      // atualiza o acompanhamento e os históricos do transporte nos componentes existentes
+      exibirRegistrosMetro();
+    } else if (funcao === 'Operador CET') {
+      // reutiliza os cartões de travessia e zeladoria, mantendo a decisão de travessia no controlador
+      exibirPedidosAplicativoCET();
+      // preserva o histórico local ao acrescentar as etapas realmente recebidas do servidor
+      sincronizarEtapasTransporte(buscarChamadosMetro().concat(buscarChamadosIara()));
+    // a coordenação reaproveita suas tabelas, filtros e indicadores consolidados
+    } else sincronizarTransporteAdministrativo();
+    avisarPainelIara('IARA conectada. Registros atualizados automaticamente.');
+  // uma falha de conexão muda apenas o aviso e conserva os últimos registros válidos do painel
+  } catch (erro) {
+    avisarPainelIara('Sem atualização da IARA. Os últimos registros recebidos foram preservados.');
+  // finally executa no sucesso e na falha, liberando a próxima tentativa de atualização
+  } finally {
+    // encerra a marca de consulta em andamento para permitir o próximo intervalo
+    consultandoPainelIara = false;
+  }
+}
+
+// chamado mantém o id original; decisao corresponde às operações existentes na api
+async function decidirChamadoRemotoIara(chamado, decisao) {
+  // confere o vínculo da estação e usa has para impedir o envio de outra decisão para o mesmo id
+  if (!chamadoDaEstacaoMetro(chamado) || decisoesPendentesIara.has(chamado.idServidor)) return;
+  // add guarda o id enquanto o servidor ainda está processando a decisão
+  decisoesPendentesIara.add(chamado.idServidor);
+  avisarPainelIara('Registrando decisão no servidor…');
+  try {
+    // aguarda a resposta da rota que grava aprovação ou recusa usando o id original do banco
+    await enviarDecisaoIara(chamado, decisao, profissionalAdmin.nome);
+    // depois da confirmação, consulta a fonte original para apresentar a situação devolvida pelo servidor
+    await atualizarPainelIara();
+  // uma falha de conexão muda apenas o aviso e conserva os últimos registros válidos do painel
+  } catch (erro) {
+    avisarPainelIara('Não foi possível confirmar a decisão. Atualize a fila antes de tentar novamente.');
+  // finally executa no sucesso e na falha, liberando a próxima tentativa de atualização
+  } finally {
+    // delete retira o id da coleção, inclusive após falha, para permitir uma tentativa futura
+    decisoesPendentesIara.delete(chamado.idServidor);
+  }
+}
+
+// consulta imediatamente e mantém um único intervalo por painel
+function iniciarPainelIara() {
+  // evita iniciar a atualização sem sessão ou criar dois intervalos para o mesmo painel
+  if (!profissionalAdmin || temporizadorPainelIara !== null) return;
+  // faz a consulta inicial imediatamente, sem esperar os primeiros três segundos
+  atualizarPainelIara();
+  // setinterval repete a atualização no tempo definido pela configuração compartilhada
+  temporizadorPainelIara = setInterval(atualizarPainelIara, configuracaoIara.intervalo);
+}
+
+// a expressão regular limita a inicialização aos quatro painéis que possuem integração
+if (profissionalAdmin && /\/(metro|cet|coordenacao|relatorios)\.html$/.test(paginaAdmin)) {
+  iniciarPainelIara();
+  // ao sair do painel, cancela o intervalo e marca que ele não está mais ativo
+  window.addEventListener('pagehide', function () { clearInterval(temporizadorPainelIara); temporizadorPainelIara = null; });
+  // ao voltar pelo histórico com a página em cache, retoma a atualização que foi interrompida
+  window.addEventListener('pageshow', function (evento) { if (evento.persisted) iniciarPainelIara(); });
+}

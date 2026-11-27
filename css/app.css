@@ -1882,7 +1882,7 @@ button {
     color: var(--verde-natural); /* cor do texto */
 }
 
-/* seta-solicitacao: ícone que indica que o pedido pode ser aberto. */
+/* seta-solicitacao: seta para baixo que indica que o pedido pode ser aberto. */
 .app .seta-solicitacao {
     width: 19px; /* largura da seta */
     height: 19px; /* altura da seta */
@@ -1891,7 +1891,7 @@ button {
 
 /* altera a direção da seta quando o pedido estiver aberto. */
 .app .card-solicitacao[open] .seta-solicitacao {
-    transform: rotate(90deg); /* gira a seta para baixo */
+    transform: rotate(180deg); /* vira a seta para cima */
 }
 
 /* historico-solicitacao: div que aparece ao abrir o pedido. */
@@ -3628,6 +3628,14 @@ button {
     gap: 14px; /* espaço entre os anexos */
 }
 
+/* dica-anexos: texto que ocupa a linha inteira acima dos dois botões de anexo. */
+.app .dica-anexos {
+    grid-column: 1 / -1; /* deixa foto e áudio lado a lado na linha de baixo */
+    margin: 0; /* retira o espaço padrão do parágrafo */
+    font-size: 0.85rem; /* texto de apoio menor que o dos campos */
+    color: var(--texto-secundario); /* cor de texto auxiliar */
+}
+
 /* anexo-relato: div que contém o campo de arquivo e sua prévia. */
 .app .anexo-relato {
     position: relative; /* referência para posicionar o campo de arquivo */
@@ -4888,5 +4896,16 @@ button {
     }
     .app .mostrador-segundos {
         min-height: 180px; /* mantém a quantidade em destaque no celular */
+    }
+}
+
+/* o sair do menu do usuário só aparece no celular, quando o menu lateral fica escondido */
+.app .opcoes-usuario a.sair-celular {
+    display: none;
+}
+
+@media (max-width: 900px) {
+    .app .opcoes-usuario a.sair-celular {
+        display: flex;
     }
 }
